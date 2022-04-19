@@ -6,6 +6,8 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+require('dotenv').config({path: './config/.env'});
+const PORT = process.env.PORT || 2000;
 
 var app = express();
 
@@ -37,5 +39,9 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+app.listen(PORT, () => {
+  console.log(`le serveur est lancé sur le port ${PORT}`);
+})
 
 module.exports = app;
