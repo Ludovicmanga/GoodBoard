@@ -8,5 +8,5 @@ export default  {
 
 export const Default = () => {
     const [isToggled, setIsToggled] = useState(false);
-    <UserOrCompanyRequestsToggleButton isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)} />
+    return <UserOrCompanyRequestsToggleButton isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)} />
 }
