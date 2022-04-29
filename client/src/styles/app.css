@@ -75,6 +75,10 @@ li {
   left: 30px;
 }
 
+  .menuChoiceModal--icon {
+    margin: 0px 15px 0px 0px;
+  }
+
 .menuChoiceModal .roadmapli {
   margin: 10px 0px 0px 0px;
 }
@@ -141,15 +145,27 @@ li {
   color: gold;
 }
 
+.featureRequestBox--votesCountBoxContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 250px;
+}
+
 .featureRequestBox--votesCountBox {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  width: 200px;
+  justify-content: center;
+  border: solid 0.5px;
+  border-radius: 15px;
+  margin: 10px;
+  height: 50px;
+  width: 70px;
 }
 
 .featureRequestBox--votesCountBox .icon {
-  margin: 15px 0px;
+  margin: 15px 10px;
 }
 
 input:checked + .slider::before {

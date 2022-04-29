@@ -12,6 +12,7 @@ export const MenuChoiceModal: React.FC<MenuChoiceModalProps> = ({}) => {
                     <li>
                         <NavLink to="/">
                             <div>
+                            <i className="fa-regular fa-face-smile menuChoiceModal--icon" />
                                 Feature requests
                             </div>
                         </NavLink>
@@ -19,6 +20,7 @@ export const MenuChoiceModal: React.FC<MenuChoiceModalProps> = ({}) => {
                     <li className='roadmapli'>
                         <NavLink to="/roadmap">
                             <div>
+                                <i className="fa-regular fa-map menuChoiceModal--icon"></i>
                                 Roadmap
                             </div>
                         </NavLink>

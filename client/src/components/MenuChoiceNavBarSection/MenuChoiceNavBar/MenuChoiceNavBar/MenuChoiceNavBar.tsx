@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react'
 import { MenuChoiceModal } from '../../MenuChoiceModal/MenuChoiceModal';
 
@@ -27,7 +26,6 @@ export const MenuChoiceNavBar: React.FC<MenuChoiceNavBarProps> = ({}) => {
                                 ) : (
                                     <i className="fa-solid fa-angle-right icon" />
                                 ) }
-                                
                                 Feature requests
                             </li>
                         </a>
