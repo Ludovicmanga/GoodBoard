@@ -62,6 +62,10 @@ li {
   background: #1fe0;
 }
 
+.menuChoiceNavbar--searchInput:focus {
+  outline: none;
+}
+
   .menuChoiceNavBar .icon {
     margin: 10px 30px;
   }
