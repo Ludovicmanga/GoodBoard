@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { FeatureRequestBox } from '../components/FeatureRequest/FeatureRequestBox/FeatureRequestBox';
+import { FeatureRequestsContainer } from '../components/FeatureRequest/FeatureRequestContainer/FeatureRequestsContainer';
 import { UserOrCompanyRequestsToggleButton } from '../components/UserOrCompanyRequestsToggleButton/UserOrCompanyRequestsToggleButton'
 
 const Home = () => {
@@ -15,9 +15,9 @@ const Home = () => {
         <div className='contextualText'>Nos idées</div>
       </div>
       {isToggled ? (
-        <FeatureRequestBox requestAuthorType = 'company' />
+        <FeatureRequestsContainer requestAuthorType = 'company' />
       ) : (
-        <FeatureRequestBox requestAuthorType = 'user' />
+        <FeatureRequestsContainer requestAuthorType = 'user' />
       )}
     </div>
   )

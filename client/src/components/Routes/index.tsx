@@ -6,7 +6,7 @@ import MainNavBar from '../MainNavBar';
 import SignInPage from '../Log/SignInPage/SignInPage';
 import SignUpPage from '../Log/SignUpPage/SignUpPage';
 import { RoadMap } from '../../pages/RoadMap';
-import { MenuChoiceNavBar } from '../MenuChoiceNavBarSection/MenuChoiceButton/MenuChoiceButton/MenuChoiceNavBar';
+import { MenuChoiceNavBar } from '../MenuChoiceNavBarSection/MenuChoiceNavBar/MenuChoiceNavBar/MenuChoiceNavBar';
 
 export default function index() {
   return (
