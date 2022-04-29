@@ -1,4 +1,5 @@
-import SignUpPage from "./SignUpPage"
+import SignUpPage from "./SignUpPage";
+import React from "react";
 
 
 export default {
