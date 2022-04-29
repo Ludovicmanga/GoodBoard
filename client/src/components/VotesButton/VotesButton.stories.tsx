@@ -1,4 +1,5 @@
 import { VotesButton } from "./VotesButton";
+import React from "react";
 
 export default {
     title: "UI/Votes",

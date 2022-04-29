@@ -1,6 +1,6 @@
-import { FeatureRequestBox } from "./FeatureRequestBox"
+import { FeatureRequestBox } from "./FeatureRequestBox";
+import React from "react";
 
-FeatureRequestBox
 export default {
     title: "UI/Feature-request",
     component: FeatureRequestBox

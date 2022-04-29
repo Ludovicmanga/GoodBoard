@@ -6,9 +6,13 @@ body {
   background: beige;
 }
 
+ul {
+  padding: 0px;
+}
+
 a {
     text-decoration: none;
-  }
+}
 
 li {
   list-style: none;
@@ -49,6 +53,10 @@ li {
   flex-direction: column;
 }
 
+  .menuChoiceNavbar--liWrapper .menuChoiceli {
+    position: relative;
+  }
+
 .menuChoiceNavbar--searchInput {
   border: none;
   background: #1fe0;
@@ -58,9 +66,18 @@ li {
     margin: 10px 30px;
   }
 
-  .menuChoiceNavbar--liWrapper i {
-    margin: 0px 20px 0px 0px;
-  }
+.menuChoiceModal {
+  border-radius: 10px;
+  padding: 20px;
+  background: white;
+  position: absolute;
+  top: 35px;
+  left: 30px;
+}
+
+.menuChoiceModal .roadmapli {
+  margin: 10px 0px 0px 0px;
+}
 
 .UserOrCompanyRequestsToggleButton--container {
   display: flex;

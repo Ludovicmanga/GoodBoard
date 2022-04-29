@@ -5,13 +5,17 @@ import { BrowserRouter as Router, Route, Navigate, Routes } from 'react-router-d
 import MainNavBar from '../MainNavBar';
 import SignInPage from '../Log/SignInPage/SignInPage';
 import SignUpPage from '../Log/SignUpPage/SignUpPage';
+import { RoadMap } from '../../pages/RoadMap';
+import { MenuChoiceNavBar } from '../MenuChoiceNavBarSection/MenuChoiceButton/MenuChoiceButton/MenuChoiceNavBar';
 
 export default function index() {
   return (
     <Router>
         <MainNavBar />
+        <MenuChoiceNavBar />
         <Routes>
              <Route path="/" element = {<Home />}/>
+             <Route path="/roadmap" element = {<RoadMap />}/>
              <Route path="/login" element = {<SignInPage />} />
              <Route path="/signUp" element = {<SignUpPage />} />
             <Route path="*" element = {<Navigate to="/" replace />} />
