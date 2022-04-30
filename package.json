@@ -4,9 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "tsc && node app.js",
+    "start": "tsc && node app.tsx",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "nodemon app.js"
+    "watch": "nodemon app.tsx"
   },
   "author": "Ludovic",
   "license": "LM",
@@ -16,6 +16,7 @@
     "dotenv": "^16.0.0",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
+    "mongoose": "^6.3.1",
     "morgan": "~1.9.1",
     "nodemon": "^2.0.15",
     "ts-node": "^10.7.0",

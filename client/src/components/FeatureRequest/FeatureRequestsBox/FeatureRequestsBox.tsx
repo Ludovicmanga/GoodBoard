@@ -19,7 +19,6 @@ export const FeatureRequestsBox: React.FC<FeatureRequestsBoxProps> = ({}) => {
                 <div className='featureRequestBox--content'>
                     <h2>Changer la taille du bouton</h2>
                     <p>J'aimerais clairement que le bouton soit beaucoup, mais alors beaucoup plus gros... Ce serait génial</p>
-                    <p>Internet</p>
                 </div>
                 <a href="#" onClick={(e) => handleToggleVote(e)} className='featureRequestBox--votesCountBoxContainer'>
                     <div className='featureRequestBox--votesCountBox'>
