@@ -8,11 +8,11 @@ import SignUpPage from '../Log/SignUpPage/SignUpPage';
 import { RoadMap } from '../../pages/RoadMap';
 import { MenuChoiceNavBar } from '../MenuChoiceNavBarSection/MenuChoiceNavBar/MenuChoiceNavBar/MenuChoiceNavBar';
 
-type indexProps = { 
+type RouterIndexProps = { 
 
 }
 
-const Index: React.FC<indexProps> = ({}) => {
+const RouterIndex: React.FC<RouterIndexProps> = ({}) => {
   const [currentPage, setCurrentPage] = useState('');
   const handleCurrentPage = (currentPageParam) => {
     setCurrentPage(() => currentPageParam)
@@ -33,4 +33,4 @@ const Index: React.FC<indexProps> = ({}) => {
   )
 }
 
-export default Index
+export default RouterIndex

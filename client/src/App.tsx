@@ -1,11 +1,11 @@
-import Index from './components/Routes/Index';
+import RouterIndex from './components/Routes/RouterIndex';
 import React from 'react';
 
 const App = () => {
 
   return (
     <>
-      <Index />
+      <RouterIndex />
     </>
   )
 }
