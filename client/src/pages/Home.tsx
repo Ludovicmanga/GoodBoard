@@ -26,7 +26,7 @@ const Home = () => {
       { newFeatureRequestModalisOpen && (
         <NewFeatureRequestModal handleCloseModal = {handleCloseModal} />
       ) }
-      <button onClick={() => setNewFeatureRequestModalisOpen(!newFeatureRequestModalisOpen)}>Nouvelle feature request</button>
+      <button className='newFeatureRequestModalOpenButton' onClick={() => setNewFeatureRequestModalisOpen(!newFeatureRequestModalisOpen)}>Nouvelle feature request</button>
     </div>
   )
 }
