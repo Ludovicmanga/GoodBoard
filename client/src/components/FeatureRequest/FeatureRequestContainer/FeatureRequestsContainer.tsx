@@ -1,5 +1,4 @@
 import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { FeatureRequestsBox } from '../FeatureRequestsBox/FeatureRequestsBox'
 
 type FeatureRequestsContainerProps = {

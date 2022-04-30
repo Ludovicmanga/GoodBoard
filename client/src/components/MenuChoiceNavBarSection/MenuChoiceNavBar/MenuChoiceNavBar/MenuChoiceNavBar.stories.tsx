@@ -7,5 +7,5 @@ export default  {
 }
 
 export const Default = () => {
-    return <MenuChoiceNavBar />
+    return <MenuChoiceNavBar currentPage = "feature requests" />
 }
