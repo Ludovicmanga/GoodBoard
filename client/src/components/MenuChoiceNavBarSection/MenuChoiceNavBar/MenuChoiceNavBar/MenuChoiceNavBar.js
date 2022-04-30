@@ -26,7 +26,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.MenuChoiceNavBar = void 0;
 const react_1 = __importStar(require("react"));
 const MenuChoiceModal_1 = require("../../MenuChoiceModal/MenuChoiceModal");
-const MenuChoiceNavBar = ({}) => {
+const MenuChoiceNavBar = ({ currentPage }) => {
     const [isToggled, setIsToggled] = (0, react_1.useState)(false);
     const handleToggle = (e) => {
         e.preventDefault();
@@ -40,7 +40,7 @@ const MenuChoiceNavBar = ({}) => {
                         isToggled ? (react_1.default.createElement(react_1.default.Fragment, null,
                             react_1.default.createElement("i", { className: "fa-solid fa-angle-down icon" }),
                             react_1.default.createElement(MenuChoiceModal_1.MenuChoiceModal, null))) : (react_1.default.createElement("i", { className: "fa-solid fa-angle-right icon" })),
-                        "Feature requests")),
+                        currentPage)),
                 react_1.default.createElement("li", null,
                     react_1.default.createElement("i", { className: "fa-solid fa-magnifying-glass icon" }),
                     react_1.default.createElement("input", { className: 'menuChoiceNavbar--searchInput', placeholder: 'Search' }))))));

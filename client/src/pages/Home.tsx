@@ -3,12 +3,19 @@ import { FeatureRequestsContainer } from '../components/FeatureRequest/FeatureRe
 import { NewFeatureRequestModal } from '../components/NewFeatureRequest/NewFeatureRequestModal/NewFeatureRequestModal';
 import { UserOrCompanyRequestsToggleButton } from '../components/UserOrCompanyRequestsToggleButton/UserOrCompanyRequestsToggleButton'
 
-const Home = () => {
+type HomeProps = {
+  handleCurrentPage: (page: string) => void
+}
+
+export const Home: React.FC<HomeProps> = ({ handleCurrentPage }) => {
+  handleCurrentPage('Feature requests');
+
   const [isToggled, setIsToggled] = useState(false);
   const [newFeatureRequestModalisOpen, setNewFeatureRequestModalisOpen] = useState(false);
   const handleCloseModal = (newFeatureRequestModalState) => {
     setNewFeatureRequestModalisOpen(() => newFeatureRequestModalState);
   }
+
 
   return (
     <div>
@@ -31,4 +38,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Home;

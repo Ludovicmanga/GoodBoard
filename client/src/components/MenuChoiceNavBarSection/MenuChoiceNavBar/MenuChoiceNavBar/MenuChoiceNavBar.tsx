@@ -2,9 +2,10 @@ import React, { useState } from 'react'
 import { MenuChoiceModal } from '../../MenuChoiceModal/MenuChoiceModal';
 
 type MenuChoiceNavBarProps = {
+    currentPage: string
 }
 
-export const MenuChoiceNavBar: React.FC<MenuChoiceNavBarProps> = ({}) => {
+export const MenuChoiceNavBar: React.FC<MenuChoiceNavBarProps> = ({ currentPage }) => {
         const [isToggled, setIsToggled] = useState(false)
 
         const handleToggle = (e) => {
@@ -26,7 +27,7 @@ export const MenuChoiceNavBar: React.FC<MenuChoiceNavBarProps> = ({}) => {
                                 ) : (
                                     <i className="fa-solid fa-angle-right icon" />
                                 ) }
-                                Feature requests
+                                { currentPage }
                             </li>
                         </a>
                         <li>

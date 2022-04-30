@@ -1,11 +1,11 @@
-import Routes from './components/Routes';
+import Index from './components/Routes/Index';
 import React from 'react';
 
 const App = () => {
 
   return (
     <>
-      <Routes />
+      <Index />
     </>
   )
 }

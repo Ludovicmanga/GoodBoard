@@ -11,6 +11,6 @@ exports.default = {
     component: MenuChoiceNavBar_1.MenuChoiceNavBar
 };
 const Default = () => {
-    return react_1.default.createElement(MenuChoiceNavBar_1.MenuChoiceNavBar, null);
+    return react_1.default.createElement(MenuChoiceNavBar_1.MenuChoiceNavBar, { currentPage: "feature requests" });
 };
 exports.Default = Default;
