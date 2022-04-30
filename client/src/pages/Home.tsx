@@ -1,11 +1,15 @@
 import React, { useState } from 'react'
 import { FeatureRequestsContainer } from '../components/FeatureRequest/FeatureRequestContainer/FeatureRequestsContainer';
+import { NewFeatureRequestModal } from '../components/NewFeatureRequest/NewFeatureRequestModal/NewFeatureRequestModal';
 import { UserOrCompanyRequestsToggleButton } from '../components/UserOrCompanyRequestsToggleButton/UserOrCompanyRequestsToggleButton'
 
 const Home = () => {
-
   const [isToggled, setIsToggled] = useState(false);
-  
+  const [newFeatureRequestModalisOpen, setNewFeatureRequestModalisOpen] = useState(false);
+  const handleCloseModal = (newFeatureRequestModalState) => {
+    setNewFeatureRequestModalisOpen(() => newFeatureRequestModalState);
+  }
+
   return (
     <div>
       <h2>Vous avez des idées ? Nous vous écoutons !</h2>
@@ -19,6 +23,10 @@ const Home = () => {
       ) : (
         <FeatureRequestsContainer requestAuthorType = 'user' />
       )}
+      { newFeatureRequestModalisOpen && (
+        <NewFeatureRequestModal handleCloseModal = {handleCloseModal} />
+      ) }
+      <button onClick={() => setNewFeatureRequestModalisOpen(!newFeatureRequestModalisOpen)}>Nouvelle feature request</button>
     </div>
   )
 }

@@ -136,6 +136,66 @@ li {
   transition: 0.4s;
 }
 
+/* New feature request modal */
+
+.newFeatureRequestModal {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.newFeatureRequestModal--wrapper {
+  background: white;
+  border-radius: 15px;
+  border: solid black 0.1px;
+  padding: 10px;
+  height: 500px;
+  width: 275px;
+}
+
+.closeModalIconContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.newFeatureRequestModal--form .inputContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.newFeatureRequestModal--form label {
+  margin: 0px 0px 0px 10px;
+}
+
+.newFeatureRequestModal--form input,
+.newFeatureRequestModal--form textarea {
+  display: flex;
+  align-items: center;
+  height: 50px;
+  border-radius: 15px;
+  width: 90%;
+  padding: 9px;
+}
+
+.newFeatureRequestModal--form--btnContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.newFeatureRequestModal--form--btnContainer input {
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* featureRequestBox */
 
 .featureRequestBox {
