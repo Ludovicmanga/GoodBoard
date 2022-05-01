@@ -30,4 +30,6 @@ module.exports.login = function (req, res) {
     });
 };
 module.exports.logout = function (req, res) {
+    res.cookie('jwt', '', { maxAge: 1 });
+    res.redirect('/');
 };
