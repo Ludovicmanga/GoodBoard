@@ -22,28 +22,29 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 exports.Home = void 0;
-const react_1 = __importStar(require("react"));
-const FeatureRequestsContainer_1 = require("../components/FeatureRequest/FeatureRequestContainer/FeatureRequestsContainer");
-const NewFeatureRequestModal_1 = require("../components/NewFeatureRequest/NewFeatureRequestModal/NewFeatureRequestModal");
-const UserOrCompanyRequestsToggleButton_1 = require("../components/UserOrCompanyRequestsToggleButton/UserOrCompanyRequestsToggleButton");
-const Home = ({ handleCurrentPage }) => {
+var react_1 = __importStar(require("react"));
+var FeatureRequestsContainer_1 = require("../components/FeatureRequest/FeatureRequestContainer/FeatureRequestsContainer");
+var NewFeatureRequestModal_1 = require("../components/NewFeatureRequest/NewFeatureRequestModal/NewFeatureRequestModal");
+var UserOrCompanyRequestsToggleButton_1 = require("../components/UserOrCompanyRequestsToggleButton/UserOrCompanyRequestsToggleButton");
+var Home = function (_a) {
+    var handleCurrentPage = _a.handleCurrentPage;
     handleCurrentPage('Feature requests');
-    const [isToggled, setIsToggled] = (0, react_1.useState)(false);
-    const [newFeatureRequestModalisOpen, setNewFeatureRequestModalisOpen] = (0, react_1.useState)(false);
-    const handleCloseModal = (newFeatureRequestModalState) => {
-        setNewFeatureRequestModalisOpen(() => newFeatureRequestModalState);
+    var _b = (0, react_1.useState)(false), isToggled = _b[0], setIsToggled = _b[1];
+    var _c = (0, react_1.useState)(false), newFeatureRequestModalisOpen = _c[0], setNewFeatureRequestModalisOpen = _c[1];
+    var handleCloseModal = function (newFeatureRequestModalState) {
+        setNewFeatureRequestModalisOpen(function () { return newFeatureRequestModalState; });
     };
-    return (react_1.default.createElement("div", null,
-        react_1.default.createElement("h2", null, "Vous avez des id\u00E9es ? Nous vous \u00E9coutons !"),
-        react_1.default.createElement("div", { className: 'UserOrCompanyRequestsToggleButton--container' },
-            react_1.default.createElement("div", { className: 'contextualText' }, "Vos id\u00E9es"),
-            react_1.default.createElement(UserOrCompanyRequestsToggleButton_1.UserOrCompanyRequestsToggleButton, { isToggled: isToggled, onToggle: () => setIsToggled(!isToggled) }),
-            react_1.default.createElement("div", { className: 'contextualText' }, "Nos id\u00E9es")),
-        isToggled ? (react_1.default.createElement(FeatureRequestsContainer_1.FeatureRequestsContainer, { requestAuthorType: 'company' })) : (react_1.default.createElement(FeatureRequestsContainer_1.FeatureRequestsContainer, { requestAuthorType: 'user' })),
-        newFeatureRequestModalisOpen && (react_1.default.createElement(NewFeatureRequestModal_1.NewFeatureRequestModal, { handleCloseModal: handleCloseModal })),
-        react_1.default.createElement("button", { className: 'newFeatureRequestModalOpenButton', onClick: () => setNewFeatureRequestModalisOpen(!newFeatureRequestModalisOpen) }, "Nouvelle feature request")));
+    return (react_1["default"].createElement("div", null,
+        react_1["default"].createElement("h2", null, "Vous avez des id\u00E9es ? Nous vous \u00E9coutons !"),
+        react_1["default"].createElement("div", { className: 'UserOrCompanyRequestsToggleButton--container' },
+            react_1["default"].createElement("div", { className: 'contextualText' }, "Vos id\u00E9es"),
+            react_1["default"].createElement(UserOrCompanyRequestsToggleButton_1.UserOrCompanyRequestsToggleButton, { isToggled: isToggled, onToggle: function () { return setIsToggled(!isToggled); } }),
+            react_1["default"].createElement("div", { className: 'contextualText' }, "Nos id\u00E9es")),
+        isToggled ? (react_1["default"].createElement(FeatureRequestsContainer_1.FeatureRequestsContainer, { requestAuthorType: 'company' })) : (react_1["default"].createElement(FeatureRequestsContainer_1.FeatureRequestsContainer, { requestAuthorType: 'user' })),
+        newFeatureRequestModalisOpen && (react_1["default"].createElement(NewFeatureRequestModal_1.NewFeatureRequestModal, { handleCloseModal: handleCloseModal })),
+        react_1["default"].createElement("button", { className: 'newFeatureRequestModalOpenButton', onClick: function () { return setNewFeatureRequestModalisOpen(!newFeatureRequestModalisOpen); } }, "Nouvelle feature request")));
 };
 exports.Home = Home;
-exports.default = exports.Home;
+exports["default"] = exports.Home;

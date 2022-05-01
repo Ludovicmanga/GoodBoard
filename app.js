@@ -7,7 +7,8 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 require('dotenv').config({ path: './config/.env' });
-const PORT = process.env.PORT || 2000;
+require('./config/db.tsx');
+var PORT = process.env.PORT || 2000;
 var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -32,7 +33,7 @@ app.use(function (err, req, res, next) {
     res.status(err.status || 500);
     res.render('error');
 });
-app.listen(PORT, () => {
-    console.log(`le serveur est lancé sur le port ${PORT}`);
+app.listen(PORT, function () {
+    console.log("le serveur est lanc\u00E9 sur le port ".concat(PORT));
 });
 module.exports = app;
