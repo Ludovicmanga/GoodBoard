@@ -1,3 +1,7 @@
 {
-    "javascript.inlayHints.propertyDeclarationTypes.enabled": false
+    "javascript.inlayHints.propertyDeclarationTypes.enabled": false,
+    "files.exclude": {
+        "**/*.js": true,
+        "**/*.js.map": true
+    }
 }
