@@ -86,5 +86,26 @@ userSchema.pre("save", function (next) {
         });
     });
 });
+userSchema.statics.login = function (email, password) {
+    return __awaiter(this, void 0, void 0, function () {
+        var user, auth;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, this.findOne({ email: email })];
+                case 1:
+                    user = _a.sent();
+                    if (!user) return [3 /*break*/, 3];
+                    return [4 /*yield*/, bcrypt.compare(password, user.password)];
+                case 2:
+                    auth = _a.sent();
+                    if (auth) {
+                        return [2 /*return*/, user];
+                    }
+                    throw Error('incorrect password');
+                case 3: throw Error('incorrect email');
+            }
+        });
+    });
+};
 var userModel = mongoose.model("user", userSchema);
 module.exports = userModel;
