@@ -4,6 +4,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var _a = require('./middleware/auth.middleware'), checkUser = _a.checkUser, requireAuth = _a.requireAuth;
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var featureRequestRouter = require('./routes/featureRequest');
@@ -16,6 +17,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.get('*', checkUser);
+app.get('/jwtid', requireAuth, function (req, res) {
+    res.status(200).send(res.locals.user._id);
+});
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/feature-request', featureRequestRouter);
