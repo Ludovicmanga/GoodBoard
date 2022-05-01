@@ -22,16 +22,16 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 exports.Default = void 0;
-const react_1 = __importStar(require("react"));
-const UserOrCompanyRequestsToggleButton_1 = require("./UserOrCompanyRequestsToggleButton");
-exports.default = {
+var react_1 = __importStar(require("react"));
+var UserOrCompanyRequestsToggleButton_1 = require("./UserOrCompanyRequestsToggleButton");
+exports["default"] = {
     title: 'UI/User or company requests toggle button',
     component: UserOrCompanyRequestsToggleButton_1.UserOrCompanyRequestsToggleButton
 };
-const Default = () => {
-    const [isToggled, setIsToggled] = (0, react_1.useState)(false);
-    return react_1.default.createElement(UserOrCompanyRequestsToggleButton_1.UserOrCompanyRequestsToggleButton, { isToggled: isToggled, onToggle: () => setIsToggled(!isToggled) });
+var Default = function () {
+    var _a = (0, react_1.useState)(false), isToggled = _a[0], setIsToggled = _a[1];
+    return react_1["default"].createElement(UserOrCompanyRequestsToggleButton_1.UserOrCompanyRequestsToggleButton, { isToggled: isToggled, onToggle: function () { return setIsToggled(!isToggled); } });
 };
 exports.Default = Default;

@@ -22,24 +22,24 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 exports.FeatureRequestsBox = void 0;
-const react_1 = __importStar(require("react"));
-const FeatureRequestsBox = ({}) => {
-    const [isVotted, setIsVotted] = (0, react_1.useState)(false);
-    const handleToggleVote = (e) => {
+var react_1 = __importStar(require("react"));
+var FeatureRequestsBox = function (_a) {
+    var _b = (0, react_1.useState)(false), isVotted = _b[0], setIsVotted = _b[1];
+    var handleToggleVote = function (e) {
         e.preventDefault();
-        setIsVotted(() => !isVotted);
+        setIsVotted(function () { return !isVotted; });
     };
-    return (react_1.default.createElement("div", { className: 'featureRequestBox' },
-        react_1.default.createElement("div", { className: 'badge' },
-            react_1.default.createElement("i", { className: "fa-solid fa-crown" })),
-        react_1.default.createElement("div", { className: 'featureRequestBox--content' },
-            react_1.default.createElement("h2", null, "Changer la taille du bouton"),
-            react_1.default.createElement("p", null, "J'aimerais clairement que le bouton soit beaucoup, mais alors beaucoup plus gros... Ce serait g\u00E9nial")),
-        react_1.default.createElement("a", { href: "#", onClick: (e) => handleToggleVote(e), className: 'featureRequestBox--votesCountBoxContainer' },
-            react_1.default.createElement("div", { className: 'featureRequestBox--votesCountBox' },
-                react_1.default.createElement("div", null, "255"),
-                isVotted ? (react_1.default.createElement("i", { className: "fa-solid fa-check icon" })) : (react_1.default.createElement("i", { className: "fa-solid fa-angle-up icon" }))))));
+    return (react_1["default"].createElement("div", { className: 'featureRequestBox' },
+        react_1["default"].createElement("div", { className: 'badge' },
+            react_1["default"].createElement("i", { className: "fa-solid fa-crown" })),
+        react_1["default"].createElement("div", { className: 'featureRequestBox--content' },
+            react_1["default"].createElement("h2", null, "Changer la taille du bouton"),
+            react_1["default"].createElement("p", null, "J'aimerais clairement que le bouton soit beaucoup, mais alors beaucoup plus gros... Ce serait g\u00E9nial")),
+        react_1["default"].createElement("a", { href: "#", onClick: function (e) { return handleToggleVote(e); }, className: 'featureRequestBox--votesCountBoxContainer' },
+            react_1["default"].createElement("div", { className: 'featureRequestBox--votesCountBox' },
+                react_1["default"].createElement("div", null, "255"),
+                isVotted ? (react_1["default"].createElement("i", { className: "fa-solid fa-check icon" })) : (react_1["default"].createElement("i", { className: "fa-solid fa-angle-up icon" }))))));
 };
 exports.FeatureRequestsBox = FeatureRequestsBox;
