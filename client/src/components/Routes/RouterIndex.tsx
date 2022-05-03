@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Home from '../../pages/Home';
 import { BrowserRouter as Router, Route, Navigate, Routes } from 'react-router-dom';
 import MainNavBar from '../MainNavBar';
@@ -13,7 +13,7 @@ type RouterIndexProps = {
 }
 
 const RouterIndex: React.FC<RouterIndexProps> = ({}) => {
-  const [currentPage, setCurrentPage] = useState('');
+  const [currentPage, setCurrentPage] = useState('Feature requests');
   const handleCurrentPage = (currentPageParam) => {
     setCurrentPage(() => currentPageParam)
   }

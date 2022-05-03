@@ -4,38 +4,55 @@ const bcrypt = require('bcrypt');
 export {};
 
 const userSchema = new mongoose.Schema(
-{
-    pseudo: {
-        type: String,
-        required: true,
-        minlength: 3,
-        maxlength: 55,
-        unique: true,
-        trim: true
-    },
-    email: {
-        type: String,
-        required: true,
-        validate: [isEmail],
-        lowercase: true,
-        unique: true,
-        trim: true,
-    },
-    password: {
-        type: String,
-        required: true,
-        max: 1024,
-        minlength: 6
-    },
-    type: {
-        type: String,
-        required: true,
-        max: 1024
+    {
+        pseudo: {
+            type: String,
+            required: true,
+            minlength: 3,
+            maxlength: 55,
+            unique: true,
+            trim: true
+        },
+        email: {
+            type: String,
+            required: true,
+            validate: [isEmail],
+            lowercase: true,
+            unique: true,
+            trim: true,
+        },
+        password: {
+            type: String,
+            required: true,
+            max: 1024,
+            minlength: 6
+        },
+        type: {
+            type: String,
+            required: true,
+            max: 1024
+        }
     }
-}
+);
 
-)
+userSchema.pre("save", async function(this: typeof userSchema, next) {
+    const salt = await bcrypt.genSalt();
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
+});
 
-const UserModel = mongoose.model("user", userSchema);
+userSchema.statics.login = async function(this: typeof userSchema, email, password) {
+    const user = await this.findOne({ email });
+    if (user) {
+      const auth = await bcrypt.compare(password, user.password);
+      if (auth) {
+        return user;
+      }
+      throw Error('incorrect password');
+    }
+    throw Error('incorrect email')
+  };
 
-module.exports = UserModel;
+const userModel = mongoose.model("user", userSchema);
+
+module.exports = userModel;

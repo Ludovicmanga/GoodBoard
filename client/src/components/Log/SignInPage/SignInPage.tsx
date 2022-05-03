@@ -7,7 +7,8 @@ const SignInPage = () => {
       <input type="email" value="email" id="signInForm-email-input"/>
       <br />
       <label htmlFor='signInForm-password-input'>Password</label>
-      <input type="password" value="password" id="signInForm-password-input"/>
+      <input type="password" value="password" id="signInForm-password-input"/><br />
+      <input type="submit" value="se connecter" />
     </form>
   )
 }
