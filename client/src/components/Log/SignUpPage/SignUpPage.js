@@ -13,6 +13,8 @@ var SignUpPage = function () {
         react_1["default"].createElement("input", { type: "email", value: "email", id: "signUpForm-email-input" }),
         react_1["default"].createElement("br", null),
         react_1["default"].createElement("label", { htmlFor: 'signUpForm-password-input' }, "Password"),
-        react_1["default"].createElement("input", { type: "password", value: "password", id: "signUpForm-password-input" })));
+        react_1["default"].createElement("input", { type: "password", value: "password", id: "signUpForm-password-input" }),
+        react_1["default"].createElement("br", null),
+        react_1["default"].createElement("input", { type: "submit", value: "s'inscrire" })));
 };
 exports["default"] = SignUpPage;

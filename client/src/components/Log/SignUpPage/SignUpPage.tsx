@@ -10,7 +10,8 @@ const SignUpPage = () => {
       <input type="email" value="email" id="signUpForm-email-input"/>
       <br />
       <label htmlFor='signUpForm-password-input'>Password</label>
-      <input type="password" value="password" id="signUpForm-password-input"/>
+      <input type="password" value="password" id="signUpForm-password-input"/><br />
+      <input type="submit" value="s'inscrire" />
     </form>
   )
 }

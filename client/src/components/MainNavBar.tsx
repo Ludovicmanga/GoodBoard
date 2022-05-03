@@ -24,7 +24,7 @@ export default function MainNavBar() {
                     </NavLink>
                 </li>
                 <li className='/login'>
-                    <NavLink to="/signIn">
+                    <NavLink to="/login">
                         <h5>Se connecter</h5>
                     </NavLink>
                 </li>
