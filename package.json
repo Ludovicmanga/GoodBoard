@@ -11,7 +11,6 @@
   "author": "Ludovic",
   "license": "LM",
   "dependencies": {
-    "@reduxjs/toolkit": "^1.7.0-rc.0",
     "bcrypt": "^5.0.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
