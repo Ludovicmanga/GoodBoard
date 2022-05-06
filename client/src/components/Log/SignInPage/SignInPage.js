@@ -33,9 +33,7 @@ var SignInPage = function () {
     var _b = (0, react_1.useState)(''), password = _b[0], setPassword = _b[1];
     var handleLogin = function (e) {
         e.preventDefault();
-        console.log(email);
-        console.log(password);
-        return axios_1["default"]
+        axios_1["default"]
             .post("http://localhost:5000/users/login", {
             email: email,
             password: password

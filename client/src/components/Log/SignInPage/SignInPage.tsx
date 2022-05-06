@@ -7,10 +7,8 @@ const SignInPage = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-   
-    console.log(email)
-    console.log(password)
-    return axios
+    
+    axios
       .post(`http://localhost:5000/users/login`, {
         email,
         password
