@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface LogState {
-    value: string;
+interface userState {
+    value: object;
 }
 
-const initialState: LogState = {
-    value: ''
+const initialState: userState = {
+    value: {}
 };
 
 const UserSlice = createSlice({
@@ -13,7 +13,7 @@ const UserSlice = createSlice({
     initialState,
     reducers: {
         getUser(state: any) {
-            state.value = 'logged';
+            return state;
         }
     }
 })

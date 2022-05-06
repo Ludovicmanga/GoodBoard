@@ -3,14 +3,14 @@ exports.__esModule = true;
 exports.getUser = void 0;
 var toolkit_1 = require("@reduxjs/toolkit");
 var initialState = {
-    value: ''
+    value: {}
 };
 var UserSlice = (0, toolkit_1.createSlice)({
     name: 'User',
     initialState: initialState,
     reducers: {
         getUser: function (state) {
-            state.value = 'logged';
+            return state;
         }
     }
 });
