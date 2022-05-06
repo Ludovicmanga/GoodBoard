@@ -4,17 +4,27 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var {checkUser, requireAuth} = require('./middleware/auth.middleware');
+require('dotenv').config({path: './config/.env'});
+require('./config/db.ts');
+const cors = require('cors');
 
+const corsOptions = {
+    origin: process.env.CLIENT_URL,
+    credentials: true,
+    'allowed-Headers': ['sessionId', 'Content-type'],
+    'exposedHeaders': ['sessionId'],
+    'methods': 'GET, HEAD, PUT, PATCH, DELETE',
+    'preflightContinue': false
+}
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var featureRequestRouter = require('./routes/featureRequest');
 
-require('dotenv').config({path: './config/.env'});
-require('./config/db.tsx');
 const PORT = process.env.PORT || 2000;
 
 var app = express();
 
+app.use(cors(corsOptions));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
