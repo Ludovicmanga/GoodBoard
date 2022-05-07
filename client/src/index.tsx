@@ -2,16 +2,19 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import './styles/app.css';
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCrown } from '@fortawesome/free-solid-svg-icons'
 import { Provider } from 'react-redux';
-import { store } from './app/store'
-
-library.add(faCrown)
+import { applyMiddleware, createStore } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import thunk from 'redux-thunk';
+import rootReducer from './reducers';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+const store = createStore(
+  rootReducer, composeWithDevTools(applyMiddleware(thunk))
+)
+
 root.render(
   <Provider store={store}>
     <React.StrictMode>

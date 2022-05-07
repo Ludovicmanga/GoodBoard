@@ -26,14 +26,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-var hooks_1 = require("../../../app/hooks");
 var axios_1 = __importDefault(require("axios"));
-var UserSlice_1 = require("../../../features/User/UserSlice");
 var react_1 = __importStar(require("react"));
+var react_redux_1 = require("react-redux");
 var SignInPage = function () {
     var _a = (0, react_1.useState)(''), email = _a[0], setEmail = _a[1];
     var _b = (0, react_1.useState)(''), password = _b[0], setPassword = _b[1];
-    var dispatch = (0, hooks_1.useAppDispatch)();
+    var dispatch = (0, react_redux_1.useDispatch)();
     var handleLogin = function (e) {
         e.preventDefault();
         axios_1["default"]
@@ -48,7 +47,6 @@ var SignInPage = function () {
                 passwordError.innerHTML = res.data.formattedErrors.password; */
             }
             else {
-                dispatch((0, UserSlice_1.logUserIn)(res.data.user));
                 window.location.href = "/";
             }
         })["catch"](function (error) { console.log(error); });
