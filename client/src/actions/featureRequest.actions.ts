@@ -7,6 +7,7 @@ export const getAllFeatureRequests = () => {
         return axios
             .get("http://localhost:5000/feature-request/get/all", { withCredentials: true })
             .then(res => {
+                console.log(res.data)
                 dispatch({ type: GET_ALL_FEATURE_REQUESTS, payload: res.data });
             })
             .catch(error => console.log(error))

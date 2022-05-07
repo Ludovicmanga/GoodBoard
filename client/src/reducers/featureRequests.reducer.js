@@ -2,7 +2,7 @@
 exports.__esModule = true;
 var featureRequest_actions_1 = require("../actions/featureRequest.actions");
 var initialState = {};
-function userReducer(state, action) {
+function featureRequestReducer(state, action) {
     if (state === void 0) { state = initialState; }
     switch (action.type) {
         case featureRequest_actions_1.GET_ALL_FEATURE_REQUESTS:
@@ -11,4 +11,4 @@ function userReducer(state, action) {
             return state;
     }
 }
-exports["default"] = userReducer;
+exports["default"] = featureRequestReducer;

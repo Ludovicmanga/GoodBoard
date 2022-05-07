@@ -11,6 +11,7 @@ var getAllFeatureRequests = function () {
         return axios_1["default"]
             .get("http://localhost:5000/feature-request/get/all", { withCredentials: true })
             .then(function (res) {
+            console.log(res.data);
             dispatch({ type: exports.GET_ALL_FEATURE_REQUESTS, payload: res.data });
         })["catch"](function (error) { return console.log(error); });
     };
