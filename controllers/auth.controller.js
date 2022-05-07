@@ -15,7 +15,7 @@ module.exports.signUp = function (req, res) {
     user.save()
         .then(function (user) { return res.status(201).json({ user: user._id }); })["catch"](function (error) {
         var formattedErrors = signUpErrors(error);
-        res.status(200).json(formattedErrors);
+        res.status(200).json(error);
     });
 };
 module.exports.login = function (req, res) {

@@ -66,6 +66,9 @@ var userSchema = new mongoose.Schema({
         type: String,
         required: true,
         max: 1024
+    },
+    voted: {
+        type: [String]
     }
 });
 userSchema.pre("save", function (next) {
