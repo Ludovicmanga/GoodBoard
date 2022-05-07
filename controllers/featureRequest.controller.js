@@ -47,6 +47,30 @@ module.exports.getAllFeatureRequests = function (req, res) { return __awaiter(vo
         }
     });
 }); };
+module.exports.getAllCompanyFeatureRequests = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                console.log("ahahiih");
+                return [4 /*yield*/, featureRequestModel.find({ creatorType: "company" })
+                        .then(function (allCompanyFeatureRequests) { return res.status(200).send(allCompanyFeatureRequests); })];
+            case 1:
+                _a.sent();
+                return [2 /*return*/];
+        }
+    });
+}); };
+module.exports.getAllUserFeatureRequests = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, featureRequestModel.find({ creatorType: "user" })
+                    .then(function (allUserFeatureRequests) { return res.status(200).send(allUserFeatureRequests); })];
+            case 1:
+                _a.sent();
+                return [2 /*return*/];
+        }
+    });
+}); };
 module.exports.createFeatureRequest = function (req, res) {
     var newFeatureRequest = new featureRequestModel({
         title: req.body.title,

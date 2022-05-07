@@ -1,4 +1,4 @@
-import { GET_ALL_COMPANY_FEATURE_REQUESTS } from "actions/featureRequest.actions";
+import { GET_ALL_COMPANY_FEATURE_REQUESTS } from "../actions/featureRequest.actions";
 
 const initialState = {};
 

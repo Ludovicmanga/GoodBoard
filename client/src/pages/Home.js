@@ -34,6 +34,7 @@ var Home = function (_a) {
     handleCurrentPage('Feature requests');
     var _b = (0, react_1.useState)(false), isToggled = _b[0], setIsToggled = _b[1];
     var userData = (0, react_redux_1.useSelector)(function (state) { return state.userReducer; });
+    var allFeatureRequests = (0, react_redux_1.useSelector)(function (state) { return state.allFeatureRequestsReducer; });
     var _c = (0, react_1.useState)(false), newFeatureRequestModalisOpen = _c[0], setNewFeatureRequestModalisOpen = _c[1];
     var handleCloseModal = function (newFeatureRequestModalState) {
         setNewFeatureRequestModalisOpen(function () { return newFeatureRequestModalState; });

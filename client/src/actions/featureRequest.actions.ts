@@ -15,7 +15,7 @@ export const getAllFeatureRequests = () => {
     }
 }
 
-export const getCompanyFeatureRequests = () => {
+export const getAllCompanyFeatureRequests = () => {
     return (dispatch) => {
         return axios
             .get("http://localhost:5000/feature-request/get/all-company", { withCredentials: true })
@@ -26,10 +26,10 @@ export const getCompanyFeatureRequests = () => {
     }
 }
 
-export const getUserFeatureRequests = () => {
+export const getAllUserFeatureRequests = () => {
     return (dispatch) => {
         return axios
-            .get("http://localhost:5000/feature-request/get/all-users", { withCredentials: true })
+            .get("http://localhost:5000/feature-request/get/all-user", { withCredentials: true })
             .then(res => {
                 dispatch({ type: GET_ALL_USER_FEATURE_REQUESTS, payload: res.data });
             })
