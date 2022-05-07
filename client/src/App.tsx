@@ -2,7 +2,7 @@ import RouterIndex from './components/Routes/RouterIndex';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { getUser } from 'actions/user.actions';
+import { getUser } from './actions/user.actions';
 
 const App = () => {
   const [uid, setUid] = useState(null);

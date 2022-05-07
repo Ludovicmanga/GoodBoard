@@ -1,7 +1,6 @@
 "use strict";
 var express = require('express');
 var router = express.Router();
-router.get('/', function (req, res, next) {
-    res.send('respond with a resource');
-});
+var featureRequestController = require('../controllers/featureRequest.controller');
+router.get('/get/all', featureRequestController.getAllFeatureRequests);
 module.exports = router;

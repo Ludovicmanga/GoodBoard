@@ -7,6 +7,7 @@ import { applyMiddleware, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import rootReducer from './reducers';
+import { getAllFeatureRequests } from './actions/featureRequest.actions';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -14,6 +15,7 @@ const root = ReactDOM.createRoot(
 const store = createStore(
   rootReducer, composeWithDevTools(applyMiddleware(thunk))
 )
+store.dispatch(getAllFeatureRequests());
 
 root.render(
   <Provider store={store}>

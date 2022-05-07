@@ -12,8 +12,10 @@ var redux_1 = require("redux");
 var redux_devtools_extension_1 = require("redux-devtools-extension");
 var redux_thunk_1 = __importDefault(require("redux-thunk"));
 var reducers_1 = __importDefault(require("./reducers"));
+var featureRequest_actions_1 = require("./actions/featureRequest.actions");
 var root = client_1["default"].createRoot(document.getElementById('root'));
 var store = (0, redux_1.createStore)(reducers_1["default"], (0, redux_devtools_extension_1.composeWithDevTools)((0, redux_1.applyMiddleware)(redux_thunk_1["default"])));
+store.dispatch((0, featureRequest_actions_1.getAllFeatureRequests)());
 root.render(react_1["default"].createElement(react_redux_1.Provider, { store: store },
     react_1["default"].createElement(react_1["default"].StrictMode, null,
         react_1["default"].createElement(App_1["default"], null))));
