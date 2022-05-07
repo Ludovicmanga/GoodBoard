@@ -1,6 +1,6 @@
-import { useAppDispatch, useAppSelector } from '../app/hooks'
+import { getUser } from '../actions/user.actions';
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FeatureRequestsContainer } from '../components/FeatureRequest/FeatureRequestContainer/FeatureRequestsContainer';
 import { NewFeatureRequestModal } from '../components/NewFeatureRequest/NewFeatureRequestModal/NewFeatureRequestModal';
 import { UserOrCompanyRequestsToggleButton } from '../components/UserOrCompanyRequestsToggleButton/UserOrCompanyRequestsToggleButton';
@@ -11,10 +11,10 @@ type HomeProps = {
 
 export const Home: React.FC<HomeProps> = ({ handleCurrentPage }) => {
   handleCurrentPage('Feature requests');
-  const userData = useAppSelector(state => state.user);
-  console.log(userData)
 
   const [isToggled, setIsToggled] = useState(false);
+  const userData = useSelector((state: any) => state.userReducer);
+  
   const [newFeatureRequestModalisOpen, setNewFeatureRequestModalisOpen] = useState(false);
   const handleCloseModal = (newFeatureRequestModalState) => {
     setNewFeatureRequestModalisOpen(() => newFeatureRequestModalState);
