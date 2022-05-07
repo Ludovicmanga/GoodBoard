@@ -1,4 +1,5 @@
 "use strict";
+exports.__esModule = true;
 var userModel = require('../models/user.model');
 var jwt = require('jsonwebtoken');
 var _a = require('../utils/errors.utils'), signUpErrors = _a.signUpErrors, loginErrors = _a.loginErrors;

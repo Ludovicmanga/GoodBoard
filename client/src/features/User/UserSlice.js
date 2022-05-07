@@ -1,18 +1,18 @@
 "use strict";
 exports.__esModule = true;
-exports.getUser = void 0;
+exports.logUserIn = void 0;
 var toolkit_1 = require("@reduxjs/toolkit");
 var initialState = {
-    value: {}
+    value: 0
 };
 var UserSlice = (0, toolkit_1.createSlice)({
-    name: 'User',
+    name: 'user',
     initialState: initialState,
     reducers: {
-        getUser: function (state) {
-            return state;
+        logUserIn: function (state, action) {
+            state.value += action.payload;
         }
     }
 });
-exports.getUser = UserSlice.actions.getUser;
+exports.logUserIn = UserSlice.actions.logUserIn;
 exports["default"] = UserSlice.reducer;

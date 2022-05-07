@@ -1,22 +1,22 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface userState {
-    value: object;
+    value: number;
 }
 
 const initialState: userState = {
-    value: {}
+    value: 0
 };
 
 const UserSlice = createSlice({
-    name: 'User',
+    name: 'user',
     initialState,
     reducers: {
-        getUser(state: any) {
-            return state;
+        logUserIn(state, action: PayloadAction<number>) {
+            state.value += action.payload;
         }
-    }
+    },
 })
 
-export const { getUser } = UserSlice.actions;
+export const { logUserIn } = UserSlice.actions;
 export default UserSlice.reducer;

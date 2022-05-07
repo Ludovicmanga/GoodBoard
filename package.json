@@ -6,7 +6,7 @@
   "scripts": {
     "start": "tsc && node app.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "tsc && nodemon app.ts"
+    "watch": "tsc && nodemon app.ts && tsc -w"
   },
   "author": "Ludovic",
   "license": "LM",

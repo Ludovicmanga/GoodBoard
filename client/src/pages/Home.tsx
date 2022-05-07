@@ -1,8 +1,9 @@
-import axios from 'axios';
+import { useAppDispatch, useAppSelector } from '../app/hooks'
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
 import { FeatureRequestsContainer } from '../components/FeatureRequest/FeatureRequestContainer/FeatureRequestsContainer';
 import { NewFeatureRequestModal } from '../components/NewFeatureRequest/NewFeatureRequestModal/NewFeatureRequestModal';
-import { UserOrCompanyRequestsToggleButton } from '../components/UserOrCompanyRequestsToggleButton/UserOrCompanyRequestsToggleButton'
+import { UserOrCompanyRequestsToggleButton } from '../components/UserOrCompanyRequestsToggleButton/UserOrCompanyRequestsToggleButton';
 
 type HomeProps = {
   handleCurrentPage: (page: string) => void
@@ -10,6 +11,8 @@ type HomeProps = {
 
 export const Home: React.FC<HomeProps> = ({ handleCurrentPage }) => {
   handleCurrentPage('Feature requests');
+  const userData = useAppSelector(state => state.user);
+  console.log(userData)
 
   const [isToggled, setIsToggled] = useState(false);
   const [newFeatureRequestModalisOpen, setNewFeatureRequestModalisOpen] = useState(false);

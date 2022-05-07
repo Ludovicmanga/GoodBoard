@@ -5,7 +5,7 @@ import './styles/app.css';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faCrown } from '@fortawesome/free-solid-svg-icons'
 import { Provider } from 'react-redux';
-import { store } from 'app/store';
+import { store } from './app/store'
 
 library.add(faCrown)
 

@@ -1,9 +1,13 @@
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import axios from 'axios';
+import { logUserIn } from '../../../features/User/UserSlice';
 import React, { useState } from 'react'
 
 const SignInPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const dispatch = useAppDispatch();
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -19,6 +23,7 @@ const SignInPage = () => {
           /* emailError.innerHTML = res.data.formattedErrors.email;
           passwordError.innerHTML = res.data.formattedErrors.password; */
         } else {
+          dispatch(logUserIn(res.data.user))
           window.location.href = "/";
         }
       })
