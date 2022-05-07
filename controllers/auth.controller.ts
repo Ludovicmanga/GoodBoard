@@ -19,7 +19,7 @@ module.exports.signUp = (req, res) => {
         .then(user => res.status(201).json({ user: user._id }))
         .catch (error => {
             const formattedErrors = signUpErrors(error);
-            res.status(200).json( formattedErrors );
+            res.status(200).json( error );
         })
 }
 

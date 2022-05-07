@@ -1,4 +1,5 @@
 "use strict";
+exports.__esModule = true;
 var ObjectId = require('mongoose').Types.ObjectId;
 var userModel = require('../models/user.model');
 module.exports.getUser = function (req, res) {

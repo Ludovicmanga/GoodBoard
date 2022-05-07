@@ -1,5 +1,6 @@
 const ObjectId = require('mongoose').Types.ObjectId;
-const userModel = require('../models/user.model')
+const userModel = require('../models/user.model');
+export {};
 
 module.exports.getUser = (req, res) => {    
     if(!ObjectId.isValid(req.params.id)) 

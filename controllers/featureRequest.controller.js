@@ -36,6 +36,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 var featureRequestModel = require('../models/featureRequest.model');
+var ObjectId = require('mongoose').Types.ObjectId;
+var userModel = require('../models/user.model');
 module.exports.getAllFeatureRequests = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -75,10 +77,23 @@ module.exports.createFeatureRequest = function (req, res) {
     var newFeatureRequest = new featureRequestModel({
         title: req.body.title,
         details: req.body.details,
-        votes: 0,
         creatorType: req.body.creatorType,
         status: req.body.status
     });
     newFeatureRequest.save()
         .then(function (featureRequest) { return res.status(200).send(featureRequest); })["catch"](function (error) { return console.log(error); });
+};
+module.exports.upVote = function (req, res) {
+    if (!ObjectId.isValid(req.params.id) || !ObjectId.isValid(req.body.userId))
+        return res.status(400).send("ID unknown : " + req.params.id);
+    featureRequestModel.updateOne({ _id: req.params.id }, { $addToSet: { voters: req.body.userId } })
+        .then(function (featureRequest) { return res.status(200).send(featureRequest); })["catch"](function (error) { return res.status(400).json({ error: error }); });
+    userModel.updateOne({ _id: req.body.userId }, { $addToSet: { voted: req.params.id } })["catch"](function (error) { return res.status(400).json({ error: error }); });
+};
+module.exports.downVote = function (req, res) {
+    if (!ObjectId.isValid(req.params.id) || !ObjectId.isValid(req.body.userId))
+        return res.status(400).send("ID unknown : " + req.params.id);
+    featureRequestModel.updateOne({ _id: req.params.id }, { $pull: { voters: req.body.userId } })
+        .then(function (featureRequest) { return res.status(200).send(featureRequest); })["catch"](function (error) { return res.status(400).json({ error: error }); });
+    userModel.updateOne({ _id: req.body.userId }, { $pull: { voted: req.params.id } })["catch"](function (error) { return res.status(400).json({ error: error }); });
 };
