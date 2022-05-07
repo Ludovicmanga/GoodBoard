@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 
 type FeatureRequestsBoxProps = {
-
+    title: string,
+    details: string,
+    votes: number
 }
 
-export const FeatureRequestsBox: React.FC<FeatureRequestsBoxProps> = ({}) => {
+export const FeatureRequestsBox: React.FC<FeatureRequestsBoxProps> = ({ title, details, votes }) => {
+        console.log(details)
         const [isVotted, setIsVotted] = useState(false);
         const handleToggleVote = (e) => {
             e.preventDefault();
@@ -17,12 +20,12 @@ export const FeatureRequestsBox: React.FC<FeatureRequestsBoxProps> = ({}) => {
                     <i className="fa-solid fa-crown"></i>
                 </div>
                 <div className='featureRequestBox--content'>
-                    <h2>Changer la taille du bouton</h2>
-                    <p>J'aimerais clairement que le bouton soit beaucoup, mais alors beaucoup plus gros... Ce serait génial</p>
+                    <h2>{title}</h2>
+                    <p>{details}</p>
                 </div>
                 <a href="#" onClick={(e) => handleToggleVote(e)} className='featureRequestBox--votesCountBoxContainer'>
                     <div className='featureRequestBox--votesCountBox'>
-                        <div>255</div>                        
+                        <div>{votes}</div>                        
                         { isVotted ? (
                             <i className="fa-solid fa-check icon"></i>
                         ) : (
