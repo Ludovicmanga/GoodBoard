@@ -66,7 +66,7 @@ var RouterIndex_1 = __importDefault(require("./components/Routes/RouterIndex"));
 var react_1 = __importStar(require("react"));
 var axios_1 = __importDefault(require("axios"));
 var react_redux_1 = require("react-redux");
-var user_actions_1 = require("actions/user.actions");
+var user_actions_1 = require("./actions/user.actions");
 var App = function () {
     var _a = (0, react_1.useState)(null), uid = _a[0], setUid = _a[1];
     var dispatch = (0, react_redux_1.useDispatch)();
