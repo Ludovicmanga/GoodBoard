@@ -10,5 +10,5 @@ exports["default"] = {
     title: "UI/Feature requests Box",
     component: FeatureRequestsBox_1.FeatureRequestsBox
 };
-var Default = function () { return (react_1["default"].createElement(FeatureRequestsBox_1.FeatureRequestsBox, null)); };
+var Default = function () { return (react_1["default"].createElement(FeatureRequestsBox_1.FeatureRequestsBox, { title: 'titre', details: '', votes: 2 })); };
 exports.Default = Default;

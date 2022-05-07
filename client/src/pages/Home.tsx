@@ -14,6 +14,7 @@ export const Home: React.FC<HomeProps> = ({ handleCurrentPage }) => {
 
   const [isToggled, setIsToggled] = useState(false);
   const userData = useSelector((state: any) => state.userReducer);
+  const allFeatureRequests = useSelector((state: any) => state.allFeatureRequestsReducer);
   
   const [newFeatureRequestModalisOpen, setNewFeatureRequestModalisOpen] = useState(false);
   const handleCloseModal = (newFeatureRequestModalState) => {
