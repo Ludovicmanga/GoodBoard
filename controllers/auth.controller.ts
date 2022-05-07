@@ -1,4 +1,5 @@
 const userModel = require('../models/user.model');
+export {}
 const jwt = require('jsonwebtoken');
 const { signUpErrors, loginErrors } = require('../utils/errors.utils');
 
