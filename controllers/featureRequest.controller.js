@@ -37,16 +37,24 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var featureRequestModel = require('../models/featureRequest.model');
 module.exports.getAllFeatureRequests = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var allFeatureRequests;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0:
-                console.log('heey');
-                return [4 /*yield*/, featureRequestModel.find()
-                        .then(function (allFeatureRequests) { return res.status(200).send(allFeatureRequests); })];
+            case 0: return [4 /*yield*/, featureRequestModel.find()
+                    .then(function (allFeatureRequests) { return res.status(200).send(allFeatureRequests); })];
             case 1:
-                allFeatureRequests = _a.sent();
+                _a.sent();
                 return [2 /*return*/];
         }
     });
 }); };
+module.exports.createFeatureRequest = function (req, res) {
+    var newFeatureRequest = new featureRequestModel({
+        title: req.body.title,
+        details: req.body.details,
+        votes: 0,
+        creatorType: req.body.creatorType,
+        status: req.body.status
+    });
+    newFeatureRequest.save()
+        .then(function (featureRequest) { return res.status(200).send(featureRequest); })["catch"](function (error) { return console.log(error); });
+};

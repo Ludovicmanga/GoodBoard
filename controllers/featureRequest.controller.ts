@@ -1,8 +1,20 @@
 const featureRequestModel = require('../models/featureRequest.model');
 
 module.exports.getAllFeatureRequests = async (req, res) => {
-    console.log('heey') 
-
-    const allFeatureRequests = await featureRequestModel.find()
+    await featureRequestModel.find()
         .then(allFeatureRequests => res.status(200).send(allFeatureRequests));
+}
+
+module.exports.createFeatureRequest = (req, res) => {
+    const newFeatureRequest = new featureRequestModel({
+        title: req.body.title,
+        details: req.body.details,
+        votes: 0,
+        creatorType: req.body.creatorType,
+        status: req.body.status
+    });
+
+    newFeatureRequest.save()
+        .then(featureRequest => res.status(200).send(featureRequest))
+        .catch(error => console.log(error))
 }
