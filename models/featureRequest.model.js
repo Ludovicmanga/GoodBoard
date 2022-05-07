@@ -10,8 +10,8 @@ var featureRequestSchema = new mongoose.Schema({
         type: String,
         max: 1024
     },
-    votes: {
-        type: Number
+    voters: {
+        type: [String]
     },
     creatorType: {
         type: String,
