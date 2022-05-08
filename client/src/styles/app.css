@@ -256,5 +256,20 @@ input:checked + .slider::before {
 input:checked + .slider {
   background: blue;
 }
+
+/* Roadmap */
+
+.roadmap--container {
+  display: flex;
+  flex-direction: column;
+}
+
+.roadmap-column {
+  margin: 0px 10px 10px 10px;
+}
+
+.roadmap-column--title {
+  text-align: center;
+}
   
 /* ------------ State ------------ */
