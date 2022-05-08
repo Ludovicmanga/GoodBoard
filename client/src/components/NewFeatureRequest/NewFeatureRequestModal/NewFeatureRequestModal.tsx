@@ -25,7 +25,6 @@ export const NewFeatureRequestModal: React.FC<NewFeatureRequestModalProps> = ({ 
         dispatch(createNewFeatureRequest(title, details, creatorType, status, creator));
         handleCloseModal(false);
     }
-    console.log(status)
 
     return (
         <div className='newFeatureRequestModal'>
@@ -34,9 +33,8 @@ export const NewFeatureRequestModal: React.FC<NewFeatureRequestModalProps> = ({ 
                     <span onClick={() => handleCloseModal(false)} className='closeModalIcon'>&#10005;</span>
                 </div>
                 <form className='newFeatureRequestModal--form' onSubmit={(e) => handleCreateNewFeatureRequest(e)}>
-                    { console.log(userData) }
-                    { userData.isAdmin && (
-                        <>
+                    { userData.type === "admin" && (
+                         <>
                             <label>Status</label><br />
                             <div className='inputContainer'>
                                 <select onChange={(e) => setStatus(e.target.value)}>
@@ -47,7 +45,7 @@ export const NewFeatureRequestModal: React.FC<NewFeatureRequestModalProps> = ({ 
                                 </select>
                             </div>
                         </>
-                    ) }
+                    )}
                     <label htmlFor='newFeatureRequestModal--titleInput'>Titre</label><br />
                     <div className='inputContainer'>
                     <input

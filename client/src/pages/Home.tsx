@@ -30,7 +30,7 @@ export const Home: React.FC<HomeProps> = ({ handleCurrentPage }) => {
         <div className='contextualText'>Nos idées</div>
       </div>
       {isToggled ? (
-        <FeatureRequestsContainer requestAuthorType = 'company' />
+        <FeatureRequestsContainer requestAuthorType = 'admin' />
       ) : (
         <FeatureRequestsContainer requestAuthorType = 'user' />
       )}

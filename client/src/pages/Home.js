@@ -45,7 +45,7 @@ var Home = function (_a) {
             react_1["default"].createElement("div", { className: 'contextualText' }, "Vos id\u00E9es"),
             react_1["default"].createElement(UserOrCompanyRequestsToggleButton_1.UserOrCompanyRequestsToggleButton, { isToggled: isToggled, onToggle: function () { return setIsToggled(!isToggled); } }),
             react_1["default"].createElement("div", { className: 'contextualText' }, "Nos id\u00E9es")),
-        isToggled ? (react_1["default"].createElement(FeatureRequestsContainer_1.FeatureRequestsContainer, { requestAuthorType: 'company' })) : (react_1["default"].createElement(FeatureRequestsContainer_1.FeatureRequestsContainer, { requestAuthorType: 'user' })),
+        isToggled ? (react_1["default"].createElement(FeatureRequestsContainer_1.FeatureRequestsContainer, { requestAuthorType: 'admin' })) : (react_1["default"].createElement(FeatureRequestsContainer_1.FeatureRequestsContainer, { requestAuthorType: 'user' })),
         newFeatureRequestModalisOpen && (react_1["default"].createElement(NewFeatureRequestModal_1.NewFeatureRequestModal, { handleCloseModal: handleCloseModal })),
         react_1["default"].createElement("button", { className: 'newFeatureRequestModalOpenButton', onClick: function () { return setNewFeatureRequestModalisOpen(!newFeatureRequestModalisOpen); } }, "Nouvelle feature request")));
 };

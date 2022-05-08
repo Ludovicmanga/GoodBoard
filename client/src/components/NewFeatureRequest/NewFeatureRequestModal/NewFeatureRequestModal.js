@@ -23,14 +23,12 @@ var NewFeatureRequestModal = function (_a) {
         dispatch((0, featureRequest_actions_1.createNewFeatureRequest)(title, details, creatorType, status, creator));
         handleCloseModal(false);
     };
-    console.log(status);
     return (react_1["default"].createElement("div", { className: 'newFeatureRequestModal' },
         react_1["default"].createElement("div", { className: 'newFeatureRequestModal--wrapper' },
             react_1["default"].createElement("div", { className: 'closeModalIconContainer' },
                 react_1["default"].createElement("span", { onClick: function () { return handleCloseModal(false); }, className: 'closeModalIcon' }, "\u2715")),
             react_1["default"].createElement("form", { className: 'newFeatureRequestModal--form', onSubmit: function (e) { return handleCreateNewFeatureRequest(e); } },
-                console.log(userData),
-                userData.isAdmin && (react_1["default"].createElement(react_1["default"].Fragment, null,
+                userData.type === "admin" && (react_1["default"].createElement(react_1["default"].Fragment, null,
                     react_1["default"].createElement("label", null, "Status"),
                     react_1["default"].createElement("br", null),
                     react_1["default"].createElement("div", { className: 'inputContainer' },

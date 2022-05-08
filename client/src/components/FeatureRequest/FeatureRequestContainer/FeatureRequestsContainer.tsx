@@ -31,9 +31,9 @@ export const FeatureRequestsContainer: React.FC<FeatureRequestsContainerProps> =
             }
         })
 
-    } else if (requestAuthorType === 'company') {
+    } else if (requestAuthorType === "admin") {
         return allFeatureRequests.map((featureRequest) => {
-            if (featureRequest.creatorType == "company") {
+            if (featureRequest.creatorType == "admin") {
                 return (
                     <FeatureRequestsBox
                         key = {featureRequest._id}

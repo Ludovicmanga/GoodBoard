@@ -17,7 +17,6 @@ const SignUpPage = () => {
         password,
         pseudo,
         type: "user",
-        isAdmin: false
       }, {withCredentials: true})
       .then(res => {
         if(res.data.formattedErrors) {
