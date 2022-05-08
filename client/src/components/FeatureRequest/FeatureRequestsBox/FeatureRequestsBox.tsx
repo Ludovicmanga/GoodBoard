@@ -31,7 +31,10 @@ export const FeatureRequestsBox: React.FC<FeatureRequestsBoxProps> = ({ title, d
         }
 
         return (
-            <div className='featureRequestBox'>
+            <a href='#' className='featureRequestBox' onClick={(e) => {
+                e.preventDefault();
+                console.log('clicked')
+            }}>
                 <div className='badge'>
                     <i className="fa-solid fa-crown"></i>
                 </div>
@@ -49,6 +52,6 @@ export const FeatureRequestsBox: React.FC<FeatureRequestsBoxProps> = ({ title, d
                         ) }
                     </div>
                 </a>
-            </div>
+            </a>
         );
 }

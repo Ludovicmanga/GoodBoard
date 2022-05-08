@@ -22,7 +22,8 @@ module.exports.createFeatureRequest = (req, res) => {
         title: req.body.title,
         details: req.body.details,
         creatorType: req.body.creatorType,
-        status: req.body.status
+        status: req.body.status,
+        creator: req.body.creator
     });
 
     newFeatureRequest.save()

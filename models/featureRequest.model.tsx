@@ -21,6 +21,10 @@ const featureRequestSchema = new mongoose.Schema(
     status: {
         type: String,
         max: 1024
+    },
+    creator: {
+        type: String,
+        max: 1024
     }
 },
   {

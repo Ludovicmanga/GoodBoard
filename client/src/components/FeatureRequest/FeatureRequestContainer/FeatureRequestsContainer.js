@@ -12,7 +12,7 @@ var FeatureRequestsContainer = function (_a) {
     var requestAuthorType = _a.requestAuthorType;
     var allFeatureRequests = (0, react_redux_1.useSelector)(function (state) { return state.allFeatureRequestsReducer; });
     if ((0, Utils_1.isEmpty)(allFeatureRequests)) {
-        return react_1["default"].createElement("div", null, "erreur");
+        return react_1["default"].createElement("div", null, "Pas encore de feature request");
     }
     if (requestAuthorType === 'user') {
         return allFeatureRequests.map(function (featureRequest) {

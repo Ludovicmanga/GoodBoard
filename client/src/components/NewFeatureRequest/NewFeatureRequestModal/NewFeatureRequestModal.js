@@ -7,17 +7,20 @@ exports.NewFeatureRequestModal = void 0;
 var react_1 = __importDefault(require("react"));
 var react_2 = require("react");
 var react_redux_1 = require("react-redux");
+var react_redux_2 = require("react-redux");
 var featureRequest_actions_1 = require("../../../actions/featureRequest.actions");
 var NewFeatureRequestModal = function (_a) {
     var handleCloseModal = _a.handleCloseModal;
-    var dispatch = (0, react_redux_1.useDispatch)();
+    var dispatch = (0, react_redux_2.useDispatch)();
     var _b = (0, react_2.useState)(''), title = _b[0], setTitle = _b[1];
     var _c = (0, react_2.useState)(''), details = _c[0], setDetails = _c[1];
+    var userData = (0, react_redux_1.useSelector)(function (state) { return state.userReducer; });
     var handleCreateNewFeatureRequest = function (e) {
         e.preventDefault();
         var status = "unassigned";
-        var creatorType = "user";
-        dispatch((0, featureRequest_actions_1.createNewFeatureRequest)(title, details, creatorType, status));
+        var creatorType = userData.type;
+        var creator = userData._id;
+        dispatch((0, featureRequest_actions_1.createNewFeatureRequest)(title, details, creatorType, status, creator));
         handleCloseModal(false);
     };
     return (react_1["default"].createElement("div", { className: 'newFeatureRequestModal' },

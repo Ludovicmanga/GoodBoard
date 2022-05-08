@@ -45,7 +45,10 @@ var FeatureRequestsBox = function (_a) {
         }
         setIsVoted(function () { return !isVoted; });
     };
-    return (react_1["default"].createElement("div", { className: 'featureRequestBox' },
+    return (react_1["default"].createElement("a", { href: '#', className: 'featureRequestBox', onClick: function (e) {
+            e.preventDefault();
+            console.log('clicked');
+        } },
         react_1["default"].createElement("div", { className: 'badge' },
             react_1["default"].createElement("i", { className: "fa-solid fa-crown" })),
         react_1["default"].createElement("div", { className: 'featureRequestBox--content' },

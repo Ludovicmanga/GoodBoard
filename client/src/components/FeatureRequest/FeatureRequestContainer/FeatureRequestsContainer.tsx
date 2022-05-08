@@ -13,7 +13,7 @@ export const FeatureRequestsContainer: React.FC<FeatureRequestsContainerProps> =
     const allFeatureRequests = useSelector((state: any) => state.allFeatureRequestsReducer);
 
     if (isEmpty(allFeatureRequests)) {
-        return <div>erreur</div>
+        return <div>Pas encore de feature request</div>
     }
 
     if (requestAuthorType === 'user') {
