@@ -6,7 +6,5 @@ import allCompanyFeatureRequestsReducer from "./allCompanyFeatureRequests.reduce
 
 export default combineReducers({
     userReducer,
-    allFeatureRequestsReducer,
-    allUserFeatureRequestsReducer,
-    allCompanyFeatureRequestsReducer
+    allFeatureRequestsReducer
 })

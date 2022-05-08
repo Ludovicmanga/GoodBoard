@@ -76,7 +76,8 @@ module.exports.createFeatureRequest = function (req, res) {
         title: req.body.title,
         details: req.body.details,
         creatorType: req.body.creatorType,
-        status: req.body.status
+        status: req.body.status,
+        creator: req.body.creator
     });
     newFeatureRequest.save()
         .then(function (featureRequest) { return res.status(200).send(featureRequest); })["catch"](function (error) { return console.log(error); });

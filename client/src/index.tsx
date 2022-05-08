@@ -16,8 +16,6 @@ const store = createStore(
   rootReducer, composeWithDevTools(applyMiddleware(thunk))
 )
 store.dispatch(getAllFeatureRequests());
-store.dispatch(getAllUserFeatureRequests());
-store.dispatch(getAllCompanyFeatureRequests());
 
 root.render(
   <Provider store={store}>

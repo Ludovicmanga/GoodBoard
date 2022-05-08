@@ -41,10 +41,10 @@ export const getAllUserFeatureRequests = () => {
     }
 }
 
-export const createNewFeatureRequest = (title, details, creatorType, status) => {
+export const createNewFeatureRequest = (title, details, creatorType, status, creator) => {
     return (dispatch) => {
         return axios
-            .post("http://localhost:5000/feature-request/create", {title, details, creatorType, status})
+            .post("http://localhost:5000/feature-request/create", {title, details, creatorType, status, creator})
             .then(res => console.log(res))
     };
 };

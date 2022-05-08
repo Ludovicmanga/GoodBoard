@@ -1,23 +1,28 @@
 import React from "react";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { createNewFeatureRequest } from "../../../actions/featureRequest.actions";
 
 type NewFeatureRequestModalProps = {
-    handleCloseModal: (newFeatureRequestModalState: boolean) => void
+    handleCloseModal: (newFeatureRequestModalState: boolean) => void;
+    title?: string;
+    details?: string;
 }
 
 export const NewFeatureRequestModal: React.FC<NewFeatureRequestModalProps> = ({ handleCloseModal }) => {
     const dispatch: any = useDispatch();
     const [title, setTitle] = useState('');
     const [details, setDetails] = useState('');
+    const userData = useSelector((state: any) => state.userReducer);
 
     const handleCreateNewFeatureRequest = (e) => {
         e.preventDefault();
         const status = "unassigned";
-        const creatorType = "user";
+        const creatorType = userData.type;
+        const creator = userData._id;
 
-        dispatch(createNewFeatureRequest(title, details, creatorType, status));
+        dispatch(createNewFeatureRequest(title, details, creatorType, status, creator));
         handleCloseModal(false);
     }
 

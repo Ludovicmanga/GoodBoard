@@ -42,10 +42,10 @@ var getAllUserFeatureRequests = function () {
     };
 };
 exports.getAllUserFeatureRequests = getAllUserFeatureRequests;
-var createNewFeatureRequest = function (title, details, creatorType, status) {
+var createNewFeatureRequest = function (title, details, creatorType, status, creator) {
     return function (dispatch) {
         return axios_1["default"]
-            .post("http://localhost:5000/feature-request/create", { title: title, details: details, creatorType: creatorType, status: status })
+            .post("http://localhost:5000/feature-request/create", { title: title, details: details, creatorType: creatorType, status: status, creator: creator })
             .then(function (res) { return console.log(res); });
     };
 };

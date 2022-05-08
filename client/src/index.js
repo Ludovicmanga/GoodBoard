@@ -16,8 +16,6 @@ var featureRequest_actions_1 = require("./actions/featureRequest.actions");
 var root = client_1["default"].createRoot(document.getElementById('root'));
 var store = (0, redux_1.createStore)(reducers_1["default"], (0, redux_devtools_extension_1.composeWithDevTools)((0, redux_1.applyMiddleware)(redux_thunk_1["default"])));
 store.dispatch((0, featureRequest_actions_1.getAllFeatureRequests)());
-store.dispatch((0, featureRequest_actions_1.getAllUserFeatureRequests)());
-store.dispatch((0, featureRequest_actions_1.getAllCompanyFeatureRequests)());
 root.render(react_1["default"].createElement(react_redux_1.Provider, { store: store },
     react_1["default"].createElement(react_1["default"].StrictMode, null,
         react_1["default"].createElement(App_1["default"], null))));
