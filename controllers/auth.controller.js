@@ -10,8 +10,8 @@ var createToken = function (id) {
     });
 };
 module.exports.signUp = function (req, res) {
-    var _a = req.body, pseudo = _a.pseudo, email = _a.email, password = _a.password, type = _a.type;
-    var user = new userModel({ pseudo: pseudo, email: email, password: password, type: type });
+    var _a = req.body, pseudo = _a.pseudo, email = _a.email, password = _a.password, type = _a.type, isAdmin = _a.isAdmin;
+    var user = new userModel({ pseudo: pseudo, email: email, password: password, type: type, isAdmin: isAdmin });
     user.save()
         .then(function (user) { return res.status(201).json({ user: user._id }); })["catch"](function (error) {
         var formattedErrors = signUpErrors(error);

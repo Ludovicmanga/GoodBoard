@@ -12,8 +12,8 @@ const createToken = (id: number) => {
 }
 
 module.exports.signUp = (req, res) => {
-    const {pseudo, email, password, type} = req.body;
-    const user = new userModel({pseudo, email, password, type});
+    const {pseudo, email, password, type, isAdmin} = req.body;
+    const user = new userModel({pseudo, email, password, type, isAdmin});
 
     user.save()
         .then(user => res.status(201).json({ user: user._id }))

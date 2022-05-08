@@ -78,7 +78,8 @@ var SignUpPage = function () {
                 email: email,
                 password: password,
                 pseudo: pseudo,
-                type: "user"
+                type: "user",
+                isAdmin: false
             }, { withCredentials: true })
                 .then(function (res) {
                 if (res.data.formattedErrors) {

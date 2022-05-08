@@ -35,6 +35,10 @@ const userSchema = new mongoose.Schema(
         voted: {
             type: [String]
         },
+        isAdmin: {
+            type: Boolean,
+            required: true
+        }
     }
 );
 

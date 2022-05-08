@@ -69,6 +69,10 @@ var userSchema = new mongoose.Schema({
     },
     voted: {
         type: [String]
+    },
+    isAdmin: {
+        type: Boolean,
+        required: true
     }
 });
 userSchema.pre("save", function (next) {
