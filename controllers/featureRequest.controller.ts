@@ -39,13 +39,13 @@ module.exports.upVote = (req, res) => {
         { $addToSet: { voters: req.body.userId } }
     )
         .then(featureRequest => res.status(200).send(featureRequest))
-        .catch(error => res.status(400).json({ error }));
+        .catch(error => res.status(200).json({ error }));
 
     userModel.updateOne(
         { _id: req.body.userId },
         { $addToSet: { voted: req.params.id } }
     )
-        .catch(error => res.status(400).json({ error }));
+        .catch(error => res.status(200).json({ error }));
 }
 
 module.exports.downVote = (req, res) => {

@@ -11,6 +11,6 @@ var allCompanyFeatureRequests_reducer_1 = __importDefault(require("./allCompanyF
 exports["default"] = (0, redux_1.combineReducers)({
     userReducer: user_reducer_1["default"],
     allFeatureRequestsReducer: allFeatureRequests_reducer_1["default"],
-    allUserFeatureRequests: allUserFeatureRequests_reducer_1["default"],
-    allCompanyFeatureRequests: allCompanyFeatureRequests_reducer_1["default"]
+    allUserFeatureRequestsReducer: allUserFeatureRequests_reducer_1["default"],
+    allCompanyFeatureRequestsReducer: allCompanyFeatureRequests_reducer_1["default"]
 });
