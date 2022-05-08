@@ -27,7 +27,6 @@ exports.FeatureRequestsBox = void 0;
 var react_1 = __importStar(require("react"));
 var FeatureRequestsBox = function (_a) {
     var title = _a.title, details = _a.details, votes = _a.votes;
-    console.log(details);
     var _b = (0, react_1.useState)(false), isVotted = _b[0], setIsVotted = _b[1];
     var handleToggleVote = function (e) {
         e.preventDefault();
@@ -41,7 +40,7 @@ var FeatureRequestsBox = function (_a) {
             react_1["default"].createElement("p", null, details)),
         react_1["default"].createElement("a", { href: "#", onClick: function (e) { return handleToggleVote(e); }, className: 'featureRequestBox--votesCountBoxContainer' },
             react_1["default"].createElement("div", { className: 'featureRequestBox--votesCountBox' },
-                react_1["default"].createElement("div", null, votes),
+                react_1["default"].createElement("div", null, "5"),
                 isVotted ? (react_1["default"].createElement("i", { className: "fa-solid fa-check icon" })) : (react_1["default"].createElement("i", { className: "fa-solid fa-angle-up icon" }))))));
 };
 exports.FeatureRequestsBox = FeatureRequestsBox;

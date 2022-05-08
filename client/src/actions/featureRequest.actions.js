@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-exports.getAllUserFeatureRequests = exports.getAllCompanyFeatureRequests = exports.getAllFeatureRequests = exports.GET_ALL_USER_FEATURE_REQUESTS = exports.GET_ALL_COMPANY_FEATURE_REQUESTS = exports.GET_ALL_FEATURE_REQUESTS = void 0;
+exports.createNewFeatureRequest = exports.getAllUserFeatureRequests = exports.getAllCompanyFeatureRequests = exports.getAllFeatureRequests = exports.GET_ALL_USER_FEATURE_REQUESTS = exports.GET_ALL_COMPANY_FEATURE_REQUESTS = exports.GET_ALL_FEATURE_REQUESTS = void 0;
 var axios_1 = __importDefault(require("axios"));
 exports.GET_ALL_FEATURE_REQUESTS = "GET_ALL_FEATURE_REQUESTS";
 exports.GET_ALL_COMPANY_FEATURE_REQUESTS = "GET_ALL_COMPANY_FEATURE_REQUESTS";
@@ -38,3 +38,11 @@ var getAllUserFeatureRequests = function () {
     };
 };
 exports.getAllUserFeatureRequests = getAllUserFeatureRequests;
+var createNewFeatureRequest = function (title, details, creatorType, status) {
+    return function (dispatch) {
+        return axios_1["default"]
+            .post("http://localhost:5000/feature-request/create", { title: title, details: details, creatorType: creatorType, status: status })
+            .then(function (res) { return console.log(res); });
+    };
+};
+exports.createNewFeatureRequest = createNewFeatureRequest;

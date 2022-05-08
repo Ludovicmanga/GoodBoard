@@ -8,7 +8,6 @@ module.exports.getAllFeatureRequests = async (req, res) => {
 }
 
 module.exports.getAllCompanyFeatureRequests = async (req, res) => {
-    console.log("ahahiih")
     await featureRequestModel.find({ creatorType: "company" })
         .then(allCompanyFeatureRequests => res.status(200).send(allCompanyFeatureRequests));
 }
@@ -19,6 +18,7 @@ module.exports.getAllUserFeatureRequests = async (req, res) => {
 }
 
 module.exports.createFeatureRequest = (req, res) => {
+    console.log(req.body.title)
     const newFeatureRequest = new featureRequestModel({
         title: req.body.title,
         details: req.body.details,

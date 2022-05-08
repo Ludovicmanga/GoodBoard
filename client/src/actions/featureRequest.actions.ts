@@ -36,3 +36,11 @@ export const getAllUserFeatureRequests = () => {
             .catch(error => console.log(error))
     }
 }
+
+export const createNewFeatureRequest = (title, details, creatorType, status) => {
+    return (dispatch) => {
+      return axios
+        .post("http://localhost:5000/feature-request/create", {title, details, creatorType, status})
+        .then(res => console.log(res))
+    };
+  };
