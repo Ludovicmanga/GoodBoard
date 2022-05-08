@@ -72,7 +72,6 @@ module.exports.getAllUserFeatureRequests = function (req, res) { return __awaite
     });
 }); };
 module.exports.createFeatureRequest = function (req, res) {
-    console.log(req.body.title);
     var newFeatureRequest = new featureRequestModel({
         title: req.body.title,
         details: req.body.details,
@@ -86,8 +85,8 @@ module.exports.upVote = function (req, res) {
     if (!ObjectId.isValid(req.params.id) || !ObjectId.isValid(req.body.userId))
         return res.status(400).send("ID unknown : " + req.params.id);
     featureRequestModel.updateOne({ _id: req.params.id }, { $addToSet: { voters: req.body.userId } })
-        .then(function (featureRequest) { return res.status(200).send(featureRequest); })["catch"](function (error) { return res.status(400).json({ error: error }); });
-    userModel.updateOne({ _id: req.body.userId }, { $addToSet: { voted: req.params.id } })["catch"](function (error) { return res.status(400).json({ error: error }); });
+        .then(function (featureRequest) { return res.status(200).send(featureRequest); })["catch"](function (error) { return res.status(200).json({ error: error }); });
+    userModel.updateOne({ _id: req.body.userId }, { $addToSet: { voted: req.params.id } })["catch"](function (error) { return res.status(200).json({ error: error }); });
 };
 module.exports.downVote = function (req, res) {
     if (!ObjectId.isValid(req.params.id) || !ObjectId.isValid(req.body.userId))

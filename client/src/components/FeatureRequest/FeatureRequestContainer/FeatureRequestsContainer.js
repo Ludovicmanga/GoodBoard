@@ -10,25 +10,22 @@ var FeatureRequestsBox_1 = require("../FeatureRequestsBox/FeatureRequestsBox");
 var Utils_1 = require("../../Utils");
 var FeatureRequestsContainer = function (_a) {
     var requestAuthorType = _a.requestAuthorType;
-    var allCompanyFeatureRequests = (0, react_redux_1.useSelector)(function (state) { return state.allCompanyFeatureRequests; });
-    var allUserFeatureRequests = (0, react_redux_1.useSelector)(function (state) { return state.allUserFeatureRequests; });
-    if (allCompanyFeatureRequests.error | allUserFeatureRequests.error) {
-        return react_1["default"].createElement("div", null, "erreur");
-    }
-    if ((0, Utils_1.isEmpty)(allCompanyFeatureRequests)) {
-        return react_1["default"].createElement("div", null, "erreur");
-    }
-    if ((0, Utils_1.isEmpty)(allUserFeatureRequests)) {
+    var allFeatureRequests = (0, react_redux_1.useSelector)(function (state) { return state.allFeatureRequestsReducer; });
+    if ((0, Utils_1.isEmpty)(allFeatureRequests)) {
         return react_1["default"].createElement("div", null, "erreur");
     }
     if (requestAuthorType === 'user') {
-        return allUserFeatureRequests.map(function (userFeatureRequest) {
-            return (react_1["default"].createElement(FeatureRequestsBox_1.FeatureRequestsBox, { key: userFeatureRequest._id, title: userFeatureRequest.title, details: userFeatureRequest.details, votes: userFeatureRequest.votes }));
+        return allFeatureRequests.map(function (featureRequest) {
+            if (featureRequest.creatorType === 'user') {
+                return (react_1["default"].createElement(FeatureRequestsBox_1.FeatureRequestsBox, { key: featureRequest._id, title: featureRequest.title, details: featureRequest.details, votes: featureRequest.voters.length, featureRequestId: featureRequest._id }));
+            }
         });
     }
     else if (requestAuthorType === 'company') {
-        return allCompanyFeatureRequests.map(function (companyFeatureRequest) {
-            return (react_1["default"].createElement(FeatureRequestsBox_1.FeatureRequestsBox, { key: companyFeatureRequest._id, title: companyFeatureRequest.title, details: companyFeatureRequest.details, votes: companyFeatureRequest.votes }));
+        return allFeatureRequests.map(function (featureRequest) {
+            if (featureRequest.creatorType == "company") {
+                return (react_1["default"].createElement(FeatureRequestsBox_1.FeatureRequestsBox, { key: featureRequest._id, title: featureRequest.title, details: featureRequest.details, votes: featureRequest.voters.length, featureRequestId: featureRequest._id }));
+            }
         });
     }
     return null;

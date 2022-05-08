@@ -10,43 +10,40 @@ type FeatureRequestsContainerProps = {
 }
 
 export const FeatureRequestsContainer: React.FC<FeatureRequestsContainerProps> = ({ requestAuthorType }) => {
-    const allCompanyFeatureRequests = useSelector((state: any) => state.allCompanyFeatureRequests);
-    const allUserFeatureRequests = useSelector((state: any) => state.allUserFeatureRequests);
+    const allFeatureRequests = useSelector((state: any) => state.allFeatureRequestsReducer);
 
-    if (allCompanyFeatureRequests.error | allUserFeatureRequests.error) {
-        return <div>erreur</div>
-    }
-
-    if (isEmpty(allCompanyFeatureRequests)) {
-        return <div>erreur</div>
-    }
-
-    if (isEmpty(allUserFeatureRequests)) {
+    if (isEmpty(allFeatureRequests)) {
         return <div>erreur</div>
     }
 
     if (requestAuthorType === 'user') {
-        return allUserFeatureRequests.map((userFeatureRequest) => {
-            return (
-                <FeatureRequestsBox
-                    key = {userFeatureRequest._id}
-                    title = {userFeatureRequest.title}
-                    details = {userFeatureRequest.details}
-                    votes = {userFeatureRequest.votes}
-                />
-            )
+        return allFeatureRequests.map((featureRequest) => {
+            if(featureRequest.creatorType === 'user') {
+                return (
+                    <FeatureRequestsBox
+                        key = {featureRequest._id}
+                        title = {featureRequest.title}
+                        details = {featureRequest.details}
+                        votes = {featureRequest.voters.length}
+                        featureRequestId = {featureRequest._id}
+                    />
+                )
+            }
         })
 
     } else if (requestAuthorType === 'company') {
-        return allCompanyFeatureRequests.map((companyFeatureRequest) => {
-            return (
-                <FeatureRequestsBox
-                    key = {companyFeatureRequest._id}
-                    title = {companyFeatureRequest.title}
-                    details = {companyFeatureRequest.details}
-                    votes = {companyFeatureRequest.votes}
-                />
-            )
+        return allFeatureRequests.map((featureRequest) => {
+            if (featureRequest.creatorType == "company") {
+                return (
+                    <FeatureRequestsBox
+                        key = {featureRequest._id}
+                        title = {featureRequest.title}
+                        details = {featureRequest.details}
+                        votes = {featureRequest.voters.length}
+                        featureRequestId = {featureRequest._id}
+                    />
+                )
+            }
         })
     }
     

@@ -25,12 +25,25 @@ var __importStar = (this && this.__importStar) || function (mod) {
 exports.__esModule = true;
 exports.FeatureRequestsBox = void 0;
 var react_1 = __importStar(require("react"));
+var react_redux_1 = require("react-redux");
+var react_redux_2 = require("react-redux");
+var featureRequest_actions_1 = require("../../../actions/featureRequest.actions");
 var FeatureRequestsBox = function (_a) {
-    var title = _a.title, details = _a.details, votes = _a.votes;
-    var _b = (0, react_1.useState)(false), isVotted = _b[0], setIsVotted = _b[1];
+    var title = _a.title, details = _a.details, votes = _a.votes, featureRequestId = _a.featureRequestId;
+    var _b = (0, react_1.useState)(false), isVoted = _b[0], setIsVoted = _b[1];
+    var userData = (0, react_redux_2.useSelector)(function (state) { return state.userReducer; });
+    var dispatch = (0, react_redux_1.useDispatch)();
     var handleToggleVote = function (e) {
         e.preventDefault();
-        setIsVotted(function () { return !isVotted; });
+        if (isVoted) {
+            console.log('downvote');
+            dispatch((0, featureRequest_actions_1.downVote)(featureRequestId, userData._id));
+        }
+        else {
+            console.log('upvote');
+            dispatch((0, featureRequest_actions_1.upVote)(featureRequestId, userData._id));
+        }
+        setIsVoted(function () { return !isVoted; });
     };
     return (react_1["default"].createElement("div", { className: 'featureRequestBox' },
         react_1["default"].createElement("div", { className: 'badge' },
@@ -40,7 +53,7 @@ var FeatureRequestsBox = function (_a) {
             react_1["default"].createElement("p", null, details)),
         react_1["default"].createElement("a", { href: "#", onClick: function (e) { return handleToggleVote(e); }, className: 'featureRequestBox--votesCountBoxContainer' },
             react_1["default"].createElement("div", { className: 'featureRequestBox--votesCountBox' },
-                react_1["default"].createElement("div", null, "5"),
-                isVotted ? (react_1["default"].createElement("i", { className: "fa-solid fa-check icon" })) : (react_1["default"].createElement("i", { className: "fa-solid fa-angle-up icon" }))))));
+                react_1["default"].createElement("div", null, votes),
+                isVoted ? (react_1["default"].createElement("i", { className: "fa-solid fa-check icon" })) : (react_1["default"].createElement("i", { className: "fa-solid fa-angle-up icon" }))))));
 };
 exports.FeatureRequestsBox = FeatureRequestsBox;
