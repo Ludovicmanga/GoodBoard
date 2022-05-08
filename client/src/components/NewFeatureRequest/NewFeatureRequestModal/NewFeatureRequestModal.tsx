@@ -14,11 +14,11 @@ export const NewFeatureRequestModal: React.FC<NewFeatureRequestModalProps> = ({ 
     const dispatch: any = useDispatch();
     const [title, setTitle] = useState('');
     const [details, setDetails] = useState('');
+    const [status, setStatus] = useState('unassigned');
     const userData = useSelector((state: any) => state.userReducer);
 
     const handleCreateNewFeatureRequest = (e) => {
         e.preventDefault();
-        const status = "unassigned";
         const creatorType = userData.type;
         const creator = userData._id;
 
@@ -33,6 +33,19 @@ export const NewFeatureRequestModal: React.FC<NewFeatureRequestModalProps> = ({ 
                     <span onClick={() => handleCloseModal(false)} className='closeModalIcon'>&#10005;</span>
                 </div>
                 <form className='newFeatureRequestModal--form' onSubmit={(e) => handleCreateNewFeatureRequest(e)}>
+                    { userData.type === "admin" && (
+                         <>
+                            <label>Status</label><br />
+                            <div className='inputContainer'>
+                                <select onChange={(e) => setStatus(e.target.value)}>
+                                    <option value='unassigned'>Unassigned</option>
+                                    <option value='planned'>Planned</option>
+                                    <option value='in-progress'>In progress</option>
+                                    <option value='done'>Done</option>
+                                </select>
+                            </div>
+                        </>
+                    )}
                     <label htmlFor='newFeatureRequestModal--titleInput'>Titre</label><br />
                     <div className='inputContainer'>
                     <input

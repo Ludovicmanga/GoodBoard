@@ -14,10 +14,10 @@ var NewFeatureRequestModal = function (_a) {
     var dispatch = (0, react_redux_2.useDispatch)();
     var _b = (0, react_2.useState)(''), title = _b[0], setTitle = _b[1];
     var _c = (0, react_2.useState)(''), details = _c[0], setDetails = _c[1];
+    var _d = (0, react_2.useState)('unassigned'), status = _d[0], setStatus = _d[1];
     var userData = (0, react_redux_1.useSelector)(function (state) { return state.userReducer; });
     var handleCreateNewFeatureRequest = function (e) {
         e.preventDefault();
-        var status = "unassigned";
         var creatorType = userData.type;
         var creator = userData._id;
         dispatch((0, featureRequest_actions_1.createNewFeatureRequest)(title, details, creatorType, status, creator));
@@ -28,6 +28,15 @@ var NewFeatureRequestModal = function (_a) {
             react_1["default"].createElement("div", { className: 'closeModalIconContainer' },
                 react_1["default"].createElement("span", { onClick: function () { return handleCloseModal(false); }, className: 'closeModalIcon' }, "\u2715")),
             react_1["default"].createElement("form", { className: 'newFeatureRequestModal--form', onSubmit: function (e) { return handleCreateNewFeatureRequest(e); } },
+                userData.type === "admin" && (react_1["default"].createElement(react_1["default"].Fragment, null,
+                    react_1["default"].createElement("label", null, "Status"),
+                    react_1["default"].createElement("br", null),
+                    react_1["default"].createElement("div", { className: 'inputContainer' },
+                        react_1["default"].createElement("select", { onChange: function (e) { return setStatus(e.target.value); } },
+                            react_1["default"].createElement("option", { value: 'unassigned' }, "Unassigned"),
+                            react_1["default"].createElement("option", { value: 'planned' }, "Planned"),
+                            react_1["default"].createElement("option", { value: 'in-progress' }, "In progress"),
+                            react_1["default"].createElement("option", { value: 'done' }, "Done"))))),
                 react_1["default"].createElement("label", { htmlFor: 'newFeatureRequestModal--titleInput' }, "Titre"),
                 react_1["default"].createElement("br", null),
                 react_1["default"].createElement("div", { className: 'inputContainer' },

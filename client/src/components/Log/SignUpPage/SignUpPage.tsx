@@ -16,7 +16,7 @@ const SignUpPage = () => {
         email,
         password,
         pseudo,
-        type: "user"
+        type: "user",
       }, {withCredentials: true})
       .then(res => {
         if(res.data.formattedErrors) {

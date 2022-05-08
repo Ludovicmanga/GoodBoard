@@ -21,9 +21,9 @@ var FeatureRequestsContainer = function (_a) {
             }
         });
     }
-    else if (requestAuthorType === 'company') {
+    else if (requestAuthorType === "admin") {
         return allFeatureRequests.map(function (featureRequest) {
-            if (featureRequest.creatorType == "company") {
+            if (featureRequest.creatorType == "admin") {
                 return (react_1["default"].createElement(FeatureRequestsBox_1.FeatureRequestsBox, { key: featureRequest._id, title: featureRequest.title, details: featureRequest.details, votes: featureRequest.voters.length, featureRequestId: featureRequest._id }));
             }
         });

@@ -34,7 +34,7 @@ const userSchema = new mongoose.Schema(
         },
         voted: {
             type: [String]
-        },
+        }
     }
 );
 
