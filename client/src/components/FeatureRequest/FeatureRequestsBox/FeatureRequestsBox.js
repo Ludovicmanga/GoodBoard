@@ -40,7 +40,7 @@ var FeatureRequestsBox = function (_a) {
             react_1["default"].createElement("p", null, details)),
         react_1["default"].createElement("a", { href: "#", onClick: function (e) { return handleToggleVote(e); }, className: 'featureRequestBox--votesCountBoxContainer' },
             react_1["default"].createElement("div", { className: 'featureRequestBox--votesCountBox' },
-                react_1["default"].createElement("div", null, "5"),
+                react_1["default"].createElement("div", null, votes),
                 isVotted ? (react_1["default"].createElement("i", { className: "fa-solid fa-check icon" })) : (react_1["default"].createElement("i", { className: "fa-solid fa-angle-up icon" }))))));
 };
 exports.FeatureRequestsBox = FeatureRequestsBox;

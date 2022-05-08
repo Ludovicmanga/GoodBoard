@@ -32,7 +32,7 @@ export const FeatureRequestsContainer: React.FC<FeatureRequestsContainerProps> =
                     key = {userFeatureRequest._id}
                     title = {userFeatureRequest.title}
                     details = {userFeatureRequest.details}
-                    votes = {userFeatureRequest.votes}
+                    votes = {userFeatureRequest.voters.length}
                 />
             )
         })
@@ -44,7 +44,7 @@ export const FeatureRequestsContainer: React.FC<FeatureRequestsContainerProps> =
                     key = {companyFeatureRequest._id}
                     title = {companyFeatureRequest.title}
                     details = {companyFeatureRequest.details}
-                    votes = {companyFeatureRequest.votes}
+                    votes = {companyFeatureRequest.voters.length}
                 />
             )
         })

@@ -18,7 +18,6 @@ module.exports.getAllUserFeatureRequests = async (req, res) => {
 }
 
 module.exports.createFeatureRequest = (req, res) => {
-    console.log(req.body.title)
     const newFeatureRequest = new featureRequestModel({
         title: req.body.title,
         details: req.body.details,

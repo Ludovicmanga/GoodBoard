@@ -72,7 +72,6 @@ module.exports.getAllUserFeatureRequests = function (req, res) { return __awaite
     });
 }); };
 module.exports.createFeatureRequest = function (req, res) {
-    console.log(req.body.title);
     var newFeatureRequest = new featureRequestModel({
         title: req.body.title,
         details: req.body.details,

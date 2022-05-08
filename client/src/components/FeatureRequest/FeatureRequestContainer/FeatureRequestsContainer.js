@@ -23,12 +23,12 @@ var FeatureRequestsContainer = function (_a) {
     }
     if (requestAuthorType === 'user') {
         return allUserFeatureRequests.map(function (userFeatureRequest) {
-            return (react_1["default"].createElement(FeatureRequestsBox_1.FeatureRequestsBox, { key: userFeatureRequest._id, title: userFeatureRequest.title, details: userFeatureRequest.details, votes: userFeatureRequest.votes }));
+            return (react_1["default"].createElement(FeatureRequestsBox_1.FeatureRequestsBox, { key: userFeatureRequest._id, title: userFeatureRequest.title, details: userFeatureRequest.details, votes: userFeatureRequest.voters.length }));
         });
     }
     else if (requestAuthorType === 'company') {
         return allCompanyFeatureRequests.map(function (companyFeatureRequest) {
-            return (react_1["default"].createElement(FeatureRequestsBox_1.FeatureRequestsBox, { key: companyFeatureRequest._id, title: companyFeatureRequest.title, details: companyFeatureRequest.details, votes: companyFeatureRequest.votes }));
+            return (react_1["default"].createElement(FeatureRequestsBox_1.FeatureRequestsBox, { key: companyFeatureRequest._id, title: companyFeatureRequest.title, details: companyFeatureRequest.details, votes: companyFeatureRequest.voters.length }));
         });
     }
     return null;

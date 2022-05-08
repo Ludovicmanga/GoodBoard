@@ -24,7 +24,7 @@ export const FeatureRequestsBox: React.FC<FeatureRequestsBoxProps> = ({ title, d
                 </div>
                 <a href="#" onClick={(e) => handleToggleVote(e)} className='featureRequestBox--votesCountBoxContainer'>
                     <div className='featureRequestBox--votesCountBox'>
-                        <div>5</div>                        
+                        <div>{votes}</div>                        
                         { isVotted ? (
                             <i className="fa-solid fa-check icon"></i>
                         ) : (
