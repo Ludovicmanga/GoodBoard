@@ -7,7 +7,6 @@ type FeatureRequestsBoxProps = {
 }
 
 export const FeatureRequestsBox: React.FC<FeatureRequestsBoxProps> = ({ title, details, votes }) => {
-        console.log(details)
         const [isVotted, setIsVotted] = useState(false);
         const handleToggleVote = (e) => {
             e.preventDefault();
@@ -25,7 +24,7 @@ export const FeatureRequestsBox: React.FC<FeatureRequestsBoxProps> = ({ title, d
                 </div>
                 <a href="#" onClick={(e) => handleToggleVote(e)} className='featureRequestBox--votesCountBoxContainer'>
                     <div className='featureRequestBox--votesCountBox'>
-                        <div>{votes}</div>                        
+                        <div>5</div>                        
                         { isVotted ? (
                             <i className="fa-solid fa-check icon"></i>
                         ) : (
