@@ -23,7 +23,15 @@ export const Home: React.FC<HomeProps> = ({ handleCurrentPage }) => {
 
   return (
     <div>
-      <h2>Vous avez des idées ? Nous vous écoutons !</h2>
+      <div className='site_catch_title_container'>
+        <div className='site_catch_title_wrapper'>
+          <p>
+            <span className='site_catch_title_wrapper--text'>Vous avez des idées ?</span><i className="fa-regular fa-lightbulb site_catch_title_wrapper--icon site_catch_title_wrapper--bulbIcon"></i><br />
+            <span className='site_catch_title_wrapper--text'>Nous vous écoutons ! </span><i className="fa-solid fa-ear-listen site_catch_title_wrapper--icon site_catch_title_wrapper--earIcon"></i>
+          </p>
+        </div>
+      </div>
+      
       <div className='UserOrCompanyRequestsToggleButton--container'>
         <div className='contextualText'>Vos idées</div>
         <UserOrCompanyRequestsToggleButton isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)} />
@@ -37,7 +45,13 @@ export const Home: React.FC<HomeProps> = ({ handleCurrentPage }) => {
       { newFeatureRequestModalisOpen && (
         <NewFeatureRequestModal handleCloseModal = {handleCloseModal} />
       ) }
-      <button className='newFeatureRequestModalOpenButton' onClick={() => setNewFeatureRequestModalisOpen(!newFeatureRequestModalisOpen)}>Nouvelle feature request</button>
+      <div className='newFeatureRequestModalOpenButton--container'>
+        <button className='newFeatureRequestModalOpenButton'
+          onClick={() => setNewFeatureRequestModalisOpen(!newFeatureRequestModalisOpen)}>
+          <i className="fa-solid fa-plus newFeatureRequestModalOpenButton--icon"></i>
+          <div className='newFeatureRequestModalOpenButton--text'>Faire une proposition</div>
+        </button>
+      </div>
     </div>
   )
 }

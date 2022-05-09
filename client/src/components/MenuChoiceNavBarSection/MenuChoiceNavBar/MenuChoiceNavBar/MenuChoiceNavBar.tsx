@@ -31,7 +31,7 @@ export const MenuChoiceNavBar: React.FC<MenuChoiceNavBarProps> = ({ currentPage 
                             </li>
                         </a>
                         <li>
-                            <i className="fa-solid fa-magnifying-glass icon"></i>
+                            <i className="fa-solid fa-magnifying-glass icon menuChoiceNavbar--searchIcon"></i>
                             <input className='menuChoiceNavbar--searchInput' placeholder='Search' />
                         </li>
                     </ul>

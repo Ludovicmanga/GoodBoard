@@ -8,10 +8,11 @@ type FeatureRequestsBoxProps = {
     title: string,
     details: string,
     votes: number,
-    featureRequestId: number
+    featureRequestId: number,
+    boxType: string
 }
 
-export const FeatureRequestsBox: React.FC<FeatureRequestsBoxProps> = ({ title, details, votes, featureRequestId }) => {
+export const FeatureRequestsBox: React.FC<FeatureRequestsBoxProps> = ({ title, details, votes, featureRequestId, boxType }) => {
         const [isVoted, setIsVoted] = useState(false);
         const userData = useSelector((state: any) => state.userReducer);
         const dispatch: any = useDispatch();
@@ -20,10 +21,8 @@ export const FeatureRequestsBox: React.FC<FeatureRequestsBoxProps> = ({ title, d
             e.preventDefault();
 
             if (isVoted) {
-                console.log('downvote')
                 dispatch(downVote(featureRequestId, userData._id))
             } else {
-                console.log('upvote')
                 dispatch(upVote(featureRequestId, userData._id))
             }
 
@@ -31,27 +30,33 @@ export const FeatureRequestsBox: React.FC<FeatureRequestsBoxProps> = ({ title, d
         }
 
         return (
-            <a href='#' className='featureRequestBox' onClick={(e) => {
+            <a href='#' className={boxType == "roadmap" ? "featureRequestBox featureRequestBox-roadmap" : "featureRequestBox"} onClick={(e) => {
                 e.preventDefault();
-                console.log('clicked')
             }}>
                 <div className='badge'>
                     <i className="fa-solid fa-crown"></i>
                 </div>
-                <div className='featureRequestBox--content'>
-                    <h2>{title}</h2>
-                    <p>{details}</p>
-                </div>
-                <a href="#" onClick={(e) => handleToggleVote(e)} className='featureRequestBox--votesCountBoxContainer'>
-                    <div className='featureRequestBox--votesCountBox'>
-                        <div>{votes}</div>                        
-                        { isVoted ? (
-                            <i className="fa-solid fa-check icon"></i>
-                        ) : (
-                            <i className="fa-solid fa-angle-up icon" />
-                        ) }
+                <div className='featureRequestBox--content-wrapper'>
+                    <div className='featureRequestBox--content'>
+                        <h2>{title}</h2>
+                        <p>{details}</p>
                     </div>
-                </a>
+                    <a href="#" onClick={(e) => handleToggleVote(e)} className='featureRequestBox--votesCountBoxContainer'>
+                    { isVoted ? (
+                        <div className='featureRequestBox--votesCountBox featureRequestBox--votesCountBox-voted'>
+                            <div>{votes}</div>                        
+                                <i className="fa-solid fa-check icon"></i>
+                        </div>
+                    ) : (
+                        <div className='featureRequestBox--votesCountBox featureRequestBox--votesCountBox-notVoted'>
+                            <div>{votes}</div>                        
+                                <i className="fa-solid fa-angle-up icon" />
+                        </div>
+                    )}
+                        
+                    </a>
+                </div>
+                
             </a>
         );
 }

@@ -7,5 +7,5 @@ export default {
 }
 
 export const Default = () => (
-    <FeatureRequestsBox featureRequestId={3} title='titre' details='' votes={2} />
+    <FeatureRequestsBox boxType="home" featureRequestId={3} title='titre' details='' votes={2} />
 )
