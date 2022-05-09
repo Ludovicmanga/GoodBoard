@@ -29,14 +29,20 @@ const SignInPage = () => {
   }
     
   return (
-    <form action='signInForm' onSubmit={handleLogin}>
-      <label htmlFor='signInForm-email-input'>Email</label>
-      <input type="email"  onChange={(e) => setEmail(e.target.value)} value={email} id="signInForm-email-input"/>
-      <br />
-      <label htmlFor='signInForm-password-input'>Password</label>
-      <input type="password" onChange={(e) => setPassword(e.target.value)} value={password} id="signInForm-password-input"/><br />
-      <input type="submit" value="se connecter" />
-    </form>
+    <div className='logForm-container'>
+      <form className='logForm' onSubmit={handleLogin}>
+        <div className='logForm--input-container'>
+          <input type="email" placeholder='Email' onChange={(e) => setEmail(e.target.value)} value={email} id="signInForm-email-input"/>
+        </div>
+        <br />
+        <div className='logForm--input-container'>
+          <input type="password" placeholder='Mot de passe' onChange={(e) => setPassword(e.target.value)} value={password} id="signInForm-password-input"/><br />
+        </div>
+        <div className='logForm--btn-container'>
+          <input className='logForm--btn' type="submit" value="se connecter" />
+        </div>
+      </form>
+    </div>
   )
 }
 

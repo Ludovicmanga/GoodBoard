@@ -45,6 +45,47 @@ button {
   
 /* ------------ Modules ------------ */
 
+/* signUp Form */
+
+.logForm-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logForm {
+  padding: 10px;
+  border-radius: 15px;
+  border: solid black 0.2px;
+  width: 60%;
+  margin: 0px 0px 0px 0px;
+  background: rgba(157, 223, 16, 0.33);
+  box-shadow: 0 1px 1px -1px #B1E814, 0 0pc 4pc #6A8E02;
+}
+
+.logForm--input-container input {
+  padding: 5px;
+  border-radius: 9px;
+  display: flex;
+  text-align: center;
+  font-size: 17px;
+}
+
+.logForm--btn-container {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0 0 0;
+  padding: 10px;
+}
+
+.logForm--btn {
+  padding: 15px;
+  border-radius: 15px;
+  background: rgba(0, 0, 0, 0.71);
+  color: white;
+  cursor: pointer;
+}
+
 .mainNavbar--container, .mainNavbar--linksContainer {
     display: flex;
     margin: 0px;
@@ -404,6 +445,24 @@ input:checked + .slider {
 
   /* ------------ Modules ------------ */
 
+  /* Log forms */
+
+  .logForm {
+    width: 600px;
+    height: 300px;
+    padding: 48px 0 0 0;
+  }
+
+  .logForm--input-container input {
+    width: 60%;
+    height: 45px;
+  }
+
+  .logForm--input-container {
+    display: flex;
+    justify-content: center;
+  }
+
   /* Menu choice navbar */
   
     .menuChoiceNavbar--liWrapper,
@@ -415,7 +474,21 @@ input:checked + .slider {
       width: 210px;
     }
 
-  /* Feature request box */
+    /* site catch title */
+
+    .site_catch_title_wrapper--icon {
+      font-size: 25px;
+    }
+
+    .site_catch_title_wrapper--bulbIcon {
+      color: gold;
+    }
+
+    .site_catch_title_wrapper--earIcon {
+      color: black;
+    }
+
+    /* Feature request box */
   .featureRequestBox {
     margin: 22px 450px 22px 450px;
   }

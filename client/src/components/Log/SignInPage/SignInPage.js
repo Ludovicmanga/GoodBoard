@@ -51,13 +51,15 @@ var SignInPage = function () {
             }
         })["catch"](function (error) { console.log(error); });
     };
-    return (react_1["default"].createElement("form", { action: 'signInForm', onSubmit: handleLogin },
-        react_1["default"].createElement("label", { htmlFor: 'signInForm-email-input' }, "Email"),
-        react_1["default"].createElement("input", { type: "email", onChange: function (e) { return setEmail(e.target.value); }, value: email, id: "signInForm-email-input" }),
-        react_1["default"].createElement("br", null),
-        react_1["default"].createElement("label", { htmlFor: 'signInForm-password-input' }, "Password"),
-        react_1["default"].createElement("input", { type: "password", onChange: function (e) { return setPassword(e.target.value); }, value: password, id: "signInForm-password-input" }),
-        react_1["default"].createElement("br", null),
-        react_1["default"].createElement("input", { type: "submit", value: "se connecter" })));
+    return (react_1["default"].createElement("div", { className: 'logForm-container' },
+        react_1["default"].createElement("form", { className: 'logForm', onSubmit: handleLogin },
+            react_1["default"].createElement("div", { className: 'logForm--input-container' },
+                react_1["default"].createElement("input", { type: "email", placeholder: 'Email', onChange: function (e) { return setEmail(e.target.value); }, value: email, id: "signInForm-email-input" })),
+            react_1["default"].createElement("br", null),
+            react_1["default"].createElement("div", { className: 'logForm--input-container' },
+                react_1["default"].createElement("input", { type: "password", placeholder: 'Mot de passe', onChange: function (e) { return setPassword(e.target.value); }, value: password, id: "signInForm-password-input" }),
+                react_1["default"].createElement("br", null)),
+            react_1["default"].createElement("div", { className: 'logForm--btn-container' },
+                react_1["default"].createElement("input", { className: 'logForm--btn', type: "submit", value: "se connecter" })))));
 };
 exports["default"] = SignInPage;
