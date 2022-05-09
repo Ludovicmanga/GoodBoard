@@ -40,14 +40,24 @@ var Home = function (_a) {
         setNewFeatureRequestModalisOpen(function () { return newFeatureRequestModalState; });
     };
     return (react_1["default"].createElement("div", null,
-        react_1["default"].createElement("h2", null, "Vous avez des id\u00E9es ? Nous vous \u00E9coutons !"),
+        react_1["default"].createElement("div", { className: 'site_catch_title_container' },
+            react_1["default"].createElement("div", { className: 'site_catch_title_wrapper' },
+                react_1["default"].createElement("p", null,
+                    react_1["default"].createElement("span", { className: 'site_catch_title_wrapper--text' }, "Vous avez des id\u00E9es ?"),
+                    react_1["default"].createElement("i", { className: "fa-regular fa-lightbulb site_catch_title_wrapper--icon site_catch_title_wrapper--bulbIcon" }),
+                    react_1["default"].createElement("br", null),
+                    react_1["default"].createElement("span", { className: 'site_catch_title_wrapper--text' }, "Nous vous \u00E9coutons ! "),
+                    react_1["default"].createElement("i", { className: "fa-solid fa-ear-listen site_catch_title_wrapper--icon site_catch_title_wrapper--earIcon" })))),
         react_1["default"].createElement("div", { className: 'UserOrCompanyRequestsToggleButton--container' },
             react_1["default"].createElement("div", { className: 'contextualText' }, "Vos id\u00E9es"),
             react_1["default"].createElement(UserOrCompanyRequestsToggleButton_1.UserOrCompanyRequestsToggleButton, { isToggled: isToggled, onToggle: function () { return setIsToggled(!isToggled); } }),
             react_1["default"].createElement("div", { className: 'contextualText' }, "Nos id\u00E9es")),
         isToggled ? (react_1["default"].createElement(FeatureRequestsContainer_1.FeatureRequestsContainer, { requestAuthorType: 'admin' })) : (react_1["default"].createElement(FeatureRequestsContainer_1.FeatureRequestsContainer, { requestAuthorType: 'user' })),
         newFeatureRequestModalisOpen && (react_1["default"].createElement(NewFeatureRequestModal_1.NewFeatureRequestModal, { handleCloseModal: handleCloseModal })),
-        react_1["default"].createElement("button", { className: 'newFeatureRequestModalOpenButton', onClick: function () { return setNewFeatureRequestModalisOpen(!newFeatureRequestModalisOpen); } }, "Nouvelle feature request")));
+        react_1["default"].createElement("div", { className: 'newFeatureRequestModalOpenButton--container' },
+            react_1["default"].createElement("button", { className: 'newFeatureRequestModalOpenButton', onClick: function () { return setNewFeatureRequestModalisOpen(!newFeatureRequestModalisOpen); } },
+                react_1["default"].createElement("i", { className: "fa-solid fa-plus newFeatureRequestModalOpenButton--icon" }),
+                react_1["default"].createElement("div", { className: 'newFeatureRequestModalOpenButton--text' }, "Faire une proposition")))));
 };
 exports.Home = Home;
 exports["default"] = exports.Home;

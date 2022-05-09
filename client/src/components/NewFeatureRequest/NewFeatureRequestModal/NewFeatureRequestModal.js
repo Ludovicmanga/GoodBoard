@@ -21,6 +21,7 @@ var NewFeatureRequestModal = function (_a) {
         var creatorType = userData.type;
         var creator = userData._id;
         dispatch((0, featureRequest_actions_1.createNewFeatureRequest)(title, details, creatorType, status, creator));
+        dispatch((0, featureRequest_actions_1.getAllFeatureRequests)());
         handleCloseModal(false);
     };
     return (react_1["default"].createElement("div", { className: 'newFeatureRequestModal' },
@@ -32,7 +33,7 @@ var NewFeatureRequestModal = function (_a) {
                     react_1["default"].createElement("label", null, "Status"),
                     react_1["default"].createElement("br", null),
                     react_1["default"].createElement("div", { className: 'inputContainer' },
-                        react_1["default"].createElement("select", { onChange: function (e) { return setStatus(e.target.value); } },
+                        react_1["default"].createElement("select", { className: 'newFeatureRequestModal--statusInput', onChange: function (e) { return setStatus(e.target.value); } },
                             react_1["default"].createElement("option", { value: 'unassigned' }, "Unassigned"),
                             react_1["default"].createElement("option", { value: 'planned' }, "Planned"),
                             react_1["default"].createElement("option", { value: 'in-progress' }, "In progress"),

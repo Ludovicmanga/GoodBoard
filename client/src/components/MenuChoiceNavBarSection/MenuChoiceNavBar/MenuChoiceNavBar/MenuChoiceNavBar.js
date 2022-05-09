@@ -43,7 +43,7 @@ var MenuChoiceNavBar = function (_a) {
                             react_1["default"].createElement(MenuChoiceModal_1.MenuChoiceModal, null))) : (react_1["default"].createElement("i", { className: "fa-solid fa-angle-right icon" })),
                         currentPage)),
                 react_1["default"].createElement("li", null,
-                    react_1["default"].createElement("i", { className: "fa-solid fa-magnifying-glass icon" }),
+                    react_1["default"].createElement("i", { className: "fa-solid fa-magnifying-glass icon menuChoiceNavbar--searchIcon" }),
                     react_1["default"].createElement("input", { className: 'menuChoiceNavbar--searchInput', placeholder: 'Search' }))))));
 };
 exports.MenuChoiceNavBar = MenuChoiceNavBar;

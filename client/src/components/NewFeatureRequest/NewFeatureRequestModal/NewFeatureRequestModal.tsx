@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { createNewFeatureRequest } from "../../../actions/featureRequest.actions";
+import { createNewFeatureRequest, getAllFeatureRequests } from "../../../actions/featureRequest.actions";
 
 type NewFeatureRequestModalProps = {
     handleCloseModal: (newFeatureRequestModalState: boolean) => void;
@@ -23,6 +23,7 @@ export const NewFeatureRequestModal: React.FC<NewFeatureRequestModalProps> = ({ 
         const creator = userData._id;
 
         dispatch(createNewFeatureRequest(title, details, creatorType, status, creator));
+        dispatch(getAllFeatureRequests());
         handleCloseModal(false);
     }
 
@@ -37,7 +38,7 @@ export const NewFeatureRequestModal: React.FC<NewFeatureRequestModalProps> = ({ 
                          <>
                             <label>Status</label><br />
                             <div className='inputContainer'>
-                                <select onChange={(e) => setStatus(e.target.value)}>
+                                <select className='newFeatureRequestModal--statusInput' onChange={(e) => setStatus(e.target.value)}>
                                     <option value='unassigned'>Unassigned</option>
                                     <option value='planned'>Planned</option>
                                     <option value='in-progress'>In progress</option>

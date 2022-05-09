@@ -26,6 +26,7 @@ export const FeatureRequestsContainer: React.FC<FeatureRequestsContainerProps> =
                         details = {featureRequest.details}
                         votes = {featureRequest.voters.length}
                         featureRequestId = {featureRequest._id}
+                        boxType = "homePage"
                     />
                 )
             }
@@ -41,6 +42,7 @@ export const FeatureRequestsContainer: React.FC<FeatureRequestsContainerProps> =
                         details = {featureRequest.details}
                         votes = {featureRequest.voters.length}
                         featureRequestId = {featureRequest._id}
+                        boxType = "homePage"
                     />
                 )
             }
