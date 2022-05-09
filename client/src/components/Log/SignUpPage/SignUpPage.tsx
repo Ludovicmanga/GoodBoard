@@ -40,17 +40,25 @@ const SignUpPage = () => {
           <h4 className='success'>Enregistrement réussi, veuillez vous connecter</h4>
         </> 
       ):
-      <form action='signUpForm' onSubmit={handleRegister}>
-        <label htmlFor='signUpForm-email-input'>Pseudo</label>
-        <input type="pseudo" value={pseudo} onChange={ (e) => setPseudo(e.target.value)} id="signUpForm-pseudo-input"/>
-        <br />
-        <label htmlFor='signUpForm-email-input'>Email</label>
-        <input type="email" onChange={ (e) => setEmail(e.target.value)} value={email} id="signUpForm-email-input"/>
-        <br />
-        <label htmlFor='signUpForm-password-input'>Password</label>
-        <input type="password" onChange={ (e) => setPassword(e.target.value)} value={password} id="signUpForm-password-input"/><br />
-        <input type="submit" value="s'inscrire" />
-      </form>
+      <div className='logForm-container'>
+        <form className='logForm' onSubmit={handleRegister}>
+          <div className='logForm--input-container'>
+            <input type="pseudo" placeholder='Pseudo' value={pseudo} onChange={ (e) => setPseudo(e.target.value)} className="logForm-pseudo-input"/>
+          </div>
+          <br />
+          <div className='logForm--input-container'>
+            <input type="email" placeholder='Email' onChange={ (e) => setEmail(e.target.value)} value={email} className="logForm-email-input"/>
+          </div>
+          <br />
+          <div className='logForm--input-container'>
+            <input type="password" placeholder='Mot de passe' onChange={ (e) => setPassword(e.target.value)} value={password} className="logForm-password-input"/><br />
+          </div>
+          <div className='logForm--btn-container'>
+            <input className='logForm--btn' type="submit" value="s'inscrire" />
+          </div>
+          
+        </form>
+      </div>
     }
     </>
   )

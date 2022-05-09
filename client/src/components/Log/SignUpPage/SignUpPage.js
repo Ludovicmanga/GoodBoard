@@ -97,16 +97,18 @@ var SignUpPage = function () {
         react_1["default"].createElement(SignInPage_1["default"], null),
         react_1["default"].createElement("span", null),
         react_1["default"].createElement("h4", { className: 'success' }, "Enregistrement r\u00E9ussi, veuillez vous connecter"))) :
-        react_1["default"].createElement("form", { action: 'signUpForm', onSubmit: handleRegister },
-            react_1["default"].createElement("label", { htmlFor: 'signUpForm-email-input' }, "Pseudo"),
-            react_1["default"].createElement("input", { type: "pseudo", value: pseudo, onChange: function (e) { return setPseudo(e.target.value); }, id: "signUpForm-pseudo-input" }),
-            react_1["default"].createElement("br", null),
-            react_1["default"].createElement("label", { htmlFor: 'signUpForm-email-input' }, "Email"),
-            react_1["default"].createElement("input", { type: "email", onChange: function (e) { return setEmail(e.target.value); }, value: email, id: "signUpForm-email-input" }),
-            react_1["default"].createElement("br", null),
-            react_1["default"].createElement("label", { htmlFor: 'signUpForm-password-input' }, "Password"),
-            react_1["default"].createElement("input", { type: "password", onChange: function (e) { return setPassword(e.target.value); }, value: password, id: "signUpForm-password-input" }),
-            react_1["default"].createElement("br", null),
-            react_1["default"].createElement("input", { type: "submit", value: "s'inscrire" }))));
+        react_1["default"].createElement("div", { className: 'logForm-container' },
+            react_1["default"].createElement("form", { className: 'logForm', onSubmit: handleRegister },
+                react_1["default"].createElement("div", { className: 'logForm--input-container' },
+                    react_1["default"].createElement("input", { type: "pseudo", placeholder: 'Pseudo', value: pseudo, onChange: function (e) { return setPseudo(e.target.value); }, className: "logForm-pseudo-input" })),
+                react_1["default"].createElement("br", null),
+                react_1["default"].createElement("div", { className: 'logForm--input-container' },
+                    react_1["default"].createElement("input", { type: "email", placeholder: 'Email', onChange: function (e) { return setEmail(e.target.value); }, value: email, className: "logForm-email-input" })),
+                react_1["default"].createElement("br", null),
+                react_1["default"].createElement("div", { className: 'logForm--input-container' },
+                    react_1["default"].createElement("input", { type: "password", placeholder: 'Mot de passe', onChange: function (e) { return setPassword(e.target.value); }, value: password, className: "logForm-password-input" }),
+                    react_1["default"].createElement("br", null)),
+                react_1["default"].createElement("div", { className: 'logForm--btn-container' },
+                    react_1["default"].createElement("input", { className: 'logForm--btn', type: "submit", value: "s'inscrire" }))))));
 };
 exports["default"] = SignUpPage;
