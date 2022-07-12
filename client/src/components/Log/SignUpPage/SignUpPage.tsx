@@ -30,7 +30,6 @@ const SignUpPage = () => {
       .catch(error => { console.log(error) })
   }
   
-
   return (
     <>
       { formSubmit ? (
@@ -39,7 +38,7 @@ const SignUpPage = () => {
           <span></span>
           <h4 className='success'>Enregistrement réussi, veuillez vous connecter</h4>
         </> 
-      ):
+      ) :
       <div className='logForm-container'>
         <form className='logForm' onSubmit={handleRegister}>
           <div className='logForm--input-container'>
@@ -55,8 +54,7 @@ const SignUpPage = () => {
           </div>
           <div className='logForm--btn-container'>
             <input className='logForm--btn' type="submit" value="s'inscrire" />
-          </div>
-          
+          </div>      
         </form>
       </div>
     }

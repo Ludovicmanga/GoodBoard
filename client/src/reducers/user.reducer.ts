@@ -1,4 +1,4 @@
-import { DOWN_VOTE_USER, UP_VOTE_USER } from "actions/featureRequest.actions";
+import { DOWN_VOTE_USER, UP_VOTE_USER } from "../actions/featureRequest.actions";
 import { GET_USER } from "../actions/user.actions";
 
 const initialState = {

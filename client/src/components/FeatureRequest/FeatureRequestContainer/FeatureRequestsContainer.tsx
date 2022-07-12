@@ -16,7 +16,14 @@ export const FeatureRequestsContainer: React.FC<FeatureRequestsContainerProps> =
         return <div>Pas encore de feature request</div>
     }
 
-    if (requestAuthorType === 'user') {
+    { if (allFeatureRequests.error) (
+        <div>{allFeatureRequests.error}</div>
+    ) }
+
+    if (requestAuthorType === 'user'
+        && !isEmpty(allFeatureRequests)
+        && !allFeatureRequests.error
+    ) {
         return allFeatureRequests.map((featureRequest) => {
             if(featureRequest.creatorType === 'user') {
                 return (
@@ -32,7 +39,9 @@ export const FeatureRequestsContainer: React.FC<FeatureRequestsContainerProps> =
             }
         })
 
-    } else if (requestAuthorType === "admin") {
+    } else if (requestAuthorType === "admin"
+    && !isEmpty(allFeatureRequests)
+    && !allFeatureRequests.error) {
         return allFeatureRequests.map((featureRequest) => {
             if (featureRequest.creatorType == "admin") {
                 return (

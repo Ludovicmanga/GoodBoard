@@ -14,7 +14,7 @@
 body {
   padding: 10px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background: beige;
+  background: #748FFC;
 }
 
 ul {
@@ -60,7 +60,7 @@ button {
   width: 60%;
   margin: 0px 0px 0px 0px;
   background: rgba(157, 223, 16, 0.33);
-  box-shadow: 0 1px 1px -1px #B1E814, 0 0pc 4pc #6A8E02;
+  box-shadow: 0 1px 1px -1px #B1E814, 0 0pc 8pc #6A8E02;
 }
 
 .logForm--input-container input {
@@ -129,53 +129,6 @@ button {
   margin: 0px 0px 0px 12px;
 }
 
-.menuChoiceNavBar {
-  background: #f8efbc;
-  height: 70px;
-  display: flex;
-  align-items: center;
-  margin: 20px 0px;
-}
-
-.menuChoiceNavbar--liWrapper {
-  display: flex;
-  flex-direction: column;
-}
-
-  .menuChoiceNavbar--liWrapper .menuChoiceli {
-    position: relative;
-  }
-
-.menuChoiceNavbar--searchInput {
-  border: none;
-  background: #1fe0;
-}
-
-.menuChoiceNavbar--searchInput:focus {
-  outline: none;
-}
-
-  .menuChoiceNavBar .icon {
-    margin: 10px 30px;
-  }
-
-.menuChoiceModal {
-  border-radius: 10px;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.9);
-  position: absolute;
-  top: 35px;
-  left: 30px;
-}
-
-  .menuChoiceModal--icon {
-    margin: 0px 15px 0px 0px;
-  }
-
-.menuChoiceModal .roadmapli {
-  margin: 10px 0px 0px 0px;
-}
-
 .UserOrCompanyRequestsToggleButton--container {
   display: flex;
   justify-content: center;
@@ -238,6 +191,8 @@ button {
   border-radius: 10px;
   background: rgba(214, 218, 32, 0.40);
   display: flex;
+  box-shadow: 0 1px 1px -1px #B1E814, 0 0pc 8pc black;
+  cursor: pointer;
 }
 
 .newFeatureRequestModalOpenButton--icon {
@@ -264,7 +219,7 @@ button {
   padding: 10px;
   height: 500px;
   width: 275px;
-  box-shadow: 10px 5px 5px #fffbf3;
+  box-shadow: 0 1px 1px -1px #B1E814, 0 0pc 8pc #6A8E02;
 }
 
 .closeModalIconContainer {
@@ -310,6 +265,8 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
+  box-shadow: 0 1px 1px -1px #B1E814, 0 0pc 8pc black;
+  cursor: pointer;
 }
 
 /* featureRequestBox */
@@ -463,17 +420,6 @@ input:checked + .slider {
     justify-content: center;
   }
 
-  /* Menu choice navbar */
-  
-    .menuChoiceNavbar--liWrapper,
-    .menuChoiceNavbar--searchInput {
-      font-size: 18px;
-    }
-
-    .menuChoiceModal {
-      width: 210px;
-    }
-
     /* site catch title */
 
     .site_catch_title_wrapper--icon {
@@ -499,7 +445,7 @@ input:checked + .slider {
   
   .featureRequestBox--content {
     width: 80%;
-    padding: 0px 0px 0px 260px;
+    padding: 0px 0px 0px 20px;
   }
   
   .featureRequestBox--votesCountBoxContainer {
@@ -540,7 +486,7 @@ input:checked + .slider {
   }
 
   .featureRequestBox-roadmap .featureRequestBox--content  {
-    padding: 0px 0px 0px 140px;
+    padding: 0px 0px 0px 80px;
   }
   
 }

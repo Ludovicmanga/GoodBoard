@@ -14,14 +14,22 @@ var FeatureRequestsContainer = function (_a) {
     if ((0, Utils_1.isEmpty)(allFeatureRequests)) {
         return react_1["default"].createElement("div", null, "Pas encore de feature request");
     }
-    if (requestAuthorType === 'user') {
+    {
+        if (allFeatureRequests.error)
+            (react_1["default"].createElement("div", null, allFeatureRequests.error));
+    }
+    if (requestAuthorType === 'user'
+        && !(0, Utils_1.isEmpty)(allFeatureRequests)
+        && !allFeatureRequests.error) {
         return allFeatureRequests.map(function (featureRequest) {
             if (featureRequest.creatorType === 'user') {
                 return (react_1["default"].createElement(FeatureRequestsBox_1.FeatureRequestsBox, { key: featureRequest._id, title: featureRequest.title, details: featureRequest.details, votes: featureRequest.voters.length, featureRequestId: featureRequest._id, boxType: "homePage" }));
             }
         });
     }
-    else if (requestAuthorType === "admin") {
+    else if (requestAuthorType === "admin"
+        && !(0, Utils_1.isEmpty)(allFeatureRequests)
+        && !allFeatureRequests.error) {
         return allFeatureRequests.map(function (featureRequest) {
             if (featureRequest.creatorType == "admin") {
                 return (react_1["default"].createElement(FeatureRequestsBox_1.FeatureRequestsBox, { key: featureRequest._id, title: featureRequest.title, details: featureRequest.details, votes: featureRequest.voters.length, featureRequestId: featureRequest._id, boxType: "homePage" }));
