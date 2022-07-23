@@ -25,7 +25,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
 exports.__esModule = true;
 exports.Home = void 0;
 var react_1 = __importStar(require("react"));
-var react_redux_1 = require("react-redux");
 var FeatureRequestsContainer_1 = require("../components/FeatureRequest/FeatureRequestContainer/FeatureRequestsContainer");
 var NewFeatureRequestModal_1 = require("../components/NewFeatureRequest/NewFeatureRequestModal/NewFeatureRequestModal");
 var UserOrCompanyRequestsToggleButton_1 = require("../components/UserOrCompanyRequestsToggleButton/UserOrCompanyRequestsToggleButton");
@@ -33,8 +32,6 @@ var Home = function (_a) {
     var handleCurrentPage = _a.handleCurrentPage;
     handleCurrentPage('Feature requests');
     var _b = (0, react_1.useState)(false), isToggled = _b[0], setIsToggled = _b[1];
-    var userData = (0, react_redux_1.useSelector)(function (state) { return state.userReducer; });
-    var allFeatureRequests = (0, react_redux_1.useSelector)(function (state) { return state.allFeatureRequestsReducer; });
     var _c = (0, react_1.useState)(false), newFeatureRequestModalisOpen = _c[0], setNewFeatureRequestModalisOpen = _c[1];
     var handleCloseModal = function (newFeatureRequestModalState) {
         setNewFeatureRequestModalisOpen(function () { return newFeatureRequestModalState; });

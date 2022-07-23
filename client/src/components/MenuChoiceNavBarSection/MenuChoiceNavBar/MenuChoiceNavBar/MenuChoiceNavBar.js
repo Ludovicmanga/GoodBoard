@@ -25,7 +25,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
 exports.__esModule = true;
 exports.MenuChoiceNavBar = void 0;
 var react_1 = __importStar(require("react"));
-var MenuChoiceModal_1 = require("../../MenuChoiceModal/MenuChoiceModal");
 var MenuChoiceNavBar = function (_a) {
     var currentPage = _a.currentPage;
     var _b = (0, react_1.useState)(false), isToggled = _b[0], setIsToggled = _b[1];
@@ -34,16 +33,8 @@ var MenuChoiceNavBar = function (_a) {
         setIsToggled(function () { return !isToggled; });
     };
     return (react_1["default"].createElement("nav", { className: 'menuChoiceNavBar' },
-        react_1["default"].createElement("div", null,
-            react_1["default"].createElement("ul", { className: 'menuChoiceNavbar--liWrapper' },
-                react_1["default"].createElement("a", { href: '#', onClick: function (e) { return handleToggle(e); } },
-                    react_1["default"].createElement("li", { className: 'menuChoiceli' },
-                        isToggled ? (react_1["default"].createElement(react_1["default"].Fragment, null,
-                            react_1["default"].createElement("i", { className: "fa-solid fa-angle-down icon" }),
-                            react_1["default"].createElement(MenuChoiceModal_1.MenuChoiceModal, null))) : (react_1["default"].createElement("i", { className: "fa-solid fa-angle-right icon" })),
-                        currentPage)),
-                react_1["default"].createElement("li", null,
-                    react_1["default"].createElement("i", { className: "fa-solid fa-magnifying-glass icon menuChoiceNavbar--searchIcon" }),
-                    react_1["default"].createElement("input", { className: 'menuChoiceNavbar--searchInput', placeholder: 'Search' }))))));
+        react_1["default"].createElement("div", { className: 'menuChoiceNavBar--item' }, "Vos suggestions"),
+        react_1["default"].createElement("div", { className: 'menuChoiceNavBar--item' }, "Nos id\u00E9es"),
+        react_1["default"].createElement("div", { className: 'menuChoiceNavBar--item' }, "Roadmap")));
 };
 exports.MenuChoiceNavBar = MenuChoiceNavBar;

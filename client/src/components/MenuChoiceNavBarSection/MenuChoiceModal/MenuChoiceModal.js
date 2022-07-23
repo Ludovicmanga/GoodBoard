@@ -13,7 +13,7 @@ var MenuChoiceModal = function (_a) {
                 react_1["default"].createElement(react_router_dom_1.NavLink, { to: "/" },
                     react_1["default"].createElement("div", null,
                         react_1["default"].createElement("i", { className: "fa-regular fa-face-smile menuChoiceModal--icon menuChoiceModal--icon" }),
-                        "Feature requests"))),
+                        "Feature requests!!!!!"))),
             react_1["default"].createElement("li", { className: 'roadmapli' },
                 react_1["default"].createElement(react_router_dom_1.NavLink, { to: "/roadmap" },
                     react_1["default"].createElement("div", null,

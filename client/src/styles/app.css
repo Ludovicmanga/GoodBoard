@@ -14,7 +14,7 @@
 body {
   padding: 10px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background: #748FFC;
+  background: white;
 }
 
 ul {
@@ -44,6 +44,20 @@ button {
 /* ------------ Layout ------------ */
   
 /* ------------ Modules ------------ */
+
+/* Menu choice nav bar */
+
+.menuChoiceNavBar {
+  display: flex;
+}
+
+  .menuChoiceNavBar--item {
+    border: solid black 0.4px;
+    margin: 0px 10px 0px 10px;
+    background: #748FFC;
+    color: white;
+    padding: 4px;
+  }
 
 /* signUp Form */
 

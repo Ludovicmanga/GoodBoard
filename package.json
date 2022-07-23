@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "start-all":  "tsc && nodemon app.ts && tsc -w && cd client && npm start",
     "start": "tsc && node app.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "tsc && nodemon app.ts && tsc -w"
