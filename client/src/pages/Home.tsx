@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { FeatureRequestsContainer } from '../components/FeatureRequest/FeatureRequestContainer/FeatureRequestsContainer';
 import { NewFeatureRequestModal } from '../components/NewFeatureRequest/NewFeatureRequestModal/NewFeatureRequestModal';
-import { UserOrCompanyRequestsToggleButton } from '../components/UserOrCompanyRequestsToggleButton/UserOrCompanyRequestsToggleButton';
 
 type HomeProps = {
   handleCurrentPage: (page: string) => void
@@ -20,20 +19,8 @@ export const Home: React.FC<HomeProps> = ({ handleCurrentPage }) => {
   }
 
   return (
-    <div>
-      <div className='site_catch_title_container'>
-        <div className='site_catch_title_wrapper'>
-          <p>
-            <span className='site_catch_title_wrapper--text'>Vous avez des idées ?</span><i className="fa-regular fa-lightbulb site_catch_title_wrapper--icon site_catch_title_wrapper--bulbIcon"></i><br />
-            <span className='site_catch_title_wrapper--text'>Nous vous écoutons ! </span><i className="fa-solid fa-ear-listen site_catch_title_wrapper--icon site_catch_title_wrapper--earIcon"></i>
-          </p>
-        </div>
-      </div>
-      
+    <div>      
       <div className='UserOrCompanyRequestsToggleButton--container'>
-        <div className='contextualText'>Vos idées</div>
-        <UserOrCompanyRequestsToggleButton isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)} />
-        <div className='contextualText'>Nos idées</div>
       </div>
       {isToggled ? (
         <FeatureRequestsContainer requestAuthorType = 'admin' />

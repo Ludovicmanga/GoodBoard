@@ -15,9 +15,9 @@ export const MenuChoiceNavBar: React.FC<MenuChoiceNavBarProps> = ({ currentPage 
 
         return (
             <nav className='menuChoiceNavBar'>
-                <div className='menuChoiceNavBar--item'>Vos suggestions</div>
-                <div className='menuChoiceNavBar--item'>Nos idées</div>
-                <div className='menuChoiceNavBar--item'>Roadmap</div>
+                <a href="#" className='menuChoiceNavBar--item'>Vos suggestions</a>
+                <a href="#" className='menuChoiceNavBar--item'>Nos idées</a>
+                <a href="#" className='menuChoiceNavBar--item'>Roadmap</a>
             </nav>
         );
 }

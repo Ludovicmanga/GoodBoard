@@ -12,9 +12,8 @@
 }
 
 body {
-  padding: 10px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background: white;
+  background: #748FFC;
 }
 
 ul {
@@ -116,32 +115,16 @@ button {
   height: 50px;
 }
 
+/* Hero */
+
+.hero_container {
+  height: 180px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* Main page  */
-
-.site_catch_title_container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.site_catch_title_wrapper {
-  background: #fffbf4;
-  padding: 18px;
-  border-radius: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 80%;
-}
-
-.site_catch_title_wrapper--text {
-  font-size: 16px;
-}
-
-.site_catch_title_wrapper--icon {
-  font-size: 17px;
-  margin: 0px 0px 0px 12px;
-}
 
 .UserOrCompanyRequestsToggleButton--container {
   display: flex;
@@ -434,20 +417,6 @@ input:checked + .slider {
     justify-content: center;
   }
 
-    /* site catch title */
-
-    .site_catch_title_wrapper--icon {
-      font-size: 25px;
-    }
-
-    .site_catch_title_wrapper--bulbIcon {
-      color: gold;
-    }
-
-    .site_catch_title_wrapper--earIcon {
-      color: black;
-    }
-
     /* Feature request box */
   .featureRequestBox {
     margin: 22px 450px 22px 450px;
@@ -485,10 +454,6 @@ input:checked + .slider {
 
   .roadmap-column {
     width: 55%;
-  }
-
-  .site_catch_title_wrapper {
-    width: 40%;
   }
 
   .roadmap-column--title-container {

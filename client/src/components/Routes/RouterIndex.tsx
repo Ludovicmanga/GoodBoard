@@ -7,6 +7,7 @@ import SignInPage from '../Log/SignInPage/SignInPage';
 import SignUpPage from '../Log/SignUpPage/SignUpPage';
 import { RoadMap } from '../../pages/RoadMap';
 import { MenuChoiceNavBar } from '../MenuChoiceNavBarSection/MenuChoiceNavBar/MenuChoiceNavBar/MenuChoiceNavBar';
+import Hero from '../Hero/Hero';
 
 type RouterIndexProps = { 
 
@@ -21,6 +22,7 @@ const RouterIndex: React.FC<RouterIndexProps> = ({}) => {
   return (
     <Router>
         <MainNavBar />
+        <Hero />
         <MenuChoiceNavBar currentPage={currentPage} />
         <Routes>
              <Route path="/" element = {<Home handleCurrentPage={handleCurrentPage} />}/>
