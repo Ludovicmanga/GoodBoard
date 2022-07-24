@@ -13,7 +13,7 @@
 
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background: #748FFC;
+  background: white;
 }
 
 ul {
@@ -44,10 +44,36 @@ button {
   
 /* ------------ Modules ------------ */
 
+/* Site header */
+
+.siteHeader {
+  background: #748FFC;
+}
+
+/* Hero */
+
+.hero--container {
+  height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.hero--company-name {
+  font-size: 50px;
+}
+
+.hero--company-description {
+  
+}
+
 /* Menu choice nav bar */
 
 .menuChoiceNavBar {
   display: flex;
+  margin: 20px 0px 0px 0px;
 }
 
   .menuChoiceNavBar--item {
@@ -99,6 +125,12 @@ button {
   cursor: pointer;
 }
 
+.mainNavbar {
+  display: flex;
+  justify-content: center;
+  color: white;
+}
+
 .mainNavbar--container, .mainNavbar--linksContainer {
     display: flex;
     margin: 0px;
@@ -113,15 +145,6 @@ button {
 .logo_container img {
   width: 50px;
   height: 50px;
-}
-
-/* Hero */
-
-.hero_container {
-  height: 180px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 /* Main page  */
@@ -183,12 +206,10 @@ button {
 }
 
 .newFeatureRequestModalOpenButton {
+  background: #748FFC;
   margin: 10px 10px 10px 10px;
   padding: 10px;
   border-radius: 10px;
-  background: rgba(214, 218, 32, 0.40);
-  display: flex;
-  box-shadow: 0 1px 1px -1px #B1E814, 0 0pc 8pc black;
   cursor: pointer;
 }
 
@@ -210,13 +231,12 @@ button {
 }
 
 .newFeatureRequestModal--wrapper {
-  background: rgba(255, 244, 149, 0.57);
-  border-radius: 15px;
+  border-radius: 4px;
+  background: #748FFC;;
   border: solid black 0.1px;
   padding: 10px;
   height: 500px;
   width: 275px;
-  box-shadow: 0 1px 1px -1px #B1E814, 0 0pc 8pc #6A8E02;
 }
 
 .closeModalIconContainer {
@@ -246,7 +266,7 @@ button {
   display: flex;
   align-items: center;
   height: 50px;
-  border-radius: 15px;
+  border-radius: 2px;
   width: 90%;
   padding: 9px;
 }

@@ -19,7 +19,7 @@ export const Home: React.FC<HomeProps> = ({ handleCurrentPage }) => {
   }
 
   return (
-    <div>      
+    <div>
       <div className='UserOrCompanyRequestsToggleButton--container'>
       </div>
       {isToggled ? (
