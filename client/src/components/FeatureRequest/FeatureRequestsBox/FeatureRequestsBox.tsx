@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { downVote, upVote } from '../../../actions/featureRequest.actions';
@@ -31,32 +30,27 @@ export const FeatureRequestsBox: React.FC<FeatureRequestsBoxProps> = ({ title, d
 
         return (
             <a href='#' className={boxType == "roadmap" ? "featureRequestBox featureRequestBox-roadmap" : "featureRequestBox"} onClick={(e) => {
-                e.preventDefault();
-            }}>
-                <div className='badge'>
-                    <i className="fa-solid fa-crown"></i>
-                </div>
+                            e.preventDefault();
+                        }}>
+                <a href="#" onClick={(e) => handleToggleVote(e)} className='featureRequestBox--votesCountBoxContainer'>
+                    { isVoted ? (
+                        <div className='featureRequestBox--votesCountBox featureRequestBox--votesCountBox-voted'>
+                            <i className="fa-solid fa-check icon"></i>
+                            <div>{votes}</div>                        
+                        </div>
+                    ) : (
+                        <div className='featureRequestBox--votesCountBox featureRequestBox--votesCountBox-notVoted'>
+                            <i className="fa-solid fa-angle-up icon" />
+                            <div>{votes}</div>                      
+                        </div>
+                    )}
+                </a>
                 <div className='featureRequestBox--content-wrapper'>
                     <div className='featureRequestBox--content'>
                         <h2>{title}</h2>
                         <p>{details}</p>
                     </div>
-                    <a href="#" onClick={(e) => handleToggleVote(e)} className='featureRequestBox--votesCountBoxContainer'>
-                    { isVoted ? (
-                        <div className='featureRequestBox--votesCountBox featureRequestBox--votesCountBox-voted'>
-                            <div>{votes}</div>                        
-                                <i className="fa-solid fa-check icon"></i>
-                        </div>
-                    ) : (
-                        <div className='featureRequestBox--votesCountBox featureRequestBox--votesCountBox-notVoted'>
-                            <div>{votes}</div>                        
-                                <i className="fa-solid fa-angle-up icon" />
-                        </div>
-                    )}
-                        
-                    </a>
                 </div>
-                
             </a>
         );
 }

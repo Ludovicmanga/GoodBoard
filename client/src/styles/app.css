@@ -20,10 +20,6 @@ ul {
   padding: 0px;
 }
 
-a, a:visited, a:hover, a:active {
-  color: inherit;
-}
-
 a {
     text-decoration: none;
 }
@@ -73,15 +69,22 @@ button {
 
 .menuChoiceNavBar {
   display: flex;
-  margin: 20px 0px 0px 0px;
+  justify-content: center;
+  height: 40px;
+  margin: 20px 0px 30px 0px;
 }
 
   .menuChoiceNavBar--item {
+    display: flex;
+    font-size: 15px;
+    justify-content: center;
+    align-items: center;
     border: solid black 0.4px;
     margin: 0px 10px 0px 10px;
     background: #748FFC;
     color: white;
-    padding: 4px;
+    padding: 13px;
+    width: 30%;
   }
 
 /* signUp Form */
@@ -147,57 +150,6 @@ button {
   height: 50px;
 }
 
-/* Main page  */
-
-.UserOrCompanyRequestsToggleButton--container {
-  display: flex;
-  justify-content: center;
-  margin: 40px 0px;
-}
-
-.UserOrCompanyRequestsToggleButton--container .contextualText {
-  display: flex;
-  align-items: center;
-}
-
-.userCompanyRequestToggleButton {
-  position: relative;
-  display: inline-block;
-  width: 100px;
-  height: 34px;
-  margin: 0px 15px;
-}
-
-.userCompanyRequestToggleButton input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.userCompanyRequestToggleButton .slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: #ccc;
-  border-radius: 34px;
-  transition: 0.4s;
-}
-
-.userCompanyRequestToggleButton .slider::before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  border-radius: 50%;
-  transition: 0.4s;
-}
-
 /* New feature request modal */
 
 .newFeatureRequestModalOpenButton--container {
@@ -207,9 +159,11 @@ button {
 
 .newFeatureRequestModalOpenButton {
   background: #748FFC;
+  display: flex;
+  align-items: center;
+  border: none;
   margin: 10px 10px 10px 10px;
   padding: 10px;
-  border-radius: 10px;
   cursor: pointer;
 }
 
@@ -286,11 +240,19 @@ button {
   cursor: pointer;
 }
 
+/* featureRequests section */
+
+.featureRequestsContainer {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
 /* featureRequestBox */
 
 .featureRequestBox {
+  width: 90%;
   background: white;
-  border-radius: 15px;
   padding: 15px;
   display: flex;
   margin: 0px 0px 15px 0px;
@@ -301,16 +263,6 @@ button {
   display: flex;
   justify-content: space-between;
   width: 100%;
-}
-
-.featureRequestBox .badge {
-  color: gold;
-  position: absolute;
-  left: -1px;
-  top: -15px;
-  background: rgba(0, 0, 0, 0.08);
-  padding: 10px;
-  border-radius: 10px;
 }
 
 .featureRequestBox--content {
@@ -329,18 +281,17 @@ button {
 }
 
 .featureRequestBox--votesCountBox-notVoted {
-  background: rgba(50, 108, 150, 0.35)
+  background: #748FFC;
 }
 
 .featureRequestBox--votesCountBox {
   display: flex;
-  flex-direction: row;
+  color: white;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: solid 0.5px;
-  border-radius: 15px;
   margin: 10px;
-  height: 50px;
+  height: 100px;
   width: 70px;
 }
 
@@ -419,6 +370,12 @@ input:checked + .slider {
 
   /* ------------ Modules ------------ */
 
+  /* Main page */
+  
+  .menuChoiceNavBar--item {
+    width: 15%;
+  }
+
   /* Log forms */
 
   .logForm {
@@ -438,12 +395,15 @@ input:checked + .slider {
   }
 
     /* Feature request box */
-  .featureRequestBox {
-    margin: 22px 450px 22px 450px;
+
+  .featureRequestBox--container {
+    display: flex;
+    justify-content: center;
   }
 
-  .featureRequestBox .badge {
-    font-size: 21px;
+  .featureRequestBox {
+    width: 60%;
+    border: solid black 0.1px;
   }
   
   .featureRequestBox--content {

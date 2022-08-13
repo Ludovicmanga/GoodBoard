@@ -7,6 +7,8 @@ import SignUpPage from '../Log/SignUpPage/SignUpPage';
 import { RoadMap } from '../../pages/RoadMap';
 import { MenuChoiceNavBar } from '../MenuChoiceNavBarSection/MenuChoiceNavBar/MenuChoiceNavBar/MenuChoiceNavBar';
 import SiteHeader from '../SiteHeader/SiteHeader';
+import UserFeatureRequests from 'pages/UserFeatureRequests';
+import CompanyFeatureRequests from 'pages/CompanyFeatureRequests';
 
 type RouterIndexProps = { 
 
@@ -23,7 +25,8 @@ const RouterIndex: React.FC<RouterIndexProps> = ({}) => {
         <SiteHeader />
         <MenuChoiceNavBar currentPage={currentPage} />
         <Routes>
-             <Route path="/" element = {<Home handleCurrentPage={handleCurrentPage} />}/>
+             <Route path="/" element = {<UserFeatureRequests />}/>
+             <Route path="/company-feature-requests" element = {<CompanyFeatureRequests />}/>
              <Route path="/roadmap" element = {<RoadMap handleCurrentPage={handleCurrentPage} />}/>
              <Route path="/login" element = {<SignInPage />} />
              <Route path="/signUp" element = {<SignUpPage />} />
