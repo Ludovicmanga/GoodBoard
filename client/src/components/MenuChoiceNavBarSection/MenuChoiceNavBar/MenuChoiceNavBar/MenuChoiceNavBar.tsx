@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { NavLink } from 'react-router-dom';
 import { MenuChoiceModal } from '../../MenuChoiceModal/MenuChoiceModal';
 
 type MenuChoiceNavBarProps = {
@@ -15,27 +16,15 @@ export const MenuChoiceNavBar: React.FC<MenuChoiceNavBarProps> = ({ currentPage 
 
         return (
             <nav className='menuChoiceNavBar'>
-                <div>
-                    <ul className='menuChoiceNavbar--liWrapper'>
-                        <a href='#' onClick={(e) => handleToggle(e)}>
-                            <li className='menuChoiceli'>
-                                {isToggled ? (
-                                    <>
-                                        <i className="fa-solid fa-angle-down icon" />
-                                        <MenuChoiceModal />
-                                    </>
-                                ) : (
-                                    <i className="fa-solid fa-angle-right icon" />
-                                ) }
-                                { currentPage }
-                            </li>
-                        </a>
-                        <li>
-                            <i className="fa-solid fa-magnifying-glass icon menuChoiceNavbar--searchIcon"></i>
-                            <input className='menuChoiceNavbar--searchInput' placeholder='Search' />
-                        </li>
-                    </ul>
-                </div>
+                <NavLink className='menuChoiceNavBar--item' to="/">
+                    <h5>Nos idées</h5>
+                </NavLink>
+                <NavLink className='menuChoiceNavBar--item' to="/company-feature-requests">
+                    <h5>Vos idées</h5>
+                </NavLink>
+                <NavLink className='menuChoiceNavBar--item' to="/roadmap">
+                    <h5>Roadmap</h5>
+                </NavLink>
             </nav>
         );
 }

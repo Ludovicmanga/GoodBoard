@@ -20,7 +20,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     return to.concat(ar || Array.prototype.slice.call(from));
 };
 exports.__esModule = true;
-var featureRequest_actions_1 = require("actions/featureRequest.actions");
+var featureRequest_actions_1 = require("../actions/featureRequest.actions");
 var user_actions_1 = require("../actions/user.actions");
 var initialState = {
     voted: []

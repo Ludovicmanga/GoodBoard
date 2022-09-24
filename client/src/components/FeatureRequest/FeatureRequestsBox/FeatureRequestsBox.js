@@ -46,16 +46,14 @@ var FeatureRequestsBox = function (_a) {
     return (react_1["default"].createElement("a", { href: '#', className: boxType == "roadmap" ? "featureRequestBox featureRequestBox-roadmap" : "featureRequestBox", onClick: function (e) {
             e.preventDefault();
         } },
-        react_1["default"].createElement("div", { className: 'badge' },
-            react_1["default"].createElement("i", { className: "fa-solid fa-crown" })),
+        react_1["default"].createElement("a", { href: "#", onClick: function (e) { return handleToggleVote(e); }, className: 'featureRequestBox--votesCountBoxContainer' }, isVoted ? (react_1["default"].createElement("div", { className: 'featureRequestBox--votesCountBox featureRequestBox--votesCountBox-voted' },
+            react_1["default"].createElement("i", { className: "fa-solid fa-check icon" }),
+            react_1["default"].createElement("div", null, votes))) : (react_1["default"].createElement("div", { className: 'featureRequestBox--votesCountBox featureRequestBox--votesCountBox-notVoted' },
+            react_1["default"].createElement("i", { className: "fa-solid fa-angle-up icon" }),
+            react_1["default"].createElement("div", null, votes)))),
         react_1["default"].createElement("div", { className: 'featureRequestBox--content-wrapper' },
             react_1["default"].createElement("div", { className: 'featureRequestBox--content' },
                 react_1["default"].createElement("h2", null, title),
-                react_1["default"].createElement("p", null, details)),
-            react_1["default"].createElement("a", { href: "#", onClick: function (e) { return handleToggleVote(e); }, className: 'featureRequestBox--votesCountBoxContainer' }, isVoted ? (react_1["default"].createElement("div", { className: 'featureRequestBox--votesCountBox featureRequestBox--votesCountBox-voted' },
-                react_1["default"].createElement("div", null, votes),
-                react_1["default"].createElement("i", { className: "fa-solid fa-check icon" }))) : (react_1["default"].createElement("div", { className: 'featureRequestBox--votesCountBox featureRequestBox--votesCountBox-notVoted' },
-                react_1["default"].createElement("div", null, votes),
-                react_1["default"].createElement("i", { className: "fa-solid fa-angle-up icon" })))))));
+                react_1["default"].createElement("p", null, details)))));
 };
 exports.FeatureRequestsBox = FeatureRequestsBox;
