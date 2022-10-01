@@ -1,4 +1,4 @@
-import { FeatureRequestsContainer } from 'components/FeatureRequest/FeatureRequestContainer/FeatureRequestsContainer'
+import { FeatureRequestsContainer } from '../components/FeatureRequest/FeatureRequestContainer/FeatureRequestsContainer'
 import React from 'react'
 
 type Props = {}
