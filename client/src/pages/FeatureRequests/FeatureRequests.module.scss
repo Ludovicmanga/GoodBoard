@@ -1,0 +1,32 @@
+@import '../../styles/useSpacing';
+
+.newFeatureRequestsBox {
+    @include useSpacing(margin, m , m, m, m);
+    display: flex;
+    justify-content: center;
+}
+
+.featureRequestTitle {
+    text-align: center;
+}
+
+.featureRequestDescription {
+    text-align: center;
+}
+
+.iconContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @include useSpacing(margin, s, s, s, s);
+}
+
+.votesBox {
+    display: flex;
+}
+
+.voteCountContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

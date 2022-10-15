@@ -2,9 +2,9 @@
   "name": "goodboard",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "app.ts",
   "scripts": {
-    "start-all":  "npm start && client/npm start",
+    "start-all": "npm start && client/npm start",
     "start": "tsc && node app.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "tsc && nodemon app.ts && tsc -w"
@@ -12,6 +12,9 @@
   "author": "Ludovic",
   "license": "LM",
   "dependencies": {
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
+    "@mui/material": "^5.10.7",
     "@reduxjs/toolkit": "^1.7.0-rc.0",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.20.0",
@@ -35,6 +38,7 @@
     "validator": "^13.7.0"
   },
   "devDependencies": {
-    "@types/express": "^4.17.13"
+    "@types/express": "^4.17.13",
+    "@types/mocha": "^10.0.0"
   }
 }

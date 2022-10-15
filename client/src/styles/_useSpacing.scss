@@ -1,0 +1,148 @@
+@import 'functions';
+@import '_variables.scss';
+
+/*
+ * Return the value for spacing size for small screen
+ * Used in useSpacing mixin
+ */
+@function getSpacingSmallScreen($spacingSize) {
+  @if ($spacingSize == 0 or $spacingSize == auto) {
+    @return $spacingSize;
+  }
+
+  @if ($spacingSize == xxxs) {
+    @return pxToRem(2);
+  }
+
+  @if ($spacingSize == xxs) {
+    @return pxToRem(4);
+  }
+  @if ($spacingSize == xs) {
+    @return pxToRem(8);
+  }
+  @if ($spacingSize == s) {
+    @return pxToRem(12);
+  }
+  @if ($spacingSize == m) {
+    @return pxToRem(16);
+  }
+  @if ($spacingSize == l) {
+    @return pxToRem(24);
+  }
+  @if ($spacingSize == xl) {
+    @return pxToRem(32);
+  }
+  @if ($spacingSize == xxl) {
+    @return pxToRem(64);
+  }
+  @if ($spacingSize == xxxl) {
+    @return pxToRem(96);
+  }
+  @error "Spacing size #{$spacingSize} must be one of 0, auto, xxs, xs, s, m, l, xl, xxl, xxxl";
+}
+
+/*
+ * Return the value for spacing size for medium screen
+ * Used in useSpacing mixin
+ */
+@function getSpacingMediumScreen($spacingSize) {
+  @if ($spacingSize == 0 or $spacingSize == auto) {
+    @return $spacingSize;
+  }
+  @if ($spacingSize == xxxs) {
+    @return pxToRem(2);
+  }
+  @if ($spacingSize == xxs) {
+    @return pxToRem(4);
+  }
+  @if ($spacingSize == xs) {
+    @return pxToRem(8);
+  }
+  @if ($spacingSize == s) {
+    @return pxToRem(12);
+  }
+  @if ($spacingSize == m) {
+    @return pxToRem(16);
+  }
+  @if ($spacingSize == l) {
+    @return pxToRem(24);
+  }
+  @if ($spacingSize == xl) {
+    @return pxToRem(40);
+  }
+  @if ($spacingSize == xxl) {
+    @return pxToRem(64);
+  }
+  @if ($spacingSize == xxxl) {
+    @return pxToRem(96);
+  }
+  @error "Spacing size #{$spacingSize} must be one of 0, auto, xxs, xs, s, m, l, xl, xxl, xxxl";
+}
+
+/*
+ * Return the value for spacing size for large screen
+ * Used in useSpacing mixin
+ */
+@function getSpacingLargeScreen($spacingSize) {
+  @if ($spacingSize == 0 or $spacingSize == auto) {
+    @return $spacingSize;
+  }
+  @if ($spacingSize == xxxs) {
+    @return pxToRem(2);
+  }
+  @if ($spacingSize == xxs) {
+    @return pxToRem(4);
+  }
+  @if ($spacingSize == xs) {
+    @return pxToRem(8);
+  }
+  @if ($spacingSize == s) {
+    @return pxToRem(12);
+  }
+  @if ($spacingSize == m) {
+    @return pxToRem(16);
+  }
+  @if ($spacingSize == l) {
+    @return pxToRem(24);
+  }
+  @if ($spacingSize == xl) {
+    @return pxToRem(48);
+  }
+  @if ($spacingSize == xxl) {
+    @return pxToRem(80);
+  }
+  @if ($spacingSize == xxxl) {
+    @return pxToRem(120);
+  }
+  @error "Spacing size #{$spacingSize} must be one of 0, auto, xxs, xs, s, m, l, xl, xxl, xxxl";
+}
+
+@mixin useSpacing(
+  $spacingType,
+  $spacingTop,
+  $spacingRight: $spacingTop,
+  $spacingBottom: $spacingTop,
+  $spacingLeft: $spacingRight
+) {
+  // Spacing for small screens
+  @media screen {
+    #{$spacingType}: getSpacingSmallScreen($spacingTop)
+      getSpacingSmallScreen($spacingRight) getSpacingSmallScreen($spacingBottom)
+      getSpacingSmallScreen($spacingLeft);
+  }
+
+  // Spacing for medium screens
+  @media screen and (min-width: $maxw-small-screen) {
+    #{$spacingType}: getSpacingMediumScreen($spacingTop)
+      getSpacingMediumScreen($spacingRight)
+      getSpacingMediumScreen($spacingBottom)
+      getSpacingMediumScreen($spacingLeft);
+  }
+
+  // Spacing for large screens
+  @media screen and (min-width: $maxw-medium-screen) {
+    #{$spacingType}: getSpacingLargeScreen($spacingTop)
+      getSpacingLargeScreen($spacingRight) getSpacingLargeScreen($spacingBottom)
+      getSpacingLargeScreen($spacingLeft);
+  }
+}
