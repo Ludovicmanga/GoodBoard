@@ -1,0 +1,31 @@
+@import 'functions';
+@import '_variables.scss';
+
+@mixin useGrid(
+  $columnCountDesktop: 12,
+  $columnCountMobile: 4,
+  $columnGapSmallScreen: pxToRem(16),
+  $columnGapMediumScreen: pxToRem(20),
+  $columnGapLargeScreen: pxToRem(28)
+) {
+  // Grid for small screens
+  @media screen {
+    display: grid;
+    grid-template-columns: repeat($columnCountMobile, 1fr);
+    column-gap: $columnGapSmallScreen;
+  }
+
+  // Grid for medium screens
+  @media screen and (min-width: $maxw-small-screen) {
+    display: grid;
+    grid-template-columns: repeat($columnCountDesktop, 1fr);
+    column-gap: $columnGapMediumScreen;
+  }
+
+  // Grid for large screens
+  @media screen and (min-width: $maxw-medium-screen) {
+    display: grid;
+    grid-template-columns: repeat($columnCountDesktop, 1fr);
+    column-gap: $columnGapLargeScreen;
+  }
+}

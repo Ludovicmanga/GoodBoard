@@ -1,7 +1,44 @@
+@import '../../styles/variables';
+@import '../../styles/useSpacing';
+
 .container {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     height: 70px;
-    border: solid 1px;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button {
+    height: $medium-button-height;
+    width: 100px;
+}
+
+.btnText {
+    font-size: $menu-choice-font-size-mobile-screen;
+}
+
+// Media queries desktop
+
+@media screen and (min-width: $maxw-small-screen) {
+    .container {
+        justify-content: center;
+    }
+
+    .buttonContainer {
+        @include useSpacing(margin, m, m, m, m);
+    }
+
+    .button {
+        width: 180px;
+    }
+
+    .btnText {
+        font-size: $menu-choice-font-size-computer-screen;
+    }
 }

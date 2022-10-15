@@ -1,0 +1,81 @@
+@import 'functions';
+
+$fs: (
+  title-xl: pxToRem(40),
+  title-l: pxToRem(22),
+  title-m: pxToRem(16),
+  title-s: pxToRem(14),
+  navElement: pxToRem(13),
+  cta: pxToRem(13),
+  bodycopy: pxToRem(12),
+  legals: pxToRem(11),
+);
+
+$fs-smallScreen: (
+  title-l: pxToRem(20),
+);
+
+$lh: (
+  title-xl: pxToRem(48),
+  title-l: pxToRem(30),
+  title-m: pxToRem(24),
+  title-s: pxToRem(20),
+  navElement: pxToRem(20),
+  cta: pxToRem(20),
+  bodycopy: pxToRem(19),
+  legals: pxToRem(19),
+);
+
+$lh-smallScreen: (
+  title-l: pxToRem(28),
+);
+
+$ff: (
+  title-xl: Poppins,
+);
+
+/*
+ * Return the value for font size
+ * Used in useTypography mixin
+ */
+@function getFontSize($typography, $isSmallScreen: false) {
+  @if ($isSmallScreen and map-get($fs-smallScreen, $typography)) {
+    @return map-get($fs-smallScreen, $typography);
+  } @else {
+    @return map-get($fs, $typography);
+  }
+  @error "Font size #{$typography} must be one of title-xl, title-l, title-m, title-s, title-navElement, cta, bodycopy, legals";
+}
+
+/*
+ * Return the value for line height
+ * Used in useTypography mixin
+ */
+@function getLineHeight($typography, $isSmallScreen: false) {
+  @if ($isSmallScreen and map-get($lh-smallScreen, $typography)) {
+    @return map-get($lh-smallScreen, $typography);
+  } @else {
+    @return map-get($lh, $typography);
+  }
+  @error "Font size #{$typography} must be one of title-xl, title-l, title-m, title-s, title-navElement, cta, bodycopy, legals";
+}
+
+/*
+ * Return the value for font family
+ * Used in useTypography mixin
+ */
+@function getFontFamily($typography) {
+  @return map-get($ff, $typography);
+  @error "Font family #{$typography} must be one of title-xl";
+}
+
+@mixin useTypography($typography) {
+  font-size: getFontSize($typography);
+  line-height: getLineHeight($typography);
+  font-family: getFontFamily($typography);
+
+  @media screen and (max-width: $maxw-screen) {
+    font-size: getFontSize($typography, true);
+    line-height: getLineHeight($typography, true);
+  }
+}

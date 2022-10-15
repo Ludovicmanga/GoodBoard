@@ -4,3 +4,336 @@ $dark-blue: #0C0454;
 
 //white
 $white: white;
+
+
+@import 'functions';
+@import 'useTypography';
+
+// colors
+$c-black: #222424;
+$c-black-opacity-95pp: rgba(34, 36, 36, 0.95);
+$c-black-opacity-75pp: rgba(34, 36, 36, 0.75);
+// color-blue
+
+$c-blue: #0900b8;
+
+$c-blue-light-90pp: #e6e6f8;
+$c-blue-light-80pp: #ceccf1;
+$c-blue-light-70pp: #b5b3ea;
+$c-blue-light-60pp: #9d99e3;
+$c-blue-light-50pp: #8480dc;
+$c-blue-light-40pp: #6f68ff;
+$c-blue-light-30pp: #534dcd;
+$c-blue-light-20pp: #3a33c6;
+$c-blue-light-10pp: #2219bf;
+$c-blue-dark-10pp: #0800a6;
+$c-blue-dark-20pp: #070093;
+$c-blue-dark-30pp: #060081;
+$c-blue-dark-40pp: #05006e;
+$c-blue-dark-50pp: #05005c;
+$c-blue-dark-60pp: #04004a;
+$c-blue-dark-70pp: #030037;
+$c-blue-dark-80pp: #020025;
+$c-blue-dark-90pp: #010012;
+
+// color-salmon
+
+$c-salmon: #ffae42;
+$c-salmon-light-90pp: #fff7ec;
+$c-salmon-light-80pp: #ffefd9;
+$c-salmon-light-70pp: #ffe7c6;
+$c-salmon-light-60pp: #ffdfb3;
+$c-salmon-light-50pp: #ffd7a1;
+$c-salmon-light-40pp: #ffce8e;
+$c-salmon-light-30pp: #ffc67b;
+$c-salmon-light-20pp: #ffbe68;
+$c-salmon-light-10pp: #ffb655;
+$c-salmon-dark-10pp: #e69d3b;
+$c-salmon-dark-20pp: #cc8b35;
+$c-salmon-dark-40pp: #996828;
+
+// color-green
+
+$c-green: #3fbea7;
+$c-green-light-90pp: #ecf9f6;
+$c-green-light-80pp: #d9f2ed;
+$c-green-light-70pp: #c5ece5;
+$c-green-light-60pp: #b2e5dc;
+$c-green-light-50pp: #9fdfd3;
+$c-green-light-40pp: #8cd8ca;
+$c-green-light-30pp: #79d2c1;
+$c-green-light-20pp: #65cbb9;
+$c-green-light-10pp: #52c5b0;
+$c-green-dark-90pp: #061311;
+$c-green-dark-80pp: #0d2621;
+$c-green-dark-70pp: #133932;
+$c-green-dark-60pp: #194c43;
+$c-green-dark-50pp: #205f54;
+$c-green-dark-40pp: #267264;
+$c-green-dark-30pp: #2c8575;
+$c-green-dark-20pp: #329886;
+$c-green-dark-10pp: #39ab96;
+
+// color-secondary
+
+$c-fishblue: #4dc6e2;
+$c-red: #e56a54;
+
+// color-grayscale
+$c-white: #ffffff;
+
+$c-grey-dark-50pp: #515454;
+$c-grey-dark-30pp: #717575;
+$c-grey-dark-20pp: #818686;
+$c-grey-dark-10pp: #919696;
+$c-grey: #a1a7a7;
+$c-grey-light-40pp: #c7caca;
+$c-grey-light-80pp: #eceded;
+$c-grey-light-85pp: #fafafa;
+$c-grey-light-95pp: #fdfdfd;
+
+// color-filter
+
+// filter color-navy
+
+$c-filternavy: invert(8%) sepia(68%) saturate(6386%) hue-rotate(254deg)
+  brightness(79%) contrast(108%);
+
+// filter color-secondary
+$c-filtergreen: invert(67%) sepia(81%) saturate(306%) hue-rotate(111deg)
+  brightness(93%) contrast(92%);
+
+$c-filterfishblue: invert(75%) sepia(99%) saturate(1805%) hue-rotate(157deg)
+  brightness(93%) contrast(89%);
+
+$c-filterred: invert(63%) sepia(41%) saturate(4133%) hue-rotate(325deg)
+  brightness(94%) contrast(91%);
+
+// filter color-black
+
+$c-filterblack: invert(9%) sepia(12%) saturate(223%) hue-rotate(131deg)
+  brightness(92%) contrast(88%);
+
+// filter color-blue
+
+$c-filterblue: invert(11%) sepia(63%) saturate(5603%) hue-rotate(241deg)
+  brightness(92%) contrast(131%);
+
+$c-filterultralightBlue: invert(85%) sepia(21%) saturate(516%)
+  hue-rotate(201deg) brightness(105%) contrast(104%);
+
+$c-filterverylightBlue: invert(89%) sepia(32%) saturate(4731%)
+  hue-rotate(192deg) brightness(109%) contrast(106%);
+
+$c-filterlesslightBlue: invert(69%) sepia(97%) saturate(2191%)
+  hue-rotate(202deg) brightness(106%) contrast(104%);
+
+$c-filtermediumlightBlue: invert(51%) sepia(15%) saturate(1798%)
+  hue-rotate(204deg) brightness(109%) contrast(101%);
+
+$c-filterdarklightBlue: invert(36%) sepia(48%) saturate(2031%)
+  hue-rotate(222deg) brightness(107%) contrast(101%);
+
+$c-filterdarkBlue: invert(8%) sepia(70%) saturate(7280%) hue-rotate(250deg)
+  brightness(62%) contrast(122%);
+
+$c-filterverydarkBlue: invert(12%) sepia(22%) saturate(5664%) hue-rotate(231deg)
+  brightness(89%) contrast(131%);
+
+$c-filterultradarkBlue: invert(7%) sepia(36%) saturate(3183%) hue-rotate(223deg)
+  brightness(101%) contrast(121%);
+
+// filter color-yellow
+
+$c-filteryellow: invert(80%) sepia(90%) saturate(1017%) hue-rotate(320deg)
+  brightness(101%) contrast(95%);
+
+$c-filterultralightYellow: invert(90%) sepia(3%) saturate(1221%)
+  hue-rotate(341deg) brightness(109%) contrast(99%);
+
+$c-filterverylightYellow: invert(84%) sepia(34%) saturate(252%)
+  hue-rotate(348deg) brightness(105%) contrast(98%);
+
+$c-filterlesslightYellow: invert(92%) sepia(25%) saturate(792%)
+  hue-rotate(325deg) brightness(99%) contrast(98%);
+
+$c-filtermediumlightYellow: invert(87%) sepia(13%) saturate(1765%)
+  hue-rotate(344deg) brightness(98%) contrast(100%);
+
+$c-filterdarklightYellow: invert(80%) sepia(39%) saturate(614%)
+  hue-rotate(343deg) brightness(104%) contrast(96%);
+
+// filter color-salmon
+
+$c-filtersalmon: invert(63%) sepia(23%) saturate(497%) hue-rotate(318deg)
+  brightness(106%) contrast(95%);
+
+$c-filterultralightSalmon: invert(94%) sepia(2%) saturate(1255%)
+  hue-rotate(314deg) brightness(103%) contrast(97%);
+
+$c-filterverylightSalmon: invert(89%) sepia(6%) saturate(1008%)
+  hue-rotate(315deg) brightness(105%) contrast(93%);
+
+$c-filtermediumlightSalmon: invert(81%) sepia(2%) saturate(3133%)
+  hue-rotate(315deg) brightness(111%) contrast(91%);
+
+$c-filterdarklightSalmon: invert(77%) sepia(5%) saturate(1523%)
+  hue-rotate(317deg) brightness(110%) contrast(88%);
+
+// filter color-grayscale
+
+$c-filterwhite: invert(100%) sepia(0%) saturate(0%) hue-rotate(316deg)
+  brightness(103%) contrast(102%);
+
+$c-filterdarkGrey: invert(58%) sepia(10%) saturate(159%) hue-rotate(131deg)
+  brightness(86%) contrast(91%);
+
+$c-filterverydarkGrey: invert(34%) sepia(8%) saturate(287%) hue-rotate(131deg)
+  brightness(95%) contrast(80%);
+
+$c-filtergrey: invert(69%) sepia(5%) saturate(207%) hue-rotate(131deg)
+  brightness(96%) contrast(89%);
+
+$c-filterlightGrey: invert(97%) sepia(1%) saturate(593%) hue-rotate(131deg)
+  brightness(86%) contrast(86%);
+
+$c-filterveryLightGrey: invert(97%) sepia(4%) saturate(2357%) hue-rotate(184deg)
+  brightness(108%) contrast(86%);
+
+// color-gradient
+
+$c-gradient-light-blue-red: linear-gradient(
+  234.51deg,
+  rgba(9, 0, 184, 0.2) 10.09%,
+  rgba(240, 67, 147, 0.2) 115.2%
+);
+
+$c-gradient-dark-red-blue: linear-gradient(
+  111.16deg,
+  rgba(32, 12, 124, 0.6) 11.75%,
+  rgba(9, 0, 184, 0.6) 69.94%
+);
+
+$c-gradient-light-blue2-red: (
+  294.82deg,
+  rgba(240, 67, 147, 0.2) 10.32%,
+  rgba(240, 67, 147, 0.2) 10.33%,
+  rgba(9, 0, 184, 0.2) 101.94%
+);
+
+// font-size
+
+$menu-choice-font-size-mobile-screen: pxToRem(10);
+$menu-choice-font-size-computer-screen: pxToRem(12);
+
+// z-indexes
+$z-xxs: 0;
+$z-xs: 1;
+$z-s: 2;
+$z-m: 3;
+$z-l: 4;
+$z-xl: 5;
+$z-xxl: 6;
+
+$z-navigation-desktop: $z-l;
+$z-dior-seller-header: 10;
+$z-scroll-to-top: 99;
+$z-fullscreen-video: 100;
+$z-skip-links: 101;
+$z-preview-label: 150;
+$z-iadvize-button: 1000000000;
+$z-overlay: $z-iadvize-button + 1; // Make to overlap iadvize button
+$z-overlay-loader: $z-overlay + 1;
+
+// constants
+$maxw-screen: pxToRem(799);
+$minw-screen: pxToRem(800);
+$iPadw-screen: pxToRem(767);
+$iPad-ten-inches-screen: pxToRem(834);
+$iPad-landscape-maxw-screen: pxToRem(1023);
+$mobile-landscape-max-height: pxToRem(375);
+// unofficial breakpoint used to avoid poor experience on small mobiles
+$unofficial-mobile-small-screen: pxToRem(350);
+// New breakpoints
+$maxw-small-screen: pxToRem(1025);
+$maxw-medium-screen: pxToRem(1681);
+
+// fonts
+$ff-main: 'Poppins';
+
+// font weight
+$fw-normal: 400;
+
+$header-height-desktop: pxToRem(56);
+$header-height-mobile: pxToRem(50);
+$header-height-addin: pxToRem(100);
+$header-search-height-mobile: pxToRem(62);
+
+$footer-height-addin: pxToRem(50);
+
+$section-title-height: pxToRem(120);
+$top-content-sheets-height: pxToRem(70);
+$top-content-slides-height: pxToRem(60);
+
+$sidebar-large: pxToRem(200);
+$sidebar-thin: pxToRem(70);
+
+$account-header-height: pxToRem(45);
+$max-content-width: pxToRem(1440);
+
+$tall-button-height: pxToRem(60);
+$medium-button-height: pxToRem(40);
+$small-button-height: pxToRem(20);
+
+$filter-header-height: pxToRem(55);
+$filter-footer-height: pxToRem(80);
+
+$scrollbar-width: pxToRem(250);
+
+$addin-width: pxToRem(300);
+$newvariablebutton-size: pxToRem(50);
+
+$genericMarginBottom: pxToRem(40);
+$genericMarginTop: pxToRem(64);
+$mgenericMarginTop: pxToRem(52);
+
+$smallGenericMarginBottom: pxToRem(20);
+$smallGenericMarginTop: pxToRem(20);
+
+$extraSmallGenericMargin: pxToRem(10);
+
+$productPageElementsMarginBottom: pxToRem(40);
+$productPageElementsMarginTop: pxToRem(40);
+
+$greyLine: pxToRem(1) solid $c-grey-light-40pp;
+$redLine: pxToRem(1) solid $c-red;
+
+// common style
+$squared-border-radius: pxToRem(5);
+$border-radius-sidebar: pxToRem(30);
+$border-radius-section-title: pxToRem(60);
+$border-light: pxToRem(1) solid $c-grey;
+//border-radius
+$squaredBorder: 5px;
+$lightSquaredBorder: 10px;
+$lightRoundedBorder: 20px;
+$roundedBorder: 40px;
+$text-field-input-height: pxToRem(46);
+$standard-box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+$heavy-box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+  rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+$getstarted-box-shadow: $c-salmon-dark-40pp 0px 7px 29px 0px;
+$frame-box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px,
+  rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+$button-box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px 0px;
+$light-box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 2px;
+
+//gold gradient for Xmas theme
+$gradient-gold: linear-gradient(
+  92deg,
+  #a48b5e -31%,
+  #ce944a -7%,
+  #d8a965 11%,
+  #f9f3e2 121%,
+  #f4e3af 132%
+);

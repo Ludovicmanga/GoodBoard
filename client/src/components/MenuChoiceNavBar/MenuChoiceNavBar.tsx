@@ -9,15 +9,27 @@ type Props = {
 const MenuChoiceNavBar = (props: Props) => {
   return (
     <div className={styles.container}>
-        <Button variant="contained">
-          Vos idées
-        </Button>
-        <Button variant="contained">
-            Nos idées
-        </Button>
-        <Button variant="contained">
-            Roadmap
-        </Button>
+        <div className={styles.buttonContainer}>
+          <Button className={styles.button} variant="contained">
+            <div className={styles.btnText}>
+              Vos idées
+            </div>
+          </Button>
+        </div>
+        <div className={styles.buttonContainer}>
+          <Button className={styles.button} variant="contained">
+            <div className={styles.btnText}>
+                Nos idées
+            </div>
+          </Button>
+        </div>
+        <div className={styles.buttonContainer}>
+          <Button className={styles.button} variant="contained">
+            <div className={styles.btnText}>
+                Roadmap
+            </div>
+          </Button>
+        </div>
     </div>
   )
 }

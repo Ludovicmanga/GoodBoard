@@ -1,0 +1,26 @@
+@import '_variables.scss';
+
+$largePagePadding: pxToRem(48);
+$mediumPagePadding: pxToRem(40);
+$smallPagePadding: pxToRem(20);
+
+// Main container outside padding - gutter.
+@mixin usePagePaddings() {
+  // Paddings for small screens
+  @media screen {
+    padding-left: $smallPagePadding;
+    padding-right: $smallPagePadding;
+  }
+
+  // Paddings for medium screens
+  @media screen and (min-width: $maxw-small-screen) {
+    padding-left: $mediumPagePadding;
+    padding-right: $mediumPagePadding;
+  }
+
+  // Paddings for large screens
+  @media screen and (min-width: $maxw-medium-screen) {
+    padding-left: $largePagePadding;
+    padding-right: $largePagePadding;
+  }
+}

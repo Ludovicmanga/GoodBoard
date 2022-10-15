@@ -6,8 +6,13 @@ type Props = {}
 const MainHero = (props: Props) => {
   return (
     <div className={styles.container}>
+        <div className={styles.imgContainer}>
+        </div>
         <div className={styles.text}>
-            DOTOS
+            Nom de l'entreprise
+        </div>
+        <div className={styles.text}>
+            Déscription de l'entreprise
         </div>
     </div>
   )

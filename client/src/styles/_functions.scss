@@ -1,0 +1,41 @@
+/*
+ * Return the rem of a pixel's value
+ *
+ * Sample: pxToRem(50)
+ * Result: 3.125rem
+ */
+@function pxToRem($number) {
+  @return #{calc($number / 16)}rem;
+}
+
+/*
+ * Return the percent ratio from width and height
+ *
+ * Sample: ratio(16, 9)
+ * Result: 56.25%
+ */
+@function ratio($width, $height) {
+  @return #{$height / $width * 100%};
+}
+
+@mixin ieAndEdgeStyles() {
+  @supports (-ms-ime-align: auto) {
+    /* EDGE CSS styles go here */
+    @content;
+  }
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    /* IE10+ CSS styles go here */
+    @content;
+  }
+}
+
+@mixin safariStyles() {
+  @media not all and (min-resolution: 0.001dpcm) {
+    @content;
+  }
+}
+
+@mixin background-opacity($color, $opacity: 0.3) {
+  background: $color; /* The Fallback */
+  background: rgba($color, $opacity);
+}
