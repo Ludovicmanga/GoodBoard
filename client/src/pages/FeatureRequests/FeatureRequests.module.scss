@@ -18,7 +18,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 10px
+    @include useSpacing(margin, s, s, s, s);
 }
 
 .votesBox {

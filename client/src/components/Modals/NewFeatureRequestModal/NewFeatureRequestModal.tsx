@@ -7,18 +7,6 @@ import Button from '@mui/material/Button';
 import { TextField } from '@mui/material';
 import styles from './NewFeatureRequestModal.module.scss';
 
-const style = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
-
 export default function TransitionsModal(props: { modalIsOpen: boolean; handleCloseModal: () => void;}) {
   return (
     <div>
@@ -34,7 +22,7 @@ export default function TransitionsModal(props: { modalIsOpen: boolean; handleCl
         }}
       >
         <Fade in={props.modalIsOpen}>
-          <Box sx={style}>
+          <div className={styles.modalContentContainer}>
             <div>Voters: </div>
             <div>Status: </div>
             <TextField id="outlined-basic" variant="outlined" />
@@ -42,7 +30,7 @@ export default function TransitionsModal(props: { modalIsOpen: boolean; handleCl
             <div className={styles.submitButtonContainer}>
               <Button variant="contained">Add request</Button>
             </div>
-          </Box>
+          </div>
         </Fade>
       </Modal>
     </div>

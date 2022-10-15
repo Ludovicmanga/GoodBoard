@@ -279,7 +279,13 @@ $sidebar-large: pxToRem(200);
 $sidebar-thin: pxToRem(70);
 
 $account-header-height: pxToRem(45);
+
+// Widths
+
 $max-content-width: pxToRem(1440);
+$scrollbar-width: pxToRem(250);
+$modal-width-computer-screen: pxToRem(400);
+$modal-width-mobile-screen: pxToRem(280);
 
 $tall-button-height: pxToRem(60);
 $medium-button-height: pxToRem(40);
@@ -288,9 +294,6 @@ $small-button-height: pxToRem(20);
 $filter-header-height: pxToRem(55);
 $filter-footer-height: pxToRem(80);
 
-$scrollbar-width: pxToRem(250);
-
-$addin-width: pxToRem(300);
 $newvariablebutton-size: pxToRem(50);
 
 $genericMarginBottom: pxToRem(40);
