@@ -13,6 +13,14 @@
     @include useSpacing(padding, xl, xl, xl, xl);
 }
 
+.votersSection {
+    display: flex;
+}
+
+.votersPicsContainer {
+    display: flex;
+}
+
 .submitButtonContainer {
     @include useSpacing(margin, m , m, m, m);
 }
