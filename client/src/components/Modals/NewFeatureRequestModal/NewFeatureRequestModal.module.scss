@@ -17,10 +17,6 @@
     display: flex;
 }
 
-.votersPicsContainer {
-    display: flex;
-}
-
 .submitButtonContainer {
     @include useSpacing(margin, m , m, m, m);
 }

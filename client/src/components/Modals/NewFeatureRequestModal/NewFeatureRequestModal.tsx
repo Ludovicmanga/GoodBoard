@@ -3,7 +3,7 @@ import Backdrop from '@mui/material/Backdrop';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
-import { Avatar, FormLabel, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
+import { Avatar, AvatarGroup, FormLabel, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
 import styles from './NewFeatureRequestModal.module.scss';
 import ludoPhoto from '../../../photos/ludoImg.jpg';
 import { useState } from 'react';
@@ -34,10 +34,10 @@ export default function TransitionsModal(props: { modalIsOpen: boolean; handleCl
               <div>
                 Voters:
               </div>
-              <div className={styles.votersPicsContainer}>
+              <AvatarGroup total={9}>
                 <Avatar alt="Voters pic" src={ludoPhoto} />
-                <Avatar alt="Voters pic" src={ludoPhoto} />
-              </div>
+                <Avatar alt="Vote pic" src={ludoPhoto} />
+              </AvatarGroup>
             </div>
             <div>
               Status:
