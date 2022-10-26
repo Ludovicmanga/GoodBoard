@@ -1,13 +1,20 @@
 import * as React from 'react';
 import Backdrop from '@mui/material/Backdrop';
-import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
-import { TextField } from '@mui/material';
+import { Avatar, AvatarGroup, FormLabel, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
 import styles from './NewFeatureRequestModal.module.scss';
+import ludoPhoto from '../../../photos/ludoImg.jpg';
+import { useState } from 'react';
 
 export default function TransitionsModal(props: { modalIsOpen: boolean; handleCloseModal: () => void;}) {
+
+  const [status, setStatus] = useState('');
+  const handleChangeStatus = (e: SelectChangeEvent<string>) => {
+    setStatus(e.target.value);
+  }
+
   return (
     <div>
       <Modal
@@ -23,10 +30,37 @@ export default function TransitionsModal(props: { modalIsOpen: boolean; handleCl
       >
         <Fade in={props.modalIsOpen}>
           <div className={styles.modalContentContainer}>
-            <div>Voters: </div>
-            <div>Status: </div>
-            <TextField id="outlined-basic" variant="outlined" />
-            <TextField id="outlined-basic" variant="outlined" />
+            <div className={styles.votersSection}>
+              <div>
+                Voters:
+              </div>
+              <AvatarGroup total={9}>
+                <Avatar alt="Voters pic" src={ludoPhoto} />
+                <Avatar alt="Vote pic" src={ludoPhoto} />
+              </AvatarGroup>
+            </div>
+            <div>
+              Status:
+              <Select
+                labelId="status"
+                id="status"
+                value={status}
+                label="Status"
+                onChange={handleChangeStatus}
+              >
+                <MenuItem value='assigned'>Assigned</MenuItem>
+                <MenuItem value='unassigned'>Unassigned</MenuItem>
+                <MenuItem value='done'>Done</MenuItem>
+              </Select>
+            </div>
+            <TextField
+              label="Titre"
+              variant="filled"
+            />
+            <TextField
+              label="Description"
+              variant="filled"
+            />
             <div className={styles.submitButtonContainer}>
               <Button variant="contained">Add request</Button>
             </div>

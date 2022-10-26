@@ -5,7 +5,6 @@ var featureRequestController = require('../controllers/featureRequest.controller
 router.get('/get/all', featureRequestController.getAllFeatureRequests);
 router.get('/get/all-user', featureRequestController.getAllUserFeatureRequests);
 router.get('/get/all-company', featureRequestController.getAllCompanyFeatureRequests);
-router.get('/get/all', featureRequestController.getAllFeatureRequests);
 router.post('/create', featureRequestController.createFeatureRequest);
 router.patch("/up-vote/:id", featureRequestController.upVote);
 router.patch("/down-vote/:id", featureRequestController.downVote);
