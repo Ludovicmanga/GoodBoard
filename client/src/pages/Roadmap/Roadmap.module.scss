@@ -1,0 +1,35 @@
+@import '../../styles/useSpacing';
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    @include useSpacing(margin, xxs, xxs, xxs, xxs );
+    height: 15%;
+}
+
+.featureContainer {
+    overflow: scroll;
+    height: 80%;
+}
+
+.featureContainer::-webkit-scrollbar {
+    display: none;
+}
+
+.paperContainer {
+    width: 380px;
+    height: 500px;
+    @include useSpacing(margin, xs, xs, xs, xs)
+}

@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
-mongoose
-    .connect(`mongodb+srv://ludovicmangaj:${process.env.DB_USER_PASSWORD}@cluster0.fhytx.mongodb.net/goodboard`)
+export const DBConnection = mongoose
+    .connect(`mongodb+srv://ludovicmangaj:M433c'm442B@cluster0.fhytx.mongodb.net/goodboard`)
     .then( () => {
         console.log('connected to MongoDB !!')
     })

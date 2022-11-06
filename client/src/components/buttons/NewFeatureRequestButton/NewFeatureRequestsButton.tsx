@@ -3,8 +3,8 @@ import React from 'react';
 import styles from './NewFeatureRequestsButton.module.scss';
 import AddIcon from '@mui/icons-material/Add';
 import { useState } from 'react';
-import TransitionsModal from '../../Modals/NewFeatureRequestModal/NewFeatureRequestModal';
-import { useEffect } from 'react';
+import FeatureRequestModal from '../../Modals/FeatureRequestModal/FeatureRequestModal';
+import { FeatureRequestModalMode } from '../../../helpers/types';
 
 type Props = {}
 
@@ -18,10 +18,6 @@ function NewFeatureRequestsButton({}: Props) {
         setNewFeatureRequestsModalOpen(false);
     }
 
-    useEffect(() => {
-      console.log(newFeatureRequestsModalOpen, ' is the open state')
-    }, [newFeatureRequestsModalOpen])
-
   return (
     <>
       <div onClick={handleOpenNewFeatureRequestModal} className={styles.newFeatureRequestButtonContainer}>
@@ -30,7 +26,7 @@ function NewFeatureRequestsButton({}: Props) {
           New feature request
         </Fab>
       </div>
-      <TransitionsModal modalIsOpen={newFeatureRequestsModalOpen} handleCloseModal={handleCloseModal} />
+      <FeatureRequestModal modalMode={FeatureRequestModalMode.creation} modalIsOpen={newFeatureRequestsModalOpen} handleCloseModal={handleCloseModal} />
     </>
   )
 }

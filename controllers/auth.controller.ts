@@ -23,7 +23,7 @@ module.exports.signUp = (req, res) => {
         })
 }
 
-module.exports.login = (req, res) => {
+/* module.exports.login = (req, res) => {
     const {email, password} = req.body;
     const user = userModel.login(email, password)
         .then(
@@ -38,7 +38,7 @@ module.exports.login = (req, res) => {
             res.status(200).json({ formattedErrors });
         });
 
-}
+} */
 
 module.exports.logout = (req, res) => {
     res.cookie('jwt', '', { maxAge: 1 });

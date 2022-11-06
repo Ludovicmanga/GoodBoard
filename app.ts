@@ -1,41 +1,50 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var {checkUser, requireAuth} = require('./middleware/auth.middleware');
-require('dotenv').config({path: './config/.env'});
-require('./config/db.ts');
-const cors = require('cors');
+import createError from 'http-errors';
+import express from 'express';
+import passport from 'passport';
+import './config/db.ts';
+import cors from 'cors';
+import session from 'express-session';
+import MongoStore from 'connect-mongo';
 
 const corsOptions = {
-    origin: process.env.CLIENT_URL,
+    origin: 'http://localhost:3000',
     credentials: true,
     'allowed-Headers': ['sessionId', 'Content-type'],
     'exposedHeaders': ['sessionId'],
     'methods': 'GET, HEAD, PUT, PATCH, DELETE',
     'preflightContinue': false
 }
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var featureRequestRouter = require('./routes/featureRequest');
 
-const PORT = process.env.PORT || 2000;
+import usersRouter from './routes/users';
+import featureRequestRouter from './routes/featureRequest';
+
+const PORT = 8080;
+
+const sessionStore = MongoStore.create({
+  mongoUrl: "mongodb+srv://ludovicmangaj:M433c'm442B@cluster0.fhytx.mongodb.net/goodboard",
+  collectionName: 'sessions'
+})
 
 var app = express();
 
 app.use(cors(corsOptions));
-app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+  secret: 'this is my secrethkjrhkfrhkfh',
+  resave: false,
+  saveUnitialized: true,
+  store: sessionStore,
+  cookie: {
+    MaxAge: 1000 * 60 * 60 * 24
+  }
+}))
 
-app.get('*', checkUser);
-app.get('/jwtid', requireAuth, (req, res) => {
-    res.status(200).send(res.locals.user._id);
-});
-app.use('/', indexRouter);
+import './config/passport.setup';
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use('/users', usersRouter);
 app.use('/feature-request', featureRequestRouter);
 

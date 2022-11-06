@@ -1,0 +1,40 @@
+@import '../../styles/useSpacing';
+@import '../../styles/variables';
+
+.newFeatureRequestsBox {
+    @include useSpacing(margin, m , m, m, m);
+    display: flex;
+    justify-content: center;
+    height: $feature-request-box-height;
+}
+
+.contentBox {
+    width: 50%;
+    cursor: pointer;
+}
+
+.featureRequestTitle {
+    text-align: center;
+}
+
+.featureRequestDescription {
+    text-align: center;
+}
+
+.iconContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @include useSpacing(margin, s, s, s, s);
+}
+
+.votesBox {
+    display: flex;
+    width: $votes-count-box-width;
+}
+
+.voteCountContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
