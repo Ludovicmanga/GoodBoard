@@ -12,6 +12,7 @@ type Props = {}
 
 function Roadmap({}: Props) {
   const allFeatureRequests = useAppSelector(state => state.allFeatureRequests);
+  console.log(allFeatureRequests, ' is all the feature requests')
 
   return (
     <>
@@ -22,6 +23,7 @@ function Roadmap({}: Props) {
             {
               (Object.keys(FeatureRequestStatus) as Array<keyof typeof FeatureRequestStatus>).map((status) => {
                 const featureRequestsWithCorrespondingStatus = allFeatureRequests.filter(featureRequest => featureRequest.status === status);
+                console.log(featureRequestsWithCorrespondingStatus, ' is the corresponsing for ', status);
                   return (
                     <Paper elevation={3} className={styles.paperContainer}>
                       <Card className={styles.title} sx={{
@@ -31,7 +33,7 @@ function Roadmap({}: Props) {
                         <div className={styles.featureNumberContainer}>2</div>
                       </Card>
                       <div className={styles.featureContainer}>
-                        {featureRequestsWithCorrespondingStatus.length > 1 ?
+                        {featureRequestsWithCorrespondingStatus.length > 0 ?
                         featureRequestsWithCorrespondingStatus.map(featureRequestWithCorrespondingStatus => <RoadMapFeature featureRequest={featureRequestWithCorrespondingStatus} />
                         )
                         :
