@@ -1,23 +1,24 @@
-const featureRequestModel = require('../models/featureRequest.model');
-const ObjectId = require('mongoose').Types.ObjectId;
-const userModel = require('../models/user.model');
+import featureRequestModel from '../models/featureRequest.model';
+import mongoose from 'mongoose';
+import userModel from '../models/user.model';
 
-module.exports.getAllFeatureRequests = async (req, res) => {
+const ObjectId = mongoose.Types.ObjectId;
+
+export const getAllFeatureRequests = async (req, res) => {
     await featureRequestModel.find()
         .then(allFeatureRequests => res.status(200).send(allFeatureRequests));
 }
 
-module.exports.getAllCompanyFeatureRequests = async (req, res) => {
+export const getAllCompanyFeatureRequests = async (req, res) => {
     await featureRequestModel.find({ creatorType: "company" })
         .then(allCompanyFeatureRequests => res.status(200).send(allCompanyFeatureRequests));
 }
-
-module.exports.getAllUserFeatureRequests = async (req, res) => {
+export const getAllUserFeatureRequests = async (req, res) => {
     await featureRequestModel.find({ creatorType: "user" })
         .then(allUserFeatureRequests => res.status(200).send(allUserFeatureRequests));
 }
 
-module.exports.createFeatureRequest = (req, res) => {
+export const createFeatureRequest = (req, res) => {
     const newFeatureRequest = new featureRequestModel({
         title: req.body.title,
         details: req.body.details,
@@ -31,38 +32,30 @@ module.exports.createFeatureRequest = (req, res) => {
         .catch(error => console.log(error))
 }
 
-module.exports.upVote = (req, res) => {
-    if (!ObjectId.isValid(req.params.id) || !ObjectId.isValid(req.body.userId))
-      return res.status(400).send("ID unknown : " + req.params.id);
-
-    featureRequestModel.updateOne(
+export const upVote = async (req, res) => {
+    const updatedFeatureRequest = await featureRequestModel.updateOne(
         { _id: req.params.id },
         { $addToSet: { voters: req.body.userId } }
     )
-        .then(featureRequest => res.status(200).send(featureRequest))
-        .catch(error => res.status(200).json({ error }));
 
-    userModel.updateOne(
+    await userModel.updateOne(
         { _id: req.body.userId },
         { $addToSet: { voted: req.params.id } }
     )
-        .catch(error => res.status(200).json({ error }));
+    
+    res.status(200).json({ updatedFeatureRequest });
 }
 
-module.exports.downVote = (req, res) => {
-    if (!ObjectId.isValid(req.params.id) || !ObjectId.isValid(req.body.userId))
-      return res.status(400).send("ID unknown : " + req.params.id);
-
-      featureRequestModel.updateOne(
+export const downVote = async (req, res) => {
+    const updatedFeatureRequest = await featureRequestModel.updateOne(
         { _id: req.params.id },
         { $pull: { voters: req.body.userId } }
     )
-        .then(featureRequest => res.status(200).send(featureRequest))
-        .catch(error => res.status(400).json({ error }));
-    
-    userModel.updateOne(
+
+    await userModel.updateOne(
         { _id: req.body.userId },
         { $pull: { voted: req.params.id } }
     )
-        .catch(error => res.status(400).json({ error }));
+
+    res.status(200).json({ updatedFeatureRequest });
 }

@@ -35,80 +35,58 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 exports.__esModule = true;
-var mongoose = require('mongoose');
-var isEmail = require('validator').isEmail;
-var bcrypt = require('bcrypt');
-var userSchema = new mongoose.Schema({
-    pseudo: {
-        type: String,
-        required: true,
-        minlength: 3,
-        maxlength: 55,
-        unique: true,
-        trim: true
-    },
-    email: {
-        type: String,
-        required: true,
-        validate: [isEmail],
-        lowercase: true,
-        unique: true,
-        trim: true
-    },
-    password: {
-        type: String,
-        required: true,
-        max: 1024,
-        minlength: 6
-    },
-    type: {
-        type: String,
-        required: true,
-        max: 1024
-    },
-    voted: {
-        type: [String]
-    }
-});
-userSchema.pre("save", function (next) {
+var passport_1 = __importDefault(require("passport"));
+var passport_local_1 = __importDefault(require("passport-local"));
+var bcrypt_1 = __importDefault(require("bcrypt"));
+var user_model_1 = __importDefault(require("../models/user.model"));
+var customFields = {
+    usernameFiels: 'email'
+};
+passport_1["default"].use(new passport_local_1["default"](function verify(email, password, done) {
     return __awaiter(this, void 0, void 0, function () {
-        var salt, _a;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0: return [4 /*yield*/, bcrypt.genSalt()];
-                case 1:
-                    salt = _b.sent();
-                    _a = this;
-                    return [4 /*yield*/, bcrypt.hash(this.password, salt)];
-                case 2:
-                    _a.password = _b.sent();
-                    next();
-                    return [2 /*return*/];
-            }
-        });
-    });
-});
-userSchema.statics.login = function (email, password) {
-    return __awaiter(this, void 0, void 0, function () {
-        var user, auth;
+        var user, auth, e_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, this.findOne({ email: email })];
+                case 0:
+                    _a.trys.push([0, 4, , 5]);
+                    return [4 /*yield*/, user_model_1["default"].findOne({ email: email })];
                 case 1:
                     user = _a.sent();
                     if (!user) return [3 /*break*/, 3];
-                    return [4 /*yield*/, bcrypt.compare(password, user.password)];
+                    return [4 /*yield*/, bcrypt_1["default"].compare(password, user.password)];
                 case 2:
                     auth = _a.sent();
                     if (auth) {
-                        return [2 /*return*/, user];
+                        return [2 /*return*/, done(null, user)];
                     }
-                    throw Error('incorrect password');
-                case 3: throw Error('incorrect email');
+                    return [2 /*return*/, done(null, false, { message: 'Incorrect password.' })];
+                case 3: return [2 /*return*/, done(null, false, { message: 'Incorrect email.' })];
+                case 4:
+                    e_1 = _a.sent();
+                    return [2 /*return*/, done(e_1)];
+                case 5: return [2 /*return*/];
             }
         });
     });
-};
-var userModel = mongoose.model("user", userSchema);
-module.exports = userModel;
+}));
+passport_1["default"].serializeUser(function (user, done) {
+    return done(null, user.id);
+});
+passport_1["default"].deserializeUser(function (id, done) {
+    try {
+        var user = user_model_1["default"].findOne({ id: id });
+        if (!user) {
+            return done(null, false);
+        }
+        else {
+            return done(null, user);
+        }
+    }
+    catch (e) {
+        return done(e, null);
+    }
+});

@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken');
+/* const jwt = require('jsonwebtoken');
 const UserModel = require('../models/user.model');
 export {};
 
@@ -37,4 +37,4 @@ module.exports.requireAuth = (req, res, next) => {
     } else {
         console.log('no token');
     }
-}
+} */

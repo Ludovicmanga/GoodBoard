@@ -4,8 +4,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 exports.__esModule = true;
 exports.AxiosInst = void 0;
+var http_1 = __importDefault(require("http"));
 var axios_1 = __importDefault(require("axios"));
-var BASE_URL = process.env.NEXT_PUBLIC_BACK_BASE_URL || 'http://localhost:8080';
+var BASE_URL = process.env.NEXT_PUBLIC_BACK_BASE_URL || 'https://localhost:8080';
+var httpAgent = new http_1["default"].Agent();
+axios_1["default"].defaults.httpAgent = httpAgent;
 var AxiosInst = /** @class */ (function () {
     function AxiosInst() {
     }

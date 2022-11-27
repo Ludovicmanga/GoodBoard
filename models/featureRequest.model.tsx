@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 export {};
 
 const featureRequestSchema = new mongoose.Schema(
@@ -35,4 +35,4 @@ const featureRequestSchema = new mongoose.Schema(
 
 const featureRequestModel = mongoose.model("Feature Request", featureRequestSchema);
 
-module.exports = featureRequestModel;
+export default featureRequestModel;

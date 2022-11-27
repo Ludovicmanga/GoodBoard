@@ -1,7 +1,6 @@
-const mongoose = require('mongoose');
-const { isEmail } = require('validator');
-const bcrypt = require('bcrypt');
-export {};
+import mongoose from "mongoose";
+/* import { isEmail } from 'validator';
+ */import bcrypt from 'bcrypt';
 
 const userSchema = new mongoose.Schema(
     {
@@ -16,8 +15,8 @@ const userSchema = new mongoose.Schema(
         email: {
             type: String,
             required: true,
-            validate: [isEmail],
-            lowercase: true,
+/*             validate: [isEmail],
+ */            lowercase: true,
             unique: true,
             trim: true,
         },
@@ -38,13 +37,13 @@ const userSchema = new mongoose.Schema(
     }
 );
 
-userSchema.pre("save", async function(this: typeof userSchema, next) {
+userSchema.pre("save", async function(this, next) {
     const salt = await bcrypt.genSalt();
     this.password = await bcrypt.hash(this.password, salt);
     next();
 });
 
-userSchema.statics.login = async function(this: typeof userSchema, email, password) {
+/* export const login = async function(this: typeof userSchema, email, password) {
     const user = await this.findOne({ email });
     if (user) {
       const auth = await bcrypt.compare(password, user.password);
@@ -55,7 +54,7 @@ userSchema.statics.login = async function(this: typeof userSchema, email, passwo
     }
     throw Error('incorrect email')
   };
-
+ */
 const userModel = mongoose.model("user", userSchema);
 
-module.exports = userModel;
+export default userModel;

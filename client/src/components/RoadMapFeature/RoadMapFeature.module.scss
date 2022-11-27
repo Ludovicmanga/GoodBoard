@@ -1,0 +1,27 @@
+@import '../../styles/useSpacing';
+
+.container {
+    @include useSpacing(margin, 0, xs, xs, xs);
+}
+
+.topContent {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.title {
+    font-weight: bold;
+}
+
+.bottomContent {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.divider {
+    @include useSpacing(margin, s, 0);
+}
+
+.dotIcon {
+    @include useSpacing(margin, xs, xxs, 0, 0);
+}

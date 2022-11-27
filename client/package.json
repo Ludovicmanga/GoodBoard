@@ -48,6 +48,7 @@
     ]
   },
   "devDependencies": {
-    "@redux-devtools/core": "^3.13.1"
+    "@redux-devtools/core": "^3.13.1",
+    "override-material-ui-css": "^1.1.4"
   }
 }

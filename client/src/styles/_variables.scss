@@ -1,6 +1,7 @@
 
 // blue
 $dark-blue: #0C0454;
+$light-blue: rgba(25, 118, 210, 0.09);
 
 //white
 $white: white;
@@ -258,6 +259,9 @@ $unofficial-mobile-small-screen: pxToRem(350);
 $maxw-small-screen: pxToRem(1025);
 $maxw-medium-screen: pxToRem(1681);
 
+// height
+$feature-request-box-height: 150px;
+
 // fonts
 $ff-main: 'Poppins';
 
@@ -286,6 +290,8 @@ $max-content-width: pxToRem(1440);
 $scrollbar-width: pxToRem(250);
 $modal-width-computer-screen: pxToRem(400);
 $modal-width-mobile-screen: pxToRem(280);
+
+$votes-count-box-width: 60px;
 
 $tall-button-height: pxToRem(60);
 $medium-button-height: pxToRem(40);
