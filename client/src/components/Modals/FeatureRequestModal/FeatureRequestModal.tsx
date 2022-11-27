@@ -4,12 +4,14 @@ import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
 import {
+  Alert,
   Avatar,
   AvatarGroup,
   Divider,
   MenuItem,
   Select,
   SelectChangeEvent,
+  Snackbar,
   TextField,
 } from "@mui/material";
 import styles from "./FeatureRequestModal.module.scss";
@@ -26,6 +28,7 @@ import { capitalizeFirstLetter } from "../../../helpers/utils";
 import axios from "axios";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { addFeatureRequest, updateFeatureRequest } from '../../../redux/features/allFeatureRequestsSlice';
+import { setGeneralProperties } from "../../../redux/features/generalPropertiesSlice";
 
 export default function FeatureRequestModal(props: {
   modalMode: FeatureRequestModalMode;
@@ -33,6 +36,7 @@ export default function FeatureRequestModal(props: {
   handleCloseModal: () => void;
   featureRequestProperties?: FeatureRequest;
 }) {
+  const generalPropertiesState = useAppSelector(state => state.generalProperties); 
   const [featureRequestProperties, setFeatureRequestProperties] =
     useState<FeatureRequest>({
       _id: "",
@@ -68,23 +72,35 @@ export default function FeatureRequestModal(props: {
         }
       });
       if (createdFeatureRequest) {
-        console.log(createdFeatureRequest.data, ' is the creator thing' )
         dispatch(addFeatureRequest({
           featureRequest: createdFeatureRequest.data,
         }));
+        dispatch(setGeneralProperties({
+          mainSnackBar: {
+            isOpen: true,
+            message: 'The feature was successfully created',
+          }
+        }));
       }
     } else {
-      const upsertedFeatureRequest = await axios({
+      const updatedFeatureRequest = await axios({
         url: 'http://localhost:8080/feature-request/update',
         method: 'post',
         data: {
-            featureRequest: featureRequestProperties,
+          featureRequest: featureRequestProperties,
         }
       });
-      console.log(upsertedFeatureRequest, ' is the updated feature');
-      dispatch(updateFeatureRequest({
-        featureRequestToUpdate: upsertedFeatureRequest.data,
-      }));
+      if (updatedFeatureRequest) {
+        dispatch(updateFeatureRequest({
+          featureRequestToUpdate: updatedFeatureRequest.data,
+        }));
+        dispatch(setGeneralProperties({
+          mainSnackBar: {
+            isOpen: true,
+            message: 'The feature was successfully updated',
+          }
+        }));
+      }
     }
     props.handleCloseModal();
   };
@@ -182,7 +198,8 @@ export default function FeatureRequestModal(props: {
             className={styles.submitButton}
             variant="contained"
           >
-            { props.modalMode === FeatureRequestModalMode.creation ? 'Create request' : 'Update request' }
+            { props.modalMode === FeatureRequestModalMode.creation ? 'Create ' : 'Update ' }
+            request
           </Button>
         </div>
       </Fade>

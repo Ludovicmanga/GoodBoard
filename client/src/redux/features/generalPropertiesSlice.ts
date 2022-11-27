@@ -4,11 +4,19 @@ import { MenuSelected } from '../../helpers/types';
 interface GeneralProperties {
     featureRequestModalOpen: boolean;
     menuSelected: MenuSelected;
+    mainSnackBar: {
+      isOpen: boolean;
+      message: string;
+    }
 }
 
 const initialState: GeneralProperties = {
     featureRequestModalOpen: false,
     menuSelected: MenuSelected.yourIdeas,
+    mainSnackBar: {
+      isOpen: false,
+      message: '',
+    }
 }
 
 export const generalPropertiesSlice = createSlice({
