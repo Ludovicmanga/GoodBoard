@@ -22,6 +22,7 @@ import {
   FeatureRequest,
   FeatureRequestModalMode,
   FeatureRequestStatus,
+  UserType,
 } from "../../../helpers/types";
 import { useEffect } from "react";
 import { capitalizeFirstLetter } from "../../../helpers/utils";
@@ -29,6 +30,7 @@ import axios from "axios";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { addFeatureRequest, updateFeatureRequest } from '../../../redux/features/allFeatureRequestsSlice';
 import { setGeneralProperties } from "../../../redux/features/generalPropertiesSlice";
+import { emptyFeatureRequest } from "../../../helpers/constants";
 
 export default function FeatureRequestModal(props: {
   modalMode: FeatureRequestModalMode;
@@ -36,27 +38,21 @@ export default function FeatureRequestModal(props: {
   handleCloseModal: () => void;
   featureRequestProperties?: FeatureRequest;
 }) {
-  const generalPropertiesState = useAppSelector(state => state.generalProperties); 
   const [featureRequestProperties, setFeatureRequestProperties] =
-    useState<FeatureRequest>({
-      _id: "",
-      title: "",
-      details: "",
-      voters: [],
-      creatorType: "admin",
-      status: FeatureRequestStatus.unassigned,
-      creator: "",
-      createdAt: "",
-      updatedAt: "",
-    });
+    useState<FeatureRequest>(emptyFeatureRequest);
 
   useEffect(() => {
-    if (
-      props.featureRequestProperties &&
-      props.modalMode === FeatureRequestModalMode.update &&
-      props.modalIsOpen
-    ) {
-      setFeatureRequestProperties(props.featureRequestProperties);
+    if (props.modalIsOpen) {
+      if (
+        props.featureRequestProperties &&
+        props.modalMode === FeatureRequestModalMode.update
+      ) {
+        setFeatureRequestProperties(props.featureRequestProperties);
+      }
+      
+      if (props.modalMode === FeatureRequestModalMode.creation) {
+        setFeatureRequestProperties(emptyFeatureRequest);
+      }
     }
   }, [props.modalIsOpen, props.featureRequestProperties, props.modalMode]);
 
