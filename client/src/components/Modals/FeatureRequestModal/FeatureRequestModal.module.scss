@@ -35,8 +35,8 @@
     @include useSpacing(margin, 0 , s, 0, 0);
 }
 
-.submitButtonContainer {
-    @include useSpacing(margin, m , m, m, m);
+.submitButton {
+    @include useSpacing(margin, l, m, xxxs, 0);
 }
 
 .divider {
