@@ -26,8 +26,9 @@ export const getAllUserFeatureRequests = async (req, res) => {
     );
 };
 
-export const upsertFeatureRequest = async (req, res) => {
-  featureRequestModel.findOneAndUpdate(
+export const updateFeatureRequest = async (req, res) => {
+  if (req.body.featureRequest._id.length > 0) {
+    featureRequestModel.findOneAndUpdate(
     { _id: req.body.featureRequest._id },
     {
       title: req.body.featureRequest.title,
@@ -38,22 +39,24 @@ export const upsertFeatureRequest = async (req, res) => {
     },
     {
       new: true,
-      upsert: true,
     },
     function (err, upsertedFeatureRequest) {
       if (err) return res.status(500).send({ error: err });
       res.status(200).send(upsertedFeatureRequest);
     }
   );
+  }
 };
 
 export const createFeatureRequest = (req, res) => {
+  const featureRequestData = req.body.featureRequest;
+  
   const newFeatureRequest = new featureRequestModel({
-    title: req.body.title,
-    details: req.body.details,
-    creatorType: req.body.creatorType,
-    status: req.body.status,
-    creator: req.body.creator,
+    title: featureRequestData.title,
+    details: featureRequestData.details,
+    creatorType: featureRequestData.creatorType,
+    status: featureRequestData.status,
+    creator: featureRequestData.creator,
   });
 
   newFeatureRequest

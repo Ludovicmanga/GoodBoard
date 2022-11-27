@@ -9,7 +9,6 @@ import axios from 'axios';
 import { useAppDispatch } from '../../redux/hooks';
 import { downVote, upVote } from '../../redux/features/allFeatureRequestsSlice';
 import { useEffect } from 'react';
-import { lightBlueButton } from '../../helpers/colors';
 import { lightBlue } from '@mui/material/colors';
 
 type Props = {

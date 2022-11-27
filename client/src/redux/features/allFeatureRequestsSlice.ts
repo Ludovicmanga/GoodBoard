@@ -26,10 +26,13 @@ export const allFeatureRequestsSlice = createSlice({
           : featureRequest
         )
       )
-    }
+    },
+    addFeatureRequest: (state, action: PayloadAction<{ featureRequest: FeatureRequest }>) => {
+      return [...state, action.payload.featureRequest];
+    },
   },
 })
 
-export const { upVote, downVote, setAllFeatureRequests } = allFeatureRequestsSlice.actions
+export const { upVote, downVote, setAllFeatureRequests, addFeatureRequest } = allFeatureRequestsSlice.actions
 
 export default allFeatureRequestsSlice.reducer

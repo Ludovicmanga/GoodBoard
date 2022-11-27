@@ -24,6 +24,8 @@ import {
 import { useEffect } from "react";
 import { capitalizeFirstLetter } from "../../../helpers/utils";
 import axios from "axios";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { addFeatureRequest } from '../../../redux/features/allFeatureRequestsSlice';
 
 export default function FeatureRequestModal(props: {
   modalMode: FeatureRequestModalMode;
@@ -54,15 +56,33 @@ export default function FeatureRequestModal(props: {
     }
   }, [props.modalIsOpen, props.featureRequestProperties, props.modalMode]);
 
+  const dispatch = useAppDispatch();
+
   const handleUpsertRequest = async () => {
-    const upsertedFeatureRequest = await axios({
-      url: 'http://localhost:8080/feature-request/upsert',
-      method: 'post',
-      data: {
-          featureRequest: featureRequestProperties,
+    if (props.modalMode === FeatureRequestModalMode.creation) {
+      const createdFeatureRequest = await axios({
+        url: 'http://localhost:8080/feature-request/create',
+        method: 'post',
+        data: {
+            featureRequest: featureRequestProperties,
+        }
+      });
+      if (createdFeatureRequest) {
+        console.log(createdFeatureRequest.data, ' is the creator thing' )
+        dispatch(addFeatureRequest({
+          featureRequest: createdFeatureRequest.data,
+        }));
       }
-    });
-    console.log(upsertedFeatureRequest, ' is the upserted feature request, i sent ', featureRequestProperties)
+    } else {
+      const upsertedFeatureRequest = await axios({
+        url: 'http://localhost:8080/feature-request/update',
+        method: 'post',
+        data: {
+            featureRequest: featureRequestProperties,
+        }
+      });
+      console.log(upsertedFeatureRequest, ' is the updated feature');
+    }
   };
 
   return (
