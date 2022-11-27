@@ -25,7 +25,7 @@ import { useEffect } from "react";
 import { capitalizeFirstLetter } from "../../../helpers/utils";
 import axios from "axios";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { addFeatureRequest } from '../../../redux/features/allFeatureRequestsSlice';
+import { addFeatureRequest, updateFeatureRequest } from '../../../redux/features/allFeatureRequestsSlice';
 
 export default function FeatureRequestModal(props: {
   modalMode: FeatureRequestModalMode;
@@ -82,7 +82,11 @@ export default function FeatureRequestModal(props: {
         }
       });
       console.log(upsertedFeatureRequest, ' is the updated feature');
+      dispatch(updateFeatureRequest({
+        featureRequestToUpdate: upsertedFeatureRequest.data,
+      }));
     }
+    props.handleCloseModal();
   };
 
   return (
@@ -178,7 +182,7 @@ export default function FeatureRequestModal(props: {
             className={styles.submitButton}
             variant="contained"
           >
-            Add request
+            { props.modalMode === FeatureRequestModalMode.creation ? 'Create request' : 'Update request' }
           </Button>
         </div>
       </Fade>
