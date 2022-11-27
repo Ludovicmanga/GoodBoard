@@ -1,4 +1,5 @@
 @import '../../styles/useSpacing';
+@import '../../styles/variables';
 
 .container {
     display: flex;
@@ -13,15 +14,26 @@
 
 .title {
     display: flex;
+    font-weight: bold;
     justify-content: space-between;
     align-items: center;
-    @include useSpacing(margin, xxs, xxs, xxs, xxs );
+    @include useSpacing(margin, xxs, xxs, m, xxs );
     height: 15%;
 }
 
 .featureContainer {
     overflow: scroll;
     height: 80%;
+}
+
+.statusTitle {
+    @include useSpacing(margin, 0, 0, 0, l);
+}
+
+.featureNumberContainer {
+    @include useSpacing(padding, xxs, s);
+    @include useSpacing(margin, 0, s, 0, 0);
+    border: solid black 0.1px;
 }
 
 .featureContainer::-webkit-scrollbar {

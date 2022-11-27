@@ -52,8 +52,6 @@ export const downVote = async (req, res) => {
         { $pull: { voters: req.body.userId } }
     )
 
-    console.log(req.body, ' is the body')
-
     await userModel.updateOne(
         { _id: req.body.userId },
         { $pull: { voted: req.params.id } }

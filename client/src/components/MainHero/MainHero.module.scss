@@ -20,4 +20,26 @@
 
 .text {
     color: $white;
+    width: 60vw;
+}
+
+.companyName {
+    font-weight: bold;
+    text-align: center;
+}
+
+.companyDescription {
+    @include useSpacing(margin, xs , xs, xs, xs);
+    text-align: center;
+}
+
+.companyLink {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    text-align: center;
+}
+
+.companyLogo {
+    @include useSpacing(margin, m , m, m, m);
 }

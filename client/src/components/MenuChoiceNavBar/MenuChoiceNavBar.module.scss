@@ -1,5 +1,6 @@
 @import '../../styles/variables';
 @import '../../styles/useSpacing';
+@import '../../styles/useTypography';
 
 .container {
     display: flex;
@@ -20,7 +21,7 @@
 }
 
 .btnText {
-    font-size: $menu-choice-font-size-mobile-screen;
+    @include useTypography(title-xs);
 }
 
 // Media queries desktop
@@ -39,6 +40,6 @@
     }
 
     .btnText {
-        font-size: $menu-choice-font-size-computer-screen;
+        @include useTypography(title-xs);
     }
 }

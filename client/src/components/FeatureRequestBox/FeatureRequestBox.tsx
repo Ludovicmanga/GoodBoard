@@ -9,6 +9,8 @@ import axios from 'axios';
 import { useAppDispatch } from '../../redux/hooks';
 import { downVote, upVote } from '../../redux/features/allFeatureRequestsSlice';
 import { useEffect } from 'react';
+import { lightBlueButton } from '../../helpers/colors';
+import { lightBlue } from '@mui/material/colors';
 
 type Props = {
     featureRequestProperties: FeatureRequest;
@@ -26,16 +28,16 @@ function FeatureRequestBox (props: Props) {
     const handleVote = async () => {
         let url = '';
         if (isVoted) {
-            url = `http://localhost:8080/feature-request/down-vote/${props.featureRequestProperties._id}`;
+            url = `http://localhost:8080/feature-request/up-vote/${props.featureRequestProperties._id}`;
             dispatch(
-                downVote({
+                upVote({
                 featureRequestId: props.featureRequestProperties._id,
                 userId: '627846ccfd2156ff58270133'
             }))
         } else {
-            url = `http://localhost:8080/feature-request/up-vote/${props.featureRequestProperties._id}`;
+            url = `http://localhost:8080/feature-request/down-vote/${props.featureRequestProperties._id}`;
             dispatch(
-                upVote({
+                downVote({
                 featureRequestId: props.featureRequestProperties._id,
                 userId: '627846ccfd2156ff58270133'
             }))
@@ -72,15 +74,22 @@ function FeatureRequestBox (props: Props) {
             selected={isVoted}
             onChange={() => setIsVoted(!isVoted)}
             onClick={() => setIsClickedAtLeastOnce(true)}
+            className={styles.checkButton}
+            sx={{
+                '&.Mui-selected': {
+                    background: lightBlue[700],
+                },
+            }}
         >
             <div className={styles.votesBox}>
                 { isVoted ? 
                     <div className={styles.iconContainer}>
-                        <ArrowDropUpRoundedIcon />
-                    </div> : (
-                    <div className={styles.iconContainer}>
                         <CheckRoundedIcon sx={{ fontSize: 15 }}/>
                     </div>
+                     : (
+                    <div className={styles.iconContainer}>
+                    <ArrowDropUpRoundedIcon />
+                </div>
                 )}
                 <div className={styles.voteCountContainer}>
                     { props.featureRequestProperties.voters?.length || 0 }

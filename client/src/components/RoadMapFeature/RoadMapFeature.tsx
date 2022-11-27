@@ -3,8 +3,11 @@ import React from 'react'
 import styles from './RoadMapFeature.module.scss';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import { FeatureRequest, UserType } from '../../helpers/types';
 
-type Props = {}
+type Props = {
+    featureRequest: FeatureRequest;
+}
 
 const RoadMapFeature = (props: Props) => {
   return (
@@ -15,17 +18,21 @@ const RoadMapFeature = (props: Props) => {
                     fontSize: 10,
                     color: 'green',
                 }} />
-                <div>Nos suggestions</div>
+                <div>
+                    { props.featureRequest.creatorType === UserType.admin ? 'Nos suggestions' : 'Vos suggestions'}
+                </div>
             </div>
-            <div className={styles.title}>Hey le sangre</div>
-            <div className={styles.detailsContainer}>Yoo ça dit kwa</div>
+            <div className={styles.title}>{props.featureRequest.title}</div>
+            <div className={styles.detailsContainer}>{props.featureRequest.details}</div>
             <Divider className={styles.divider} />
             <div className={styles.bottomContent}>
                 <ArrowDropUpIcon className={styles.icon} sx={{
                     fontSize: 25,
                     color: 'blue',
                 }} />
-                <div>45</div>
+                <div>
+                 {props.featureRequest.voters.length}
+                </div>
             </div>
         </CardContent>
     </Card>

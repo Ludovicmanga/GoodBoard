@@ -15,6 +15,12 @@ export enum UserType {
     admin = "admin"
 }
 
+export enum FeatureRequestStatus {
+    unassigned = "unassigned",
+    assigned = "assigned",
+    done = "done"
+}
+
 export enum FeatureRequestModalMode {
     update = "update",
     creation = "creation"

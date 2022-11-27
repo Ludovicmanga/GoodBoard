@@ -9,16 +9,38 @@
     width: $modal-width-mobile-screen;
     background: $white;
     border: 0.5px solid #000;
+    border-radius: 8px;
     box-shadow: 24px;
-    @include useSpacing(padding, xl, xl, xl, xl);
+    @include useSpacing(padding, l, xl, xl, xl);
 }
 
-.votersSection {
+.modalTitle {
+    text-align: center;
+    font-weight: bold;
+    @include useSpacing(margin, 0, 0, l, 0);
+}
+
+.textInput {
+    width: 100%;
+}
+
+.votersSection, .statusSection {
     display: flex;
+    @include useSpacing(margin, 0 , 0, s, 0);
+}
+
+.votersSectionTitle, .statusSectionTitle {
+    display: flex;
+    align-items: center;
+    @include useSpacing(margin, 0 , s, 0, 0);
 }
 
 .submitButtonContainer {
     @include useSpacing(margin, m , m, m, m);
+}
+
+.divider {
+    @include useSpacing(margin, 0 , 0, l, 0);
 }
 
 @media screen and (min-width: $maxw-small-screen) {
