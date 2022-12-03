@@ -21,9 +21,9 @@ function NewFeatureRequestsButton({}: Props) {
   return (
     <>
       <div onClick={handleOpenNewFeatureRequestModal} className={styles.newFeatureRequestButtonContainer}>
-        <Fab color="primary" variant="extended">
-          <AddIcon sx={{ mr: 1 }} />
-          New feature request
+        <Fab color="primary" variant="extended" className={styles.button}>
+          <AddIcon className={styles.addIcon}/>
+          New request
         </Fab>
       </div>
       <FeatureRequestModal modalMode={FeatureRequestModalMode.creation} modalIsOpen={newFeatureRequestsModalOpen} handleCloseModal={handleCloseModal} />

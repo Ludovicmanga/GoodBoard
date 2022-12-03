@@ -18,7 +18,7 @@ const FeatureRequests = (props: Props) => {
   return (
     <>
       <SiteMainHeader />
-      { featureRequestsWithCorrespondingPropsType.length > 1 ? featureRequestsWithCorrespondingPropsType.map(featureRequest => 
+      { featureRequestsWithCorrespondingPropsType.length > 0 ? featureRequestsWithCorrespondingPropsType.map(featureRequest => 
         <FeatureRequestBox
           key={featureRequest._id}
           featureRequestProperties={featureRequest}

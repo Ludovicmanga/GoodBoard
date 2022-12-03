@@ -28,7 +28,11 @@ import { useEffect } from "react";
 import { capitalizeFirstLetter } from "../../../helpers/utils";
 import axios from "axios";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { addFeatureRequest, updateFeatureRequest } from '../../../redux/features/allFeatureRequestsSlice';
+import {
+  addFeatureRequest,
+  deleteFeatureRequest,
+  updateFeatureRequest,
+} from "../../../redux/features/allFeatureRequestsSlice";
 import { setGeneralProperties } from "../../../redux/features/generalPropertiesSlice";
 import { emptyFeatureRequest } from "../../../helpers/constants";
 
@@ -41,6 +45,12 @@ export default function FeatureRequestModal(props: {
   const [featureRequestProperties, setFeatureRequestProperties] =
     useState<FeatureRequest>(emptyFeatureRequest);
 
+  const [titleHasError, setTitleHasError] = useState<boolean>(false);
+  const [titleErrorHelperText, setTitleErrorHelperText] = useState<string>("");
+  const [detailsHasError, setDetailsHasError] = useState<boolean>(false);
+  const [detailsErrorHelperText, setDetailsErrorHelperText] =
+    useState<string>("");
+
   useEffect(() => {
     if (props.modalIsOpen) {
       if (
@@ -49,7 +59,7 @@ export default function FeatureRequestModal(props: {
       ) {
         setFeatureRequestProperties(props.featureRequestProperties);
       }
-      
+
       if (props.modalMode === FeatureRequestModalMode.creation) {
         setFeatureRequestProperties(emptyFeatureRequest);
       }
@@ -58,47 +68,110 @@ export default function FeatureRequestModal(props: {
 
   const dispatch = useAppDispatch();
 
-  const handleUpsertRequest = async () => {
+  const deleteRequest = async () => {
+    const deletedFeature = await axios({
+      url: "http://localhost:8080/feature-request/delete",
+      method: "post",
+      data: {
+        featureRequestId: featureRequestProperties._id,
+      },
+    });
+    if (deletedFeature.data.deleted) {
+      dispatch(
+        deleteFeatureRequest({
+          featureRequest: featureRequestProperties,
+        })
+      );
+    }
+    dispatch(
+      setGeneralProperties({
+        mainSnackBar: {
+          isOpen: true,
+          message: "The feature was successfully deleted",
+        },
+      })
+    );
+    props.handleCloseModal();
+  };
+
+  const upsertRequest = async () => {
     if (props.modalMode === FeatureRequestModalMode.creation) {
       const createdFeatureRequest = await axios({
-        url: 'http://localhost:8080/feature-request/create',
-        method: 'post',
+        url: "http://localhost:8080/feature-request/create",
+        method: "post",
         data: {
-            featureRequest: featureRequestProperties,
-        }
+          featureRequest: featureRequestProperties,
+        },
       });
       if (createdFeatureRequest) {
-        dispatch(addFeatureRequest({
-          featureRequest: createdFeatureRequest.data,
-        }));
-        dispatch(setGeneralProperties({
-          mainSnackBar: {
-            isOpen: true,
-            message: 'The feature was successfully created',
-          }
-        }));
+        dispatch(
+          addFeatureRequest({
+            featureRequest: createdFeatureRequest.data,
+          })
+        );
+        dispatch(
+          setGeneralProperties({
+            mainSnackBar: {
+              isOpen: true,
+              message: "The feature was successfully created",
+            },
+          })
+        );
       }
     } else {
       const updatedFeatureRequest = await axios({
-        url: 'http://localhost:8080/feature-request/update',
-        method: 'post',
+        url: "http://localhost:8080/feature-request/update",
+        method: "post",
         data: {
           featureRequest: featureRequestProperties,
-        }
+        },
       });
       if (updatedFeatureRequest) {
-        dispatch(updateFeatureRequest({
-          featureRequestToUpdate: updatedFeatureRequest.data,
-        }));
-        dispatch(setGeneralProperties({
-          mainSnackBar: {
-            isOpen: true,
-            message: 'The feature was successfully updated',
-          }
-        }));
+        dispatch(
+          updateFeatureRequest({
+            featureRequestToUpdate: updatedFeatureRequest.data,
+          })
+        );
+        dispatch(
+          setGeneralProperties({
+            mainSnackBar: {
+              isOpen: true,
+              message: "The feature was successfully updated",
+            },
+          })
+        );
       }
     }
     props.handleCloseModal();
+  };
+
+  const handleUpsertRequest = async () => {
+    if (
+      featureRequestProperties.title.length > 0 &&
+      featureRequestProperties.details.length > 0
+    ) {
+      await upsertRequest();
+    } else {
+      if (featureRequestProperties.title.length === 0) {
+        setTitleHasError(true);
+        setTitleErrorHelperText("Title cannot be empty");
+
+        setTimeout(() => {
+          setTitleHasError(false);
+          setTitleErrorHelperText("");
+        }, 3000);
+      }
+
+      if (featureRequestProperties.details.length === 0) {
+        setDetailsHasError(true);
+        setDetailsErrorHelperText("Details cannot be empty");
+
+        setTimeout(() => {
+          setDetailsHasError(false);
+          setDetailsErrorHelperText("");
+        }, 3000);
+      }
+    }
   };
 
   return (
@@ -130,7 +203,7 @@ export default function FeatureRequestModal(props: {
                   className={styles.avatarGroup}
                   total={featureRequestProperties.voters?.length}
                 >
-                  {featureRequestProperties.voters.length > 1 ? (
+                  {featureRequestProperties.voters.length > 0 ? (
                     featureRequestProperties.voters
                       ?.slice(0, 4)
                       .map((voter) => (
@@ -168,6 +241,8 @@ export default function FeatureRequestModal(props: {
             </>
           )}
           <TextField
+            error={titleHasError}
+            helperText={titleErrorHelperText}
             label="Title"
             value={featureRequestProperties.title}
             onChange={(e) => {
@@ -178,6 +253,8 @@ export default function FeatureRequestModal(props: {
             className={`${styles.textInput} ${styles.titleInput}`}
           />
           <TextField
+            error={detailsHasError}
+            helperText={detailsErrorHelperText}
             label="Details"
             multiline
             rows={4}
@@ -189,14 +266,23 @@ export default function FeatureRequestModal(props: {
             }}
             className={`${styles.textInput} ${styles.textArea}`}
           />
-          <Button
-            onClick={handleUpsertRequest}
-            className={styles.submitButton}
-            variant="contained"
-          >
-            { props.modalMode === FeatureRequestModalMode.creation ? 'Create ' : 'Update ' }
-            request
-          </Button>
+          <div className={styles.mainButtonsContainer}>
+            <Button
+              onClick={handleUpsertRequest}
+              className={styles.submitButton}
+              variant="contained"
+            >
+              {props.modalMode === FeatureRequestModalMode.creation
+                ? "Create "
+                : "Update "}
+              request
+            </Button>
+            {props.modalMode === FeatureRequestModalMode.update && (
+              <Button className={styles.submitButton} onClick={deleteRequest} variant="outlined" color="error">
+                Delete request
+              </Button>
+            )}
+          </div>
         </div>
       </Fade>
     </Modal>

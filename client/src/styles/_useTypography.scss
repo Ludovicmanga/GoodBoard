@@ -4,13 +4,14 @@ $fs: (
   title-xl: pxToRem(40),
   title-l: pxToRem(22),
   title-m: pxToRem(16),
+  addIcon: pxToRem(18),
   title-s: pxToRem(14),
+  commonText: pxToRem(14),
   title-xs: pxToRem(12),
   navElement: pxToRem(13),
   cta: pxToRem(13),
   bodycopy: pxToRem(12),
   legals: pxToRem(11),
-  commonText: pxToRem(14),
 );
 
 $fs-smallScreen: (
