@@ -4,6 +4,7 @@ import FeatureRequestBox from '../../components/FeatureRequestBox/FeatureRequest
 import { UserType } from '../../helpers/types';
 import React from 'react';
 import SiteMainHeader from '../../components/Sections/SiteMainHeader/SiteMainHeader';
+import EmptyData from '../../components/EmptyData/EmptyData';
 
 type Props = {
   type: UserType;
@@ -11,19 +12,19 @@ type Props = {
 
 const FeatureRequests = (props: Props) => {
   const allFeatureRequests = useAppSelector(state => state.allFeatureRequests);
+  const featureRequestsWithCorrespondingPropsType = allFeatureRequests.filter(featureRequest => featureRequest.creatorType === props.type);
+  
   
   return (
     <>
       <SiteMainHeader />
-      { allFeatureRequests.map(featureRequest => {
-          if (featureRequest.creatorType === props.type) {
-            return (
-              <FeatureRequestBox key={featureRequest._id} featureRequestProperties={featureRequest} />
-            )
-          } else {
-            return null;
-          }
-        }
+      { featureRequestsWithCorrespondingPropsType.length > 1 ? featureRequestsWithCorrespondingPropsType.map(featureRequest => 
+        <FeatureRequestBox
+          key={featureRequest._id}
+          featureRequestProperties={featureRequest}
+        />
+      ) : (
+        <EmptyData />
       )}
       <NewFeatureRequestsButton />
     </>

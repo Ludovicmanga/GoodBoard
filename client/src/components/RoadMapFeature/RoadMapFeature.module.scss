@@ -2,6 +2,7 @@
 
 .container {
     @include useSpacing(margin, 0, xs, xs, xs);
+    height: $roadmap-box-height;
 }
 
 .topContent {

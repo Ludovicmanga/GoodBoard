@@ -1,0 +1,23 @@
+@import '../../styles/useSpacing';
+@import '../../styles/useTypography';
+.container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    @include useSpacing(padding, l);
+}
+
+.imgContainer {
+    height: 100px;
+    width: 100px;
+}
+
+.img {
+    height: 100%;
+    width: 100%;
+}
+
+.text {
+    @include useTypography(title-m);
+}
