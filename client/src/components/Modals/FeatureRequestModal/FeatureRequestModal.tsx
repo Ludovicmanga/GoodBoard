@@ -168,26 +168,26 @@ export default function FeatureRequestModal(props: {
             </>
           )}
           <TextField
-            label="Titre"
-            variant="filled"
+            label="Title"
             value={featureRequestProperties.title}
             onChange={(e) => {
               setFeatureRequestProperties((propertiesState) => {
                 return { ...propertiesState, title: e.target.value };
               });
             }}
-            className={styles.textInput}
+            className={`${styles.textInput} ${styles.titleInput}`}
           />
           <TextField
-            label="Description"
-            variant="filled"
+            label="Details"
+            multiline
+            rows={4}
             value={featureRequestProperties.details}
             onChange={(e) => {
               setFeatureRequestProperties((propertiesState) => {
                 return { ...propertiesState, details: e.target.value };
               });
             }}
-            className={styles.textInput}
+            className={`${styles.textInput} ${styles.textArea}`}
           />
           <Button
             onClick={handleUpsertRequest}

@@ -5,7 +5,14 @@
     height: 35vh;
     background: $dark-blue;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.contentWrapper {
+    display: flex;
+    width: 50%;
+    height: 100%;
     justify-content: center;
     align-items: center;
 }
@@ -21,23 +28,33 @@
 .text {
     color: $white;
     width: 60vw;
+    height: 50%;
+    @include useSpacing(margin, 0 , 0, 0, l);
+    @include useSpacing(padding, m);
+    overflow: hidden;
 }
 
 .companyName {
     font-weight: bold;
-    text-align: center;
+    display: flex;
+    justify-content: flex-start;
+    @include useSpacing(margin, 0 , 0, xs, 0);
+    @include useTypography(title-m);
 }
 
 .companyDescription {
-    @include useSpacing(margin, xs , xs, xs, xs);
-    text-align: center;
+    display: flex;
+    justify-content: flex-start;
+    @include useSpacing(margin, 0 , 0, xs, 0);
+    @include useTypography(commonText);
 }
 
 .companyLink {
     text-decoration: none;
     color: inherit;
     cursor: pointer;
-    text-align: center;
+    display: flex;
+    justify-content: flex-start;
 }
 
 .companyLogo {

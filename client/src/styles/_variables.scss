@@ -260,8 +260,8 @@ $maxw-small-screen: pxToRem(1025);
 $maxw-medium-screen: pxToRem(1681);
 
 // height
-$feature-request-box-height: 150px;
-
+$feature-request-box-height: 100px;
+$roadmap-box-height: pxToRem(160);
 // fonts
 $ff-main: 'Poppins';
 

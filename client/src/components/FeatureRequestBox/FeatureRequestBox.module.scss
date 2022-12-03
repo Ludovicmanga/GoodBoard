@@ -1,24 +1,53 @@
 @import '../../styles/useSpacing';
+@import '../../styles/useTypography';
 @import '../../styles/variables';
 
+.container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
 .newFeatureRequestsBox {
-    @include useSpacing(margin, m , m, m, m);
+    @include useSpacing(margin, s, 0);
     display: flex;
     justify-content: center;
     height: $feature-request-box-height;
+    width: 45%;
+}
+
+.newFeatureRequestsBox:hover {
+    box-shadow: 0 0 2px $c-blue-dark-30pp;
 }
 
 .contentBox {
-    width: 40%;
+    width: 85%;
     cursor: pointer;
+    @include useSpacing(padding, s, s);
 }
 
 .featureRequestTitle {
-    text-align: center;
+    display: flex;
+    justify-content: flex-start;
+    @include useSpacing(margin, 0, 0, m, s);
+    @include useTypography(title-m);
 }
 
 .featureRequestDescription {
-    text-align: center;
+    display: flex;
+    justify-content: flex-start;
+    @include useSpacing(margin, 0, 0, 0, s);
+    @include useTypography(commonText);
+}
+
+.checkButton {
+    height: 100%;
+    width: 15%;
+}
+
+.votesBox {
+    display: flex;
+    width: $votes-count-box-width;
 }
 
 .iconContainer {
@@ -26,11 +55,6 @@
     justify-content: center;
     align-items: center;
     @include useSpacing(margin, s, s, s, s);
-}
-
-.votesBox {
-    display: flex;
-    width: $votes-count-box-width;
 }
 
 .voteCountContainer {

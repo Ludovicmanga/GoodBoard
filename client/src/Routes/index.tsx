@@ -8,7 +8,6 @@ import Login from '../components/Login/Login';
 
 export default function index() {
     return (
-     <div className={styles.superContainer}>
        <div className={styles.container}>
         <Router>
             <Routes>
@@ -20,6 +19,5 @@ export default function index() {
             </Routes>
         </Router>
       </div>
-     </div>
     )
   }

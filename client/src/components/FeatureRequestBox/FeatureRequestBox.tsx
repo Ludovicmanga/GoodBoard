@@ -57,44 +57,45 @@ function FeatureRequestBox (props: Props) {
     }, [isVoted])
 
   return (
-    <div className={styles.newFeatureRequestsBox}>
-        <Card className={styles.contentBox} onClick={() => setNewFeatureRequestsModalOpen(true)}>
-            <CardContent>
+    <div className={styles.container}>
+        <div className={styles.newFeatureRequestsBox}>
+            <Card className={styles.contentBox} onClick={() => setNewFeatureRequestsModalOpen(true)}>
                 <h3 className={styles.featureRequestTitle}>
                     { props.featureRequestProperties.title }
                 </h3>
                 <div className={styles.featureRequestDescription}>
-                    { props.featureRequestProperties.details }
+                    { props.featureRequestProperties.details.slice(0, 100) }
+                    { props.featureRequestProperties.details.length > 99 && '...' }
                 </div>
-            </CardContent>
-        </Card>
-        <ToggleButton
-            value="check"
-            selected={isVoted}
-            onChange={() => setIsVoted(!isVoted)}
-            onClick={() => setIsClickedAtLeastOnce(true)}
-            className={styles.checkButton}
-            sx={{
-                '&.Mui-selected': {
-                    background: lightBlue[700],
-                },
-            }}
-        >
-            <div className={styles.votesBox}>
-                { isVoted ? 
-                    <div className={styles.iconContainer}>
-                        <CheckRoundedIcon sx={{ fontSize: 15 }}/>
+            </Card>
+            <ToggleButton
+                value="check"
+                selected={isVoted}
+                onChange={() => setIsVoted(!isVoted)}
+                onClick={() => setIsClickedAtLeastOnce(true)}
+                className={styles.checkButton}
+                sx={{
+                    '&.Mui-selected': {
+                        background: lightBlue[700],
+                    },
+                }}
+            >
+                <div className={styles.votesBox}>
+                    { isVoted ? 
+                        <div className={styles.iconContainer}>
+                            <CheckRoundedIcon sx={{ fontSize: 15 }}/>
+                        </div>
+                        : (
+                        <div className={styles.iconContainer}>
+                        <ArrowDropUpRoundedIcon />
                     </div>
-                     : (
-                    <div className={styles.iconContainer}>
-                    <ArrowDropUpRoundedIcon />
+                    )}
+                    <div className={styles.voteCountContainer}>
+                        { props.featureRequestProperties.voters?.length || 0 }
+                    </div>
                 </div>
-                )}
-                <div className={styles.voteCountContainer}>
-                    { props.featureRequestProperties.voters?.length || 0 }
-                </div>
-            </div>
-        </ToggleButton>
+            </ToggleButton>
+        </div>
         <FeatureRequestModal
             featureRequestProperties={props.featureRequestProperties}
             modalMode={FeatureRequestModalMode.update}

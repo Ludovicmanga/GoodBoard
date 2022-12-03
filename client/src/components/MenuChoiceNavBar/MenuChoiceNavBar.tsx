@@ -27,7 +27,7 @@ const MenuChoiceNavBar = (props: Props) => {
               sx={generalPropertiesState.menuSelected === MenuSelected.yourIdeas ? { backgroundColor: '#0C0454' } : {}}
             >
               <div className={styles.btnText}>
-                Vos idées
+                Your ideas
               </div>
             </Button>
           </NavLink>
@@ -43,7 +43,7 @@ const MenuChoiceNavBar = (props: Props) => {
               sx={generalPropertiesState.menuSelected === MenuSelected.ourIdeas ? { backgroundColor: '#0C0454' } : {}}
             >
               <div className={styles.btnText}>
-                Nos idées
+                Our ideas
               </div>
             </Button>
           </NavLink>
