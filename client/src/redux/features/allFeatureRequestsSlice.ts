@@ -30,6 +30,9 @@ export const allFeatureRequestsSlice = createSlice({
     addFeatureRequest: (state, action: PayloadAction<{ featureRequest: FeatureRequest }>) => {
       return [...state, action.payload.featureRequest];
     },
+    deleteFeatureRequest: (state, action: PayloadAction<{ featureRequest: FeatureRequest }>) => {
+      return state.filter(featureRequest => featureRequest._id !== action.payload.featureRequest._id);
+    },
     updateFeatureRequest: (state, action: PayloadAction<{ featureRequestToUpdate: FeatureRequest }>) => {
       return state.map(featureRequest => {
         if (featureRequest._id === action.payload.featureRequestToUpdate._id) {
@@ -43,6 +46,6 @@ export const allFeatureRequestsSlice = createSlice({
   },
 })
 
-export const { upVote, downVote, setAllFeatureRequests, addFeatureRequest, updateFeatureRequest } = allFeatureRequestsSlice.actions
+export const { upVote, downVote, setAllFeatureRequests, addFeatureRequest, deleteFeatureRequest, updateFeatureRequest } = allFeatureRequestsSlice.actions
 
 export default allFeatureRequestsSlice.reducer

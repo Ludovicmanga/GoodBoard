@@ -1,6 +1,6 @@
-import { FeatureRequestStatus, UserType } from "./types";
+import { FeatureRequest, FeatureRequestStatus, UserType } from "./types";
 
-export const emptyFeatureRequest = {
+export const emptyFeatureRequest: FeatureRequest = {
     _id: "",
     title: "",
     details: "",

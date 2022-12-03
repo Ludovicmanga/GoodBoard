@@ -47,6 +47,11 @@
     @include useSpacing(margin, 0 , 0, l, 0);
 }
 
+.mainButtonsContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
 @media screen and (min-width: $maxw-small-screen) {
     .modalContentContainer {
         width: $modal-width-computer-screen;

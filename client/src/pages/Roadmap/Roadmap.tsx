@@ -3,7 +3,6 @@ import React from "react";
 import EmptyData from "../../components/EmptyData/EmptyData";
 import RoadMapFeature from "../../components/RoadMapFeature/RoadMapFeature";
 import SiteMainHeader from "../../components/Sections/SiteMainHeader/SiteMainHeader";
-import { lightBlue } from "../../helpers/colors";
 import { FeatureRequestStatus } from "../../helpers/types";
 import { capitalizeFirstLetter } from "../../helpers/utils";
 import { useAppSelector } from "../../redux/hooks";
@@ -34,16 +33,13 @@ function Roadmap({}: Props) {
                 );
               return (
                 <Paper elevation={3} className={styles.paperContainer}>
-                  <Card
-                    className={styles.title}
-                    sx={{
-                      background: lightBlue,
-                    }}
-                  >
+                  <Card className={styles.title}>
                     <div className={styles.statusTitle}>
                       {capitalizeFirstLetter(status)}
                     </div>
-                    <div className={styles.featureNumberContainer}>2</div>
+                    <div className={styles.featureNumberContainer}>
+                      {featureRequestsWithCorrespondingStatus.length}
+                    </div>
                   </Card>
                   <div className={styles.featureContainer}>
                     {featureRequestsWithCorrespondingStatus.length > 0 ? (

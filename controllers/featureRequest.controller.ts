@@ -92,3 +92,10 @@ export const downVote = async (req, res) => {
 
   res.status(200).json({ updatedFeatureRequest });
 };
+
+export const deleteFeatureRequest = async (req, res) => {
+  const deleteFeature = await featureRequestModel.findOneAndDelete({ _id: req.body.featureRequestId });
+  res.json({
+    deleted: true,
+  })
+}
