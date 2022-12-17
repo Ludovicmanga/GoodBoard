@@ -1,5 +1,5 @@
 import express from 'express';
-import { createFeatureRequest, deleteFeatureRequest, downVote, getAllCompanyFeatureRequests, getAllFeatureRequests, getAllUserFeatureRequests, updateFeatureRequest, upsertFeatureRequest, upVote } from '../controllers/featureRequest.controller';
+import { createFeatureRequest, deleteFeatureRequest, downVote, getAllCompanyFeatureRequests, getAllFeatureRequests, getAllUserFeatureRequests, updateFeatureRequest, upVote } from '../controllers/featureRequest.controller';
 const router = express.Router();
 
 router.get('/get/all', getAllFeatureRequests);
