@@ -64,8 +64,8 @@ app.use(function(err, req, res, next) {
   res.json({ error: err })
 });
 
-app.listen(PORT || 5000, () => {
-  console.log(`le serveur est lancé !!`);
+app.listen(process.env.PORT || 5000, () => {
+  console.log(`le serveur est lancé sur le port ${PORT}`);
 })
 
 module.exports = app;
