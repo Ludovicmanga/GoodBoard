@@ -2,16 +2,16 @@
 @import '../../styles/useSpacing';
 
 .container {
-    height: 35vh;
     background: $dark-blue;
     display: flex;
     justify-content: center;
     align-items: center;
+    @include useSpacing(padding, l, 0);
 }
 
 .contentWrapper {
     display: flex;
-    width: 46%;
+    flex-direction: column;
     height: 100%;
     justify-content: center;
     align-items: center;
@@ -27,36 +27,76 @@
 
 .text {
     color: $white;
-    width: 60vw;
-    height: 50%;
-    @include useSpacing(margin, 0 , 0, 0, l);
+    width: 62%;
     @include useSpacing(padding, m);
-    overflow: hidden;
+    max-height: $max-descrition-height;
+    overflow-y: hidden;
 }
 
 .companyName {
     font-weight: bold;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     @include useSpacing(margin, 0 , 0, xs, 0);
-    @include useTypography(title-m);
+    @include useTypography(companyName);
 }
 
 .companyDescription {
-    display: flex;
-    justify-content: flex-start;
-    @include useSpacing(margin, 0 , 0, xs, 0);
+    text-align: center;
     @include useTypography(commonText);
+    overflow-y: auto;
+}
+
+.socialLinks {
+    display: flex;
+    justify-content: center;
+    @include useSpacing(margin, xs , 0, 0, 0);
 }
 
 .companyLink {
     text-decoration: none;
-    color: inherit;
+    color: white;
     cursor: pointer;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
+    @include useTypography(title-xs);
+    @include useSpacing(margin, s , 0, 0, 0);
 }
 
 .companyLogo {
     @include useSpacing(margin, m , m, m, m);
+}
+
+.socialNetworkIcon {
+    color: white;
+    @include useSpacing(margin, 0 , xs, 0, 0);
+}
+
+
+@media screen and (min-width: $main-breakpoint) {
+    .contentWrapper {
+        display: flex;
+        flex-direction: row;
+        width: 46%;
+    }
+
+    .text {
+        @include useSpacing(margin, 0 , 0, 0, l);
+    }
+
+    .companyName {
+        justify-content: flex-start;
+    }
+
+    .companyDescription {
+        text-align: left;
+    }
+
+    .companyLink {
+        justify-content: flex-start;
+    }
+
+    .socialLinks {
+        justify-content: flex-start;
+    }
 }
