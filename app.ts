@@ -64,6 +64,12 @@ app.use(function(err, req, res, next) {
   res.json({ error: err })
 });
 
+app.get('/test', (req, res) => {
+  res.json({
+    success: "i received it!!"
+  })
+})
+
 app.listen(process.env.PORT || 5000, () => {
   console.log(`le serveur est lancé sur le port ${PORT}`);
 })
