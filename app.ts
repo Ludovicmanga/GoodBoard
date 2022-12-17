@@ -29,6 +29,7 @@ var app = express();
 
 app.use(cors(corsOptions));
 app.use(express.json());
+app.use(express.static('client/build'));
 app.use(express.urlencoded({ extended: false }));
 app.use(session({
   secret: 'this is my secrethkjrhkfrhkfh',
@@ -64,9 +65,9 @@ app.use(function(err, req, res, next) {
   res.json({ error: err })
 });
 
-app.get('/test', (req, res) => {
-  res.json({
-    success: "i received it!!"
+app.get('/test', (_, res) => {
+  res.send({
+    message: 'working',
   })
 })
 
