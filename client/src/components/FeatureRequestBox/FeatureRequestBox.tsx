@@ -1,4 +1,4 @@
-import { Card, CardContent, ToggleButton } from "@mui/material";
+import { Card, ToggleButton } from "@mui/material";
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import ArrowDropUpRoundedIcon from "@mui/icons-material/ArrowDropUpRounded";
 import React, { useState } from "react";
@@ -9,15 +9,15 @@ import axios from "axios";
 import { useAppDispatch } from "../../redux/hooks";
 import { downVote, upVote } from "../../redux/features/allFeatureRequestsSlice";
 import { useEffect } from "react";
-import { lightBlue, red } from "@mui/material/colors";
-import { newShade } from "../../helpers/utils";
+import { lightBlue } from "@mui/material/colors";
+
 
 type Props = {
   featureRequestProperties: FeatureRequest;
 };
 
 function FeatureRequestBox(props: Props) {
-  const [isVoted, setIsVoted] = useState(true);
+  const [isVoted, setIsVoted] = useState(false);
   const [isClickedAtLeastOnce, setIsClickedAtLeastOnce] = useState(false);
   const [newFeatureRequestsModalOpen, setNewFeatureRequestsModalOpen] =
     useState(false);
@@ -81,6 +81,11 @@ function FeatureRequestBox(props: Props) {
           onChange={() => setIsVoted(!isVoted)}
           onClick={() => setIsClickedAtLeastOnce(true)}
           className={styles.checkButton}
+          sx={{
+            '&.Mui-selected': {
+              bgcolor: lightBlue[700],
+            }
+          }}
         >
           <div className={styles.votesBox}>
             {isVoted ? (

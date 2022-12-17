@@ -4,12 +4,12 @@
 .container {
     display: flex;
     justify-content: center;
-    align-items: center;
 }
 
 .box {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .title {
@@ -41,7 +41,14 @@
 }
 
 .paperContainer {
-    width: 380px;
-    height: 500px;
+    width: pxToRem(380);
+    height: pxToRem(500);
     @include useSpacing(margin, xs, xs, xs, xs)
+}
+
+.emptyDataContainer {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

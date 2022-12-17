@@ -1,19 +1,16 @@
 @import '../../../styles/useSpacing';
 @import '../../../styles/useTypography';
 
-.newFeatureRequestButtonContainer {
-    display: flex;
-    justify-content: center;
+.button {
+    @include useTypography(title-xs);
+    @include useSpacing(padding,m,l,m,m);
     position: fixed;
-    bottom: 25px;
-    width: 100%;
+    bottom: 1%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .addIcon {
     @include useSpacing(margin,0,xs,0,xxs);
     @include useTypography(addIcon)
-}
-
-.button {
-    @include useTypography(title-xs)
 }

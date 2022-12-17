@@ -1,17 +1,37 @@
 @import '../../styles/useSpacing';
+@import '../../styles/useTypography';
 
 .container {
     @include useSpacing(margin, 0, xs, xs, xs);
     height: $roadmap-box-height;
+    cursor: pointer;
+}
+
+.cardContent {
+    @include useSpacing(padding, s, m, s, m);
 }
 
 .topContent {
     display: flex;
     justify-content: flex-start;
+    align-items: center;
+    height: 10%;
+}
+
+.featureType {
+    @include useTypography(legals);
 }
 
 .title {
     font-weight: bold;
+    @include useSpacing(margin, xxs, 0, xs, 0);
+    height: 15%;
+}
+
+.detailsContainer {
+    overflow: hidden;
+    @include useTypography(commonText);
+    height: 30%;
 }
 
 .bottomContent {
@@ -20,9 +40,9 @@
 }
 
 .divider {
-    @include useSpacing(margin, s, 0);
+    @include useSpacing(margin, l, 0, m, 0);
 }
 
 .dotIcon {
-    @include useSpacing(margin, xs, xxs, 0, 0);
+    @include useSpacing(margin, 0, xxs, 0, 0)
 }

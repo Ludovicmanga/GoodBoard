@@ -3,7 +3,7 @@ import React from "react";
 import EmptyData from "../../components/EmptyData/EmptyData";
 import RoadMapFeature from "../../components/RoadMapFeature/RoadMapFeature";
 import SiteMainHeader from "../../components/Sections/SiteMainHeader/SiteMainHeader";
-import { FeatureRequestStatus } from "../../helpers/types";
+import { EmptyPageType, FeatureRequestStatus } from "../../helpers/types";
 import { capitalizeFirstLetter } from "../../helpers/utils";
 import { useAppSelector } from "../../redux/hooks";
 import styles from "./Roadmap.module.scss";
@@ -14,7 +14,6 @@ function Roadmap({}: Props) {
   const allFeatureRequests = useAppSelector(
     (state) => state.allFeatureRequests
   );
-  console.log(allFeatureRequests, " is all the feature requests");
 
   return (
     <>
@@ -53,7 +52,12 @@ function Roadmap({}: Props) {
                         )
                       )
                     ) : (
-                      <EmptyData />
+                      <div className={styles.emptyDataContainer}>
+                        <EmptyData
+                          text="Nothing planned yet"
+                          type={EmptyPageType.roadmap}
+                        />
+                      </div>
                     )}
                   </div>
                 </Paper>

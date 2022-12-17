@@ -31,3 +31,8 @@ export enum MenuSelected {
     ourIdeas = "our ideas",
     roadmap = "roadmap"
 }
+
+export enum EmptyPageType {
+    roadmap = 'roadmap',
+    featureRequests = 'feature requests'
+}

@@ -5,41 +5,26 @@
 .container {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-    height: 70px;
+    justify-content: center;
 }
 
 .buttonContainer {
     display: flex;
     justify-content: center;
     align-items: center;
+    @include useSpacing(margin, m, s);
 }
 
 .button {
     height: $medium-button-height;
-    width: 100px;
 }
 
 .btnText {
     @include useTypography(title-xs);
 }
 
-// Media queries desktop
-
-@media screen and (min-width: $maxw-small-screen) {
-    .container {
-        justify-content: center;
-    }
-
-    .buttonContainer {
-        @include useSpacing(margin, m, m, m, m);
-    }
-
+@media screen and (min-width: $main-breakpoint) {
     .button {
-        width: 180px;
-    }
-
-    .btnText {
-        @include useTypography(title-xs);
-    }
+        @include useSpacing(padding, 0, xl);
+    }    
 }

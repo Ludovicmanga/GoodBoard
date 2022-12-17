@@ -9,11 +9,11 @@
 }
 
 .newFeatureRequestsBox {
+    width: 85%;
     @include useSpacing(margin, s, 0);
     display: flex;
     justify-content: center;
     height: $feature-request-box-height;
-    width: 45%;
 }
 
 .newFeatureRequestsBox:hover {
@@ -21,9 +21,9 @@
 }
 
 .contentBox {
-    width: 85%;
+    width: 75%;
     cursor: pointer;
-    @include useSpacing(padding, s, s);
+    @include useSpacing(padding, s);
 }
 
 .featureRequestTitle {
@@ -41,24 +41,39 @@
 }
 
 .checkButton {
-    height: 100%;
-    width: 15%;
+    width: 25%;
 }
 
 .votesBox {
     display: flex;
-    width: $votes-count-box-width;
+    justify-content: space-around;
+    @include useSpacing(padding, s);
 }
 
 .iconContainer {
     display: flex;
     justify-content: center;
     align-items: center;
-    @include useSpacing(margin, s, s, s, s);
+    @include useSpacing(margin,0, xxs);
 }
 
 .voteCountContainer {
     display: flex;
     align-items: center;
     justify-content: center;
+    @include useSpacing(margin,0, xxs);
+}
+
+@media screen and (min-width: $main-breakpoint) {
+    .newFeatureRequestsBox {
+        width: 45%;
+    }
+
+    .contentBox {
+        width: 85%;
+    }
+
+    .checkButton {
+        width: 15%;
+    }
 }
