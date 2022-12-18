@@ -6,6 +6,9 @@ import cors from 'cors';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import path from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const corsOptions = {
     origin: 'http://localhost:3000',
@@ -30,11 +33,6 @@ var app = express();
 
 app.use(cors(corsOptions));
 app.use(express.json());
-app.use(express.static(path.join(__dirname, "client/build")));
-  // Handle React routing, return all requests to React app
-  app.get("*", function (req, res) {
-    res.sendFile(path.join(__dirname, "client/build", "index.html"));
-  });
 app.use(express.urlencoded({ extended: false }));
 app.use(session({
   secret: 'this is my secrethkjrhkfrhkfh',
@@ -51,6 +49,10 @@ import './config/passport.setup';
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(express.static('client/build'));
+app.get('/*', (_, res) => {
+  res.sendFile(path.join(__dirname, './client/build/index.html'))
+})
 app.use('/users', usersRouter);
 app.use('/feature-request', featureRequestRouter);
 
@@ -71,7 +73,7 @@ app.use(function(err, req, res, next) {
 });
 
 app.listen(process.env.PORT || 5000, () => {
-  console.log(`le serveur est lancé sur le port ${PORT}`);
+  console.log(`le serveur est lancé sur le port ${process.env.PORT}`);
 })
 
-module.exports = app;
+export default app;
