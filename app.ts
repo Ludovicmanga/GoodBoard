@@ -5,6 +5,10 @@ import './config/db.ts';
 import cors from 'cors';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const corsOptions = {
     origin: 'http://localhost:3000',
@@ -45,6 +49,10 @@ import './config/passport.setup';
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(express.static('client/build'));
+app.get('/*', (_, res) => {
+  res.sendFile(path.join(__dirname, './client/build/index.html'))
+})
 app.use('/users', usersRouter);
 app.use('/feature-request', featureRequestRouter);
 
@@ -64,14 +72,8 @@ app.use(function(err, req, res, next) {
   res.json({ error: err })
 });
 
-app.get('/test', (req, res) => {
-  res.json({
-    success: "i received it!!"
-  })
-})
-
 app.listen(process.env.PORT || 5000, () => {
-  console.log(`le serveur est lancé sur le port ${PORT}`);
+  console.log(`le serveur est lancé sur le port ${process.env.PORT}`);
 })
 
-module.exports = app;
+export default app;
