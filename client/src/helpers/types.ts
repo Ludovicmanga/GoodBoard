@@ -36,3 +36,8 @@ export enum EmptyPageType {
     roadmap = 'roadmap',
     featureRequests = 'feature requests'
 }
+
+export enum AuthPageType {
+    login = "login",
+    signUp = "signUp"
+}

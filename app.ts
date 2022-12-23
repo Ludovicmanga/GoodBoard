@@ -11,7 +11,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: ['http://localhost:3000', 'http://localhost:5000'],
     credentials: true,
     'allowed-Headers': ['sessionId', 'Content-type'],
     'exposedHeaders': ['sessionId'],
@@ -22,37 +22,42 @@ const corsOptions = {
 import usersRouter from './routes/users';
 import featureRequestRouter from './routes/featureRequest';
 
-const PORT = 8080;
-
-const sessionStore = MongoStore.create({
+/* const sessionStore = MongoStore.create({
   mongoUrl: "mongodb+srv://ludovicmangaj:M433c'm442B@cluster0.fhytx.mongodb.net/goodboard",
   collectionName: 'sessions'
 })
-
+ */
 var app = express();
+import './config/passport.setup';
 
 app.use(cors(corsOptions));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(session({
   secret: 'this is my secrethkjrhkfrhkfh',
   resave: false,
-  saveUnitialized: true,
-  store: sessionStore,
+  saveUnitialized: false,
+  // store: sessionStore,
+  store: MongoStore.create({
+    mongoUrl: "mongodb+srv://ludovicmangaj:M433c'm442B@cluster0.fhytx.mongodb.net/goodboard",
+    collectionName: 'sessions'
+  }),
   cookie: {
-    MaxAge: 1000 * 60 * 60 * 24
+    secure: false,
+    MaxAge: 1000 * 60 * 60 * 24,
   }
 }))
-
-import './config/passport.setup';
 
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(express.static('client/build'));
-app.get('/*', (_, res) => {
-  res.sendFile(path.join(__dirname, './client/build/index.html'))
-})
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static('client/build'));
+  app.get('/*', (_, res) => {
+    res.sendFile(path.join(__dirname, './client/build/index.html'))
+  })
+}
+
 app.use('/users', usersRouter);
 app.use('/feature-request', featureRequestRouter);
 
@@ -72,8 +77,10 @@ app.use(function(err, req, res, next) {
   res.json({ error: err })
 });
 
-app.listen(process.env.PORT || 5000, () => {
-  console.log(`le serveur est lancé sur le port ${process.env.PORT}`);
+const PORT = process.env.PORT || 8080;
+
+app.listen(PORT, () => {
+  console.log(`le serveur est lancé sur le port ${PORT}`);
 })
 
 export default app;

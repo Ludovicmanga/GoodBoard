@@ -2,8 +2,7 @@ import http from 'http';
 
 import axios from 'axios';
 import { AxiosInstance } from 'axios';
-const BASE_URL =
-  process.env.NEXT_PUBLIC_BACK_BASE_URL || 'https://localhost:8080';
+const BASE_URL = 'http://localhost:8080';
 const httpAgent = new http.Agent();
 axios.defaults.httpAgent = httpAgent;
 

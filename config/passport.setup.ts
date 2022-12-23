@@ -4,13 +4,16 @@ import bcrypt from 'bcrypt';
 import userModel from '../models/user.model';
 
 const customFields = {
-    usernameFiels: 'email',
+    usernameField: 'email',
+    passwordField: 'password'
 }
 
 passport.use(
     new LocalStrategy(
-        async function verify(email, password, done) {
+        customFields,
+        async (email, password, done) => {
             try {
+                console.log('I will try to verify')
                 const user = await userModel.findOne({ email });
                 if (user) {
                 const auth = await bcrypt.compare(password, user.password);
@@ -28,11 +31,13 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
+    console.log('I serialize user', user)
     return done(null, user.id);
 });
 
 passport.deserializeUser((id, done) => {
     try {
+        console.log('I deserialize user')
         const user = userModel.findOne({ id });
         if (!user) {
           return done(null, false);
