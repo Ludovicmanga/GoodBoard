@@ -1,40 +1,14 @@
-/* const jwt = require('jsonwebtoken');
-const UserModel = require('../models/user.model');
-export {};
+import { NextFunction } from "express";
 
-module.exports.checkUser = (req, res, next) => {
-    const token = req.cookies.jwt;
-
-    if(token) {
-        jwt.verify(token, process.env.TOKEN_SECRET, async( error, decodedToken) => {
-            if (error) {
-                res.locals.user = null;
-                next()
-            } else {
-                let user = await UserModel.findById(decodedToken.id);
-                res.locals.user = user;
-                next();
-            }
-        })
+export const checkAuthenticated = async (
+    req: any,
+    res: Response,
+    next: NextFunction,
+  ) => {
+    if (req.isAuthenticated()) {
+        console.log('I am authenticated')
+        next();
     } else {
-        res.locals.user = null;
-        res.status(200).json({ error: "no valid token found"})
+        console.log('I am not authenticated user is ', req.user)
     }
-}
-
-module.exports.requireAuth = (req, res, next) => {
-    const token = req.cookies.jwt;
-
-    if (token) {
-        jwt.verify(token, process.env.TOKEN_SECRET, async (error, decodedToken) => {
-            if(error) {
-                console.log(error);
-            } else {
-                console.log(decodedToken.id);
-                next();
-            }
-        })
-    } else {
-        console.log('no token');
-    }
-} */
+  }

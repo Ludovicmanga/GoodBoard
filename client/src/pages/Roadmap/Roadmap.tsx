@@ -14,6 +14,7 @@ function Roadmap({}: Props) {
   const allFeatureRequests = useAppSelector(
     (state) => state.allFeatureRequests
   );
+  console.log(allFeatureRequests, ' are all the fratrue requests');
 
   return (
     <>

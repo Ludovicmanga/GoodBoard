@@ -3,7 +3,7 @@ import React from 'react';
 import FeatureRequests from '../pages/FeatureRequests/FeatureRequests';
 import styles from './index.module.scss';
 import Roadmap from '../pages/Roadmap/Roadmap';
-import { UserType } from '../helpers/types';
+import { AuthPageType, UserType } from '../helpers/types';
 import Login from '../components/Login/Login';
 
 export default function index() {
@@ -12,7 +12,8 @@ export default function index() {
         <Router>
             <Routes>
                 <Route path="/user-feature-requests" element = {<FeatureRequests type={UserType.user} />}/>
-                <Route path="/login" element = {<Login />}/>
+                <Route path="/login" element = {<Login authType={AuthPageType.login} />}/>
+                <Route path="/sign-up" element = {<Login authType={AuthPageType.signUp} />}/>
                 <Route path="/company-feature-requests" element = {<FeatureRequests type={UserType.admin} />}/>
                 <Route path="/roadmap" element = {<Roadmap />}/>
                 <Route path="*" element = {<Navigate to="/user-feature-request" replace />} />
