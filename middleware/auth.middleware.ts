@@ -9,6 +9,6 @@ export const checkAuthenticated = async (
         console.log('I am authenticated')
         next();
     } else {
-        console.log('I am not authenticated user is ', req.user)
+        console.log('I am not authenticated user is ', req.user, ' session is ', req.session)
     }
   }

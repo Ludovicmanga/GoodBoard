@@ -22,11 +22,6 @@ const corsOptions = {
 import usersRouter from './routes/users';
 import featureRequestRouter from './routes/featureRequest';
 
-/* const sessionStore = MongoStore.create({
-  mongoUrl: "mongodb+srv://ludovicmangaj:M433c'm442B@cluster0.fhytx.mongodb.net/goodboard",
-  collectionName: 'sessions'
-})
- */
 var app = express();
 import './config/passport.setup';
 
@@ -37,15 +32,17 @@ app.use(session({
   secret: 'this is my secrethkjrhkfrhkfh',
   resave: false,
   saveUnitialized: false,
-  // store: sessionStore,
   store: MongoStore.create({
     mongoUrl: "mongodb+srv://ludovicmangaj:M433c'm442B@cluster0.fhytx.mongodb.net/goodboard",
     collectionName: 'sessions'
   }),
   cookie: {
-    secure: false,
-    MaxAge: 1000 * 60 * 60 * 24,
-  }
+    secure: process.env.NODE_ENV === "production",
+    path: '/',
+    httpOnly: true,
+    sameSite: 'none',
+    maxAge: 24 * 60 * 60 * 1000,
+  },
 }))
 
 app.use(passport.initialize());
