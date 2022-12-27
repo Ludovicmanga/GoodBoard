@@ -1,8 +1,8 @@
 import { NextFunction } from "express";
 
 export const checkAuthenticated = async (
-    req: any,
-    res: Response,
+    req,
+    res,
     next: NextFunction,
   ) => {
     if (req.isAuthenticated()) {
@@ -10,5 +10,6 @@ export const checkAuthenticated = async (
         next();
     } else {
         console.log('I am not authenticated user is ', req.user, ' session is ', req.session)
+        next();
     }
   }

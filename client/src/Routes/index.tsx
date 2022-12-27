@@ -11,12 +11,12 @@ export default function index() {
        <div className={styles.container}>
         <Router>
             <Routes>
-                <Route path="/user-feature-requests" element = {<FeatureRequests type={UserType.user} />}/>
                 <Route path="/login" element = {<Login authType={AuthPageType.login} />}/>
                 <Route path="/sign-up" element = {<Login authType={AuthPageType.signUp} />}/>
                 <Route path="/company-feature-requests" element = {<FeatureRequests type={UserType.admin} />}/>
+                <Route path="/user-feature-requests" element = {<FeatureRequests type={UserType.user} />}/>
                 <Route path="/roadmap" element = {<Roadmap />}/>
-                <Route path="*" element = {<Navigate to="/user-feature-request" replace />} />
+                <Route path="*" element = {<Navigate to="/user-feature-requests" replace />} />
             </Routes>
         </Router>
       </div>

@@ -17,7 +17,7 @@ const MenuChoiceNavBar = (props: Props) => {
   return (
     <div className={styles.container}>
         <div className={styles.buttonContainer}>
-          <NavLink to='/company-feature-requests'>
+          <NavLink to='/user-feature-requests'>
             <Button
               onClick={() => dispatch(setGeneralProperties({
                 menuSelected: MenuSelected.yourIdeas,
@@ -33,7 +33,7 @@ const MenuChoiceNavBar = (props: Props) => {
           </NavLink>
         </div>
         <div className={styles.buttonContainer}>
-          <NavLink to='/user-feature-requests'>
+          <NavLink to='/company-feature-requests'>
             <Button
               onClick={() => dispatch(setGeneralProperties({
                 menuSelected: MenuSelected.ourIdeas,

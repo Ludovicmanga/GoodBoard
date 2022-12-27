@@ -1,11 +1,12 @@
 import { Box, Card, Paper } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import EmptyData from "../../components/EmptyData/EmptyData";
 import RoadMapFeature from "../../components/RoadMapFeature/RoadMapFeature";
 import SiteMainHeader from "../../components/Sections/SiteMainHeader/SiteMainHeader";
-import { EmptyPageType, FeatureRequestStatus } from "../../helpers/types";
+import { EmptyPageType, FeatureRequestStatus, MenuSelected } from "../../helpers/types";
 import { capitalizeFirstLetter } from "../../helpers/utils";
-import { useAppSelector } from "../../redux/hooks";
+import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import styles from "./Roadmap.module.scss";
 
 type Props = {};
@@ -14,7 +15,13 @@ function Roadmap({}: Props) {
   const allFeatureRequests = useAppSelector(
     (state) => state.allFeatureRequests
   );
-  console.log(allFeatureRequests, ' are all the fratrue requests');
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(setGeneralProperties({
+      menuSelected: MenuSelected.roadmap,
+    }));
+  }, [])
 
   return (
     <>

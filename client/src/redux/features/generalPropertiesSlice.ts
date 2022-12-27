@@ -3,7 +3,7 @@ import { MenuSelected } from '../../helpers/types';
 
 interface GeneralProperties {
     featureRequestModalOpen: boolean;
-    menuSelected: MenuSelected;
+    menuSelected: MenuSelected | null;
     mainSnackBar: {
       isOpen: boolean;
       message: string;
@@ -12,7 +12,7 @@ interface GeneralProperties {
 
 const initialState: GeneralProperties = {
     featureRequestModalOpen: false,
-    menuSelected: MenuSelected.yourIdeas,
+    menuSelected: null,
     mainSnackBar: {
       isOpen: false,
       message: '',

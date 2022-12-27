@@ -6,11 +6,11 @@ import styles from "./FeatureRequestBox.module.scss";
 import { FeatureRequest, FeatureRequestModalMode } from "../../helpers/types";
 import FeatureRequestModal from "../Modals/FeatureRequestModal/FeatureRequestModal";
 import axios from "axios";
-import { useAppDispatch } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { downVote, upVote } from "../../redux/features/allFeatureRequestsSlice";
 import { useEffect } from "react";
 import { lightBlue } from "@mui/material/colors";
-
+import { addToVotedFeatures, removeFromVotedFeatures } from "../../redux/features/loggedUserSlice";
 
 type Props = {
   featureRequestProperties: FeatureRequest;
@@ -25,6 +25,8 @@ function FeatureRequestBox(props: Props) {
     setNewFeatureRequestsModalOpen(false);
   };
   const dispatch = useAppDispatch();
+  const loggedUser = useAppSelector((state) => state.loggedUser);
+  const menuSelectedState = useAppSelector(state => state.generalProperties.menuSelected)
 
   const handleVote = async () => {
     let url = "";
@@ -33,23 +35,33 @@ function FeatureRequestBox(props: Props) {
       dispatch(
         upVote({
           featureRequestId: props.featureRequestProperties._id,
-          userId: "627846ccfd2156ff58270133",
+          userId: loggedUser._id,
         })
       );
+      dispatch(
+        addToVotedFeatures({
+          featureRequestId: props.featureRequestProperties._id
+        }),
+      )
     } else {
       url = `http://localhost:8080/feature-request/down-vote/${props.featureRequestProperties._id}`;
       dispatch(
         downVote({
           featureRequestId: props.featureRequestProperties._id,
-          userId: "627846ccfd2156ff58270133",
-        })
+          userId: loggedUser._id,
+        }),
       );
+      dispatch(
+        removeFromVotedFeatures({
+          featureRequestId: props.featureRequestProperties._id
+        }),
+      )
     }
     await axios({
       url,
       method: "post",
       data: {
-        userId: "627846ccfd2156ff58270133",
+        userId: loggedUser._id,
       },
     });
   };
@@ -59,6 +71,11 @@ function FeatureRequestBox(props: Props) {
       handleVote();
     }
   }, [isVoted]);
+
+  useEffect(() => {
+    console.log('okkkk', loggedUser.voted, ' is voted users, and feat ids is ', props.featureRequestProperties._id);
+    setIsVoted(loggedUser.voted.includes(props.featureRequestProperties._id));
+  }, [loggedUser.voted, menuSelectedState]);
 
   return (
     <div className={styles.container}>
@@ -82,9 +99,9 @@ function FeatureRequestBox(props: Props) {
           onClick={() => setIsClickedAtLeastOnce(true)}
           className={styles.checkButton}
           sx={{
-            '&.Mui-selected': {
+            "&.Mui-selected": {
               bgcolor: lightBlue[700],
-            }
+            },
           }}
         >
           <div className={styles.votesBox}>

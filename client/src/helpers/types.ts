@@ -10,6 +10,13 @@ export type FeatureRequest = {
     updatedAt: any;
 }
 
+export type User = {
+    _id: string;
+    email: string;
+    voted: string[];
+    type: UserType | null;
+}
+
 export enum UserType {
     user = "user",
     admin = "admin"
