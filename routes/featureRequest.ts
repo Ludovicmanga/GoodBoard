@@ -3,7 +3,7 @@ import { createFeatureRequest, deleteFeatureRequest, downVote, getAllCompanyFeat
 import { checkAuthenticated } from '../middleware/auth.middleware';
 const router = express.Router();
 
-router.get('/get/all', checkAuthenticated , getAllFeatureRequests);
+router.get('/get/all', checkAuthenticated, getAllFeatureRequests);
 router.get('/get/all-user', getAllUserFeatureRequests);
 router.get('/get/all-company', getAllCompanyFeatureRequests);
 router.post('/create', createFeatureRequest);

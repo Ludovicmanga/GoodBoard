@@ -48,15 +48,18 @@ export const updateFeatureRequest = async (req, res) => {
   }
 };
 
-export const createFeatureRequest = (req, res) => {
+export const createFeatureRequest = async (req, res) => {
   const featureRequestData = req.body.featureRequest;
+
+  const loggedUser = await userModel.findById('63a5c70dcd60d8df7aecc3f8');
+
   
   const newFeatureRequest = new featureRequestModel({
     title: featureRequestData.title,
     details: featureRequestData.details,
-    creatorType: featureRequestData.creatorType,
+    creatorType: loggedUser.type,
     status: featureRequestData.status,
-    creator: featureRequestData.creator,
+    creator: loggedUser._id,
   });
 
   newFeatureRequest

@@ -4,19 +4,16 @@ import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
 import {
-  Alert,
   Avatar,
   AvatarGroup,
   Divider,
   MenuItem,
   Select,
   SelectChangeEvent,
-  Snackbar,
   TextField,
 } from "@mui/material";
 import styles from "./FeatureRequestModal.module.scss";
 import ludoPhoto from "../../../photos/ludoImg.jpg";
-import noVoter from "../../../photos/no_voter.png";
 import { useState } from "react";
 import {
   FeatureRequest,
@@ -45,11 +42,14 @@ export default function FeatureRequestModal(props: {
   const [featureRequestProperties, setFeatureRequestProperties] =
     useState<FeatureRequest>(emptyFeatureRequest);
 
+  const [hasUpdateRights, setHasUpdateRights] = useState(false);
   const [titleHasError, setTitleHasError] = useState<boolean>(false);
   const [titleErrorHelperText, setTitleErrorHelperText] = useState<string>("");
   const [detailsHasError, setDetailsHasError] = useState<boolean>(false);
   const [detailsErrorHelperText, setDetailsErrorHelperText] =
     useState<string>("");
+  const loggedUserState = useAppSelector((state) => state.loggedUser);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (props.modalIsOpen) {
@@ -58,15 +58,15 @@ export default function FeatureRequestModal(props: {
         props.modalMode === FeatureRequestModalMode.update
       ) {
         setFeatureRequestProperties(props.featureRequestProperties);
-      }
-
-      if (props.modalMode === FeatureRequestModalMode.creation) {
+      } else {
         setFeatureRequestProperties(emptyFeatureRequest);
       }
+      setHasUpdateRights(
+        loggedUserState.type === UserType.admin ||
+          featureRequestProperties.creator === loggedUserState._id
+      );
     }
   }, [props.modalIsOpen, props.featureRequestProperties, props.modalMode]);
-
-  const dispatch = useAppDispatch();
 
   const deleteRequest = async () => {
     const deletedFeature = await axios({
@@ -217,15 +217,23 @@ export default function FeatureRequestModal(props: {
               <div className={styles.statusSection}>
                 <div className={styles.statusSectionTitle}>Status :</div>
                 <Select
+                  disabled={!hasUpdateRights}
                   labelId="status"
                   id="status"
                   value={featureRequestProperties.status}
                   label="Status"
-                  onChange={(e: SelectChangeEvent<string>) => {
-                    setFeatureRequestProperties((propertiesState) => {
-                      return { ...propertiesState, status: e.target.value };
-                    });
-                  }}
+                  onChange={
+                    hasUpdateRights
+                      ? (e: SelectChangeEvent<string>) => {
+                          setFeatureRequestProperties((propertiesState) => {
+                            return {
+                              ...propertiesState,
+                              status: e.target.value,
+                            };
+                          });
+                        }
+                      : () => console.log("not editable")
+                  }
                 >
                   {(
                     Object.keys(FeatureRequestStatus) as Array<
@@ -241,6 +249,7 @@ export default function FeatureRequestModal(props: {
             </>
           )}
           <TextField
+            disabled={!hasUpdateRights}
             error={titleHasError}
             helperText={titleErrorHelperText}
             label="Title"
@@ -253,35 +262,46 @@ export default function FeatureRequestModal(props: {
             className={`${styles.textInput} ${styles.titleInput}`}
           />
           <TextField
+            disabled={!hasUpdateRights}
             error={detailsHasError}
             helperText={detailsErrorHelperText}
             label="Details"
             multiline
             rows={4}
             value={featureRequestProperties.details}
-            onChange={(e) => {
-              setFeatureRequestProperties((propertiesState) => {
-                return { ...propertiesState, details: e.target.value };
-              });
-            }}
+            onChange={
+              (e) => {
+                setFeatureRequestProperties((propertiesState) => {
+                  return { ...propertiesState, details: e.target.value };
+                });
+              }
+            }
             className={`${styles.textInput} ${styles.textArea}`}
           />
           <div className={styles.mainButtonsContainer}>
-            <Button
-              onClick={handleUpsertRequest}
-              className={styles.submitButton}
-              variant="contained"
-            >
-              {props.modalMode === FeatureRequestModalMode.creation
-                ? "Create "
-                : "Update "}
-              request
-            </Button>
-            {props.modalMode === FeatureRequestModalMode.update && (
-              <Button className={styles.submitButton} onClick={deleteRequest} variant="outlined" color="error">
-                Delete request
+            {hasUpdateRights && (
+              <Button
+                onClick={handleUpsertRequest}
+                className={styles.submitButton}
+                variant="contained"
+              >
+                {props.modalMode === FeatureRequestModalMode.creation
+                  ? "Create "
+                  : "Update "}
+                request
               </Button>
             )}
+            {hasUpdateRights &&
+              props.modalMode === FeatureRequestModalMode.update && (
+                <Button
+                  className={styles.submitButton}
+                  onClick={deleteRequest}
+                  variant="outlined"
+                  color="error"
+                >
+                  Delete request
+                </Button>
+              )}
           </div>
         </div>
       </Fade>

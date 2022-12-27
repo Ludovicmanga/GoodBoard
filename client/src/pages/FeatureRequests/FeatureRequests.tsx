@@ -1,11 +1,12 @@
 import NewFeatureRequestsButton from "../../components/buttons/NewFeatureRequestButton/NewFeatureRequestsButton";
-import { useAppSelector } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import FeatureRequestBox from "../../components/FeatureRequestBox/FeatureRequestBox";
-import { EmptyPageType, UserType } from "../../helpers/types";
-import React from "react";
+import { EmptyPageType, MenuSelected, UserType } from "../../helpers/types";
+import React, { useEffect } from "react";
 import SiteMainHeader from "../../components/Sections/SiteMainHeader/SiteMainHeader";
 import EmptyData from "../../components/EmptyData/EmptyData";
 import styles from "./FeatureRequests.module.scss";
+import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
 
 type Props = {
   type: UserType;
@@ -18,6 +19,20 @@ const FeatureRequests = (props: Props) => {
   const featureRequestsWithCorrespondingPropsType = allFeatureRequests.filter(
     (featureRequest) => featureRequest.creatorType === props.type
   );
+  const dispatch = useAppDispatch();
+  const menuSelectedState = useAppSelector(state => state.generalProperties.menuSelected)
+
+  useEffect(() => {
+    if (props.type === UserType.user) {
+      dispatch(setGeneralProperties({
+        menuSelected: MenuSelected.yourIdeas
+      }))
+    } else {
+      dispatch(setGeneralProperties({
+        menuSelected: MenuSelected.ourIdeas
+      }))
+    }
+  }, [menuSelectedState])
 
   return (
     <div className={styles.container}>
