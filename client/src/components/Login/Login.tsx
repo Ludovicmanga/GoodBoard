@@ -30,7 +30,8 @@ const Login = (props: Props) => {
         data: {
           email,
           password,
-        }
+        },
+        withCredentials: true,
       });
     }
     if (props.authType === AuthPageType.signUp) {

@@ -6,6 +6,7 @@ import { request } from "express";
 const ObjectId = mongoose.Types.ObjectId;
 
 export const getAllFeatureRequests = async (req, res) => {
+  console.log('I am logged 2 as ', req.user);
   await featureRequestModel
     .find()
     .then((allFeatureRequests) => res.status(200).send(allFeatureRequests));

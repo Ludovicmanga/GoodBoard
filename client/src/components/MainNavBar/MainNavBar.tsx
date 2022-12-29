@@ -16,6 +16,7 @@ import Menu from "@mui/material/Menu";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
 import { SettingsModal } from "../Modals/FeatureRequestModal/Settings/SettingsModal";
+import axios from "axios";
 
 
 const pages: string[] = [];
@@ -30,6 +31,14 @@ const MainNavBar = () => {
   const dispatch = useAppDispatch();
   const generalPropertiesState = useAppSelector(state => state.generalProperties);
 
+  const handleLogout = async () => {
+    await axios({
+      url: "http://localhost:8080/users/logout",
+      method: "post",
+      withCredentials: true,
+    });
+  }
+
   const handleSettingsModal = () => {
     dispatch(setGeneralProperties({
       generalSettingsModalOpen: true,
@@ -42,7 +51,7 @@ const MainNavBar = () => {
     },
     {
       linkText: "Se déconnecter",
-      onClick: handleSettingsModal,
+      onClick: handleLogout,
     },
   ];
 

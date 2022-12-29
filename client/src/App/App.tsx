@@ -14,6 +14,7 @@ function App() {
   const getAllUserFeatureRequests = async () => {
     const allUsersFeatureRequests = await axios({
       url: "http://localhost:8080/feature-request/get/all",
+      withCredentials: true,
     });
     return allUsersFeatureRequests.data;
   };
