@@ -73,7 +73,6 @@ function FeatureRequestBox(props: Props) {
   }, [isVoted]);
 
   useEffect(() => {
-    console.log('okkkk', loggedUser.voted, ' is voted users, and feat ids is ', props.featureRequestProperties._id);
     setIsVoted(loggedUser.voted.includes(props.featureRequestProperties._id));
   }, [loggedUser.voted, menuSelectedState]);
 

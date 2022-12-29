@@ -6,10 +6,9 @@ export const checkAuthenticated = async (
     next: NextFunction,
   ) => {
     if (req.isAuthenticated()) {
-        console.log('I am authenticated')
+        console.log('I am logged as ', req.user);
         next();
     } else {
-        console.log('I am not authenticated user is ', req.user, ' session is ', req.session)
-        next();
+        console.log('I am not authenticated');
     }
   }
