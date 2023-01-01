@@ -1,18 +1,19 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { MenuSelected, User } from "../../helpers/types";
+import { User } from "../../helpers/types";
 
-const initialState: User = {
-  _id: "",
-  email: "",
-  type: null,
-  voted: [],
+type LoggedUser = {
+  user: User | null | undefined;
+}
+
+const initialState: LoggedUser = {
+  user: undefined,
 };
 
 export const loggedUserSlice = createSlice({
   name: "logged user",
   initialState,
   reducers: {
-    setLoggedUserState: (state, action: PayloadAction<Partial<User>>) => {
+    setLoggedUserState: (state, action: PayloadAction<Partial<LoggedUser>>) => {
       state = { ...state, ...action.payload };
       return state;
     },
@@ -22,7 +23,9 @@ export const loggedUserSlice = createSlice({
         featureRequestId: string;
       }>
     ) => {
-      state.voted = [...state.voted, action.payload.featureRequestId];
+      if (state.user) {
+        state.user.voted = [...state.user.voted, action.payload.featureRequestId];
+      }
       return state;
     },
     removeFromVotedFeatures: (
@@ -31,7 +34,9 @@ export const loggedUserSlice = createSlice({
         featureRequestId: string;
       }>
     ) => {
-      state.voted = state.voted.filter(featureRequestId => featureRequestId !== action.payload.featureRequestId);
+      if (state.user) {
+        state.user.voted = state.user.voted.filter(featureRequestId => featureRequestId !== action.payload.featureRequestId);
+      }
       return state;
     },
   },

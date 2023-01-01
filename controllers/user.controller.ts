@@ -1,8 +1,16 @@
 import userModel from '../models/user.model';
 
 export const getUser = async (req, res, next) => {
-   const user = await userModel.findById(req.params.id);
-   if (user) {
-    res.send(user)
+   if (req.user) {
+      const user = await userModel.findById(req.user.id);
+      if (user) {
+         res.send({
+            user
+         })
+      }
+   } else {
+      res.send({
+         notAuthenticated: true,
+      })
    }
 }

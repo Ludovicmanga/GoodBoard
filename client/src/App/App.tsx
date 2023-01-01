@@ -2,7 +2,6 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import axios from "axios";
 import React from "react";
 import { useEffect } from "react";
-import { UserType } from "../helpers/types";
 import { setAllFeatureRequests } from "../redux/features/allFeatureRequestsSlice";
 import { setLoggedUserState } from "../redux/features/loggedUserSlice";
 import { useAppDispatch } from "../redux/hooks";
@@ -26,15 +25,25 @@ function App() {
     };
     const getLoggedUser = async () => {
       const userResponse = await axios({
-        url: `http://localhost:8080/users/get/63a5c70dcd60d8df7aecc3f8`,
+        url: `http://localhost:8080/users/checkIfAuthenticated`,
+        withCredentials: true,
       });
-      console.log(userResponse.data, ' is the user')
-      dispatch(setLoggedUserState({
-        _id: '63a5c70dcd60d8df7aecc3f8',
-        email: userResponse.data.email,
-        type: userResponse.data.type,
-        voted: userResponse.data.voted,
-      }))
+      if (userResponse.data.user) {
+        const user = userResponse.data.user;
+        dispatch(setLoggedUserState({
+          user: {
+            _id: user._id,
+            email: user.email,
+            type: user.type,
+            voted: user.voted,
+          }
+        }))
+      }
+      if (userResponse.data.notAuthenticated) {
+        dispatch(setLoggedUserState({
+          user: null,
+        }))
+      }
     };
     getLoggedUser();
     getAll();

@@ -6,7 +6,6 @@ import { request } from "express";
 const ObjectId = mongoose.Types.ObjectId;
 
 export const getAllFeatureRequests = async (req, res) => {
-  console.log('I am logged 2 as ', req.user);
   await featureRequestModel
     .find()
     .then((allFeatureRequests) => res.status(200).send(allFeatureRequests));
@@ -51,16 +50,13 @@ export const updateFeatureRequest = async (req, res) => {
 
 export const createFeatureRequest = async (req, res) => {
   const featureRequestData = req.body.featureRequest;
-
-  const loggedUser = await userModel.findById('63a5c70dcd60d8df7aecc3f8');
-
   
   const newFeatureRequest = new featureRequestModel({
     title: featureRequestData.title,
     details: featureRequestData.details,
-    creatorType: loggedUser.type,
+    creatorType: req.user.type,
     status: featureRequestData.status,
-    creator: loggedUser._id,
+    creator: req.user.id,
   });
 
   newFeatureRequest

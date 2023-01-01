@@ -6,14 +6,17 @@ import { getUser } from "../controllers/user.controller";
 const router = express();
 
 router.get("/get/:id", getUser);
+router.get('/checkIfAuthenticated', getUser);
 router.post("/login", passport.authenticate("local"), (req: any, res) => {
-  res.send(req.user);
+  res.json({
+    user: req.user,
+  });
 });
 router.post('/logout', (req: any, res, next) => {
   req.logout(function(err) {
     if (err) { return next(err); }
     res.json({
-      disconnected: true,
+      loggedOut: true,
     })
   });
 });

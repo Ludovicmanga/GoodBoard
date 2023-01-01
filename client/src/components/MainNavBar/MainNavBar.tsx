@@ -17,6 +17,8 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
 import { SettingsModal } from "../Modals/FeatureRequestModal/Settings/SettingsModal";
 import axios from "axios";
+import { setLoggedUserState } from "../../redux/features/loggedUserSlice";
+import { useNavigate } from "react-router-dom";
 
 
 const pages: string[] = [];
@@ -29,14 +31,30 @@ const MainNavBar = () => {
     null
   );
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const generalPropertiesState = useAppSelector(state => state.generalProperties);
 
   const handleLogout = async () => {
-    await axios({
+    const response = await axios<{ loggedOut: boolean }>({
       url: "http://localhost:8080/users/logout",
       method: "post",
       withCredentials: true,
     });
+    if (response.data.loggedOut) {
+      dispatch(setLoggedUserState({
+        user: null,
+      }));
+      navigate("/login");
+        dispatch(
+          setGeneralProperties({
+            mainSnackBar: {
+              isOpen: true,
+              message: `Successful logout`,
+            },
+          })
+        )
+    }
+
   }
 
   const handleSettingsModal = () => {
