@@ -12,7 +12,11 @@ import Container from "@mui/material/Container";
 import { GoogleLogin } from "@react-oauth/google";
 import { Divider } from "@mui/material";
 import axios from "axios";
-import { AuthPageType, UserType } from "../../helpers/types";
+import { AuthPageType, User, UserType } from "../../helpers/types";
+import { useAppDispatch } from "../../redux/hooks";
+import { setLoggedUserState } from "../../redux/features/loggedUserSlice";
+import { useNavigate } from "react-router-dom";
+import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
 
 type Props = {
   authType: AuthPageType;
@@ -21,10 +25,12 @@ type Props = {
 const Login = (props: Props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handleAuth = async () => {
     if (props.authType === AuthPageType.login) {
-      await axios({
+      const userResponse = await axios<{ user: User }>({
         url: "http://localhost:8080/users/login",
         method: "post",
         data: {
@@ -33,17 +39,42 @@ const Login = (props: Props) => {
         },
         withCredentials: true,
       });
+      if (userResponse.data.user) {
+        dispatch(setLoggedUserState({
+          user: userResponse.data.user,
+        }));
+        navigate("/");
+        dispatch(
+          setGeneralProperties({
+            mainSnackBar: {
+              isOpen: true,
+              message: `Welcome ${userResponse.data.user.email} !`,
+            },
+          })
+        )
+      }
     }
     if (props.authType === AuthPageType.signUp) {
-      await axios({
+      const signUpResponse = await axios<{ user: User }>({
         url: "http://localhost:8080/users/sign-up",
         method: "post",
         data: {
           email,
           password,
-          type: UserType.admin
+          type: UserType.user
         }
       });
+      if (signUpResponse.data.user) {
+        navigate("/login");
+        dispatch(
+          setGeneralProperties({
+            mainSnackBar: {
+              isOpen: true,
+              message: "Successful sign up !",
+            },
+          })
+        )
+      }
     }
   }
 

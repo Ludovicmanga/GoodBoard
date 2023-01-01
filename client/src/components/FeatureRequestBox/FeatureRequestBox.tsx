@@ -10,7 +10,10 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { downVote, upVote } from "../../redux/features/allFeatureRequestsSlice";
 import { useEffect } from "react";
 import { lightBlue } from "@mui/material/colors";
-import { addToVotedFeatures, removeFromVotedFeatures } from "../../redux/features/loggedUserSlice";
+import {
+  addToVotedFeatures,
+  removeFromVotedFeatures,
+} from "../../redux/features/loggedUserSlice";
 
 type Props = {
   featureRequestProperties: FeatureRequest;
@@ -26,44 +29,48 @@ function FeatureRequestBox(props: Props) {
   };
   const dispatch = useAppDispatch();
   const loggedUser = useAppSelector((state) => state.loggedUser);
-  const menuSelectedState = useAppSelector(state => state.generalProperties.menuSelected)
+  const menuSelectedState = useAppSelector(
+    (state) => state.generalProperties.menuSelected
+  );
 
   const handleVote = async () => {
     let url = "";
-    if (isVoted) {
-      url = `http://localhost:8080/feature-request/up-vote/${props.featureRequestProperties._id}`;
-      dispatch(
-        upVote({
-          featureRequestId: props.featureRequestProperties._id,
-          userId: loggedUser._id,
-        })
-      );
-      dispatch(
-        addToVotedFeatures({
-          featureRequestId: props.featureRequestProperties._id
-        }),
-      )
-    } else {
-      url = `http://localhost:8080/feature-request/down-vote/${props.featureRequestProperties._id}`;
-      dispatch(
-        downVote({
-          featureRequestId: props.featureRequestProperties._id,
-          userId: loggedUser._id,
-        }),
-      );
-      dispatch(
-        removeFromVotedFeatures({
-          featureRequestId: props.featureRequestProperties._id
-        }),
-      )
+    if (loggedUser.user) {
+      if (isVoted) {
+        url = `http://localhost:8080/feature-request/up-vote/${props.featureRequestProperties._id}`;
+        dispatch(
+          upVote({
+            featureRequestId: props.featureRequestProperties._id,
+            userId: loggedUser.user._id,
+          })
+        );
+        dispatch(
+          addToVotedFeatures({
+            featureRequestId: props.featureRequestProperties._id,
+          })
+        );
+      } else {
+        url = `http://localhost:8080/feature-request/down-vote/${props.featureRequestProperties._id}`;
+        dispatch(
+          downVote({
+            featureRequestId: props.featureRequestProperties._id,
+            userId: loggedUser.user._id,
+          })
+        );
+        dispatch(
+          removeFromVotedFeatures({
+            featureRequestId: props.featureRequestProperties._id,
+          })
+        );
+      }
+      await axios({
+        url,
+        method: "post",
+        data: {
+          userId: loggedUser.user._id,
+        },
+      });
     }
-    await axios({
-      url,
-      method: "post",
-      data: {
-        userId: loggedUser._id,
-      },
-    });
   };
 
   useEffect(() => {
@@ -73,8 +80,10 @@ function FeatureRequestBox(props: Props) {
   }, [isVoted]);
 
   useEffect(() => {
-    setIsVoted(loggedUser.voted.includes(props.featureRequestProperties._id));
-  }, [loggedUser.voted, menuSelectedState]);
+    if (loggedUser.user) {
+      setIsVoted(loggedUser.user.voted.includes(props.featureRequestProperties._id));
+    }
+  }, [loggedUser?.user?.voted, menuSelectedState]);
 
   return (
     <div className={styles.container}>

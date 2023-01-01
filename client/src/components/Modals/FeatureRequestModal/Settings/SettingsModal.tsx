@@ -3,6 +3,7 @@ import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
+import { useAppSelector } from "../../../../redux/hooks";
 
 const style = {
   position: "absolute" as "absolute",
@@ -22,6 +23,7 @@ type Props = {
 };
 
 export const SettingsModal = (props: Props) => {
+  const loggedUser = useAppSelector(state => state.loggedUser);
 
   return (
     <div>
@@ -39,8 +41,9 @@ export const SettingsModal = (props: Props) => {
         <Fade in={props.modalIsOpen}>
           <Box sx={style}>
             <div>
-                Name :
+                Email :
             </div>
+            {loggedUser?.user?.email}
             <div>
                 Company
             </div>
