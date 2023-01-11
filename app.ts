@@ -21,6 +21,7 @@ const corsOptions = {
 
 import usersRouter from './routes/users';
 import featureRequestRouter from './routes/featureRequest';
+import boardRouter from './routes/board';
 
 var app = express();
 import './config/passport.setup';
@@ -53,6 +54,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 app.use('/users', usersRouter);
+app.use('/board', boardRouter);
 app.use('/feature-request', featureRequestRouter);
 
 // catch 404 and forward to error handler

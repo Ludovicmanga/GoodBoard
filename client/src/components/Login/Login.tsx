@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styles from "./Login.module.scss";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";

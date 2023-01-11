@@ -20,31 +20,38 @@ const FeatureRequests = (props: Props) => {
     (featureRequest) => featureRequest.creatorType === props.type
   );
   const dispatch = useAppDispatch();
-  const menuSelectedState = useAppSelector(state => state.generalProperties.menuSelected)
+  const menuSelectedState = useAppSelector(
+    (state) => state.generalProperties.menuSelected
+  );
 
   useEffect(() => {
     if (props.type === UserType.user) {
-      dispatch(setGeneralProperties({
-        menuSelected: MenuSelected.yourIdeas
-      }))
+      dispatch(
+        setGeneralProperties({
+          menuSelected: MenuSelected.yourIdeas,
+        })
+      );
     } else {
-      dispatch(setGeneralProperties({
-        menuSelected: MenuSelected.ourIdeas
-      }))
+      dispatch(
+        setGeneralProperties({
+          menuSelected: MenuSelected.ourIdeas,
+        })
+      );
     }
-  }, [menuSelectedState])
+  }, [menuSelectedState]);
 
   return (
-    <div className={styles.container}>
+    <>
       <SiteMainHeader />
-      <div className={styles.mainContent}>
         {featureRequestsWithCorrespondingPropsType.length > 0 ? (
-          featureRequestsWithCorrespondingPropsType.map((featureRequest) => (
-            <FeatureRequestBox
-              key={featureRequest._id}
-              featureRequestProperties={featureRequest}
-            />
-          ))
+          <div className={styles.container}>
+            {featureRequestsWithCorrespondingPropsType.map((featureRequest) => (
+              <FeatureRequestBox
+                key={featureRequest._id}
+                featureRequestProperties={featureRequest}
+              />
+            ))}
+          </div>
         ) : (
           <div className={styles.emptyDataContainer}>
             <EmptyData
@@ -53,9 +60,8 @@ const FeatureRequests = (props: Props) => {
             />
           </div>
         )}
-        <NewFeatureRequestsButton />
-      </div>
-    </div>
+      <NewFeatureRequestsButton />
+    </>
   );
 };
 
