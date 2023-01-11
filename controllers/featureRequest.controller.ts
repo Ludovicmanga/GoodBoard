@@ -3,8 +3,6 @@ import mongoose from "mongoose";
 import userModel from "../models/user.model";
 import { request } from "express";
 
-const ObjectId = mongoose.Types.ObjectId;
-
 export const getAllFeatureRequests = async (req, res) => {
   await featureRequestModel
     .find()

@@ -1,7 +1,9 @@
 import mongoose from "mongoose";
+import dotenv from 'dotenv';
+dotenv.config();
 
 export const DBConnection = mongoose
-    .connect(`mongodb+srv://ludovicmangaj:M433c'm442B@cluster0.fhytx.mongodb.net/goodboard`)
+    .connect(process.env.MONGODB_URL || '')
     .then( () => {
         console.log('connected to MongoDB !!')
     })
