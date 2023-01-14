@@ -12,7 +12,7 @@ function App() {
   const dispatch = useAppDispatch();
   const getAllUserFeatureRequests = async () => {
     const allUsersFeatureRequests = await axios({
-      url: "http://localhost:8080/feature-request/get/all",
+      url: "https://goodboard-app.herokuapp.com/api/feature-request/get/all",
       withCredentials: true,
     });
     return allUsersFeatureRequests.data;
@@ -25,7 +25,7 @@ function App() {
     };
     const getLoggedUser = async () => {
       const userResponse = await axios({
-        url: `http://localhost:8080/users/checkIfAuthenticated`,
+        url: `https://goodboard-app.herokuapp.com/api/users/checkIfAuthenticated`,
         withCredentials: true,
       });
       if (userResponse.data.user) {

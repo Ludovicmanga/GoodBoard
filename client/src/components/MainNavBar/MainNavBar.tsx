@@ -36,7 +36,7 @@ const MainNavBar = () => {
 
   const handleLogout = async () => {
     const response = await axios<{ loggedOut: boolean }>({
-      url: "http://localhost:8080/users/logout",
+      url: "https://goodboard-app.herokuapp.com/api/users/logout",
       method: "post",
       withCredentials: true,
     });
