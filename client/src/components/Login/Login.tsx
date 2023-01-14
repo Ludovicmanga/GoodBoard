@@ -31,7 +31,7 @@ const Login = (props: Props) => {
   const handleAuth = async () => {
     if (props.authType === AuthPageType.login) {
       const userResponse = await axios<{ user: User }>({
-        url: "https://goodboard-app.herokuapp.com/users/login",
+        url: "http://localhost:8080/api/users/login",
         method: "post",
         data: {
           email,
@@ -56,7 +56,7 @@ const Login = (props: Props) => {
     }
     if (props.authType === AuthPageType.signUp) {
       const signUpResponse = await axios<{ user: User }>({
-        url: "https://goodboard-app.herokuapp.com/users/sign-up",
+        url: "http://localhost:8080/api/users/sign-up",
         method: "post",
         data: {
           email,
