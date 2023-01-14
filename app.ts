@@ -29,6 +29,7 @@ import './config/passport.setup';
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.enable('trust proxy')
 app.use(session({
   secret: 'this is my secrethkjrhkfrhkfh',
   resave: false,
@@ -40,7 +41,7 @@ app.use(session({
   cookie: {
     secure: process.env.NODE_ENV === "production",
     maxAge: 24 * 60 * 60 * 1000,
-    //httpOnly: true,
+    httpOnly: true,
     sameSite: 'none'
   },
 }))
