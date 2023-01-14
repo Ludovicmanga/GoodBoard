@@ -53,7 +53,6 @@ export default function FeatureRequestModal(props: {
 
   useEffect(() => {
     if (props.modalIsOpen && loggedUserState.user) {
-      console.log('okk!!', props.featureRequestProperties);
       if (
         props.featureRequestProperties &&
         props.modalMode === FeatureRequestModalMode.update
@@ -62,12 +61,21 @@ export default function FeatureRequestModal(props: {
       } else {
         setFeatureRequestProperties(emptyFeatureRequest);
       }
-      setHasUpdateRights(
-        loggedUserState.user.type === UserType.admin ||
-        props.featureRequestProperties?.creator === loggedUserState.user?._id
-      );
     }
   }, [props.modalIsOpen, props.featureRequestProperties, props.modalMode]);
+
+  useEffect(() => {
+    if (
+      props.modalIsOpen &&
+      loggedUserState.user &&
+      props.modalMode === FeatureRequestModalMode.update
+    ) {
+      setHasUpdateRights(
+        loggedUserState?.user.type === UserType.admin ||
+          featureRequestProperties?.creator === loggedUserState.user?._id
+      );
+    }
+  }, [featureRequestProperties.creator]);
 
   const deleteRequest = async () => {
     const deletedFeature = await axios({
@@ -194,9 +202,11 @@ export default function FeatureRequestModal(props: {
         <div className={styles.modalContentContainer}>
           <div className={styles.modalTitle}>
             {props.modalMode === FeatureRequestModalMode.creation
-              ? "Make"
-              : "Update"}{" "}
-            a feature request
+              ? "Make feature request"
+              : props.modalMode === FeatureRequestModalMode.update &&
+                hasUpdateRights
+              ? "Update feature request"
+              : ""}
           </div>
           <Divider className={styles.divider} />
           {props.modalMode === FeatureRequestModalMode.update && (
@@ -221,23 +231,22 @@ export default function FeatureRequestModal(props: {
               <div className={styles.statusSection}>
                 <div className={styles.statusSectionTitle}>Status :</div>
                 <Select
-                  disabled={props.modalMode === FeatureRequestModalMode.update && !hasUpdateRights}
+                  disabled={
+                    props.modalMode === FeatureRequestModalMode.update &&
+                    !hasUpdateRights
+                  }
                   labelId="status"
                   id="status"
                   value={featureRequestProperties.status}
                   label="Status"
-                  onChange={
-                    hasUpdateRights
-                      ? (e: SelectChangeEvent<string>) => {
-                          setFeatureRequestProperties((propertiesState) => {
-                            return {
-                              ...propertiesState,
-                              status: e.target.value,
-                            };
-                          });
-                        }
-                      : () => console.log("not editable")
-                  }
+                  onChange={(e: SelectChangeEvent<string>) => {
+                    setFeatureRequestProperties((propertiesState) => {
+                      return {
+                        ...propertiesState,
+                        status: e.target.value,
+                      };
+                    });
+                  }}
                 >
                   {(
                     Object.keys(FeatureRequestStatus) as Array<
@@ -253,7 +262,10 @@ export default function FeatureRequestModal(props: {
             </>
           )}
           <TextField
-            disabled={props.modalMode === FeatureRequestModalMode.update && !hasUpdateRights}
+            disabled={
+              props.modalMode === FeatureRequestModalMode.update &&
+              !hasUpdateRights
+            }
             error={titleHasError}
             helperText={titleErrorHelperText}
             label="Title"
@@ -266,24 +278,26 @@ export default function FeatureRequestModal(props: {
             className={`${styles.textInput} ${styles.titleInput}`}
           />
           <TextField
-            disabled={props.modalMode === FeatureRequestModalMode.update && !hasUpdateRights}
+            disabled={
+              props.modalMode === FeatureRequestModalMode.update &&
+              !hasUpdateRights
+            }
             error={detailsHasError}
             helperText={detailsErrorHelperText}
             label="Details"
             multiline
             rows={4}
             value={featureRequestProperties.details}
-            onChange={
-              (e) => {
-                setFeatureRequestProperties((propertiesState) => {
-                  return { ...propertiesState, details: e.target.value };
-                });
-              }
-            }
+            onChange={(e) => {
+              setFeatureRequestProperties((propertiesState) => {
+                return { ...propertiesState, details: e.target.value };
+              });
+            }}
             className={`${styles.textInput} ${styles.textArea}`}
           />
           <div className={styles.mainButtonsContainer}>
-            {(hasUpdateRights || props.modalMode === FeatureRequestModalMode.creation) && (
+            {(hasUpdateRights ||
+              props.modalMode === FeatureRequestModalMode.creation) && (
               <Button
                 onClick={handleUpsertRequest}
                 className={styles.submitButton}
