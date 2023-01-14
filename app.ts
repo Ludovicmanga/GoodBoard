@@ -29,7 +29,7 @@ import './config/passport.setup';
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-//app.enable('trust proxy')
+app.enable('trust proxy')
 app.use(session({
   secret: 'this is my secrethkjrhkfrhkfh',
   resave: false,
