@@ -42,6 +42,7 @@ app.use(session({
     maxAge: 24 * 60 * 60 * 1000,
     httpOnly: true,
     domain: 'goodboard-app.herokuapp.com',
+    sameSite: 'none'
   },
 }))
 
