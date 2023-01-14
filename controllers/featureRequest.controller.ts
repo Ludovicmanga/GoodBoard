@@ -47,6 +47,7 @@ export const updateFeatureRequest = async (req, res) => {
 };
 
 export const createFeatureRequest = async (req, res) => {
+  console.log(req.user, ' is the user')
   const featureRequestData = req.body.featureRequest;
   
   const newFeatureRequest = new featureRequestModel({
