@@ -53,6 +53,7 @@ export default function FeatureRequestModal(props: {
 
   useEffect(() => {
     if (props.modalIsOpen && loggedUserState.user) {
+      console.log('okk!!', props.featureRequestProperties);
       if (
         props.featureRequestProperties &&
         props.modalMode === FeatureRequestModalMode.update
@@ -63,7 +64,7 @@ export default function FeatureRequestModal(props: {
       }
       setHasUpdateRights(
         loggedUserState.user.type === UserType.admin ||
-          featureRequestProperties.creator === loggedUserState.user?._id
+        props.featureRequestProperties?.creator === loggedUserState.user?._id
       );
     }
   }, [props.modalIsOpen, props.featureRequestProperties, props.modalMode]);
