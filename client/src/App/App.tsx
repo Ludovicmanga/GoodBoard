@@ -2,6 +2,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import axios from "axios";
 import React from "react";
 import { useEffect } from "react";
+import { websiteUrl } from "../helpers/constants";
 import { setAllFeatureRequests } from "../redux/features/allFeatureRequestsSlice";
 import { setLoggedUserState } from "../redux/features/loggedUserSlice";
 import { useAppDispatch } from "../redux/hooks";
@@ -12,7 +13,7 @@ function App() {
   const dispatch = useAppDispatch();
   const getAllUserFeatureRequests = async () => {
     const allUsersFeatureRequests = await axios({
-      url: "https://goodboard-app.herokuapp.com/api/feature-request/get/all",
+      url: `${websiteUrl}/api/feature-request/get/all`,
       withCredentials: true,
     });
     return allUsersFeatureRequests.data;
@@ -25,7 +26,7 @@ function App() {
     };
     const getLoggedUser = async () => {
       const userResponse = await axios({
-        url: `https://goodboard-app.herokuapp.com/api/users/checkIfAuthenticated`,
+        url: `${websiteUrl}/api/users/checkIfAuthenticated`,
         withCredentials: true,
       });
       if (userResponse.data.user) {

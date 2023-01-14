@@ -17,6 +17,7 @@ import { useAppDispatch } from "../../redux/hooks";
 import { setLoggedUserState } from "../../redux/features/loggedUserSlice";
 import { useNavigate } from "react-router-dom";
 import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
+import { websiteUrl } from "../../helpers/constants";
 
 type Props = {
   authType: AuthPageType;
@@ -31,7 +32,7 @@ const Login = (props: Props) => {
   const handleAuth = async () => {
     if (props.authType === AuthPageType.login) {
       const userResponse = await axios<{ user: User }>({
-        url: "https://goodboard-app.herokuapp.com/api/users/login",
+        url: `${websiteUrl}/api/users/login`,
         method: "post",
         data: {
           email,
@@ -56,7 +57,7 @@ const Login = (props: Props) => {
     }
     if (props.authType === AuthPageType.signUp) {
       const signUpResponse = await axios<{ user: User }>({
-        url: "https://goodboard-app.herokuapp.com/api/users/sign-up",
+        url: `${websiteUrl}/api/users/sign-up`,
         method: "post",
         data: {
           email,

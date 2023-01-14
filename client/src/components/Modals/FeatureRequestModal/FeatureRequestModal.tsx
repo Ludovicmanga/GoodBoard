@@ -31,7 +31,7 @@ import {
   updateFeatureRequest,
 } from "../../../redux/features/allFeatureRequestsSlice";
 import { setGeneralProperties } from "../../../redux/features/generalPropertiesSlice";
-import { emptyFeatureRequest } from "../../../helpers/constants";
+import { emptyFeatureRequest, websiteUrl } from "../../../helpers/constants";
 
 export default function FeatureRequestModal(props: {
   modalMode: FeatureRequestModalMode;
@@ -70,7 +70,7 @@ export default function FeatureRequestModal(props: {
 
   const deleteRequest = async () => {
     const deletedFeature = await axios({
-      url: "https://goodboard-app.herokuapp.com/api/feature-request/delete",
+      url: `${websiteUrl}/api/feature-request/delete`,
       method: "post",
       data: {
         featureRequestId: featureRequestProperties._id,
@@ -98,7 +98,7 @@ export default function FeatureRequestModal(props: {
   const upsertRequest = async () => {
     if (props.modalMode === FeatureRequestModalMode.creation) {
       const createdFeatureRequest = await axios({
-        url: "https://goodboard-app.herokuapp.com/api/feature-request/create",
+        url: `${websiteUrl}/api/feature-request/create`,
         method: "post",
         data: {
           featureRequest: featureRequestProperties,
@@ -122,7 +122,7 @@ export default function FeatureRequestModal(props: {
       }
     } else {
       const updatedFeatureRequest = await axios({
-        url: "https://goodboard-app.herokuapp.com/api/feature-request/update",
+        url: `${websiteUrl}/api/feature-request/update`,
         method: "post",
         data: {
           featureRequest: featureRequestProperties,

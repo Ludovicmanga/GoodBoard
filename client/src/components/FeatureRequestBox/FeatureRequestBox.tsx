@@ -14,6 +14,7 @@ import {
   addToVotedFeatures,
   removeFromVotedFeatures,
 } from "../../redux/features/loggedUserSlice";
+import { websiteUrl } from "../../helpers/constants";
 
 type Props = {
   featureRequestProperties: FeatureRequest;
@@ -37,7 +38,7 @@ function FeatureRequestBox(props: Props) {
     let url = "";
     if (loggedUser.user) {
       if (isVoted) {
-        url = `https://goodboard-app.herokuapp.com/api/feature-request/up-vote/${props.featureRequestProperties._id}`;
+        url = `${websiteUrl}/api/feature-request/up-vote/${props.featureRequestProperties._id}`;
         dispatch(
           upVote({
             featureRequestId: props.featureRequestProperties._id,
@@ -50,7 +51,7 @@ function FeatureRequestBox(props: Props) {
           })
         );
       } else {
-        url = `https://goodboard-app.herokuapp.com/api/feature-request/down-vote/${props.featureRequestProperties._id}`;
+        url = `${websiteUrl}/api/feature-request/down-vote/${props.featureRequestProperties._id}`;
         dispatch(
           downVote({
             featureRequestId: props.featureRequestProperties._id,
