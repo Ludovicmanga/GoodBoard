@@ -19,6 +19,7 @@ import { SettingsModal } from "../Modals/FeatureRequestModal/Settings/SettingsMo
 import axios from "axios";
 import { setLoggedUserState } from "../../redux/features/loggedUserSlice";
 import { useNavigate } from "react-router-dom";
+import { websiteUrl } from "../../helpers/constants";
 
 
 const pages: string[] = [];
@@ -36,7 +37,7 @@ const MainNavBar = () => {
 
   const handleLogout = async () => {
     const response = await axios<{ loggedOut: boolean }>({
-      url: "https://goodboard-app.herokuapp.com/api/users/logout",
+      url: `${websiteUrl}/api/users/logout`,
       method: "post",
       withCredentials: true,
     });

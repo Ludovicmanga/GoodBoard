@@ -1,6 +1,7 @@
 import { Button, TextField } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
+import { websiteUrl } from "../../helpers/constants";
 
 type Props = {};
 
@@ -8,7 +9,7 @@ const BoardCreation = (props: Props) => {
   const [name, setName] = useState("");
   const handleBoardCreation = async () => {
     const boardCreationResponse = await axios({
-        url: "https://goodboard-app.herokuapp.com/api/board/create",
+        url: `${websiteUrl}/api/board/create`,
         method: 'post',
         data: {
             name,
