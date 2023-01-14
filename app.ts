@@ -46,16 +46,16 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use('/api/users', usersRouter);
+app.use('/api/board', boardRouter);
+app.use('/api/feature-request', featureRequestRouter);
+
 if (process.env.NODE_ENV === "production") {
   app.use(express.static('client/build'));
   app.get('/*', (_, res) => {
     res.sendFile(path.join(__dirname, './client/build/index.html'))
   })
 }
-
-app.use('/users', usersRouter);
-app.use('/board', boardRouter);
-app.use('/feature-request', featureRequestRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
