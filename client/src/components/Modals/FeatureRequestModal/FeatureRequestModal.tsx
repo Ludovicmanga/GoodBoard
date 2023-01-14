@@ -70,7 +70,7 @@ export default function FeatureRequestModal(props: {
 
   const deleteRequest = async () => {
     const deletedFeature = await axios({
-      url: "http://localhost:8080/feature-request/delete",
+      url: "https://goodboard-app.herokuapp.com/api/feature-request/delete",
       method: "post",
       data: {
         featureRequestId: featureRequestProperties._id,
@@ -98,7 +98,7 @@ export default function FeatureRequestModal(props: {
   const upsertRequest = async () => {
     if (props.modalMode === FeatureRequestModalMode.creation) {
       const createdFeatureRequest = await axios({
-        url: "http://localhost:8080/feature-request/create",
+        url: "https://goodboard-app.herokuapp.com/api/feature-request/create",
         method: "post",
         data: {
           featureRequest: featureRequestProperties,
@@ -122,7 +122,7 @@ export default function FeatureRequestModal(props: {
       }
     } else {
       const updatedFeatureRequest = await axios({
-        url: "http://localhost:8080/feature-request/update",
+        url: "https://goodboard-app.herokuapp.com/api/feature-request/update",
         method: "post",
         data: {
           featureRequest: featureRequestProperties,

@@ -37,7 +37,7 @@ function FeatureRequestBox(props: Props) {
     let url = "";
     if (loggedUser.user) {
       if (isVoted) {
-        url = `http://localhost:8080/feature-request/up-vote/${props.featureRequestProperties._id}`;
+        url = `https://goodboard-app.herokuapp.com/api/feature-request/up-vote/${props.featureRequestProperties._id}`;
         dispatch(
           upVote({
             featureRequestId: props.featureRequestProperties._id,
@@ -50,7 +50,7 @@ function FeatureRequestBox(props: Props) {
           })
         );
       } else {
-        url = `http://localhost:8080/feature-request/down-vote/${props.featureRequestProperties._id}`;
+        url = `https://goodboard-app.herokuapp.com/api/feature-request/down-vote/${props.featureRequestProperties._id}`;
         dispatch(
           downVote({
             featureRequestId: props.featureRequestProperties._id,

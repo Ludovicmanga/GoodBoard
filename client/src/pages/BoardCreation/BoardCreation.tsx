@@ -8,7 +8,7 @@ const BoardCreation = (props: Props) => {
   const [name, setName] = useState("");
   const handleBoardCreation = async () => {
     const boardCreationResponse = await axios({
-        url: "http://localhost:8080/board/create",
+        url: "https://goodboard-app.herokuapp.com/api/board/create",
         method: 'post',
         data: {
             name,
