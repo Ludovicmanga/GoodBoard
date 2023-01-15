@@ -10,12 +10,13 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { GoogleLogin } from "@react-oauth/google";
-import { Divider } from "@mui/material";
+import { Divider, Grid } from "@mui/material";
 import axios from "axios";
 import { AuthPageType, User, UserType } from "../../helpers/types";
 import { useAppDispatch } from "../../redux/hooks";
 import { setLoggedUserState } from "../../redux/features/loggedUserSlice";
 import { useNavigate } from "react-router-dom";
+import Link from '@mui/material/Link'
 import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
 import { websiteUrl } from "../../helpers/constants";
 
@@ -125,10 +126,18 @@ const Login = (props: Props) => {
               id="password"
               autoComplete="current-password"
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
+            <Grid container>
+              <Grid item xs>
+                <Link href="#" variant="body2">
+                  Forgot password?
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link href={ props.authType === AuthPageType.login ? `${websiteUrl}/sign-up` : `${websiteUrl}/login`} variant="body2">
+                  {props.authType === AuthPageType.login ? "Don't have an account? Sign Up" : "Already have an account? Log in"}
+                </Link>
+              </Grid>
+            </Grid>
             <div className={styles.buttonsContainer}>
               <Button
                 onClick={handleAuth}
