@@ -13,7 +13,6 @@ passport.use(
         customFields,
         async (email, password, done) => {
             try {
-                console.log('I will try to verify')
                 const user = await userModel.findOne({ email });
                 if (user) {
                 const auth = await bcrypt.compare(password, user.password);

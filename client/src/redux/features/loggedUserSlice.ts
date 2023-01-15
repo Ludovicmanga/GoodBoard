@@ -17,6 +17,12 @@ export const loggedUserSlice = createSlice({
       state = { ...state, ...action.payload };
       return state;
     },
+    setEmail: (state, action: PayloadAction<string>) => {
+      if (state.user) {
+        state.user.email = action.payload;
+      }
+      return state;
+    },
     addToVotedFeatures: (
       state,
       action: PayloadAction<{
@@ -42,6 +48,6 @@ export const loggedUserSlice = createSlice({
   },
 });
 
-export const { setLoggedUserState, addToVotedFeatures, removeFromVotedFeatures } = loggedUserSlice.actions;
+export const { setLoggedUserState, setEmail, addToVotedFeatures, removeFromVotedFeatures } = loggedUserSlice.actions;
 
 export default loggedUserSlice.reducer;

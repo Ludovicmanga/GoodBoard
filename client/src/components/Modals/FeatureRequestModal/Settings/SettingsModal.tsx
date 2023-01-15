@@ -1,10 +1,16 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
-import { useAppSelector } from "../../../../redux/hooks";
-
+import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
+import { AiOutlineMail } from "react-icons/ai";
+import { Button, TextField } from "@mui/material";
+import axios from "axios";
+import { websiteUrl } from "../../../../helpers/constants";
+import { setGeneralProperties } from "../../../../redux/features/generalPropertiesSlice";
+import { setEmail as setEmailRedux } from "../../../../redux/features/loggedUserSlice";
+import { validateEmail } from "../../../../helpers/utils";
 const style = {
   position: "absolute" as "absolute",
   top: "50%",
@@ -23,7 +29,55 @@ type Props = {
 };
 
 export const SettingsModal = (props: Props) => {
-  const loggedUser = useAppSelector(state => state.loggedUser);
+  const loggedUser = useAppSelector((state) => state.loggedUser);
+  const [email, setEmail] = useState(loggedUser?.user?.email);
+  const [wrongFormatEmail, setWrongFormatEmail] = useState<boolean>(false);
+  const [emailErrorHelperText, setEmailErrorHelperText] = useState<string>("");
+
+  const dispatch = useAppDispatch();
+
+  const handleChangeUserEmail = async () => {
+    if (email) {
+      if (validateEmail(email)) {
+        console.log(email, ' is validated')
+        const updatedEmailResponse = await axios({
+          method: "post",
+          url: `${websiteUrl}/api/users/update-email`,
+          data: {
+            updatedEmail: email,
+          },
+          withCredentials: true,
+        });
+        if (updatedEmailResponse.data.updatedEmail) {
+          if (email) {
+            dispatch(setEmailRedux(email));
+          }
+          dispatch(
+            setGeneralProperties({
+              mainSnackBar: {
+                isOpen: true,
+                message: `Email successfully updated`,
+              },
+            })
+          );
+        }
+      } else {
+        setWrongFormatEmail(true);
+        setEmailErrorHelperText("Wrong email format");
+
+        setTimeout(() => {
+          setWrongFormatEmail(false);
+          setEmailErrorHelperText("");
+        }, 3000);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (props.modalIsOpen) {
+      setEmail(loggedUser?.user?.email);
+    }
+  }, [props.modalIsOpen]);
 
   return (
     <div>
@@ -40,13 +94,17 @@ export const SettingsModal = (props: Props) => {
       >
         <Fade in={props.modalIsOpen}>
           <Box sx={style}>
-            <div>
-                Email :
-            </div>
-            {loggedUser?.user?.email}
-            <div>
-                Company
-            </div>
+            <AiOutlineMail />
+            <TextField
+              inputMode="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              error={wrongFormatEmail}
+              helperText={emailErrorHelperText}
+            />
+            <Button onClick={handleChangeUserEmail} variant="contained">
+              Save
+            </Button>
           </Box>
         </Fade>
       </Modal>
