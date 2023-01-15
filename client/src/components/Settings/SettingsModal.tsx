@@ -13,18 +13,6 @@ import { setEmail as setEmailRedux } from "../../redux/features/loggedUserSlice"
 import { validateEmail } from "../../helpers/utils";
 import styles from "./SettingsModal.module.scss";
 
-const style = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
-
 type Props = {
   modalIsOpen: boolean;
   handleClose: () => void;
@@ -95,7 +83,7 @@ export const SettingsModal = (props: Props) => {
         }}
       >
         <Fade in={props.modalIsOpen}>
-          <Box sx={style}>
+          <Box className={styles.modalContentContainer}>
             <div className={styles.settingSection}>
               <Card className={styles.settingIllustrationContainer}>
                 <div className={styles.iconContainer}>
