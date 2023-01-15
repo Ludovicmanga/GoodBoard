@@ -3,14 +3,16 @@ import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
-import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
-import { AiOutlineMail } from "react-icons/ai";
-import { Button, TextField } from "@mui/material";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { AiOutlineMail, AiFillBank } from "react-icons/ai";
+import { Button, Card, TextField } from "@mui/material";
 import axios from "axios";
-import { websiteUrl } from "../../../../helpers/constants";
-import { setGeneralProperties } from "../../../../redux/features/generalPropertiesSlice";
-import { setEmail as setEmailRedux } from "../../../../redux/features/loggedUserSlice";
-import { validateEmail } from "../../../../helpers/utils";
+import { websiteUrl } from "../../helpers/constants";
+import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
+import { setEmail as setEmailRedux } from "../../redux/features/loggedUserSlice";
+import { validateEmail } from "../../helpers/utils";
+import styles from "./SettingsModal.module.scss";
+
 const style = {
   position: "absolute" as "absolute",
   top: "50%",
@@ -39,7 +41,7 @@ export const SettingsModal = (props: Props) => {
   const handleChangeUserEmail = async () => {
     if (email) {
       if (validateEmail(email)) {
-        console.log(email, ' is validated')
+        console.log(email, " is validated");
         const updatedEmailResponse = await axios({
           method: "post",
           url: `${websiteUrl}/api/users/update-email`,
@@ -94,15 +96,38 @@ export const SettingsModal = (props: Props) => {
       >
         <Fade in={props.modalIsOpen}>
           <Box sx={style}>
-            <AiOutlineMail />
-            <TextField
-              inputMode="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              error={wrongFormatEmail}
-              helperText={emailErrorHelperText}
-            />
-            <Button onClick={handleChangeUserEmail} variant="contained">
+            <div className={styles.settingSection}>
+              <Card className={styles.settingIllustrationContainer}>
+                <div className={styles.iconContainer}>
+                  <AiOutlineMail />
+                </div>
+                <div className={styles.iconSubtext}>Email</div>
+              </Card>
+              <TextField
+                inputMode="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                error={wrongFormatEmail}
+                helperText={emailErrorHelperText}
+              />
+            </div>
+            <div className={styles.settingSection}>
+              <Card className={styles.settingIllustrationContainer}>
+                <div className={styles.iconContainer}>
+                  <AiFillBank />
+                </div>
+                <div className={styles.iconSubtext}>Company</div>
+              </Card>
+              <TextField
+                disabled
+                value="Apple"
+              />
+            </div>
+            <Button
+              className={styles.submitButton}
+              onClick={handleChangeUserEmail}
+              variant="contained"
+            >
               Save
             </Button>
           </Box>

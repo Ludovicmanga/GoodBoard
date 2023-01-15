@@ -1,0 +1,32 @@
+@import '../../styles/useSpacing';
+@import '../../styles/useTypography';
+
+.settingSection {
+    display: flex;
+    @include useSpacing(margin, m, 0);
+}
+
+.settingIllustrationContainer {
+    display: flex;
+    flex-direction: column;
+    @include useSpacing(margin, 0, m, 0, 0);
+    @include useSpacing(padding, 0, m);
+    width: 10%;
+    justify-content: center
+}
+
+.iconContainer {
+    @include useTypography(modalIcon);
+    display: flex;
+    justify-content: center;
+}
+
+.iconSubtext {
+    @include useTypography(title-xs);
+    display: flex;
+    justify-content: center;
+}
+
+.submitButton {
+    @include useSpacing(margin, m, 0, 0, 0);
+}
