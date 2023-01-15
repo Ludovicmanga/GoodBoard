@@ -29,6 +29,12 @@ const Login = (props: Props) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  const handleAuthOnEnter = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if(e.key === 'Enter'){
+      handleAuth();
+    }
+  }
+
   const handleAuth = async () => {
     if (props.authType === AuthPageType.login) {
       const userResponse = await axios<{ user: User }>({
@@ -109,6 +115,7 @@ const Login = (props: Props) => {
             />
             <TextField
               onChange={(e) => setPassword(e.target.value) }
+              onKeyDown={handleAuthOnEnter}
               margin="normal"
               required
               fullWidth

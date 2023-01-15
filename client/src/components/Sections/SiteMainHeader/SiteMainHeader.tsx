@@ -20,7 +20,7 @@ const SiteMainHeader = (props: Props) => {
       <MainNavBar />
       <MainHero />
       <MenuChoiceNavBar />
-      <Snackbar
+{/*       <Snackbar
         open={generalPropertiesState.mainSnackBar.isOpen}
         autoHideDuration={4000}
         onClose={() => {
@@ -50,7 +50,7 @@ const SiteMainHeader = (props: Props) => {
         >
           {generalPropertiesState.mainSnackBar.message}
         </Alert>
-      </Snackbar>
+      </Snackbar> */}
     </>
   );
 };
