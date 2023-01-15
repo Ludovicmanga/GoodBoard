@@ -15,7 +15,7 @@ import AdbIcon from "@mui/icons-material/Adb";
 import Menu from "@mui/material/Menu";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
-import { SettingsModal } from "../Modals/FeatureRequestModal/Settings/SettingsModal";
+import { SettingsModal } from "../Settings/SettingsModal";
 import axios from "axios";
 import { setLoggedUserState } from "../../redux/features/loggedUserSlice";
 import { useNavigate } from "react-router-dom";

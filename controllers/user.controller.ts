@@ -14,3 +14,14 @@ export const getUser = async (req, res, next) => {
       })
    }
 }
+
+export const updateEmail = async (req, res) => {
+   if (req.user) {
+      const updatedUser = await userModel.findOneAndUpdate({ _id: req.user.id }, { email: req.body.updatedEmail }, { new: true });
+      if (updatedUser) {
+         res.status(200).json({
+            updatedEmail: updatedUser.email,
+         })
+      }
+   }
+}

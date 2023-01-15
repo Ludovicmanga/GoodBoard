@@ -1,7 +1,7 @@
 import express from "express";
 import passport from "passport";
 import { signUp } from "../controllers/auth.controller";
-import { getUser } from "../controllers/user.controller";
+import { getUser, updateEmail } from "../controllers/user.controller";
 
 const router = express();
 
@@ -21,5 +21,6 @@ router.post('/logout', (req: any, res, next) => {
   });
 });
 router.post("/sign-up", signUp);
+router.post("/update-email", updateEmail);
 
 export default router;
