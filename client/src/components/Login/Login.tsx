@@ -128,12 +128,12 @@ const Login = (props: Props) => {
             />
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link className={styles.link} href="#" variant="body2">
                   Forgot password?
                 </Link>
               </Grid>
               <Grid item>
-                <Link href={ props.authType === AuthPageType.login ? `${websiteUrl}/sign-up` : `${websiteUrl}/login`} variant="body2">
+                <Link className={styles.link} href={ props.authType === AuthPageType.login ? `${websiteUrl}/sign-up` : `${websiteUrl}/login`} variant="body2">
                   {props.authType === AuthPageType.login ? "Don't have an account? Sign Up" : "Already have an account? Log in"}
                 </Link>
               </Grid>
