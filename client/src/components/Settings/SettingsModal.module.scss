@@ -1,5 +1,19 @@
 @import '../../styles/useSpacing';
+@import '../../styles/variables';
 @import '../../styles/useTypography';
+
+.modalContentContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: $modal-width-mobile-screen;
+    background: $white;
+    border: 0.5px solid #000;
+    border-radius: 8px;
+    box-shadow: 24px;
+    @include useSpacing(padding, l, xl, xl, xl);
+}
 
 .settingSection {
     display: flex;
@@ -29,4 +43,10 @@
 
 .submitButton {
     @include useSpacing(margin, m, 0, 0, 0);
+}
+
+@media screen and (min-width: $main-breakpoint) {
+    .modalContentContainer {
+        width: $modal-width-computer-screen;
+    }
 }
