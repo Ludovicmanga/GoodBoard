@@ -2,6 +2,7 @@ import { useState } from "react";
 import styles from "./Login.module.scss";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
+import LoadingButton from '@mui/lab/LoadingButton';
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -25,6 +26,7 @@ type Props = {
 const Login = (props: Props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [buttonIsLoading, setButtonIsLoading] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -36,6 +38,7 @@ const Login = (props: Props) => {
 
   const handleAuth = async () => {
     if (props.authType === AuthPageType.login) {
+      setButtonIsLoading(true);
       const userResponse = await axios<{ user: User }>({
         url: `${websiteUrl}/api/users/login`,
         method: "post",
@@ -45,6 +48,7 @@ const Login = (props: Props) => {
         },
         withCredentials: true,
       });
+      setButtonIsLoading(false);
       if (userResponse.data.user) {
         dispatch(setLoggedUserState({
           user: userResponse.data.user,
@@ -61,6 +65,7 @@ const Login = (props: Props) => {
       }
     }
     if (props.authType === AuthPageType.signUp) {
+      setButtonIsLoading(true);
       const signUpResponse = await axios<{ user: User }>({
         url: `${websiteUrl}/api/users/sign-up`,
         method: "post",
@@ -70,6 +75,7 @@ const Login = (props: Props) => {
           type: UserType.user
         }
       });
+      setButtonIsLoading(false);
       if (signUpResponse.data.user) {
         navigate("/login");
         dispatch(
@@ -137,14 +143,15 @@ const Login = (props: Props) => {
               </Grid>
             </Grid>
             <div className={styles.buttonsContainer}>
-              <Button
+              <LoadingButton
+                loading={buttonIsLoading}
                 onClick={handleAuth}
                 fullWidth
                 variant="contained"
                 className={styles.button}
               >
                 { props.authType === AuthPageType.login ? 'Sign In' :  'Sign up' }
-              </Button>
+              </LoadingButton>
               <Divider className={styles.divider} />
               <GoogleLogin
                 onSuccess={(credentialResponse) => {
