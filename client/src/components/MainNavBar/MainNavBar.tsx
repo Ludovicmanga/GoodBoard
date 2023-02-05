@@ -1,11 +1,10 @@
 import * as React from "react";
-import { useState } from 'react';
+import { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -20,7 +19,7 @@ import axios from "axios";
 import { setLoggedUserState } from "../../redux/features/loggedUserSlice";
 import { useNavigate } from "react-router-dom";
 import { websiteUrl } from "../../helpers/constants";
-
+import SwitchBoardModal from "../Modals/FeatureRequestModal/SwitchBoard/SwitchBoardModal";
 
 const pages: string[] = [];
 
@@ -33,7 +32,9 @@ const MainNavBar = () => {
   );
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const generalPropertiesState = useAppSelector(state => state.generalProperties);
+  const generalPropertiesState = useAppSelector(
+    (state) => state.generalProperties
+  );
 
   const handleLogout = async () => {
     const response = await axios<{ loggedOut: boolean }>({
@@ -42,43 +43,78 @@ const MainNavBar = () => {
       withCredentials: true,
     });
     if (response.data.loggedOut) {
-      dispatch(setLoggedUserState({
-        user: null,
-      }));
+      dispatch(
+        setLoggedUserState({
+          user: null,
+        })
+      );
       navigate("/login");
-        dispatch(
-          setGeneralProperties({
-            mainSnackBar: {
-              isOpen: true,
-              message: `Successful logout`,
-            },
-          })
-        )
+      dispatch(
+        setGeneralProperties({
+          mainSnackBar: {
+            isOpen: true,
+            message: `Successful logout`,
+          },
+        })
+      );
     }
-
-  }
+  };
 
   const handleSettingsModal = () => {
-    dispatch(setGeneralProperties({
-      generalSettingsModalOpen: true,
-    }))
+    dispatch(
+      setGeneralProperties({
+        generalSettingsModalOpen: true,
+      })
+    );
+  };
+
+  const handleChangeBoard = () => {
+    dispatch(
+      setGeneralProperties({
+        switchBoardModalOpen: true,
+      })
+    );
+  };
+
+  const handleShareBoard = () => {
+    console.log('to share');
   }
+
   const settings = [
     {
-      linkText: "Mon compte",
+      linkText: "My account",
       onClick: handleSettingsModal,
     },
     {
-      linkText: "Se déconnecter",
+      linkText: "Switch board",
+      onClick: handleChangeBoard,
+    },
+    {
+      linkText: "Share your board",
+      onClick: handleShareBoard,
+    },
+    {
+      linkText: "Logout",
       onClick: handleLogout,
     },
   ];
 
   const handleCloseSettingsModal = () => {
-    dispatch(setGeneralProperties({
-      generalSettingsModalOpen: false,
-    }))
-  }
+    dispatch(
+      setGeneralProperties({
+        generalSettingsModalOpen: false,
+      })
+    );
+  };
+
+  const handleCloseSwitchModal = () => {
+    dispatch(
+      setGeneralProperties({
+        switchBoardModalOpen: false,
+      })
+    );
+  };
+
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -176,7 +212,14 @@ const MainNavBar = () => {
           </Box>
         </Toolbar>
       </Container>
-      <SettingsModal modalIsOpen={generalPropertiesState.generalSettingsModalOpen} handleClose={handleCloseSettingsModal} />
+      <SettingsModal
+        modalIsOpen={generalPropertiesState.generalSettingsModalOpen}
+        handleClose={handleCloseSettingsModal}
+      />
+      <SwitchBoardModal
+        modalIsOpen={generalPropertiesState.switchBoardModalOpen}
+        handleClose={handleCloseSwitchModal}
+      />
     </AppBar>
   );
 };

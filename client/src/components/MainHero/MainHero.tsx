@@ -1,13 +1,47 @@
 import { Avatar } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./MainHero.module.scss";
 import appleLogo from "../../photos/apple_logo.png";
 import { BsFacebook } from "react-icons/bs";
 import { AiFillInstagram, AiFillTwitterCircle } from "react-icons/ai";
+import axios from "axios";
+import { websiteUrl } from "../../helpers/constants";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { Board } from "../../helpers/types";
 
 type Props = {};
 
 const MainHero = (props: Props) => {
+  const generalProperties = useAppSelector(state => state.generalProperties);
+  const [boardData, setBoardData] = useState<Board>({
+    _id: '',
+    name: '',
+    description: '',
+  })
+  
+  useEffect(() => {
+    if (generalProperties.activeBoard && generalProperties.activeBoard.length > 0) {
+      getActiveBoardData(generalProperties.activeBoard);
+    }
+  }, [generalProperties.activeBoard])
+
+  const getActiveBoardData = async (activeBoard: string) => {
+    handleDispatchActiveBoardData(activeBoard);
+  };
+
+  const handleDispatchActiveBoardData = async (activeBoard: string) => {
+    const response = await axios({
+      method: 'post',
+      url: `${websiteUrl}/api/board/get`,
+      data: {
+        boardId: generalProperties.activeBoard,
+      },
+    });
+    if (response.data) {
+      setBoardData(response.data);
+    }
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.contentWrapper}>
@@ -21,11 +55,9 @@ const MainHero = (props: Props) => {
           }}
         />
         <div className={styles.text}>
-          <div className={styles.companyName}>Apple</div>
+          <div className={styles.companyName}>{boardData.name}</div>
           <div className={styles.companyDescription}>
-            Apple est une entreprise multinationale américaine qui crée et
-            commercialise des produits électroniques grand public, des
-            ordinateurs personnels et des logiciels.
+                  {boardData.description}
           </div>
           <a rel="noreferrer" target="_blank" href="https://www.apple.com/">
             <div className={styles.companyLink}>Voir le site web</div>

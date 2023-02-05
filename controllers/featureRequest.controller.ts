@@ -9,6 +9,12 @@ export const getAllFeatureRequests = async (req, res) => {
     .then((allFeatureRequests) => res.status(200).send(allFeatureRequests));
 };
 
+export const getAllBoardFeatureRequests = async (req, res) => {
+  await featureRequestModel
+    .find({ board: req.body.boardId })
+    .then((allBoardFeatureRequests) => res.status(200).send(allBoardFeatureRequests));
+};
+
 export const getAllCompanyFeatureRequests = async (req, res) => {
   await featureRequestModel
     .find({ creatorType: "company" })
@@ -55,6 +61,7 @@ export const createFeatureRequest = async (req, res) => {
     creatorType: req.user.type,
     status: featureRequestData.status,
     creator: req.user.id,
+    board: req.body.board,
   });
 
   newFeatureRequest
@@ -92,7 +99,7 @@ export const downVote = async (req, res) => {
 };
 
 export const deleteFeatureRequest = async (req, res) => {
-  const deleteFeature = await featureRequestModel.findOneAndDelete({ _id: req.body.featureRequestId });
+  await featureRequestModel.findOneAndDelete({ _id: req.body.featureRequestId });
   res.json({
     deleted: true,
   })

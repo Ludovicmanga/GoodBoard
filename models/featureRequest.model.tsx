@@ -23,9 +23,13 @@ const featureRequestSchema = new mongoose.Schema(
         max: 1024
     },
     creator: {
-        type: String,
-        max: 1024
-    }
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user'
+    },
+    board: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'board'
+    },
 },
   {
     timestamps: true,
