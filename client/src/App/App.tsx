@@ -1,7 +1,7 @@
 import { Alert, Snackbar } from "@mui/material";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 import { useEffect } from "react";
 import { websiteUrl } from "../helpers/constants";
 import { setAllFeatureRequests } from "../redux/features/allFeatureRequestsSlice";
@@ -17,19 +17,36 @@ function App() {
     (state) => state.generalProperties
   );
 
-  const getAllUserFeatureRequests = async () => {
+  const getAllBoardFeatureRequestsApiCall = async (activeBoard: string) => {
     const allUsersFeatureRequests = await axios({
-      url: `${websiteUrl}/api/feature-request/get/all`,
+      url: `${websiteUrl}/api/feature-request/get/all-from-board`,
+      method: 'post',
+      data: {
+        boardId: activeBoard,
+      },
       withCredentials: true,
     });
     return allUsersFeatureRequests.data;
   };
 
+  const getAllBoardFeatureRequests = async (activeBoard: string) => {
+    const allFeatureRequests = await getAllBoardFeatureRequestsApiCall(activeBoard);
+    dispatch(setAllFeatureRequests(allFeatureRequests));
+  };
+
   useEffect(() => {
-    const getAll = async () => {
-      const allFeatureRequests = await getAllUserFeatureRequests();
-      dispatch(setAllFeatureRequests(allFeatureRequests));
-    };
+    dispatch(setGeneralProperties({
+      activeBoard: localStorage.getItem('board'),
+    }))
+  }, [])
+
+  useEffect(() => {
+    if (generalPropertiesState.activeBoard && generalPropertiesState.activeBoard.length > 0) {
+      getAllBoardFeatureRequests(generalPropertiesState.activeBoard);
+    }
+  }, [generalPropertiesState.activeBoard])
+
+  useEffect(() => {
     const getLoggedUser = async () => {
       const userResponse = await axios({
         url: `${websiteUrl}/api/users/checkIfAuthenticated`,
@@ -57,7 +74,6 @@ function App() {
       }
     };
     getLoggedUser();
-    getAll();
   }, []);
 
   return (

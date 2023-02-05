@@ -1,37 +1,44 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { MenuSelected } from '../../helpers/types';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { MenuSelected } from "../../helpers/types";
 
 interface GeneralProperties {
-    featureRequestModalOpen: boolean;
-    generalSettingsModalOpen: boolean;
-    menuSelected: MenuSelected | null;
-    mainSnackBar: {
-      isOpen: boolean;
-      message: string;
-    }
+  activeBoard: string | null;
+  featureRequestModalOpen: boolean;
+  generalSettingsModalOpen: boolean;
+  switchBoardModalOpen: boolean;
+  menuSelected: MenuSelected | null;
+  mainSnackBar: {
+    isOpen: boolean;
+    message: string;
+  };
 }
 
 const initialState: GeneralProperties = {
-    featureRequestModalOpen: false,
-    generalSettingsModalOpen: false,
-    menuSelected: null,
-    mainSnackBar: {
-      isOpen: false,
-      message: '',
-    }
-}
+  activeBoard: null,
+  featureRequestModalOpen: false,
+  generalSettingsModalOpen: false,
+  switchBoardModalOpen: false,
+  menuSelected: null,
+  mainSnackBar: {
+    isOpen: false,
+    message: "",
+  },
+};
 
 export const generalPropertiesSlice = createSlice({
-  name: 'all feature requests',
+  name: "all feature requests",
   initialState,
   reducers: {
-    setGeneralProperties: (state, action: PayloadAction<Partial<GeneralProperties>>) => {
-        state = { ...state, ...action.payload };
-        return state;
-      },
+    setGeneralProperties: (
+      state,
+      action: PayloadAction<Partial<GeneralProperties>>
+    ) => {
+      state = { ...state, ...action.payload };
+      return state;
+    },
   },
-})
+});
 
-export const { setGeneralProperties } = generalPropertiesSlice.actions
+export const { setGeneralProperties } = generalPropertiesSlice.actions;
 
-export default generalPropertiesSlice.reducer
+export default generalPropertiesSlice.reducer;

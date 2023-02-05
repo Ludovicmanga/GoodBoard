@@ -10,6 +10,7 @@ export const emptyFeatureRequest: FeatureRequest = {
     creator: "",
     createdAt: "",
     updatedAt: "",
+    board: "",
   }
 
 export const websiteUrl = process.env.NODE_ENV === "production" ? "https://goodboard-app.herokuapp.com" : "http://localhost:8080"

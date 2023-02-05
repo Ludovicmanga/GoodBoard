@@ -16,6 +16,7 @@ import BoardCreation from "../pages/BoardCreation/BoardCreation";
 
 export default function Index() {
   const loggedUser = useAppSelector((state) => state.loggedUser);
+  const activeBoard = useAppSelector(state => state.generalProperties.activeBoard);
 
   return (
     <div className={styles.container}>
@@ -30,13 +31,16 @@ export default function Index() {
             element={<Login authType={AuthPageType.login} />}
           />
           <Route
-            path="/create-board"
+            path="/choose-board"
             element={<BoardCreation />}
           />
           {loggedUser.user === null && (
             <Route path="*" element={<Navigate to="/login" replace />} />
           )}
-          {loggedUser.user && (
+          {loggedUser.user && !activeBoard && (
+            <Route path="*" element={<Navigate to="/choose-board" replace />} />
+          )}
+          {loggedUser.user && activeBoard && (
             <>
               <Route
                 path="/company-feature-requests"

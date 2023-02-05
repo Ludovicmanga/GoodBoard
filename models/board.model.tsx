@@ -2,14 +2,14 @@ import mongoose from "mongoose";
 
 const boardSchema = new mongoose.Schema(
     {
-        url: {
+        name: {
             type: String,
             required: true,
             lowercase: true,
             unique: true,
             trim: true,
         },
-        name: {
+        description: {
             type: String,
             required: true,
             lowercase: true,

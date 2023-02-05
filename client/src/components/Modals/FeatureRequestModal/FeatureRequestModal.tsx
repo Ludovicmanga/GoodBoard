@@ -50,6 +50,7 @@ export default function FeatureRequestModal(props: {
     useState<string>("");
   const loggedUserState = useAppSelector((state) => state.loggedUser);
   const dispatch = useAppDispatch();
+  const generalPropertiesState = useAppSelector(state => state.generalProperties);
 
   useEffect(() => {
     if (props.modalIsOpen && loggedUserState.user) {
@@ -111,6 +112,7 @@ export default function FeatureRequestModal(props: {
         method: "post",
         data: {
           featureRequest: featureRequestProperties,
+          board: generalPropertiesState.activeBoard,
         },
         withCredentials: true,
       });

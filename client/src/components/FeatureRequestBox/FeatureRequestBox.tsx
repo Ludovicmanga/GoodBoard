@@ -130,10 +130,10 @@ function FeatureRequestBox(props: Props) {
         </ToggleButton>
       </div>
       <FeatureRequestModal
-        featureRequestProperties={props.featureRequestProperties}
         modalMode={FeatureRequestModalMode.update}
         modalIsOpen={newFeatureRequestsModalOpen}
         handleCloseModal={handleCloseModal}
+        featureRequestProperties={props.featureRequestProperties}
       />
     </div>
   );

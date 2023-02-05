@@ -8,6 +8,7 @@ export type FeatureRequest = {
     creator: string;
     createdAt: any;
     updatedAt: any;
+    board: string;
 }
 
 export type User = {
@@ -48,3 +49,9 @@ export enum AuthPageType {
     login = "login",
     signUp = "signUp"
 }
+
+export type Board = {
+    _id: string;
+    name: string;
+    description: string;
+  }
