@@ -20,6 +20,7 @@ import { setLoggedUserState } from "../../redux/features/loggedUserSlice";
 import { useNavigate } from "react-router-dom";
 import { websiteUrl } from "../../helpers/constants";
 import SwitchBoardModal from "../Modals/FeatureRequestModal/SwitchBoard/SwitchBoardModal";
+import ShareBoardModal from "../Modals/ShareBoard/ShareBoard";
 
 const pages: string[] = [];
 
@@ -77,7 +78,11 @@ const MainNavBar = () => {
   };
 
   const handleShareBoard = () => {
-    console.log('to share');
+    dispatch(
+      setGeneralProperties({
+        shareBoardModalOpen: true,
+      })
+    );
   }
 
   const settings = [
@@ -111,6 +116,14 @@ const MainNavBar = () => {
     dispatch(
       setGeneralProperties({
         switchBoardModalOpen: false,
+      })
+    );
+  };
+
+  const handleCloseShareBoardModal = () => {
+    dispatch(
+      setGeneralProperties({
+        shareBoardModalOpen: false,
       })
     );
   };
@@ -219,6 +232,10 @@ const MainNavBar = () => {
       <SwitchBoardModal
         modalIsOpen={generalPropertiesState.switchBoardModalOpen}
         handleClose={handleCloseSwitchModal}
+      />
+      <ShareBoardModal
+        modalIsOpen={generalPropertiesState.shareBoardModalOpen}
+        handleClose={handleCloseShareBoardModal}
       />
     </AppBar>
   );
