@@ -3,14 +3,14 @@ import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { AiOutlineMail, AiFillBank } from "react-icons/ai";
 import { Button, Card, TextField } from "@mui/material";
 import axios from "axios";
-import { websiteUrl } from "../../helpers/constants";
-import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
-import { setEmail as setEmailRedux } from "../../redux/features/loggedUserSlice";
-import { validateEmail } from "../../helpers/utils";
+import { websiteUrl } from "../../../helpers/constants";
+import { setGeneralProperties } from "../../../redux/features/generalPropertiesSlice";
+import { setEmail as setEmailRedux } from "../../../redux/features/loggedUserSlice";
+import { validateEmail } from "../../../helpers/utils";
 import styles from "./SettingsModal.module.scss";
 
 type Props = {

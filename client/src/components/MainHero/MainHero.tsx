@@ -31,11 +31,7 @@ const MainHero = (props: Props) => {
 
   const handleDispatchActiveBoardData = async (activeBoard: string) => {
     const response = await axios({
-      method: 'post',
-      url: `${websiteUrl}/api/board/get`,
-      data: {
-        boardId: generalProperties.activeBoard,
-      },
+      url: `${websiteUrl}/api/board/get/${generalProperties.activeBoard}`,
     });
     if (response.data) {
       setBoardData(response.data);

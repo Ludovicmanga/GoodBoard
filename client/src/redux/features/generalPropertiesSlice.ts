@@ -5,6 +5,7 @@ interface GeneralProperties {
   activeBoard: string | null;
   featureRequestModalOpen: boolean;
   generalSettingsModalOpen: boolean;
+  shareBoardModalOpen: boolean;
   switchBoardModalOpen: boolean;
   menuSelected: MenuSelected | null;
   mainSnackBar: {
@@ -17,6 +18,7 @@ const initialState: GeneralProperties = {
   activeBoard: null,
   featureRequestModalOpen: false,
   generalSettingsModalOpen: false,
+  shareBoardModalOpen: false,
   switchBoardModalOpen: false,
   menuSelected: null,
   mainSnackBar: {
