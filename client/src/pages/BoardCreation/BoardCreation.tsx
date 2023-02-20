@@ -5,13 +5,14 @@ import { useNavigate } from "react-router-dom";
 import { websiteUrl } from "../../helpers/constants";
 import { Board } from "../../helpers/types";
 import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
-import { useAppDispatch } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 
 type Props = {};
 
 const BoardCreation = (props: Props) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const boardId = useAppSelector(state => state.generalProperties.activeBoard);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [boardsList, setBoardsList] = useState<Board[]>([]);
@@ -25,7 +26,6 @@ const BoardCreation = (props: Props) => {
   const handleGetUserBoards = async () => {
     const userBoardsResponse = await axios({
       url: `${websiteUrl}/api/board/get/user-boards`,
-      method: "get",
       withCredentials: true,
     });
     if (userBoardsResponse) {
