@@ -10,6 +10,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    @include useSpacing(margin, 0, 0, l, 0);
 }
 
 .title {

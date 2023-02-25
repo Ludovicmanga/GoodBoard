@@ -1,0 +1,16 @@
+
+@import '../../styles/useTypography';
+@import '../../styles/useSpacing';
+@import '../../styles/variables';
+
+.container {
+    display: flex;
+}
+
+.pictureAvatar {
+}
+
+.icon {
+    color: $c-black;
+    font-size: 20px;
+}

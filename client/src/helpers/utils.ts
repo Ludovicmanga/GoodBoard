@@ -30,3 +30,8 @@ export const validateEmail = (inputText: string) => {
     return false;
   }
 };
+
+export const getFirstLetterInUpperCase = (stringToParse : string) => {
+  const firstLetter = stringToParse.charAt(0).toUpperCase();
+  return firstLetter;
+}

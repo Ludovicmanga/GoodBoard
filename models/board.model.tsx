@@ -30,6 +30,11 @@ const boardSchema = new mongoose.Schema(
             unique: true,
             trim: true,
         },
+        picture: {
+            type: String,
+            required: false,
+            max: 1024
+        },
     }
 );
 

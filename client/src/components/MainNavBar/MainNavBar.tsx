@@ -10,7 +10,7 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
+import EventNoteIcon from '@mui/icons-material/EventNote';
 import Menu from "@mui/material/Menu";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
@@ -21,6 +21,7 @@ import { useNavigate } from "react-router-dom";
 import { websiteUrl } from "../../helpers/constants";
 import SwitchBoardModal from "../Modals/FeatureRequestModal/SwitchBoard/SwitchBoardModal";
 import ShareBoardModal from "../Modals/ShareBoard/ShareBoardModal";
+import DarkModeToggle from "../buttons/DarkModeToggle/DarkModeToggle";
 
 const pages: string[] = [];
 
@@ -77,6 +78,10 @@ const MainNavBar = () => {
     );
   };
 
+  const handleDisplayIntegrations = () => {
+    console.log('I will display the possible integrations')
+  }
+
   const handleShareBoard = () => {
     dispatch(
       setGeneralProperties({
@@ -97,6 +102,10 @@ const MainNavBar = () => {
     {
       linkText: "Share your board",
       onClick: handleShareBoard,
+    },
+    {
+      linkText: "Integrations",
+      onClick: handleDisplayIntegrations,
     },
     {
       linkText: "Logout",
@@ -145,7 +154,7 @@ const MainNavBar = () => {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+          <EventNoteIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
@@ -163,7 +172,7 @@ const MainNavBar = () => {
           >
             GOODBOARD
           </Typography>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+          <EventNoteIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
@@ -193,7 +202,7 @@ const MainNavBar = () => {
               </Button>
             ))}
           </Box>
-
+          <DarkModeToggle />
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Paramètres">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

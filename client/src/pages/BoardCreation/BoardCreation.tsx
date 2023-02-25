@@ -1,21 +1,34 @@
-import { Button, TextField } from "@mui/material";
+import {
+  Avatar,
+  Button,
+  IconButton,
+  Paper,
+  TextField,
+  Typography,
+} from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import BoardInList from "../../components/BoardInList/BoardInList";
+import CreateBoardModal from "../../components/CreateBoardModal/CreateBoardModal";
+import { handleSetActiveBoard } from "../../helpers/boards";
 import { websiteUrl } from "../../helpers/constants";
 import { Board } from "../../helpers/types";
-import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import styles from "./BoardCreation.module.scss";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import Add from "@mui/icons-material/Add";
 
 type Props = {};
 
 const BoardCreation = (props: Props) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const boardId = useAppSelector(state => state.generalProperties.activeBoard);
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+  const boardId = useAppSelector(
+    (state) => state.generalProperties.activeBoard
+  );
   const [boardsList, setBoardsList] = useState<Board[]>([]);
+  const [mode, setMode] = useState<"selection" | "creation">("selection");
 
   useEffect(() => {
     const getUserBoards = async () => {
@@ -35,83 +48,61 @@ const BoardCreation = (props: Props) => {
       ]);
     }
   };
-  const handleBoardCreation = async () => {
-    const boardCreationResponse = await axios({
-      url: `${websiteUrl}/api/board/create`,
-      method: "post",
-      data: {
-        name,
-        description,
-      },
-      withCredentials: true,
-    });
-    if (boardCreationResponse.data) {
-      setBoardsList((currentBoardsList) => [
-        ...currentBoardsList,
-        boardCreationResponse.data,
-      ]);
-    }
-  };
-
-  const handleSetActiveBoard = (boardId: string) => {
-    localStorage.setItem("board", boardId);
-    dispatch(
-      setGeneralProperties({
-        activeBoard: boardId,
-      })
-    );
-    navigate("/");
-    dispatch(
-      setGeneralProperties({
-        switchBoardModalOpen: false,
-      })
-    );
-  };
 
   return (
     <div>
-      <h1>Choose a board</h1>
-
-      {boardsList.map((board) => {
-        return (
-          <div key={board._id}>
-            <div>{board.name}</div>
-            <div>{board.description}</div>
-            <button onClick={() => handleSetActiveBoard(board._id)}>
-              Select
-            </button>
+      {mode === "selection" ? (
+        <>
+          <h1 className={`${styles.sectionTitle} ${styles.selectBoardTitle}`}>Select a board</h1>
+          {boardsList.map((board) => {
+            return (
+              <Paper
+                key={board._id}
+                onClick={() =>
+                  handleSetActiveBoard(board._id, dispatch, navigate)
+                }
+                sx={{
+                  cursor: 'pointer',
+                }}
+                className={styles.boardInListContainer}
+              >
+                <BoardInList name={board.name} />
+              </Paper>
+            );
+          })}
+          <h1 className={`${styles.sectionTitle} ${styles.createBoardTitle}`}>Create a board</h1>
+          <Paper
+            className={styles.createBoardBtnContainer}
+            onClick={() => setMode("creation")}
+            sx={{
+              cursor: 'pointer',
+            }}
+          >
+            <IconButton className={styles.createBoardBtnIcon}>
+              <Avatar className={styles.createBoardBtnAvatar} variant="rounded">
+                <Add />
+              </Avatar>
+            </IconButton>
+            <Typography variant="button" color="textSecondary">
+              Create New Board
+            </Typography>
+          </Paper>
+        </>
+      ) : (
+        <>
+          <div>
+            <div className={styles.stepBackContainer}>
+              <IconButton
+                onClick={() => setMode("selection")}
+                className={styles.stepBackIcon}
+              >
+                <ArrowBackIcon />
+              </IconButton>
+            </div>
+            <CreateBoardModal />
           </div>
-        );
-      })}
-
-      <h1>Create a board</h1>
-      <h2>Choose a name for your board</h2>
-      <TextField
-        onChange={(e) => setName(e.target.value)}
-        margin="normal"
-        required
-        fullWidth
-        id="board-name"
-        label="Board name"
-        name="board-name"
-        autoFocus
-        value={name}
-      />
-      <h2>Choose a description for your board</h2>
-      <TextField
-        onChange={(e) => setDescription(e.target.value)}
-        margin="normal"
-        required
-        fullWidth
-        id="board-description"
-        label="Board description"
-        name="board-description"
-        autoFocus
-        value={description}
-      />
-      <Button onClick={handleBoardCreation} variant="contained">
-        Create board
-      </Button>
+        </>
+      )}
     </div>
   );
 };
