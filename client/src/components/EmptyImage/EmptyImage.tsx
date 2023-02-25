@@ -1,7 +1,7 @@
 import { Avatar, Badge } from "@mui/material";
 import React from "react";
 import styles from "./EmptyImage.module.scss";
-import { MdAddPhotoAlternate } from "react-icons/md";
+import Add from "@mui/icons-material/Add";
 
 
 type Props = {};
@@ -19,7 +19,10 @@ const EmptyImage = (props: Props) => {
         }}
         variant='rounded'
       >
-          <MdAddPhotoAlternate className={styles.icon} />
+          <div className={styles.iconAndTextContainer}>
+          <div className={styles.iconContainer}><Add sx={{ fontSize: 40 }} /></div>
+          <div className={styles.iconText}>Add a picture</div>
+          </div>
       </Avatar>
     </div>
   );

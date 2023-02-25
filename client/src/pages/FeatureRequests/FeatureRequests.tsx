@@ -7,6 +7,7 @@ import SiteMainHeader from "../../components/Sections/SiteMainHeader/SiteMainHea
 import EmptyData from "../../components/EmptyData/EmptyData";
 import styles from "./FeatureRequests.module.scss";
 import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
+import Integrations from "../Integrations/Integrations";
 
 type Props = {
   type: UserType;

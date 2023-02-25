@@ -13,6 +13,7 @@ import { AuthPageType, UserType } from "../helpers/types";
 import Login from "../components/Login/Login";
 import { useAppSelector } from "../redux/hooks";
 import BoardCreation from "../pages/BoardCreation/BoardCreation";
+import Integrations from "../pages/Integrations/Integrations";
 
 export default function Index() {
   const loggedUser = useAppSelector((state) => state.loggedUser);
@@ -49,6 +50,10 @@ export default function Index() {
               <Route
                 path="/user-feature-requests"
                 element={<FeatureRequests type={UserType.user} />}
+              />
+              <Route
+                path="/integrations"
+                element={<Integrations/>}
               />
               <Route path="/roadmap" element={<Roadmap />} />
               <Route

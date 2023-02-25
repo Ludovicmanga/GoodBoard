@@ -79,7 +79,7 @@ const MainNavBar = () => {
   };
 
   const handleDisplayIntegrations = () => {
-    console.log('I will display the possible integrations')
+    navigate("/integrations");
   }
 
   const handleShareBoard = () => {

@@ -13,7 +13,7 @@ $white: white;
 // colors
 $c-black: #222424;
 $c-black-opacity-95pp: rgba(34, 36, 36, 0.95);
-$c-black-opacity-75pp: rgba(34, 36, 36, 0.75);
+$c-black-opacity-45pp: rgba(34, 36, 36, 0.45);
 // color-blue
 
 $c-blue: #0900b8;
@@ -266,6 +266,7 @@ $main-breakpoint: 40rem;
 // height
 $feature-request-box-height: 100px;
 $roadmap-box-height: pxToRem(165);
+$integration-box-height: pxToRem(170);
 // fonts
 $ff-main: 'Poppins';
 
