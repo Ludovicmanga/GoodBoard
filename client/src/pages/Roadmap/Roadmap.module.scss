@@ -19,7 +19,8 @@
     justify-content: space-between;
     align-items: center;
     @include useSpacing(margin, xxs, xxs, m, xxs );
-    height: 15%;
+    height: 11%;
+    border-radius: 4px;
 }
 
 .featureContainer {
@@ -31,6 +32,14 @@
     @include useSpacing(margin, 0, 0, 0, l);
 }
 
+.notDoneTitle {
+    background: #EDF2FF;
+}
+
+.doneTitle {
+    background: #4263EB;
+    color: white;
+}
 .featureNumberContainer {
     @include useSpacing(padding, xxs, s);
     @include useSpacing(margin, 0, s, 0, 0);
@@ -44,7 +53,8 @@
 .paperContainer {
     width: pxToRem(380);
     height: pxToRem(500);
-    @include useSpacing(margin, xs, xs, xs, xs)
+    @include useSpacing(margin, xs, xs, xs, xs);
+    background: #F6F6F6;
 }
 
 .emptyDataContainer {

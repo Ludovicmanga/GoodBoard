@@ -19,14 +19,55 @@
     display: flex;
 }
 
-.urlSectionContainer {
+.sectionTitle {
+    font-size: $switch-board-menu-title;
+    font-weight: 600;
+}
+
+.outlinedInput {
+    padding-right: 0px;
+    @include useTypography(commonText);
+}
+
+.inviteAdminSectionTitle {
+    @include useSpacing(margin, 0, 0, s, 0);
+}
+
+.shareBoardSectionTitle {
+    @include useSpacing(margin, xl, 0, s, 0);
+}
+
+.textFieldWithBtnInsideContainer {
     display: flex;
     justify-content: space-between;
-    @include useSpacing(margin, l, 0, 0, 0);
+}
+
+.urlTextFieldContainer {
+    @include useSpacing(margin, s, 0, 0, 0);
 }
 
 .CopyToClipboardButtonContainer {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.linkIsPublicContainer {
+    display: flex;
+    justify-content: space-between;
+    @include useTypography(commonText);
+}
+
+.inviteBtn {
+    max-height: 100%;
+}
+
+.shareWithTheWorldSectionContainer {
+    @include useSpacing(margin, m, 0, 0, 0);
+}
+
+@media screen and (min-width: $main-breakpoint) {
+    .modalContentContainer {
+        width: $modal-width-computer-screen;
+    }
 }

@@ -5,13 +5,15 @@ import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { AiOutlineMail, AiFillBank } from "react-icons/ai";
-import { Button, Card, TextField } from "@mui/material";
+import { Avatar, Button, Card, TextField } from "@mui/material";
 import axios from "axios";
 import { websiteUrl } from "../../../helpers/constants";
 import { setGeneralProperties } from "../../../redux/features/generalPropertiesSlice";
 import { setEmail as setEmailRedux } from "../../../redux/features/loggedUserSlice";
 import { validateEmail } from "../../../helpers/utils";
 import styles from "./SettingsModal.module.scss";
+import Add from "@mui/icons-material/Add";
+import { FaPortrait } from "react-icons/fa";
 
 type Props = {
   modalIsOpen: boolean;
@@ -29,7 +31,6 @@ export const SettingsModal = (props: Props) => {
   const handleChangeUserEmail = async () => {
     if (email) {
       if (validateEmail(email)) {
-        console.log(email, " is validated");
         const updatedEmailResponse = await axios({
           method: "post",
           url: `${websiteUrl}/api/users/update-email`,
@@ -97,19 +98,20 @@ export const SettingsModal = (props: Props) => {
                 onChange={(e) => setEmail(e.target.value)}
                 error={wrongFormatEmail}
                 helperText={emailErrorHelperText}
+                fullWidth
+                placeholder="Ex: elon-musk@tesla.com"
               />
             </div>
             <div className={styles.settingSection}>
               <Card className={styles.settingIllustrationContainer}>
                 <div className={styles.iconContainer}>
-                  <AiFillBank />
+                  <FaPortrait />
                 </div>
-                <div className={styles.iconSubtext}>Company</div>
+                <div className={styles.iconSubtext}>Picture</div>
               </Card>
-              <TextField
-                disabled
-                value="Apple"
-              />
+              <Avatar variant="rounded">
+                <Add />
+              </Avatar>
             </div>
             <Button
               className={styles.submitButton}

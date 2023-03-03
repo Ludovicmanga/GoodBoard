@@ -3,46 +3,77 @@
 
 .container {
     @include useSpacing(margin, 0, xs, xs, xs);
-    height: $roadmap-box-height;
+    height: 160px;
     cursor: pointer;
+    border-radius: 10px;
 }
 
 .cardContent {
-    @include useSpacing(padding, s, m, s, m);
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.topContentRow {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 20%;
+
 }
 
 .topContent {
     display: flex;
-    justify-content: flex-start;
     align-items: center;
-    height: 10%;
+}
+
+.dotIconContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .featureType {
-    @include useTypography(legals);
+    @include useSpacing(margin, 0, 0, 0, xxs);
+    @include useTypography(subContextText);
+    color: #7B7B7B;
 }
 
 .title {
     font-weight: bold;
-    @include useSpacing(margin, xxs, 0, xs, 0);
     height: 15%;
+    display: flex;
+    align-items: center;
+    @include useSpacing(padding, m, 0, 0, 0);
+    box-sizing: border-box;
 }
 
 .detailsContainer {
-    overflow: hidden;
+    @include useSpacing(padding, m, 0);
     @include useTypography(commonText);
-    height: 30%;
+    height: 45%;
+    box-sizing: border-box;
+ }
+
+ .dividerContainer {
+    height: 12%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.divider {
+    width: 100%;
 }
 
 .bottomContent {
     display: flex;
     justify-content: flex-end;
+    height: 20%;
+    box-sizing: border-box;
 }
 
-.divider {
-    @include useSpacing(margin, l, 0, m, 0);
-}
-
-.dotIcon {
-    @include useSpacing(margin, 0, xxs, 0, 0)
+.votesCount {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

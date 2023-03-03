@@ -50,7 +50,9 @@ export default function FeatureRequestModal(props: {
     useState<string>("");
   const loggedUserState = useAppSelector((state) => state.loggedUser);
   const dispatch = useAppDispatch();
-  const generalPropertiesState = useAppSelector(state => state.generalProperties);
+  const generalPropertiesState = useAppSelector(
+    (state) => state.generalProperties
+  );
 
   useEffect(() => {
     if (props.modalIsOpen && loggedUserState.user) {
@@ -233,10 +235,11 @@ export default function FeatureRequestModal(props: {
               <div className={styles.statusSection}>
                 <div className={styles.statusSectionTitle}>Status :</div>
                 <Select
-                  disabled={
-                    props.modalMode === FeatureRequestModalMode.update &&
-                    !hasUpdateRights
-                  }
+                  inputProps={{
+                    readOnly:
+                      props.modalMode === FeatureRequestModalMode.update &&
+                      !hasUpdateRights,
+                  }}
                   labelId="status"
                   id="status"
                   value={featureRequestProperties.status}
@@ -264,10 +267,11 @@ export default function FeatureRequestModal(props: {
             </>
           )}
           <TextField
-            disabled={
-              props.modalMode === FeatureRequestModalMode.update &&
-              !hasUpdateRights
-            }
+            InputProps={{
+              readOnly:
+                props.modalMode === FeatureRequestModalMode.update &&
+                !hasUpdateRights,
+            }}
             error={titleHasError}
             helperText={titleErrorHelperText}
             label="Title"
@@ -280,10 +284,11 @@ export default function FeatureRequestModal(props: {
             className={`${styles.textInput} ${styles.titleInput}`}
           />
           <TextField
-            disabled={
-              props.modalMode === FeatureRequestModalMode.update &&
-              !hasUpdateRights
-            }
+            InputProps={{
+              readOnly:
+                props.modalMode === FeatureRequestModalMode.update &&
+                !hasUpdateRights,
+            }}
             error={detailsHasError}
             helperText={detailsErrorHelperText}
             label="Details"

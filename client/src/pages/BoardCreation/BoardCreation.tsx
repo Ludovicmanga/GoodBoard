@@ -53,29 +53,40 @@ const BoardCreation = (props: Props) => {
     <div>
       {mode === "selection" ? (
         <>
-          <h1 className={`${styles.sectionTitle} ${styles.selectBoardTitle}`}>Select a board</h1>
-          {boardsList.map((board) => {
-            return (
-              <Paper
-                key={board._id}
-                onClick={() =>
-                  handleSetActiveBoard(board._id, dispatch, navigate)
-                }
-                sx={{
-                  cursor: 'pointer',
-                }}
-                className={styles.boardInListContainer}
+          {boardsList.length > 0 && (
+            <>
+              <h1
+                className={`${styles.sectionTitle} ${styles.selectBoardTitle}`}
               >
-                <BoardInList name={board.name} />
-              </Paper>
-            );
-          })}
-          <h1 className={`${styles.sectionTitle} ${styles.createBoardTitle}`}>Create a board</h1>
+                Select a board
+              </h1>
+              {boardsList.map((board) => {
+                return (
+                  <Paper
+                    key={board._id}
+                    onClick={() =>
+                      handleSetActiveBoard(board._id, dispatch, navigate)
+                    }
+                    sx={{
+                      cursor: "pointer",
+                    }}
+                    className={styles.boardInListContainer}
+                  >
+                    <BoardInList name={board.name} />
+                  </Paper>
+                );
+              })}
+            </>
+          )}
+
+          <h1 className={`${styles.sectionTitle} ${styles.createBoardTitle}`}>
+            Create a board
+          </h1>
           <Paper
             className={styles.createBoardBtnContainer}
             onClick={() => setMode("creation")}
             sx={{
-              cursor: 'pointer',
+              cursor: "pointer",
             }}
           >
             <IconButton className={styles.createBoardBtnIcon}>

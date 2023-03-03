@@ -1,4 +1,4 @@
-import { Alert, Snackbar } from "@mui/material";
+import { Alert, createTheme, Snackbar, ThemeProvider } from "@mui/material";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import axios from "axios";
 import React, { useState } from "react";
@@ -13,9 +13,23 @@ import "./App.module.scss";
 
 function App() {
   const dispatch = useAppDispatch();
+
   const generalPropertiesState = useAppSelector(
     (state) => state.generalProperties
   );
+  const mode = localStorage.getItem('darkMode');
+
+  const lightTheme = createTheme({
+    palette: {
+      mode: "light",
+    },
+  });
+  
+  const darkTheme = createTheme({
+    palette: {
+      mode: "dark",
+    },
+  });
 
   const getAllBoardFeatureRequestsApiCall = async (activeBoard: string) => {
     const allUsersFeatureRequests = await axios({
@@ -37,14 +51,14 @@ function App() {
   useEffect(() => {
     dispatch(setGeneralProperties({
       activeBoard: localStorage.getItem('board'),
-    }))
-  }, [])
+    }));
+  }, []);
 
   useEffect(() => {
     if (generalPropertiesState.activeBoard && generalPropertiesState.activeBoard.length > 0) {
       getAllBoardFeatureRequests(generalPropertiesState.activeBoard);
     }
-  }, [generalPropertiesState.activeBoard])
+  }, [generalPropertiesState.activeBoard]);
 
   useEffect(() => {
     const getLoggedUser = async () => {
@@ -110,7 +124,10 @@ function App() {
             {generalPropertiesState.mainSnackBar.message}
           </Alert>
         </Snackbar>
+        <ThemeProvider theme={generalPropertiesState.colorMode === 'light' ? lightTheme : darkTheme}>
         <Routes />
+
+        </ThemeProvider>
       </>
     </GoogleOAuthProvider>
   );

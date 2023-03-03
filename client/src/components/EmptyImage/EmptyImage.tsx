@@ -20,8 +20,7 @@ const EmptyImage = (props: Props) => {
         variant='rounded'
       >
           <div className={styles.iconAndTextContainer}>
-          <div className={styles.iconContainer}><Add sx={{ fontSize: 40 }} /></div>
-          <div className={styles.iconText}>Add a picture</div>
+            <Add sx={{ fontSize: 40 }} />
           </div>
       </Avatar>
     </div>

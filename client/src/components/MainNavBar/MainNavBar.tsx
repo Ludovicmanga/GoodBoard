@@ -10,7 +10,7 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import EventNoteIcon from '@mui/icons-material/EventNote';
+import EventNoteIcon from "@mui/icons-material/EventNote";
 import Menu from "@mui/material/Menu";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
@@ -22,6 +22,8 @@ import { websiteUrl } from "../../helpers/constants";
 import SwitchBoardModal from "../Modals/FeatureRequestModal/SwitchBoard/SwitchBoardModal";
 import ShareBoardModal from "../Modals/ShareBoard/ShareBoardModal";
 import DarkModeToggle from "../buttons/DarkModeToggle/DarkModeToggle";
+import styles from "./MainNavBar.module.scss";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const pages: string[] = [];
 
@@ -45,7 +47,8 @@ const MainNavBar = () => {
       withCredentials: true,
     });
     if (response.data.loggedOut) {
-      dispatch(
+      /*       localStorage.removeItem("board");
+       */ dispatch(
         setLoggedUserState({
           user: null,
         })
@@ -80,7 +83,7 @@ const MainNavBar = () => {
 
   const handleDisplayIntegrations = () => {
     navigate("/integrations");
-  }
+  };
 
   const handleShareBoard = () => {
     dispatch(
@@ -88,7 +91,7 @@ const MainNavBar = () => {
         shareBoardModalOpen: true,
       })
     );
-  }
+  };
 
   const settings = [
     {
@@ -136,7 +139,6 @@ const MainNavBar = () => {
       })
     );
   };
-
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -202,11 +204,16 @@ const MainNavBar = () => {
               </Button>
             ))}
           </Box>
-          <DarkModeToggle />
+          <div className={styles.darkModeBtnContainer}>
+            <DarkModeToggle />
+          </div>
+
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Paramètres">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                {/*                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                 */}{" "}
+                <AccountCircleIcon sx={{ fontSize: 40, color: '#F6F6F6' }} />
               </IconButton>
             </Tooltip>
             <Menu
