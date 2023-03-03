@@ -5,6 +5,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
 import FeatureRequestModal from "../../Modals/FeatureRequestModal/FeatureRequestModal";
 import { FeatureRequestModalMode } from "../../../helpers/types";
+import { useAppSelector } from "../../../redux/hooks";
 
 type Props = {};
 
@@ -19,6 +20,8 @@ function NewFeatureRequestsButton({}: Props) {
     setNewFeatureRequestsModalOpen(false);
   };
 
+  const generalPropertiesState = useAppSelector(state => state.generalProperties);
+
   return (
     <>
       <Fab
@@ -26,6 +29,10 @@ function NewFeatureRequestsButton({}: Props) {
         variant="extended"
         className={styles.button}
         onClick={handleOpenNewFeatureRequestModal}
+        sx={{
+          bgcolor: generalPropertiesState.colorMode === 'light' ? '' : 'black',
+          color: generalPropertiesState.colorMode === 'light' ? '' : 'white'
+        }}
       >
         <AddIcon className={styles.addIcon} />
         New request

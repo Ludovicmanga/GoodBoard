@@ -13,7 +13,7 @@ $white: white;
 // colors
 $c-black: #222424;
 $c-black-opacity-95pp: rgba(34, 36, 36, 0.95);
-$c-black-opacity-75pp: rgba(34, 36, 36, 0.75);
+$c-black-opacity-45pp: rgba(34, 36, 36, 0.45);
 // color-blue
 
 $c-blue: #0900b8;
@@ -226,6 +226,8 @@ $c-gradient-light-blue2-red: (
 
 $menu-choice-font-size-mobile-screen: pxToRem(10);
 $menu-choice-font-size-computer-screen: pxToRem(12);
+$big-avatar-icon-font-size: pxToRem(50);
+$switch-board-menu-title: pxToRem(15);
 
 // z-indexes
 $z-xxs: 0;
@@ -264,6 +266,7 @@ $main-breakpoint: 40rem;
 // height
 $feature-request-box-height: 100px;
 $roadmap-box-height: pxToRem(165);
+$integration-box-height: pxToRem(170);
 // fonts
 $ff-main: 'Poppins';
 
@@ -293,7 +296,7 @@ $max-descrition-height: pxToRem(200);
 $max-content-width: pxToRem(1440);
 $scrollbar-width: pxToRem(250);
 $modal-width-computer-screen: pxToRem(400);
-$modal-width-mobile-screen: pxToRem(280);
+$modal-width-mobile-screen: pxToRem(400);
 
 $tall-button-height: pxToRem(60);
 $medium-button-height: pxToRem(40);

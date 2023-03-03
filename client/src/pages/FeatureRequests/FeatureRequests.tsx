@@ -42,7 +42,7 @@ const FeatureRequests = (props: Props) => {
 
   return (
     <>
-      <SiteMainHeader />
+      <SiteMainHeader />      
         {featureRequestsWithCorrespondingPropsType.length > 0 ? (
           <div className={styles.container}>
             {featureRequestsWithCorrespondingPropsType.map((featureRequest) => (

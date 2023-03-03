@@ -40,7 +40,7 @@ function Roadmap({}: Props) {
                 );
               return (
                 <Paper elevation={3} className={styles.paperContainer}>
-                  <Card className={styles.title}>
+                  <Card className={status === "done" ? `${`${styles.title}`} ${styles.doneTitle}` : `${`${styles.title}`} ${styles.notDoneTitle}`}>
                     <div className={styles.statusTitle}>
                       {capitalizeFirstLetter(status)}
                     </div>

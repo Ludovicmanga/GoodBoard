@@ -54,4 +54,5 @@ export type Board = {
     _id: string;
     name: string;
     description: string;
+    picture: string;
   }

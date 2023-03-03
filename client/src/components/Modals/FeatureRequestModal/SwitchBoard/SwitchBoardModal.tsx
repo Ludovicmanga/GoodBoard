@@ -28,9 +28,7 @@ const SwitchBoardModal = (props: Props) => {
           >
             <Fade in={props.modalIsOpen}>
               <Box className={styles.modalContentContainer}>
-              <Card>
                 <BoardCreation />
-              </Card>
               </Box>
             </Fade>
           </Modal>

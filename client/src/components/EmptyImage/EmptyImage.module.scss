@@ -1,0 +1,16 @@
+@import '../../styles/useTypography';
+@import '../../styles/useSpacing';
+@import '../../styles/variables';
+
+.container {
+    cursor: pointer;
+}
+
+.icon {
+    color: $c-black;
+    font-size: $big-avatar-icon-font-size;
+}
+
+.iconAndTextContainer {
+    color: $c-black-opacity-45pp;
+}

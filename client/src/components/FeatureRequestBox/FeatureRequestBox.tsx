@@ -1,4 +1,4 @@
-import { Card, ToggleButton } from "@mui/material";
+import { Card, Chip, ToggleButton } from "@mui/material";
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import ArrowDropUpRoundedIcon from "@mui/icons-material/ArrowDropUpRounded";
 import React, { useState } from "react";
@@ -9,7 +9,7 @@ import axios from "axios";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { downVote, upVote } from "../../redux/features/allFeatureRequestsSlice";
 import { useEffect } from "react";
-import { lightBlue } from "@mui/material/colors";
+import { lightBlue, lightGreen } from "@mui/material/colors";
 import {
   addToVotedFeatures,
   removeFromVotedFeatures,
@@ -19,6 +19,12 @@ import { websiteUrl } from "../../helpers/constants";
 type Props = {
   featureRequestProperties: FeatureRequest;
 };
+
+const featureCategories = [
+  "New brand",
+  "Faster Website",
+  "Faster Website",
+];
 
 function FeatureRequestBox(props: Props) {
   const [isVoted, setIsVoted] = useState(false);
@@ -33,6 +39,8 @@ function FeatureRequestBox(props: Props) {
   const menuSelectedState = useAppSelector(
     (state) => state.generalProperties.menuSelected
   );
+  const generalPropertiesState = useAppSelector(state => state.generalProperties);
+
 
   const handleVote = async () => {
     let url = "";
@@ -82,7 +90,9 @@ function FeatureRequestBox(props: Props) {
 
   useEffect(() => {
     if (loggedUser.user) {
-      setIsVoted(loggedUser.user.voted.includes(props.featureRequestProperties._id));
+      setIsVoted(
+        loggedUser.user.voted.includes(props.featureRequestProperties._id)
+      );
     }
   }, [loggedUser?.user?.voted, menuSelectedState]);
 
@@ -94,11 +104,17 @@ function FeatureRequestBox(props: Props) {
           onClick={() => setNewFeatureRequestsModalOpen(true)}
         >
           <h3 className={styles.featureRequestTitle}>
-            {props.featureRequestProperties.title}
+            {props.featureRequestProperties.title.slice(0,30)}
+            {props.featureRequestProperties.title.length > 30 && "..."}
           </h3>
           <div className={styles.featureRequestDescription}>
-            {props.featureRequestProperties.details.slice(0, 100)}
-            {props.featureRequestProperties.details.length > 99 && "..."}
+            {props.featureRequestProperties.details.slice(0, 50)}
+            {props.featureRequestProperties.details.length > 50 && "..."}
+          </div>
+          <div className={styles.tagsContainer}>
+            {featureCategories.map((category) => (
+              <Chip className={styles.tag} label={category} />
+            ))}
           </div>
         </Card>
         <ToggleButton
@@ -109,8 +125,10 @@ function FeatureRequestBox(props: Props) {
           className={styles.checkButton}
           sx={{
             "&.Mui-selected": {
-              bgcolor: lightBlue[700],
+              bgcolor: generalPropertiesState.colorMode === 'light' ? lightBlue[700] : 'black'
             },
+            '&:hover': { bgcolor: generalPropertiesState.colorMode === 'light' ? lightBlue[700] : 'black', color: generalPropertiesState.colorMode === 'light' ? 'black' : 'white' },
+            color: 'black',
           }}
         >
           <div className={styles.votesBox}>

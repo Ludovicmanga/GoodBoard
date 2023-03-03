@@ -1,0 +1,49 @@
+@import '../../styles/variables';
+@import '../../styles/useSpacing';
+
+.container {
+    cursor: pointer;
+    height: $integration-box-height;
+    @include useSpacing(padding, m);
+}
+
+.container:hover {
+    box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.4);
+}
+
+.connectedBadgeContainer {
+    display: flex;
+    justify-content: flex-end;
+    height: 15%;
+}
+
+.logoAndNameRowContainer {
+    display: flex;
+    justify-content: flex-start;
+    height: 50%;
+}
+
+.logoAndNameContainer {
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content: center;
+    @include useSpacing(margin, 0, 0, 0, l);
+    width: 30%;
+}
+
+.logoContainer {
+    @include useSpacing(margin, xs, 0, 0, 0);
+}
+
+.nameContainer {
+    text-align: center;
+    font-weight: 500;
+    @include useSpacing(margin, xs, 0, 0, 0);
+}
+
+.descriptionContainer {
+    color: $c-black-opacity-45pp;
+    @include useSpacing(margin, m, 0, 0, 0);
+    height: 30%;
+}

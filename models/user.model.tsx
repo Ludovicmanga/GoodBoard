@@ -21,6 +21,11 @@ const userSchema = new mongoose.Schema(
             required: true,
             max: 1024
         },
+        picture: {
+            type: String,
+            required: false,
+            max: 1024
+        },
         voted: {
             type: [String],
             default: [],

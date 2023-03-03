@@ -12,6 +12,7 @@ interface GeneralProperties {
     isOpen: boolean;
     message: string;
   };
+  colorMode: 'light' | 'dark' | null;
 }
 
 const initialState: GeneralProperties = {
@@ -25,6 +26,7 @@ const initialState: GeneralProperties = {
     isOpen: false,
     message: "",
   },
+  colorMode: null,
 };
 
 export const generalPropertiesSlice = createSlice({

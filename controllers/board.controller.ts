@@ -50,7 +50,6 @@ export const createBoard = async (req, res) => {
       newBoard.save()
         .then(savedObject => {
           const token = generateJwtToken(savedObject.id, secretKey);
-          console.log(token, ' is the token i want to add')
           const publicUrl = `${websiteUrl}/api/board/${token}`;
           savedObject.privateUrl = `${websiteUrl}/api/board/${savedObject.id}`;
           savedObject.publicUrl = publicUrl;

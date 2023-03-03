@@ -12,12 +12,12 @@ type Props = {
 const EmptyData = (props: Props) => {
   return (
     <div className={styles.container}>
-        <div className={styles.imgContainer}>
+{/*         <div className={styles.imgContainer}>
             <img className={styles.img} src={props.type === EmptyPageType.featureRequests ? emptyBox : EmptyPageType.roadmap ? roadmapImg : ''} alt='empty-box' />
         </div>
         <div className={styles.text}>
             {props.text}
-        </div>
+        </div> */}
     </div>
   )
 }
