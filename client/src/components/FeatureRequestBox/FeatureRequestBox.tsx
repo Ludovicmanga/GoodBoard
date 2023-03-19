@@ -123,13 +123,13 @@ function FeatureRequestBox(props: Props) {
           onChange={() => setIsVoted(!isVoted)}
           onClick={() => setIsClickedAtLeastOnce(true)}
           className={styles.checkButton}
-          sx={{
+/*           sx={{
             "&.Mui-selected": {
               bgcolor: generalPropertiesState.colorMode === 'light' ? lightBlue[700] : 'black'
             },
             '&:hover': { bgcolor: generalPropertiesState.colorMode === 'light' ? lightBlue[700] : 'black', color: generalPropertiesState.colorMode === 'light' ? 'black' : 'white' },
             color: 'black',
-          }}
+          }} */
         >
           <div className={styles.votesBox}>
             {isVoted ? (

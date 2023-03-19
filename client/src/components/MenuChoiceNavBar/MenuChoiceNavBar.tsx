@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './MenuChoiceNavBar.module.scss';
-import { Button } from '@mui/material';
+import { Button, Paper } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { MenuSelected } from '../../helpers/types';
@@ -15,7 +15,7 @@ const MenuChoiceNavBar = (props: Props) => {
   const generalPropertiesState = useAppSelector(state => state.generalProperties);
 
   return (
-    <div className={styles.container}>
+    <Paper className={styles.container}>
         <div className={styles.buttonContainer}>
           <NavLink to='/user-feature-requests'>
             <Button
@@ -64,7 +64,7 @@ const MenuChoiceNavBar = (props: Props) => {
             </Button>
           </NavLink>
         </div>
-    </div>
+    </Paper>
   )
 }
 

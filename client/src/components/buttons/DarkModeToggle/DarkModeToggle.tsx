@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { IconButton } from '@mui/material';
-import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import { useAppDispatch } from '../../../redux/hooks';
 import { setGeneralProperties } from '../../../redux/features/generalPropertiesSlice';
 
 function DarkModeToggle() {
