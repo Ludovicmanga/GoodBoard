@@ -5,7 +5,7 @@ import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { AiOutlineMail, AiFillBank } from "react-icons/ai";
-import { Avatar, Button, Card, TextField } from "@mui/material";
+import { Avatar, Button, Card, Paper, TextField } from "@mui/material";
 import axios from "axios";
 import { websiteUrl } from "../../../helpers/constants";
 import { setGeneralProperties } from "../../../redux/features/generalPropertiesSlice";
@@ -84,7 +84,7 @@ export const SettingsModal = (props: Props) => {
         }}
       >
         <Fade in={props.modalIsOpen}>
-          <Box className={styles.modalContentContainer}>
+          <Paper className={styles.modalContentContainer}>
             <div className={styles.settingSection}>
               <Card className={styles.settingIllustrationContainer}>
                 <div className={styles.iconContainer}>
@@ -120,7 +120,7 @@ export const SettingsModal = (props: Props) => {
             >
               Save
             </Button>
-          </Box>
+          </Paper>
         </Fade>
       </Modal>
     </div>

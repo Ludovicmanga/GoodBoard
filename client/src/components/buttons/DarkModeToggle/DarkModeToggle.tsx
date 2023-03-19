@@ -12,7 +12,7 @@ function DarkModeToggle() {
   const handleToggle = () => {
     setIsDarkMode(!isDarkMode);
     dispatch(setGeneralProperties({
-      colorMode: isDarkMode ? 'dark' : 'light'
+      darkMode: isDarkMode ? true : false,
     }))
     localStorage.setItem('darkMode', !isDarkMode ? 'on' : 'off');
   };

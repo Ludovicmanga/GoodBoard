@@ -35,6 +35,11 @@ const boardSchema = new mongoose.Schema(
             required: false,
             max: 1024
         },
+        themeColor: {
+            type: String,
+            required: true,
+            max: 1024
+        },
     }
 );
 

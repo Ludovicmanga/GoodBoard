@@ -8,6 +8,24 @@ import {
   websiteUrl,
 } from "../helpers/auth";
 
+export const updateColor = async (req, res) => {
+  try {
+    const { themeColor, boardId } = req.body;
+    const updatedBoard = await boardModel.findOneAndUpdate(
+      { _id: boardId },
+      {
+        themeColor,
+      },
+      {
+        new: true,
+      }
+    );
+    res.status(200).send(updatedBoard.themeColor);
+  } catch (e) {
+    console.log(e, " is the error");
+  }
+};
+
 export const getBoard = async (req, res) => {
   try {
     const foundBoard = await boardModel.find({ _id: req.params.boardId });
@@ -44,17 +62,19 @@ export const createBoard = async (req, res) => {
       const newBoard = new boardModel({
         name: req.body.name,
         description: req.body.description,
-        privateUrl: 'emptyUrl',
-        publicUrl: 'emptyUrl',
+        themeColor: req.body.themeColor,
+        privateUrl: "emptyUrl",
+        publicUrl: "emptyUrl",
       });
-      newBoard.save()
-        .then(savedObject => {
+      newBoard
+        .save()
+        .then((savedObject) => {
           const token = generateJwtToken(savedObject.id, secretKey);
           const publicUrl = `${websiteUrl}/api/board/${token}`;
           savedObject.privateUrl = `${websiteUrl}/api/board/${savedObject.id}`;
           savedObject.publicUrl = publicUrl;
           savedObject.save();
-      })
+        })
         .catch((error) => console.log(error));
 
       const newBoardUserRelation = new boardUserRelModel({

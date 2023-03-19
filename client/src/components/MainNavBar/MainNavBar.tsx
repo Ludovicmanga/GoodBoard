@@ -22,6 +22,7 @@ import ShareBoardModal from "../Modals/ShareBoard/ShareBoardModal";
 import DarkModeToggle from "../buttons/DarkModeToggle/DarkModeToggle";
 import styles from "./MainNavBar.module.scss";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import ChangeBoardColorModal from "../Modals/ChangeBoardColorModal/ChangeBoardColorModal";
 
 const pages: string[] = [];
 
@@ -91,6 +92,14 @@ const MainNavBar = () => {
     );
   };
 
+  const handleDisplayChangeBoardColor = () => {
+    dispatch(
+      setGeneralProperties({
+        changeBoardColorModalOpen: true,
+      })
+    );
+  }
+
   const settings = [
     {
       linkText: "My account",
@@ -105,8 +114,8 @@ const MainNavBar = () => {
       onClick: handleShareBoard,
     },
     {
-      linkText: "Board settings",
-      onClick: handleDisplayIntegrations,
+      linkText: "Change board color",
+      onClick: handleDisplayChangeBoardColor,
     },
     {
       linkText: "Integrations",
@@ -255,6 +264,13 @@ const MainNavBar = () => {
         modalIsOpen={generalPropertiesState.shareBoardModalOpen}
         handleClose={handleCloseShareBoardModal}
       />
+      <ChangeBoardColorModal
+        modalIsOpen={generalPropertiesState.changeBoardColorModalOpen}
+        handleClose={() => dispatch(setGeneralProperties({
+          changeBoardColorModalOpen: false,
+        }))}
+      />
+      
     </AppBar>
   );
 };

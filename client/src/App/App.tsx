@@ -1,4 +1,5 @@
-import { Alert, createTheme, Snackbar, ThemeProvider } from "@mui/material";
+import { Alert, createTheme, CssBaseline, Snackbar, ThemeProvider } from "@mui/material";
+import { red } from "@mui/material/colors";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import axios from "axios";
 import React, { useState } from "react";
@@ -17,7 +18,6 @@ function App() {
   const generalPropertiesState = useAppSelector(
     (state) => state.generalProperties
   );
-  const mode = localStorage.getItem('darkMode');
 
   const lightTheme = createTheme({
     palette: {
@@ -25,11 +25,65 @@ function App() {
     },
   });
   
+  const greenTheme = createTheme({
+    palette: {
+      primary: {
+        main: "#469C63",
+      },
+      secondary: {
+        main: "#6EC382",
+      }
+    },
+  });
+
+  const redTheme = createTheme({
+    palette: {
+      primary: {
+        main: "#F43C2B",
+      },
+      secondary: {
+        main: "#E27476",
+      }
+    },
+  });
+
+  const yellowTheme = createTheme({
+    palette: {
+      primary: {
+        main: "#EDD91A",
+      },
+      secondary: {
+        main: "#FFE600",
+      }
+    },
+  });
+
   const darkTheme = createTheme({
     palette: {
       mode: "dark",
+      primary: {
+        main: "rgba(0, 0, 0)",
+      }
     },
   });
+
+  const themes = [{
+    color: 'green',
+    theme: greenTheme
+  },
+  {
+    color: 'blue',
+    theme: lightTheme
+  },
+  {
+    color: 'yellow',
+    theme: yellowTheme
+  },
+  {
+    color: 'red',
+    theme: redTheme
+  },]
+  
 
   const getAllBoardFeatureRequestsApiCall = async (activeBoard: string) => {
     const allUsersFeatureRequests = await axios({
@@ -124,9 +178,9 @@ function App() {
             {generalPropertiesState.mainSnackBar.message}
           </Alert>
         </Snackbar>
-        <ThemeProvider theme={generalPropertiesState.colorMode === 'light' ? lightTheme : darkTheme}>
+        <ThemeProvider theme={generalPropertiesState.darkMode === true ? darkTheme : (themes.find(colorTheme => colorTheme.color === generalPropertiesState.colorMode))?.theme || lightTheme }>
         <Routes />
-
+        <CssBaseline />
         </ThemeProvider>
       </>
     </GoogleOAuthProvider>

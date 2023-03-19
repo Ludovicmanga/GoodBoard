@@ -32,14 +32,6 @@
     @include useSpacing(margin, 0, 0, 0, l);
 }
 
-.notDoneTitle {
-    background: #EDF2FF;
-}
-
-.doneTitle {
-    background: #4263EB;
-    color: white;
-}
 .featureNumberContainer {
     @include useSpacing(padding, xxs, s);
     @include useSpacing(margin, 0, s, 0, 0);
@@ -54,7 +46,6 @@
     width: pxToRem(380);
     height: pxToRem(500);
     @include useSpacing(margin, xs, xs, xs, xs);
-    background: #F6F6F6;
 }
 
 .emptyDataContainer {

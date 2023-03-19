@@ -7,7 +7,6 @@ import SiteMainHeader from "../../components/Sections/SiteMainHeader/SiteMainHea
 import EmptyData from "../../components/EmptyData/EmptyData";
 import styles from "./FeatureRequests.module.scss";
 import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
-import { Paper } from "@mui/material";
 
 type Props = {
   type: UserType;
@@ -45,14 +44,14 @@ const FeatureRequests = (props: Props) => {
     <>
       <SiteMainHeader />      
         {featureRequestsWithCorrespondingPropsType.length > 0 ? (
-          <Paper className={styles.container}>
+          <div className={styles.container}>
             {featureRequestsWithCorrespondingPropsType.map((featureRequest) => (
               <FeatureRequestBox
                 key={featureRequest._id}
                 featureRequestProperties={featureRequest}
               />
             ))}
-          </Paper>
+          </div>
         ) : (
           <div className={styles.emptyDataContainer}>
             <EmptyData

@@ -8,19 +8,3 @@
 .submitBtn {
     @include useSpacing(margin,m,0,0,0);
 }
-
-.colorPaletteBoxContainer {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.colorPaletteBox {
-    @include useSpacing(margin,s);
-    cursor: pointer;
-    border: $c-black 1px solid;
-    width: 3rem;
-    height: 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}

@@ -1,9 +1,13 @@
-import { Box, Card, Paper } from "@mui/material";
+import { Box, Card, Paper, useTheme } from "@mui/material";
 import React, { useEffect } from "react";
 import EmptyData from "../../components/EmptyData/EmptyData";
 import RoadMapFeature from "../../components/RoadMapFeature/RoadMapFeature";
 import SiteMainHeader from "../../components/Sections/SiteMainHeader/SiteMainHeader";
-import { EmptyPageType, FeatureRequestStatus, MenuSelected } from "../../helpers/types";
+import {
+  EmptyPageType,
+  FeatureRequestStatus,
+  MenuSelected,
+} from "../../helpers/types";
 import { capitalizeFirstLetter } from "../../helpers/utils";
 import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
@@ -16,12 +20,15 @@ function Roadmap({}: Props) {
     (state) => state.allFeatureRequests
   );
   const dispatch = useAppDispatch();
+  const theme = useTheme();
 
   useEffect(() => {
-    dispatch(setGeneralProperties({
-      menuSelected: MenuSelected.roadmap,
-    }));
-  }, [])
+    dispatch(
+      setGeneralProperties({
+        menuSelected: MenuSelected.roadmap,
+      })
+    );
+  }, []);
 
   return (
     <>
@@ -40,7 +47,13 @@ function Roadmap({}: Props) {
                 );
               return (
                 <Paper elevation={3} className={styles.paperContainer}>
-                  <Card className={status === "done" ? `${`${styles.title}`} ${styles.doneTitle}` : `${`${styles.title}`} ${styles.notDoneTitle}`}>
+                  <Card
+                    className={styles.title}
+                    sx={{
+                      backgroundColor:
+                        status === "done" ? theme.palette.primary.dark : "",
+                    }}
+                  >
                     <div className={styles.statusTitle}>
                       {capitalizeFirstLetter(status)}
                     </div>

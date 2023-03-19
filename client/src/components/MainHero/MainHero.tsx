@@ -1,4 +1,4 @@
-import { Avatar } from "@mui/material";
+import { Avatar, Box, useTheme } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import styles from "./MainHero.module.scss";
 import { BsFacebook } from "react-icons/bs";
@@ -8,16 +8,19 @@ import { websiteUrl } from "../../helpers/constants";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { Board } from "../../helpers/types";
 import EmptyImage from "../EmptyImage/EmptyImage";
+import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
 
 type Props = {};
 
 const MainHero = (props: Props) => {
   const generalProperties = useAppSelector((state) => state.generalProperties);
+  const dispatch = useAppDispatch();
   const [boardData, setBoardData] = useState<Board>({
     _id: "",
     name: "",
     description: "",
     picture: "",
+    themeColor: "",
   });
 
   useEffect(() => {
@@ -28,6 +31,14 @@ const MainHero = (props: Props) => {
       getActiveBoardData(generalProperties.activeBoard);
     }
   }, [generalProperties.activeBoard]);
+
+  useEffect(() => {
+    if (boardData.themeColor.length > 0) {
+      dispatch(setGeneralProperties({
+        colorMode: boardData.themeColor,
+      }))
+    }
+  }, [boardData.themeColor])
 
   const getActiveBoardData = async (activeBoard: string) => {
     handleDispatchActiveBoardData(activeBoard);
@@ -42,8 +53,12 @@ const MainHero = (props: Props) => {
     }
   };
 
+  const theme = useTheme();
+
   return (
-    <div className={styles.container}>
+    <Box className={styles.container} sx={{
+      background: theme.palette.primary.main,
+    }}>
       <div className={styles.contentWrapper}>
         {boardData.picture ? (
           <Avatar
@@ -76,7 +91,7 @@ const MainHero = (props: Props) => {
           </div>
         </div>
       </div>
-    </div>
+    </Box>
   );
 };
 

@@ -1,11 +1,13 @@
 import Add from "@mui/icons-material/Add";
 import { Avatar, Button, TextField } from "@mui/material";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { handleSetActiveBoard } from "../../helpers/boards";
 import { websiteUrl } from "../../helpers/constants";
+import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
 import { useAppDispatch } from "../../redux/hooks";
+import ChooseBoardColor from "../ChooseBoardColor/ChooseBoardColor";
 import styles from "./CreateBoardModal.module.scss";
 
 type Props = {};
@@ -14,15 +16,22 @@ const CreateBoardModal = (props: Props) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [website, setWebsite] = useState("");
+  const [themeColor, setThemeColor] = useState('blue');
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const handleBoardCreation = async () => {
+    console.log({
+      name,
+      description,
+      themeColor,
+    }, ' is the description')
     const boardCreationResponse = await axios({
       url: `${websiteUrl}/api/board/create`,
       method: "post",
       data: {
         name,
         description,
+        themeColor,
       },
       withCredentials: true,
     });
@@ -30,7 +39,11 @@ const CreateBoardModal = (props: Props) => {
       handleSetActiveBoard(boardCreationResponse.data._id, dispatch, navigate);
     }
   };
-  const colors = ["blue", "red", "green", "yellow", "yellow"];
+
+  useEffect(() => {
+    console.log(themeColor, ' is the theme colors')
+  }, [themeColor])
+
   return (
     <>
       <TextField
@@ -68,15 +81,7 @@ const CreateBoardModal = (props: Props) => {
         autoFocus
         value={website}
       />
-      <h2 className={styles.inputLabel}>Choose your board color</h2>
-      <div className={styles.colorPaletteBoxContainer}>
-        {colors.map((color) => (
-          <Avatar sx={{
-            background: `${color}`
-          }} className={styles.colorPaletteBox} variant="rounded">{color}</Avatar>
-        ))}
-      </div>
-
+      <ChooseBoardColor mode='creation' setThemeColor={setThemeColor} />
       <h2 className={styles.inputLabel}>Board logo</h2>
       <Avatar variant="rounded">
         <Add />

@@ -8,6 +8,7 @@ import {
   AvatarGroup,
   Divider,
   MenuItem,
+  Paper,
   Select,
   SelectChangeEvent,
   TextField,
@@ -203,7 +204,7 @@ export default function FeatureRequestModal(props: {
       }}
     >
       <Fade in={props.modalIsOpen}>
-        <div className={styles.modalContentContainer}>
+        <Paper className={styles.modalContentContainer}>
           <div className={styles.modalTitle}>
             {props.modalMode === FeatureRequestModalMode.creation
               ? "Make feature request"
@@ -328,7 +329,7 @@ export default function FeatureRequestModal(props: {
                 </Button>
               )}
           </div>
-        </div>
+        </Paper>
       </Fade>
     </Modal>
   );
