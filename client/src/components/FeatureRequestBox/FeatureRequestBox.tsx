@@ -23,7 +23,6 @@ type Props = {
 const featureCategories = [
   "New brand",
   "Faster Website",
-  "Faster Website",
 ];
 
 function FeatureRequestBox(props: Props) {

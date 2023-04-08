@@ -1,6 +1,61 @@
+@import '../../styles/useSpacing';
+
 .emptyDataContainer {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 30%;
+}
+
+.sectionContainer {
+    display: flex;
+}
+
+.sidebarContainer {
+    @include useSpacing(padding, 0, 0, 0, xl);
+    width: 20%;
+}
+
+.featuresSectionContainer {
+    width: 80%;
+    display: flex;
+}
+
+.featuresContainer {
+    width: 90%;
+}
+
+.listItemButton {
+    color: #8f9399;
+    font-size: 14px;
+}
+
+.listItem {
+    font-size: 14px;
+}
+
+.featuresSectionContainer {
+    display: flex;
+    flex-direction: column;
+    @include useSpacing(margin, l, 0)
+}
+
+.filterSectionContainer {
+    display: flex;
+    justify-content: flex-end;
+    width: 65%;
+}
+
+.filtersContainer {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.filtersTextContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+    @include useSpacing(margin, 0, 0, 0, s);
 }

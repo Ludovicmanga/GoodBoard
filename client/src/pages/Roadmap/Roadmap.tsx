@@ -1,6 +1,8 @@
 import { Box, Card, Paper, useTheme } from "@mui/material";
 import React, { useEffect } from "react";
 import EmptyData from "../../components/EmptyData/EmptyData";
+import MainHero from "../../components/MainHero/MainHero";
+import MainNavBar from "../../components/MainNavBar/MainNavBar";
 import RoadMapFeature from "../../components/RoadMapFeature/RoadMapFeature";
 import SiteMainHeader from "../../components/Sections/SiteMainHeader/SiteMainHeader";
 import {
@@ -32,7 +34,8 @@ function Roadmap({}: Props) {
 
   return (
     <>
-      <SiteMainHeader />
+      <MainNavBar />
+      <MainHero />
       <div className={styles.container}>
         <Box className={styles.box}>
           <>

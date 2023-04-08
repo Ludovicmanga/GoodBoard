@@ -5,7 +5,7 @@ import React from "react";
 type Props = {
   name: string;
   description: string;
-  logo: JSX.Element;
+  logo: string;
   connected: boolean;
 };
 
@@ -18,7 +18,7 @@ const IntegrationBox = (props: Props) => {
       <div className={styles.logoAndNameRowContainer}>
         <div className={styles.logoAndNameContainer}>
           <>
-            <div className={styles.logoContainer}>{props.logo}</div>
+            <div className={styles.logoContainer}><img src={props.logo} alt={props.name} height={50} /></div>
             <div className={styles.nameContainer}>{props.name}</div>
           </>
         </div>
