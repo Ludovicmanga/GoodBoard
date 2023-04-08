@@ -55,4 +55,5 @@ export type Board = {
     name: string;
     description: string;
     picture: string;
+    themeColor: string;
   }

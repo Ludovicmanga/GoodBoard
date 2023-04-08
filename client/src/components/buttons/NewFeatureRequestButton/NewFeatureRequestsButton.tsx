@@ -29,10 +29,10 @@ function NewFeatureRequestsButton({}: Props) {
         variant="extended"
         className={styles.button}
         onClick={handleOpenNewFeatureRequestModal}
-        sx={{
+/*         sx={{
           bgcolor: generalPropertiesState.colorMode === 'light' ? '' : 'black',
           color: generalPropertiesState.colorMode === 'light' ? '' : 'white'
-        }}
+        }} */
       >
         <AddIcon className={styles.addIcon} />
         New request

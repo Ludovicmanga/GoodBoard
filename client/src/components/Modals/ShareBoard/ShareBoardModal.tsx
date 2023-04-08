@@ -9,6 +9,7 @@ import {
   Card,
   FormControlLabel,
   OutlinedInput,
+  Paper,
   TextField,
 } from "@mui/material";
 import CopyToClipboardButton from "../../buttons/CopyToClipboardButton/CopyToClipboardButton";
@@ -96,7 +97,7 @@ const ShareBoardModal = (props: Props) => {
         }}
       >
         <Fade in={props.modalIsOpen}>
-          <Box className={styles.modalContentContainer}>
+          <Paper className={styles.modalContentContainer}>
             <div
               className={`${styles.sectionTitle} ${styles.inviteAdminSectionTitle}`}
             >
@@ -157,7 +158,7 @@ const ShareBoardModal = (props: Props) => {
                 />
               </div>
             </div>
-          </Box>
+          </Paper>
         </Fade>
       </Modal>
     </div>

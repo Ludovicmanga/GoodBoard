@@ -6,13 +6,15 @@ interface GeneralProperties {
   featureRequestModalOpen: boolean;
   generalSettingsModalOpen: boolean;
   shareBoardModalOpen: boolean;
+  changeBoardColorModalOpen: boolean;
   switchBoardModalOpen: boolean;
   menuSelected: MenuSelected | null;
   mainSnackBar: {
     isOpen: boolean;
     message: string;
   };
-  colorMode: 'light' | 'dark' | null;
+  darkMode: boolean | null;
+  colorMode: string | null;
 }
 
 const initialState: GeneralProperties = {
@@ -26,7 +28,9 @@ const initialState: GeneralProperties = {
     isOpen: false,
     message: "",
   },
+  changeBoardColorModalOpen: false,
   colorMode: null,
+  darkMode: null,
 };
 
 export const generalPropertiesSlice = createSlice({

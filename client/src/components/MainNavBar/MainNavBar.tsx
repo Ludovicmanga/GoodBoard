@@ -1,12 +1,10 @@
 import * as React from "react";
-import { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
@@ -24,6 +22,7 @@ import ShareBoardModal from "../Modals/ShareBoard/ShareBoardModal";
 import DarkModeToggle from "../buttons/DarkModeToggle/DarkModeToggle";
 import styles from "./MainNavBar.module.scss";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import ChangeBoardColorModal from "../Modals/ChangeBoardColorModal/ChangeBoardColorModal";
 
 const pages: string[] = [];
 
@@ -93,6 +92,14 @@ const MainNavBar = () => {
     );
   };
 
+  const handleDisplayChangeBoardColor = () => {
+    dispatch(
+      setGeneralProperties({
+        changeBoardColorModalOpen: true,
+      })
+    );
+  }
+
   const settings = [
     {
       linkText: "My account",
@@ -105,6 +112,10 @@ const MainNavBar = () => {
     {
       linkText: "Share your board",
       onClick: handleShareBoard,
+    },
+    {
+      linkText: "Change board color",
+      onClick: handleDisplayChangeBoardColor,
     },
     {
       linkText: "Integrations",
@@ -253,6 +264,13 @@ const MainNavBar = () => {
         modalIsOpen={generalPropertiesState.shareBoardModalOpen}
         handleClose={handleCloseShareBoardModal}
       />
+      <ChangeBoardColorModal
+        modalIsOpen={generalPropertiesState.changeBoardColorModalOpen}
+        handleClose={() => dispatch(setGeneralProperties({
+          changeBoardColorModalOpen: false,
+        }))}
+      />
+      
     </AppBar>
   );
 };

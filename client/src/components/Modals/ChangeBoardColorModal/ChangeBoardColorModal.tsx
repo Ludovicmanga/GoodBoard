@@ -1,18 +1,14 @@
-import React, { useEffect, useState } from "react";
-import Backdrop from "@mui/material/Backdrop";
-import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
-import Fade from "@mui/material/Fade";
-import styles from './SwitchBoardModal.module.scss';
-import { Card, Paper } from "@mui/material";
-import BoardCreation from "../../../../pages/BoardCreation/BoardCreation";
+import { Backdrop, Fade, Modal, Paper } from "@mui/material";
+import ChooseBoardColor from "../../ChooseBoardColor/ChooseBoardColor";
+import styles from './ChangeBoardColorModal.module.scss';
+
 
 type Props = {
     modalIsOpen: boolean;
     handleClose: () => void;
   };
 
-const SwitchBoardModal = (props: Props) => {
+const ChangeBoardColorModal = (props: Props) => {
     return (
         <div>
           <Modal
@@ -28,7 +24,7 @@ const SwitchBoardModal = (props: Props) => {
           >
             <Fade in={props.modalIsOpen}>
               <Paper className={styles.modalContentContainer}>
-                <BoardCreation />
+                <ChooseBoardColor mode='update' />
               </Paper>
             </Fade>
           </Modal>
@@ -36,4 +32,4 @@ const SwitchBoardModal = (props: Props) => {
       );
 }
 
-export default SwitchBoardModal
+export default ChangeBoardColorModal

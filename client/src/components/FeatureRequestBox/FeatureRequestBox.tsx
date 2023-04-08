@@ -1,4 +1,4 @@
-import { Card, Chip, ToggleButton } from "@mui/material";
+import { Card, Chip, ToggleButton, useTheme } from "@mui/material";
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import ArrowDropUpRoundedIcon from "@mui/icons-material/ArrowDropUpRounded";
 import React, { useState } from "react";
@@ -22,7 +22,6 @@ type Props = {
 
 const featureCategories = [
   "New brand",
-  "Faster Website",
   "Faster Website",
 ];
 
@@ -96,6 +95,8 @@ function FeatureRequestBox(props: Props) {
     }
   }, [loggedUser?.user?.voted, menuSelectedState]);
 
+  const theme = useTheme();
+
   return (
     <div className={styles.container}>
       <div className={styles.newFeatureRequestsBox}>
@@ -123,12 +124,12 @@ function FeatureRequestBox(props: Props) {
           onChange={() => setIsVoted(!isVoted)}
           onClick={() => setIsClickedAtLeastOnce(true)}
           className={styles.checkButton}
-          sx={{
+           sx={{
             "&.Mui-selected": {
-              bgcolor: generalPropertiesState.colorMode === 'light' ? lightBlue[700] : 'black'
+              bgcolor: theme.palette.primary.main,
             },
-            '&:hover': { bgcolor: generalPropertiesState.colorMode === 'light' ? lightBlue[700] : 'black', color: generalPropertiesState.colorMode === 'light' ? 'black' : 'white' },
-            color: 'black',
+            '&:hover': theme.palette.primary.main,
+            color: theme.palette.text.primary,
           }}
         >
           <div className={styles.votesBox}>
