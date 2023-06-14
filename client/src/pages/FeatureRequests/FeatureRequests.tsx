@@ -44,6 +44,8 @@ const FeatureRequests = (props: Props) => {
 
   const [statusListOpen, setStatusListOpen] = useState(true);
   const [topicsListOpen, setTopicsListOpen] = useState(true);
+  const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
+  const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
 
   useEffect(() => {
     if (props.type === UserType.user) {
@@ -61,21 +63,22 @@ const FeatureRequests = (props: Props) => {
     }
   }, [menuSelectedState]);
 
-  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
-    null
-  );
+  const statusChoices = [
+    {
+      label: "Unassigned",
+      btnColor: "#EB765D",
+    },
+    {
+      label: "Assigned",
+      btnColor: "#63C8D9",
+    },
+    {
+      label: "Done",
+      btnColor: "#1ab856",
+    },
+  ];
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    console.log(event.currentTarget, " is clicked");
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
+  const featureCategoriesChoices = ["Change font", "Faster website"];
 
   return (
     <>
@@ -91,41 +94,33 @@ const FeatureRequests = (props: Props) => {
             </ListItemButton>
             <Collapse in={statusListOpen} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
-                <ListItemButton sx={{ pl: 4 }}>
-                  <ListItemIcon>
-                    <PanoramaFishEyeIcon  sx={{
-                      color: "#EB765D",
-                      fontSize: 15,
-                    }} />
-                  </ListItemIcon>
-                  <ListItemText>
-                    <div className={styles.listItem}>Unassigned</div>
-                  </ListItemText>
-                </ListItemButton>
-                <ListItemButton sx={{ pl: 4 }}>
-                  <ListItemIcon>
-                  <PanoramaFishEyeIcon  sx={{
-                      color: "#63C8D9",
-                      fontSize: 15,
-                    }} />
-                  </ListItemIcon>
-                  <ListItemText>
-                    <div className={styles.listItem}>Assigned</div>
-                  </ListItemText>
-                </ListItemButton>
-                <ListItemButton sx={{ pl: 4 }}>
-                  <ListItemIcon>
-                    <PanoramaFishEyeIcon  sx={{
-                      color: "#1ab856",
-                      fontSize: 15,
-                    }} />
-                    
-                  </ListItemIcon>
-                  <ListItemText>
-                    <div className={styles.listItem}>Done</div>
-                  </ListItemText>
-                  <TiDelete size={22} color='grey' />
-                </ListItemButton>
+                {statusChoices.map((statusChoice) => (
+                  <ListItemButton
+                    sx={{ pl: 4 }}
+                    onClick={() => setSelectedStatus(statusChoice.label)}
+                  >
+                    <ListItemIcon>
+                      <PanoramaFishEyeIcon
+                        sx={{
+                          color: statusChoice.btnColor,
+                          fontSize: 15,
+                        }}
+                      />
+                    </ListItemIcon>
+                    <ListItemText>
+                      <div className={styles.listItem}>
+                        {statusChoice.label}
+                      </div>
+                    </ListItemText>
+                    {selectedStatus === statusChoice.label && (
+                      <TiDelete
+                        size={22}
+                        color="grey"
+                        onClick={() => console.log("i was clicked")}
+                      />
+                    )}
+                  </ListItemButton>
+                ))}
               </List>
             </Collapse>
             <ListItemButton onClick={() => setTopicsListOpen(!topicsListOpen)}>
@@ -135,68 +130,28 @@ const FeatureRequests = (props: Props) => {
             </ListItemButton>
             <Collapse in={topicsListOpen} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
-                <ListItemButton sx={{ pl: 4 }}>
-                  <ListItemIcon>
-                    <TagIcon fontSize="small" />
-                  </ListItemIcon>
-                  <ListItemText>
-                    <div className={styles.listItem}>Change font</div>
-                  </ListItemText>
-                </ListItemButton>
-                <ListItemButton sx={{ pl: 4 }}>
-                  <ListItemIcon>
-                    <TagIcon fontSize="small" />
-                  </ListItemIcon>
-                  <ListItemText>
-                    <div className={styles.listItem}>Faster website</div>
-                  </ListItemText>
-                </ListItemButton>
+                {featureCategoriesChoices.map((featureCategoryChoice) => (
+                  <ListItemButton sx={{ pl: 4 }} onClick={() => setSelectedTopic(featureCategoryChoice)}>
+                    <ListItemIcon>
+                      <TagIcon fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText>
+                      <div className={styles.listItem}>{featureCategoryChoice}</div>
+                    </ListItemText>
+                    {selectedTopic === featureCategoryChoice && (
+                      <TiDelete
+                        size={22}
+                        color="grey"
+                        onClick={() => console.log("i was clicked")}
+                      />
+                    )}
+                  </ListItemButton>
+                ))}
               </List>
             </Collapse>
           </List>
         </div>
         <div className={styles.featuresSectionContainer}>
-          <div className={styles.filterSectionContainer}>
-            <div className={styles.filtersContainer}>
-              <Button
-                variant="outlined"
-                onClick={handleClick}
-                startIcon={<BiFilter size={27} />}
-              >
-                Filter
-              </Button>
-              <Popover
-                id={id}
-                open={open}
-                anchorEl={anchorEl}
-                onClose={handleClose}
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "left",
-                }}
-              >
-                <TextField fullWidth placeholder='Filter by value or topic' />
-                <List component="div" disablePadding>
-                  <ListItemButton sx={{ pl: 4 }}>
-                    <ListItemIcon>
-                      <TagIcon fontSize="small" />
-                    </ListItemIcon>
-                    <ListItemText>
-                      <div className={styles.listItem}>Change font</div>
-                    </ListItemText>
-                  </ListItemButton>
-                  <ListItemButton sx={{ pl: 4 }}>
-                    <ListItemIcon>
-                      <TagIcon fontSize="small" />
-                    </ListItemIcon>
-                    <ListItemText>
-                      <div className={styles.listItem}>Faster website</div>
-                    </ListItemText>
-                  </ListItemButton>
-                </List>
-              </Popover>
-            </div>
-          </div>
           {featureRequestsWithCorrespondingPropsType.length > 0 ? (
             <div className={styles.featuresContainer}>
               {featureRequestsWithCorrespondingPropsType.map(

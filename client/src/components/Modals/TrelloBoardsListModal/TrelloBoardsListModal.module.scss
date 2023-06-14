@@ -1,0 +1,57 @@
+@import '../../../styles/variables';
+@import '../../../styles/useSpacing';
+
+.modalContentContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: $modal-width-mobile-screen;
+    border: 0.5px solid #000;
+    border-radius: 8px;
+    box-shadow: 24px;
+    @include useSpacing(padding, l, xl, xl, xl);
+    overflow-y: auto;
+    height: 600px;
+}
+
+.modalContentContainer::-webkit-scrollbar {
+    display: none;
+  }
+
+.boardBox {
+    @include useSpacing(margin, m, 0);
+    @include useSpacing(padding, m);
+}
+
+.AccordionSummaryContainer {
+    display: flex;
+}
+
+.boardImg {
+    border-radius: 10px;
+}
+
+.boardNameContainer {
+    @include useSpacing(padding, 0, 0, 0, l);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.detailBoxContainer {
+    display: flex;
+}
+
+.detailBoxName {
+    @include useSpacing(margin, 0, 0, 0, m);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.checkBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

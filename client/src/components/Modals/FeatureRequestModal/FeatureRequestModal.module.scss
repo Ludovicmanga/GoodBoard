@@ -20,6 +20,39 @@
     @include useSpacing(margin, 0, 0, l, 0);
 }
 
+.middle {
+    display: flex;
+}
+
+.mainContentMiddleContainer {
+    width: 80%;
+}
+
+.rightNavbar {
+    width: 28%;
+    @include useSpacing(margin, 0, 0, 0, xxl);
+}
+
+.integrationChip {
+    display: flex;
+    align-items: center;
+    @include useSpacing(margin, s, 0);
+    cursor: pointer;
+    @include useSpacing(padding, xs);
+    @include useTypography(title-s);
+}
+
+.integrationChipText {
+    @include useSpacing(margin, 0, 0, 0, m);
+}
+
+.rightNavbarTitle {
+    display: flex;
+    @include useTypography(legals);
+    @include useSpacing(margin, 0, 0, xs, 0);
+    font-weight:550;
+}
+
 .textInput {
     width: 100%;
 }
@@ -49,7 +82,6 @@
 
 .mainButtonsContainer {
     display: flex;
-    justify-content: space-between;
 }
 
 @media screen and (min-width: $main-breakpoint) {

@@ -26,6 +26,16 @@ const userSchema = new mongoose.Schema(
             required: false,
             max: 1024
         },
+        trelloAccessToken: {
+            type: String,
+            required: false,
+            max: 1024
+        },
+        trelloAccessTokenSecret: {
+            type: String,
+            required: false,
+            max: 1024
+        },
         voted: {
             type: [String],
             default: [],
