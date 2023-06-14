@@ -6,9 +6,11 @@ import Button from "@mui/material/Button";
 import {
   Avatar,
   AvatarGroup,
+  Card,
   Divider,
   MenuItem,
   Paper,
+  Popover,
   Select,
   SelectChangeEvent,
   TextField,
@@ -33,6 +35,9 @@ import {
 } from "../../../redux/features/allFeatureRequestsSlice";
 import { setGeneralProperties } from "../../../redux/features/generalPropertiesSlice";
 import { emptyFeatureRequest, websiteUrl } from "../../../helpers/constants";
+import { FaSalesforce, FaTrello } from "react-icons/fa";
+import { RxNotionLogo } from "react-icons/rx";
+import TrelloBoardsListModal from "../TrelloBoardsListModal/TrelloBoardsListModal";
 
 export default function FeatureRequestModal(props: {
   modalMode: FeatureRequestModalMode;
@@ -54,6 +59,30 @@ export default function FeatureRequestModal(props: {
   const generalPropertiesState = useAppSelector(
     (state) => state.generalProperties
   );
+  const [trelloBoardsList, setTrelloBoardsList] = useState<{
+    id: string;
+    name: string;
+    url: string;
+    lists:       {
+      id: string
+      name: string,
+      closed: boolean,
+      idBoard: string,
+      pos: number,
+      subscribed: boolean,
+      softLimit: null,
+      status: null
+  }[];
+  prefs: {
+    backgroundImageScaled: {
+      width: number,
+      height: number,
+      url: string;
+  }[];
+  }
+  }[]>([]);
+  const [trelloBoardsListModalOpen, setTrelloBoardsListModalOpen] = useState(false);  
+
 
   useEffect(() => {
     if (props.modalIsOpen && loggedUserState.user) {
@@ -191,6 +220,24 @@ export default function FeatureRequestModal(props: {
     }
   };
 
+  const handleDisplayTrelloCards = async () => {
+    const res = await axios({
+      method: "POST",
+      url: `${websiteUrl}/api/integration/getTrelloBoards`,
+      withCredentials: true,
+    });
+
+    console.log(res.data, ' is the res man')
+
+    setTrelloBoardsList(res.data);
+    setTrelloBoardsListModalOpen(true);
+  };
+
+  useEffect(() => {
+    console.log(trelloBoardsList, ' is the list')
+  }, [trelloBoardsList])
+
+
   return (
     <Modal
       aria-labelledby="transition-modal-title"
@@ -214,95 +261,121 @@ export default function FeatureRequestModal(props: {
               : ""}
           </div>
           <Divider className={styles.divider} />
-          {props.modalMode === FeatureRequestModalMode.update && (
-            <>
-              <div className={styles.votersSection}>
-                <div className={styles.votersSectionTitle}>Voters :</div>
-                <AvatarGroup
-                  className={styles.avatarGroup}
-                  total={featureRequestProperties.voters?.length}
-                >
-                  {featureRequestProperties.voters.length > 0 ? (
-                    featureRequestProperties.voters
-                      ?.slice(0, 4)
-                      .map((voter) => (
-                        <Avatar key={voter} alt="Voters pic" src={ludoPhoto} />
-                      ))
-                  ) : (
-                    <div>Not voted yet</div>
-                  )}
-                </AvatarGroup>
-              </div>
-              <div className={styles.statusSection}>
-                <div className={styles.statusSectionTitle}>Status :</div>
-                <Select
-                  inputProps={{
-                    readOnly:
-                      props.modalMode === FeatureRequestModalMode.update &&
-                      !hasUpdateRights,
-                  }}
-                  labelId="status"
-                  id="status"
-                  value={featureRequestProperties.status}
-                  label="Status"
-                  onChange={(e: SelectChangeEvent<string>) => {
-                    setFeatureRequestProperties((propertiesState) => {
-                      return {
-                        ...propertiesState,
-                        status: e.target.value,
-                      };
-                    });
-                  }}
-                >
-                  {(
-                    Object.keys(FeatureRequestStatus) as Array<
-                      keyof typeof FeatureRequestStatus
+          <div className={styles.middle}>
+            <div className={styles.mainContentMiddleContainer}>
+              {props.modalMode === FeatureRequestModalMode.update && (
+                <div>
+                  <div className={styles.votersSection}>
+                    <div className={styles.votersSectionTitle}>Voters :</div>
+                    <AvatarGroup
+                      className={styles.avatarGroup}
+                      total={featureRequestProperties.voters?.length}
                     >
-                  ).map((status) => (
-                    <MenuItem value={status}>
-                      {capitalizeFirstLetter(status)}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </div>
-            </>
-          )}
-          <TextField
-            InputProps={{
-              readOnly:
-                props.modalMode === FeatureRequestModalMode.update &&
-                !hasUpdateRights,
-            }}
-            error={titleHasError}
-            helperText={titleErrorHelperText}
-            label="Title"
-            value={featureRequestProperties.title}
-            onChange={(e) => {
-              setFeatureRequestProperties((propertiesState) => {
-                return { ...propertiesState, title: e.target.value };
-              });
-            }}
-            className={`${styles.textInput} ${styles.titleInput}`}
-          />
-          <TextField
-            InputProps={{
-              readOnly:
-                props.modalMode === FeatureRequestModalMode.update &&
-                !hasUpdateRights,
-            }}
-            error={detailsHasError}
-            helperText={detailsErrorHelperText}
-            label="Details"
-            multiline
-            rows={4}
-            value={featureRequestProperties.details}
-            onChange={(e) => {
-              setFeatureRequestProperties((propertiesState) => {
-                return { ...propertiesState, details: e.target.value };
-              });
-            }}
-            className={`${styles.textInput} ${styles.textArea}`}
-          />
+                      {featureRequestProperties.voters.length > 0 ? (
+                        featureRequestProperties.voters
+                          ?.slice(0, 4)
+                          .map((voter) => (
+                            <Avatar
+                              key={voter}
+                              alt="Voters pic"
+                              src={ludoPhoto}
+                            />
+                          ))
+                      ) : (
+                        <div>Not voted yet</div>
+                      )}
+                    </AvatarGroup>
+                  </div>
+                  <div className={styles.statusSection}>
+                    <div className={styles.statusSectionTitle}>Status :</div>
+                    <Select
+                      inputProps={{
+                        readOnly:
+                          props.modalMode === FeatureRequestModalMode.update &&
+                          !hasUpdateRights,
+                      }}
+                      labelId="status"
+                      id="status"
+                      value={featureRequestProperties.status}
+                      label="Status"
+                      onChange={(e: SelectChangeEvent<string>) => {
+                        setFeatureRequestProperties((propertiesState) => {
+                          return {
+                            ...propertiesState,
+                            status: e.target.value,
+                          };
+                        });
+                      }}
+                    >
+                      {(
+                        Object.keys(FeatureRequestStatus) as Array<
+                          keyof typeof FeatureRequestStatus
+                        >
+                      ).map((status) => (
+                        <MenuItem value={status}>
+                          {capitalizeFirstLetter(status)}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </div>
+                </div>
+              )}
+              <TextField
+                InputProps={{
+                  readOnly:
+                    props.modalMode === FeatureRequestModalMode.update &&
+                    !hasUpdateRights,
+                }}
+                error={titleHasError}
+                helperText={titleErrorHelperText}
+                label="Title"
+                value={featureRequestProperties.title}
+                onChange={(e) => {
+                  setFeatureRequestProperties((propertiesState) => {
+                    return { ...propertiesState, title: e.target.value };
+                  });
+                }}
+                className={`${styles.textInput} ${styles.titleInput}`}
+              />
+              <TextField
+                InputProps={{
+                  readOnly:
+                    props.modalMode === FeatureRequestModalMode.update &&
+                    !hasUpdateRights,
+                }}
+                error={detailsHasError}
+                helperText={detailsErrorHelperText}
+                label="Details"
+                multiline
+                rows={4}
+                value={featureRequestProperties.details}
+                onChange={(e) => {
+                  setFeatureRequestProperties((propertiesState) => {
+                    return { ...propertiesState, details: e.target.value };
+                  });
+                }}
+                className={`${styles.textInput} ${styles.textArea}`}
+              />
+            </div>
+            <div className={styles.rightNavbar}>
+              <div className={styles.rightNavbarTitle}>Integrations</div>
+              <Card
+                onClick={handleDisplayTrelloCards}
+                className={styles.integrationChip}
+              >
+                <FaTrello color="#007AC0" />
+                <div className={styles.integrationChipText}>Trello</div>
+              </Card>
+              <Card className={styles.integrationChip}>
+                <FaSalesforce color="#009EDB" />
+                <div className={styles.integrationChipText}>Salesforce</div>
+              </Card>
+              <Card className={styles.integrationChip}>
+                <RxNotionLogo />
+                <div className={styles.integrationChipText}>Notion</div>
+              </Card>
+            </div>
+          </div>
           <div className={styles.mainButtonsContainer}>
             {(hasUpdateRights ||
               props.modalMode === FeatureRequestModalMode.creation) && (
@@ -329,6 +402,7 @@ export default function FeatureRequestModal(props: {
                 </Button>
               )}
           </div>
+          <TrelloBoardsListModal cardTitle={featureRequestProperties.title} cardDescription={featureRequestProperties.details} trelloBoardsList={trelloBoardsList} modalIsOpen={trelloBoardsListModalOpen} handleClose={() => setTrelloBoardsListModalOpen(false)} />
         </Paper>
       </Fade>
     </Modal>

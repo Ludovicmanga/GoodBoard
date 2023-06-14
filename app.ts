@@ -22,6 +22,7 @@ const corsOptions = {
 import usersRouter from './routes/users';
 import featureRequestRouter from './routes/featureRequest';
 import boardRouter from './routes/board';
+import integrationRouter from './routes/integration';
 
 var app = express();
 import './config/passport.setup';
@@ -50,6 +51,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/api/users', usersRouter);
+app.use('/api/integration', integrationRouter);
 app.use('/api/board', boardRouter);
 app.use('/api/feature-request', featureRequestRouter);
 
