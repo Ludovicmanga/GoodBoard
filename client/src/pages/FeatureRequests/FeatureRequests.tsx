@@ -80,6 +80,25 @@ const FeatureRequests = (props: Props) => {
 
   const featureCategoriesChoices = ["Change font", "Faster website"];
 
+  const handleChangeSelectedTopic = (featureCategoryChoice: string) => {
+    if (selectedTopic === featureCategoryChoice) {
+      setSelectedTopic(null);
+    } else {
+      setSelectedTopic(featureCategoryChoice)
+    }
+  }
+
+  const handleChangeSelectedStatus = (statusClicked: {
+    label: string,
+    btnColor: string,
+  }) => {
+    if (selectedStatus === statusClicked.label) {
+      setSelectedStatus(null);
+    } else {
+      setSelectedStatus(statusClicked.label);
+    }
+  }
+
   return (
     <>
       <MainNavBar />
@@ -97,7 +116,7 @@ const FeatureRequests = (props: Props) => {
                 {statusChoices.map((statusChoice) => (
                   <ListItemButton
                     sx={{ pl: 4 }}
-                    onClick={() => setSelectedStatus(statusChoice.label)}
+                    onClick={() => handleChangeSelectedStatus(statusChoice)}
                   >
                     <ListItemIcon>
                       <PanoramaFishEyeIcon
@@ -131,7 +150,7 @@ const FeatureRequests = (props: Props) => {
             <Collapse in={topicsListOpen} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
                 {featureCategoriesChoices.map((featureCategoryChoice) => (
-                  <ListItemButton sx={{ pl: 4 }} onClick={() => setSelectedTopic(featureCategoryChoice)}>
+                  <ListItemButton sx={{ pl: 4 }} onClick={() => handleChangeSelectedTopic(featureCategoryChoice)}>
                     <ListItemIcon>
                       <TagIcon fontSize="small" />
                     </ListItemIcon>
@@ -142,7 +161,6 @@ const FeatureRequests = (props: Props) => {
                       <TiDelete
                         size={22}
                         color="grey"
-                        onClick={() => console.log("i was clicked")}
                       />
                     )}
                   </ListItemButton>
