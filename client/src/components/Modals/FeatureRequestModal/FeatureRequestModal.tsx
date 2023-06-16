@@ -4,13 +4,13 @@ import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
 import {
+  Autocomplete,
   Avatar,
   AvatarGroup,
   Card,
   Divider,
   MenuItem,
   Paper,
-  Popover,
   Select,
   SelectChangeEvent,
   TextField,
@@ -38,6 +38,7 @@ import { emptyFeatureRequest, websiteUrl } from "../../../helpers/constants";
 import { FaSalesforce, FaTrello } from "react-icons/fa";
 import { RxNotionLogo } from "react-icons/rx";
 import TrelloBoardsListModal from "../TrelloBoardsListModal/TrelloBoardsListModal";
+import { getTopicsList } from "../../../helpers/topics";
 
 export default function FeatureRequestModal(props: {
   modalMode: FeatureRequestModalMode;
@@ -59,33 +60,37 @@ export default function FeatureRequestModal(props: {
   const generalPropertiesState = useAppSelector(
     (state) => state.generalProperties
   );
-  const [trelloBoardsList, setTrelloBoardsList] = useState<{
-    id: string;
-    name: string;
-    url: string;
-    lists:       {
-      id: string
-      name: string,
-      closed: boolean,
-      idBoard: string,
-      pos: number,
-      subscribed: boolean,
-      softLimit: null,
-      status: null
-  }[];
-  prefs: {
-    backgroundImageScaled: {
-      width: number,
-      height: number,
+  const [trelloBoardsList, setTrelloBoardsList] = useState<
+    {
+      id: string;
+      name: string;
       url: string;
-  }[];
-  }
-  }[]>([]);
-  const [trelloBoardsListModalOpen, setTrelloBoardsListModalOpen] = useState(false);  
-
+      lists: {
+        id: string;
+        name: string;
+        closed: boolean;
+        idBoard: string;
+        pos: number;
+        subscribed: boolean;
+        softLimit: null;
+        status: null;
+      }[];
+      prefs: {
+        backgroundImageScaled: {
+          width: number;
+          height: number;
+          url: string;
+        }[];
+      };
+    }[]
+  >([]);
+  const [trelloBoardsListModalOpen, setTrelloBoardsListModalOpen] =
+    useState(false);
+  const [topicsList, setTopicsList] = useState<string[]>([]);
 
   useEffect(() => {
     if (props.modalIsOpen && loggedUserState.user) {
+      console.log(props.featureRequestProperties, ' are the feature request properties')
       if (
         props.featureRequestProperties &&
         props.modalMode === FeatureRequestModalMode.update
@@ -96,6 +101,17 @@ export default function FeatureRequestModal(props: {
       }
     }
   }, [props.modalIsOpen, props.featureRequestProperties, props.modalMode]);
+
+  const handleSetTopicsList = async () => {
+    const topicsListResponse = await getTopicsList();
+    setTopicsList(topicsListResponse.data);
+  }
+
+  useEffect(() => {
+    if (props.modalIsOpen) {
+      handleSetTopicsList();
+    }
+  }, [props.modalIsOpen])
 
   useEffect(() => {
     if (
@@ -109,6 +125,7 @@ export default function FeatureRequestModal(props: {
       );
     }
   }, [featureRequestProperties.creator]);
+
 
   const deleteRequest = async () => {
     const deletedFeature = await axios({
@@ -227,16 +244,9 @@ export default function FeatureRequestModal(props: {
       withCredentials: true,
     });
 
-    console.log(res.data, ' is the res man')
-
     setTrelloBoardsList(res.data);
     setTrelloBoardsListModalOpen(true);
   };
-
-  useEffect(() => {
-    console.log(trelloBoardsList, ' is the list')
-  }, [trelloBoardsList])
-
 
   return (
     <Modal
@@ -320,6 +330,30 @@ export default function FeatureRequestModal(props: {
                   </div>
                 </div>
               )}
+              <div className={styles.statusSection}>
+                <div className={styles.statusSectionTitle}>Topic :</div>
+                <Autocomplete
+                  multiple
+                  onChange={(e, value) => {
+                    setFeatureRequestProperties((propertiesState) => {
+                      return { ...propertiesState, topics: value };
+                    });
+                  }}
+                  value={featureRequestProperties?.topics || []}
+                  limitTags={3}
+                  options={topicsList}
+                  getOptionLabel={(option) => option}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Feature topics"
+                      placeholder="Topics of the feature"
+                    />
+                  )}
+                  sx={{ width: "500px" }}
+                />
+              </div>
+
               <TextField
                 InputProps={{
                   readOnly:
@@ -402,7 +436,13 @@ export default function FeatureRequestModal(props: {
                 </Button>
               )}
           </div>
-          <TrelloBoardsListModal cardTitle={featureRequestProperties.title} cardDescription={featureRequestProperties.details} trelloBoardsList={trelloBoardsList} modalIsOpen={trelloBoardsListModalOpen} handleClose={() => setTrelloBoardsListModalOpen(false)} />
+          <TrelloBoardsListModal
+            cardTitle={featureRequestProperties.title}
+            cardDescription={featureRequestProperties.details}
+            trelloBoardsList={trelloBoardsList}
+            modalIsOpen={trelloBoardsListModalOpen}
+            handleClose={() => setTrelloBoardsListModalOpen(false)}
+          />
         </Paper>
       </Fade>
     </Modal>

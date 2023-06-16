@@ -9,7 +9,6 @@ import axios from "axios";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { downVote, upVote } from "../../redux/features/allFeatureRequestsSlice";
 import { useEffect } from "react";
-import { lightBlue, lightGreen } from "@mui/material/colors";
 import {
   addToVotedFeatures,
   removeFromVotedFeatures,
@@ -19,11 +18,6 @@ import { websiteUrl } from "../../helpers/constants";
 type Props = {
   featureRequestProperties: FeatureRequest;
 };
-
-const featureCategories = [
-  "New brand",
-  "Faster Website",
-];
 
 function FeatureRequestBox(props: Props) {
   const [isVoted, setIsVoted] = useState(false);
@@ -38,8 +32,6 @@ function FeatureRequestBox(props: Props) {
   const menuSelectedState = useAppSelector(
     (state) => state.generalProperties.menuSelected
   );
-  const generalPropertiesState = useAppSelector(state => state.generalProperties);
-
 
   const handleVote = async () => {
     let url = "";
@@ -113,7 +105,7 @@ function FeatureRequestBox(props: Props) {
             {props.featureRequestProperties.details.length > 50 && "..."}
           </div>
           <div className={styles.tagsContainer}>
-            {featureCategories.map((category) => (
+            {props.featureRequestProperties.topics.map((category) => (
               <Chip className={styles.tag} label={category} />
             ))}
           </div>

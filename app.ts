@@ -23,6 +23,7 @@ import usersRouter from './routes/users';
 import featureRequestRouter from './routes/featureRequest';
 import boardRouter from './routes/board';
 import integrationRouter from './routes/integration';
+import topicsRouter from './routes/topics';
 
 var app = express();
 import './config/passport.setup';
@@ -54,6 +55,7 @@ app.use('/api/users', usersRouter);
 app.use('/api/integration', integrationRouter);
 app.use('/api/board', boardRouter);
 app.use('/api/feature-request', featureRequestRouter);
+app.use('/api/topics', topicsRouter);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static('client/build'));
