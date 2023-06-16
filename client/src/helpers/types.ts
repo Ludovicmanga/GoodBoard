@@ -9,6 +9,7 @@ export type FeatureRequest = {
     createdAt: any;
     updatedAt: any;
     board: string;
+    topics: string[];
 }
 
 export type User = {

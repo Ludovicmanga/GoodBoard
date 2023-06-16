@@ -37,6 +37,6 @@ const featureRequestSchema = new mongoose.Schema(
 
 )
 
-const featureRequestModel = mongoose.model("Feature Request", featureRequestSchema);
+const featureRequestModel = mongoose.model("feature", featureRequestSchema);
 
 export default featureRequestModel;
