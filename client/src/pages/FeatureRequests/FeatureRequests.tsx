@@ -7,25 +7,19 @@ import EmptyData from "../../components/EmptyData/EmptyData";
 import styles from "./FeatureRequests.module.scss";
 import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
 import {
-  Button,
   Collapse,
-  IconButton,
   List,
-  ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Popover,
-  TextField,
-  Typography,
 } from "@mui/material";
 import PanoramaFishEyeIcon from "@mui/icons-material/PanoramaFishEye";
 import MainNavBar from "../../components/MainNavBar/MainNavBar";
 import MainHero from "../../components/MainHero/MainHero";
 import TagIcon from "@mui/icons-material/Tag";
-import { BiFilter } from "react-icons/bi";
 import { TiDelete } from "react-icons/ti";
 import { getTopicsList } from "../../helpers/topics";
+import SearchBar from "../../components/SearchBar/SearchBar";
 
 type Props = {
   type: UserType;
@@ -48,15 +42,16 @@ const FeatureRequests = (props: Props) => {
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
   const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
   const [topicsList, setTopicsList] = useState<string[]>([]);
+  const [searchedWord, setSearchedWord] = useState<string | null>(null);
 
   const handleSetTopicsList = async () => {
     const topicsListResponse = await getTopicsList();
     setTopicsList(topicsListResponse.data);
-  }
+  };
 
   useEffect(() => {
     handleSetTopicsList();
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (props.type === UserType.user) {
@@ -89,26 +84,24 @@ const FeatureRequests = (props: Props) => {
     },
   ];
 
-  //const featureCategoriesChoices = ["Change font", "Faster website"];
-
   const handleChangeSelectedTopic = (featureCategoryChoice: string) => {
     if (selectedTopic === featureCategoryChoice) {
       setSelectedTopic(null);
     } else {
-      setSelectedTopic(featureCategoryChoice)
+      setSelectedTopic(featureCategoryChoice);
     }
-  }
+  };
 
   const handleChangeSelectedStatus = (statusClicked: {
-    label: string,
-    btnColor: string,
+    label: string;
+    btnColor: string;
   }) => {
     if (selectedStatus === statusClicked.label) {
       setSelectedStatus(null);
     } else {
       setSelectedStatus(statusClicked.label);
     }
-  }
+  };
 
   return (
     <>
@@ -161,7 +154,10 @@ const FeatureRequests = (props: Props) => {
             <Collapse in={topicsListOpen} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
                 {topicsList.map((topicChoice) => (
-                  <ListItemButton sx={{ pl: 4 }} onClick={() => handleChangeSelectedTopic(topicChoice)}>
+                  <ListItemButton
+                    sx={{ pl: 4 }}
+                    onClick={() => handleChangeSelectedTopic(topicChoice)}
+                  >
                     <ListItemIcon>
                       <TagIcon fontSize="small" />
                     </ListItemIcon>
@@ -169,10 +165,7 @@ const FeatureRequests = (props: Props) => {
                       <div className={styles.listItem}>{topicChoice}</div>
                     </ListItemText>
                     {selectedTopic === topicChoice && (
-                      <TiDelete
-                        size={22}
-                        color="grey"
-                      />
+                      <TiDelete size={22} color="grey" />
                     )}
                   </ListItemButton>
                 ))}
@@ -183,27 +176,43 @@ const FeatureRequests = (props: Props) => {
         <div className={styles.featuresSectionContainer}>
           {featureRequestsWithCorrespondingPropsType.length > 0 ? (
             <div className={styles.featuresContainer}>
-              {featureRequestsWithCorrespondingPropsType.filter(featReq => {
-                if (selectedTopic) {
-                  return featReq.topics.includes(selectedTopic!)
-                } else {
-                  return featReq;
-                }
-              }).filter(featReq => {
-                if (selectedStatus) {
-                  return featReq.status.toLowerCase() === selectedStatus.toLowerCase()
-                } else {
-                  return featReq;
-                }
-              }).map(
-                (featureRequest) => {
-                  console.log(featureRequest, ' is the damn feature request man!!');
-                  return <FeatureRequestBox
-                  key={featureRequest._id}
-                  featureRequestProperties={featureRequest}
-                />
-                }
-              )}
+              <SearchBar
+                onSearch={(searchedWord) => setSearchedWord(searchedWord)}
+              />
+
+              {featureRequestsWithCorrespondingPropsType
+                .filter((featReq) => {
+                  if (selectedTopic) {
+                    return featReq.topics.includes(selectedTopic!);
+                  } else {
+                    return featReq;
+                  }
+                })
+                .filter((featReq) => {
+                  if (selectedStatus) {
+                    return (
+                      featReq.status.toLowerCase() ===
+                      selectedStatus.toLowerCase()
+                    );
+                  } else {
+                    return featReq;
+                  }
+                })
+                .filter((featReq) => {
+                  if (searchedWord) {
+                    return featReq.title.toLowerCase().includes(searchedWord.toLowerCase());
+                  } else {
+                    return featReq;
+                  }
+                })
+                .map((featureRequest) => {
+                  return (
+                    <FeatureRequestBox
+                      key={featureRequest._id}
+                      featureRequestProperties={featureRequest}
+                    />
+                  );
+                })}
             </div>
           ) : (
             <div className={styles.emptyDataContainer}>

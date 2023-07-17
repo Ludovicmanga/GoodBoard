@@ -16,14 +16,7 @@ const boardSchema = new mongoose.Schema(
             unique: true,
             trim: true,
         },
-        privateUrl: {
-            type: String,
-            required: false,
-            lowercase: true,
-            unique: true,
-            trim: true,
-        },
-        publicUrl: {
+        url: {
             type: String,
             required: false,
             lowercase: true,

@@ -331,7 +331,6 @@ export default function FeatureRequestModal(props: {
                 </div>
               )}
               <div className={styles.statusSection}>
-                <div className={styles.statusSectionTitle}>Topic :</div>
                 <Autocomplete
                   multiple
                   onChange={(e, value) => {

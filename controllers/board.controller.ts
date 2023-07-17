@@ -63,16 +63,13 @@ export const createBoard = async (req, res) => {
         name: req.body.name,
         description: req.body.description,
         themeColor: req.body.themeColor,
-        privateUrl: "emptyUrl",
-        publicUrl: "emptyUrl",
+        url: "emptyUrl",
       });
       newBoard
         .save()
         .then((savedObject) => {
-          const token = generateJwtToken(savedObject.id, secretKey);
-          const publicUrl = `${websiteUrl}/api/board/${token}`;
-          savedObject.privateUrl = `${websiteUrl}/api/board/${savedObject.id}`;
-          savedObject.publicUrl = publicUrl;
+          //const token = generateJwtToken(savedObject.id, secretKey);
+          savedObject.url = `${websiteUrl}/api/board/${savedObject.id}`;
           savedObject.save();
         })
         .catch((error) => console.log(error));
@@ -97,10 +94,10 @@ export const getShareUrl = async (req, res) => {
   try {
     const foundBoard = await boardModel.findOne({ _id: req.body.boardId });
     if (req.body.publicStatus === true) {
-      res.status(200).send({ url: foundBoard.publicUrl });
+      res.status(200).send({ url: foundBoard.url });
     }
     if (req.body.publicStatus === false) {
-      res.status(200).send({ url: foundBoard.privateUrl });
+      res.status(200).send({ url: foundBoard.url });
     }
     return null;
   } catch (e) {
@@ -123,3 +120,7 @@ export const getPublicBoard = async (req, res) => {
     console.log(e, " is the error");
   }
 };
+
+export const uploadImage = (req, res) => {
+  console.log('I will upload the image');
+}

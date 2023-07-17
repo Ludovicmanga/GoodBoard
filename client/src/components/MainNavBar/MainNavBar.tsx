@@ -24,7 +24,21 @@ import styles from "./MainNavBar.module.scss";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ChangeBoardColorModal from "../Modals/ChangeBoardColorModal/ChangeBoardColorModal";
 
-const pages: string[] = [];
+const pages: {
+  title: string;
+  url: string;
+}[] = [{
+  title: 'our ideas',
+  url: `/user-feature-requests`
+},
+{
+  title: 'your ideas',
+  url: `/company-feature-requests`
+},
+{
+  title: 'roadmap',
+  url: `/roadmap`
+}];
 
 const MainNavBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -185,33 +199,14 @@ const MainNavBar = () => {
           >
             GOODBOARD
           </Typography>
-          <EventNoteIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            GOODBOARD
-          </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
-                key={page}
-                onClick={handleCloseNavMenu}
+                key={page.title}
+                onClick={() => navigate(page.url)}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
-                {page}
+                {page.title}
               </Button>
             ))}
           </Box>
@@ -222,8 +217,6 @@ const MainNavBar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Paramètres">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                {/*                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                 */}{" "}
                 <AccountCircleIcon sx={{ fontSize: 40, color: '#F6F6F6' }} />
               </IconButton>
             </Tooltip>
