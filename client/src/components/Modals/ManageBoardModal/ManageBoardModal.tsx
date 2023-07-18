@@ -29,14 +29,12 @@ const ManageBoardModal = (props: Props) => {
   const generalPropertiesState = useAppSelector(state => state.generalProperties)
 
   const handleChangeBoardStatus = async (event: boolean) => {
-    console.log('i will change')
     const response = await axios({
       method: "post",
       url: `${websiteUrl}/api/board/update-public-status`,
       withCredentials: true,
       data: { publicStatus: event, activeBoard: generalPropertiesState.activeBoard },
     });
-    console.log(response, ' is the reponse');
     if (response.data !== null && response.data !== undefined ) {
       console.log('i set the data to ', response.data)
       setBoardIsPublic(response.data)

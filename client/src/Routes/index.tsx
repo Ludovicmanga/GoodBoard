@@ -3,9 +3,7 @@ import {
   Route,
   Navigate,
   Routes,
-  redirect,
 } from "react-router-dom";
-import React, { useEffect } from "react";
 import FeatureRequests from "../pages/FeatureRequests/FeatureRequests";
 import styles from "./index.module.scss";
 import Roadmap from "../pages/Roadmap/Roadmap";
@@ -14,6 +12,7 @@ import Login from "../components/Login/Login";
 import { useAppSelector } from "../redux/hooks";
 import BoardCreation from "../pages/BoardCreation/BoardCreation";
 import Integrations from "../pages/Integrations/Integrations";
+import ViewBoard from "../pages/ViewBoard/ViewBoard";
 
 export default function Index() {
   const loggedUser = useAppSelector((state) => state.loggedUser);
@@ -34,6 +33,10 @@ export default function Index() {
           <Route
             path="/choose-board"
             element={<BoardCreation />}
+          />
+          <Route
+            path="/view-board/:boardId"
+            element={<ViewBoard />}
           />
           {loggedUser.user === null && (
             <Route path="*" element={<Navigate to="/login" replace />} />
