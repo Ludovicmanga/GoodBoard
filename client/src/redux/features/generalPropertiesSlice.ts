@@ -8,6 +8,7 @@ interface GeneralProperties {
   shareBoardModalOpen: boolean;
   changeBoardColorModalOpen: boolean;
   switchBoardModalOpen: boolean;
+  manageBoardModalOpen: boolean;
   menuSelected: MenuSelected | null;
   mainSnackBar: {
     isOpen: boolean;
@@ -22,6 +23,7 @@ const initialState: GeneralProperties = {
   featureRequestModalOpen: false,
   generalSettingsModalOpen: false,
   shareBoardModalOpen: false,
+  manageBoardModalOpen: false,
   switchBoardModalOpen: false,
   menuSelected: null,
   mainSnackBar: {

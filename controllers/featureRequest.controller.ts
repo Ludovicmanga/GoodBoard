@@ -1,9 +1,8 @@
 import featureRequestModel from "../models/featureRequest.model";
-import mongoose from "mongoose";
 import userModel from "../models/user.model";
-import { request } from "express";
 import topicModel from "../models/topic.module";
 import featureTopicRelModel from "../models/featureTopicRelModel";
+import { UserRoles } from "../helpers/types";
 
 export const getAllFeatureRequests = async (req, res) => {
   await featureRequestModel
@@ -35,14 +34,14 @@ export const getAllBoardFeatureRequests = async (req, res) => {
 
 export const getAllCompanyFeatureRequests = async (req, res) => {
   await featureRequestModel
-    .find({ creatorType: "company" })
+    .find({ creatorType: { $in: [UserRoles.admin, UserRoles.member] } })
     .then((allCompanyFeatureRequests) =>
       res.status(200).send(allCompanyFeatureRequests)
     );
 };
 export const getAllUserFeatureRequests = async (req, res) => {
   await featureRequestModel
-    .find({ creatorType: "user" })
+    .find({ creatorType: UserRoles.externalUser })
     .then((allUserFeatureRequests) =>
       res.status(200).send(allUserFeatureRequests)
     );

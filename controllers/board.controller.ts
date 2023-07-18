@@ -1,12 +1,8 @@
 import boardModel from "../models/board.model";
 import boardUserRelModel from "../models/boardUserRel.model";
 import { getAllBoardFeatureRequestsHelper } from "../helpers/featureRequests";
-import {
-  generateJwtToken,
-  secretKey,
-  verifyJwtToken,
-  websiteUrl,
-} from "../helpers/auth";
+import { secretKey, verifyJwtToken, websiteUrl } from "../helpers/auth";
+import { UserRoles } from "../helpers/types";
 
 export const updateColor = async (req, res) => {
   try {
@@ -64,6 +60,7 @@ export const createBoard = async (req, res) => {
         description: req.body.description,
         themeColor: req.body.themeColor,
         url: "emptyUrl",
+        isPublic: false,
       });
       newBoard
         .save()
@@ -77,7 +74,7 @@ export const createBoard = async (req, res) => {
       const newBoardUserRelation = new boardUserRelModel({
         user: req.user.id,
         board: newBoard.id,
-        userRole: "company",
+        userRole: UserRoles.admin,
       });
 
       newBoardUserRelation.save().catch((error) => console.log(error));
@@ -122,5 +119,36 @@ export const getPublicBoard = async (req, res) => {
 };
 
 export const uploadImage = (req, res) => {
-  console.log('I will upload the image');
-}
+  console.log("I will upload the image");
+};
+
+export const updatePublicStatus = async (req, res) => {
+  try {
+    const updatedBoard = await boardModel.findOneAndUpdate(
+      { _id: req.body.activeBoard },
+      {
+        isPublic: req.body.publicStatus,
+      },
+      {
+        new: true,
+      }
+    );
+    if (updatedBoard) {
+      res.send(req.body.publicStatus);
+    }
+  } catch (e) {
+    console.log(e, "is the error");
+  }
+};
+
+export const getPublicStatus = async (req, res) => {
+  try {
+    const foundBoardStatus = await boardModel.findById(req.body.activeBoard).select('isPublic');
+    console.log(foundBoardStatus.isPublic, ' is the found board status')
+    if (foundBoardStatus) {
+      res.send(foundBoardStatus.isPublic)
+    }
+  } catch (e) {
+    console.log(e, "is the error");
+  }
+};

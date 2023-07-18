@@ -23,6 +23,10 @@ const boardSchema = new mongoose.Schema(
             unique: true,
             trim: true,
         },
+        isPublic: {
+            type: Boolean,
+            required: true,
+        },
         picture: {
             type: String,
             required: false,

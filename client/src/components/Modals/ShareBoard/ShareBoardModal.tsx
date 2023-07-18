@@ -1,22 +1,17 @@
 import React, { useEffect, useState } from "react";
 import Backdrop from "@mui/material/Backdrop";
-import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import styles from "./ShareBoardModal.module.scss";
 import {
   Button,
-  Card,
-  FormControlLabel,
   OutlinedInput,
   Paper,
-  TextField,
 } from "@mui/material";
 import CopyToClipboardButton from "../../buttons/CopyToClipboardButton/CopyToClipboardButton";
 import axios from "axios";
 import { websiteUrl } from "../../../helpers/constants";
 import { useAppSelector } from "../../../redux/hooks";
-import { Switch } from "antd";
 import { validateEmail } from "../../../helpers/utils";
 
 type Props = {
@@ -130,7 +125,7 @@ const ShareBoardModal = (props: Props) => {
               Share your board with the world
             </div>
             <div className={styles.shareWithTheWorldSectionContainer}>
-              <div className={styles.linkIsPublicContainer}>
+              {/*               <div className={styles.linkIsPublicContainer}>
                 <div>
                   {linkIsPublic ? "Board is public" : "Board is private"}
                 </div>
@@ -139,7 +134,7 @@ const ShareBoardModal = (props: Props) => {
                   checked={linkIsPublic}
                   onChange={handleChangeLinkPublicStatus}
                 />
-              </div>
+              </div> */}
               <div
                 className={`${styles.textFieldWithBtnInsideContainer} ${styles.urlTextFieldContainer}`}
               >

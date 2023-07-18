@@ -23,22 +23,25 @@ import DarkModeToggle from "../buttons/DarkModeToggle/DarkModeToggle";
 import styles from "./MainNavBar.module.scss";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ChangeBoardColorModal from "../Modals/ChangeBoardColorModal/ChangeBoardColorModal";
+import ManageBoardModal from "../Modals/ManageBoardModal/ManageBoardModal";
 
 const pages: {
   title: string;
   url: string;
-}[] = [{
-  title: 'our ideas',
-  url: `/user-feature-requests`
-},
-{
-  title: 'your ideas',
-  url: `/company-feature-requests`
-},
-{
-  title: 'roadmap',
-  url: `/roadmap`
-}];
+}[] = [
+  {
+    title: "our ideas",
+    url: `/user-feature-requests`,
+  },
+  {
+    title: "your ideas",
+    url: `/company-feature-requests`,
+  },
+  {
+    title: "roadmap",
+    url: `/roadmap`,
+  },
+];
 
 const MainNavBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -94,6 +97,14 @@ const MainNavBar = () => {
     );
   };
 
+  const handleManageBoard = () => {
+    dispatch(
+      setGeneralProperties({
+        manageBoardModalOpen: true,
+      })
+    );
+  };
+
   const handleDisplayIntegrations = () => {
     navigate("/integrations");
   };
@@ -112,12 +123,16 @@ const MainNavBar = () => {
         changeBoardColorModalOpen: true,
       })
     );
-  }
+  };
 
   const settings = [
     {
       linkText: "My account",
       onClick: handleSettingsModal,
+    },
+    {
+      linkText: "Manage this board",
+      onClick: handleManageBoard,
     },
     {
       linkText: "Switch board",
@@ -127,10 +142,10 @@ const MainNavBar = () => {
       linkText: "Share your board",
       onClick: handleShareBoard,
     },
-    {
+    /*     {
       linkText: "Change board color",
       onClick: handleDisplayChangeBoardColor,
-    },
+    }, */
     {
       linkText: "Integrations",
       onClick: handleDisplayIntegrations,
@@ -164,6 +179,14 @@ const MainNavBar = () => {
       })
     );
   };
+
+  const handleCloseManageBoardModal = () => {
+    dispatch(
+      setGeneralProperties({
+        manageBoardModalOpen: false,
+      })
+    );
+  };  
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -217,7 +240,7 @@ const MainNavBar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Paramètres">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <AccountCircleIcon sx={{ fontSize: 40, color: '#F6F6F6' }} />
+                <AccountCircleIcon sx={{ fontSize: 40, color: "#F6F6F6" }} />
               </IconButton>
             </Tooltip>
             <Menu
@@ -257,13 +280,20 @@ const MainNavBar = () => {
         modalIsOpen={generalPropertiesState.shareBoardModalOpen}
         handleClose={handleCloseShareBoardModal}
       />
+      <ManageBoardModal
+        modalIsOpen={generalPropertiesState.manageBoardModalOpen}
+        handleClose={handleCloseManageBoardModal}
+      />
       <ChangeBoardColorModal
         modalIsOpen={generalPropertiesState.changeBoardColorModalOpen}
-        handleClose={() => dispatch(setGeneralProperties({
-          changeBoardColorModalOpen: false,
-        }))}
+        handleClose={() =>
+          dispatch(
+            setGeneralProperties({
+              changeBoardColorModalOpen: false,
+            })
+          )
+        }
       />
-      
     </AppBar>
   );
 };
