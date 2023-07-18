@@ -143,7 +143,6 @@ export const updatePublicStatus = async (req, res) => {
 export const getPublicStatus = async (req, res) => {
   try {
     const foundBoardStatus = await boardModel.findById(req.body.activeBoard).select('isPublic');
-    console.log(foundBoardStatus.isPublic, ' is the found board status')
     if (foundBoardStatus) {
       res.send(foundBoardStatus.isPublic)
     }

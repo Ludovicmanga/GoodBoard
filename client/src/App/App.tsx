@@ -94,7 +94,11 @@ function App() {
       },
       withCredentials: true,
     });
-    return allUsersFeatureRequests.data;
+    if (allUsersFeatureRequests.data === 'user doesn\'t have access to the board') {
+      console.log('Afficher un simple message derreur indiquant que lutilisateur n a pas acces au board, qui est privé')
+    } else {
+      return allUsersFeatureRequests.data;
+    }
   };
 
   const getAllBoardFeatureRequests = async (activeBoard: string) => {
