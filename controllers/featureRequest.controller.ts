@@ -23,14 +23,11 @@ export const getAllBoardFeatureRequests = async (req, res) => {
         );
         res.status(200).send(mapped);
       } else {
-        console.log('privé')
-        // Vu que c'est privé, on check que l'utilisateur a bien accès au board
         const userHasAccessToTheBoard = await checkUserHasAccessToBoard(
           req.user.id,
           req.body.boardId
         );
-        console.log(userHasAccessToTheBoard, ' is the access to the board')
-        if (userHasAccessToTheBoard) {
+       if (userHasAccessToTheBoard) {
           const mapped = await getAllBoardFeatureRequestsMappedWithTopics(
             req.body.boardId
           );

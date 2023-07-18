@@ -2,14 +2,10 @@ import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
 import EventNoteIcon from "@mui/icons-material/EventNote";
-import Menu from "@mui/material/Menu";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
 import { SettingsModal } from "../Modals/Settings/SettingsModal";
@@ -21,9 +17,9 @@ import SwitchBoardModal from "../Modals/FeatureRequestModal/SwitchBoard/SwitchBo
 import ShareBoardModal from "../Modals/ShareBoard/ShareBoardModal";
 import DarkModeToggle from "../buttons/DarkModeToggle/DarkModeToggle";
 import styles from "./MainNavBar.module.scss";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ChangeBoardColorModal from "../Modals/ChangeBoardColorModal/ChangeBoardColorModal";
 import ManageBoardModal from "../Modals/ManageBoardModal/ManageBoardModal";
+import SettingsMenu from "../SettingsMenu/SettingsMenu";
 
 const pages: {
   title: string;
@@ -199,6 +195,10 @@ const MainNavBar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+  
+  const handleGoToLoginPage = () => navigate("/login");
+
+  const loggedUser = useAppSelector((state) => state.loggedUser);
 
   return (
     <AppBar position="static">
@@ -236,36 +236,7 @@ const MainNavBar = () => {
           <div className={styles.darkModeBtnContainer}>
             <DarkModeToggle />
           </div>
-
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Paramètres">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <AccountCircleIcon sx={{ fontSize: 40, color: "#F6F6F6" }} />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting.linkText} onClick={setting.onClick}>
-                  <Typography textAlign="center">{setting.linkText}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+          { loggedUser.user ? (<SettingsMenu anchorElUser={anchorElUser} settings={settings} handleCloseUserMenu={handleCloseUserMenu} handleOpenUserMenu={handleOpenUserMenu} />) : <div onClick={handleGoToLoginPage} className={styles.logInBtn}>Log in</div> }
         </Toolbar>
       </Container>
       <SettingsModal

@@ -3,3 +3,8 @@
 .darkModeBtnContainer {
     @include useSpacing(margin, 0, l);
 }
+
+.logInBtn {
+    @include useSpacing(margin, s);
+    cursor: pointer;
+}
