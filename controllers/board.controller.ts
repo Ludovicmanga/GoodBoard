@@ -54,19 +54,21 @@ export const getUserBoards = async (req, res) => {
 
 export const createBoard = async (req, res) => {
   try {
+    console.log('I will try to create the board my boy');
     if (req.user) {
       const newBoard = new boardModel({
         name: req.body.name,
         description: req.body.description,
         themeColor: req.body.themeColor,
-        url: "emptyUrl",
+        //url: "emptyUrl",
         isPublic: false,
       });
       newBoard
         .save()
         .then((savedObject) => {
+          console.log(savedObject, ' is the savec object')
           //const token = generateJwtToken(savedObject.id, secretKey);
-          savedObject.url = `${websiteUrl}/api/board/${savedObject.id}`;
+          savedObject.url = `${websiteUrl}/view-board/${savedObject.id}`;
           savedObject.save();
         })
         .catch((error) => console.log(error));
