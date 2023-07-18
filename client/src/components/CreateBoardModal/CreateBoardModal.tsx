@@ -9,6 +9,7 @@ import { setGeneralProperties } from "../../redux/features/generalPropertiesSlic
 import { useAppDispatch } from "../../redux/hooks";
 import ChooseBoardColor from "../ChooseBoardColor/ChooseBoardColor";
 import styles from "./CreateBoardModal.module.scss";
+import BoardIsPublicBtn from "../BoardIsPublicBtn/BoardIsPublicBtn";
 
 type Props = {};
 
@@ -17,14 +18,10 @@ const CreateBoardModal = (props: Props) => {
   const [description, setDescription] = useState("");
   const [website, setWebsite] = useState("");
   const [themeColor, setThemeColor] = useState('blue');
+  const [boardIsPublic, setBoardIsPublic] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const handleBoardCreation = async () => {
-    console.log({
-      name,
-      description,
-      themeColor,
-    }, ' is the description')
     const boardCreationResponse = await axios({
       url: `${websiteUrl}/api/board/create`,
       method: "post",
@@ -32,6 +29,7 @@ const CreateBoardModal = (props: Props) => {
         name,
         description,
         themeColor,
+        boardIsPublic
       },
       withCredentials: true,
     });
@@ -40,9 +38,9 @@ const CreateBoardModal = (props: Props) => {
     }
   };
 
-  useEffect(() => {
-    console.log(themeColor, ' is the theme colors')
-  }, [themeColor])
+  const handleChangeBoardStatus = async (publicStatus: boolean) => {
+    setBoardIsPublic(publicStatus);
+  }
 
   return (
     <>
@@ -86,6 +84,7 @@ const CreateBoardModal = (props: Props) => {
       <Avatar variant="rounded">
         <Add />
       </Avatar>
+      <BoardIsPublicBtn boardIsPublic={boardIsPublic} handleChangeBoardStatus={handleChangeBoardStatus} />
       <Button
         className={styles.submitBtn}
         onClick={handleBoardCreation}

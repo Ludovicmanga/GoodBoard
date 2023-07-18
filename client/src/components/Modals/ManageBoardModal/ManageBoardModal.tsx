@@ -16,6 +16,7 @@ import { Switch } from "antd";
 import axios from "axios";
 import { websiteUrl } from "../../../helpers/constants";
 import { useAppSelector } from "../../../redux/hooks";
+import BoardIsPublicBtn from "../../BoardIsPublicBtn/BoardIsPublicBtn";
 
 type Props = {
   modalIsOpen: boolean;
@@ -94,16 +95,7 @@ const ManageBoardModal = (props: Props) => {
                 </div>
               </div>
             </div>
-            <div className={styles.linkIsPublicContainer}>
-              <div>
-                {boardIsPublic ? "Board is public" : "Board is private"}
-              </div>
-              <Switch
-                loading={false}
-                checked={boardIsPublic}
-                onChange={handleChangeBoardStatus}
-              />
-            </div>
+            <BoardIsPublicBtn handleChangeBoardStatus={handleChangeBoardStatus} boardIsPublic={boardIsPublic} />
           </Paper>
         </Fade>
       </Modal>

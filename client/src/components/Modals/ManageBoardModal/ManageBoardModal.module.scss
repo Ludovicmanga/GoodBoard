@@ -25,10 +25,3 @@
     align-items: center;
     justify-content: center;
 }
-
-.linkIsPublicContainer {
-    display: flex;
-    justify-content: space-between;
-    @include useTypography(commonText);
-    @include useSpacing(margin, l, 0, 0, 0);
-}
