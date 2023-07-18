@@ -1,4 +1,10 @@
-import { Alert, createTheme, CssBaseline, Snackbar, ThemeProvider } from "@mui/material";
+import {
+  Alert,
+  createTheme,
+  CssBaseline,
+  Snackbar,
+  ThemeProvider,
+} from "@mui/material";
 import { red } from "@mui/material/colors";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import axios from "axios";
@@ -11,6 +17,7 @@ import { setLoggedUserState } from "../redux/features/loggedUserSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import Routes from "../Routes";
 import "./App.module.scss";
+import CannotMakeActionAsGuestModal from "../components/Modals/CannotMakeActionAsGuestModal/CannotMakeActionAsGuestModal";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -24,7 +31,7 @@ function App() {
       mode: "light",
     },
   });
-  
+
   const greenTheme = createTheme({
     palette: {
       primary: {
@@ -32,7 +39,7 @@ function App() {
       },
       secondary: {
         main: "#6EC382",
-      }
+      },
     },
   });
 
@@ -43,7 +50,7 @@ function App() {
       },
       secondary: {
         main: "#E27476",
-      }
+      },
     },
   });
 
@@ -54,7 +61,7 @@ function App() {
       },
       secondary: {
         main: "#FFE600",
-      }
+      },
     },
   });
 
@@ -63,57 +70,69 @@ function App() {
       mode: "dark",
       primary: {
         main: "rgba(0, 0, 0)",
-      }
+      },
     },
   });
 
-  const themes = [{
-    color: 'green',
-    theme: greenTheme
-  },
-  {
-    color: 'blue',
-    theme: lightTheme
-  },
-  {
-    color: 'yellow',
-    theme: yellowTheme
-  },
-  {
-    color: 'red',
-    theme: redTheme
-  },]
-  
+  const themes = [
+    {
+      color: "green",
+      theme: greenTheme,
+    },
+    {
+      color: "blue",
+      theme: lightTheme,
+    },
+    {
+      color: "yellow",
+      theme: yellowTheme,
+    },
+    {
+      color: "red",
+      theme: redTheme,
+    },
+  ];
 
   const getAllBoardFeatureRequestsApiCall = async (activeBoard: string) => {
     const allUsersFeatureRequests = await axios({
       url: `${websiteUrl}/api/feature-request/get/all-from-board`,
-      method: 'post',
+      method: "post",
       data: {
         boardId: activeBoard,
       },
       withCredentials: true,
     });
-    if (allUsersFeatureRequests.data === 'user doesn\'t have access to the board') {
-      console.log('Afficher un simple message derreur indiquant que lutilisateur n a pas acces au board, qui est privé')
+    if (
+      allUsersFeatureRequests.data === "user doesn't have access to the board"
+    ) {
+      console.log(
+        "Afficher un simple message derreur indiquant que lutilisateur n a pas acces au board, qui est privé"
+      );
     } else {
       return allUsersFeatureRequests.data;
     }
   };
 
   const getAllBoardFeatureRequests = async (activeBoard: string) => {
-    const allFeatureRequests = await getAllBoardFeatureRequestsApiCall(activeBoard);
+    const allFeatureRequests = await getAllBoardFeatureRequestsApiCall(
+      activeBoard
+    );
     dispatch(setAllFeatureRequests(allFeatureRequests));
   };
 
   useEffect(() => {
-    dispatch(setGeneralProperties({
-      activeBoard: localStorage.getItem('board'),
-    }));
+    dispatch(
+      setGeneralProperties({
+        activeBoard: localStorage.getItem("board"),
+      })
+    );
   }, []);
 
   useEffect(() => {
-    if (generalPropertiesState.activeBoard && generalPropertiesState.activeBoard.length > 0) {
+    if (
+      generalPropertiesState.activeBoard &&
+      generalPropertiesState.activeBoard.length > 0
+    ) {
       getAllBoardFeatureRequests(generalPropertiesState.activeBoard);
     }
   }, [generalPropertiesState.activeBoard]);
@@ -182,9 +201,18 @@ function App() {
             {generalPropertiesState.mainSnackBar.message}
           </Alert>
         </Snackbar>
-        <ThemeProvider theme={generalPropertiesState.darkMode === true ? darkTheme : (themes.find(colorTheme => colorTheme.color === generalPropertiesState.colorMode))?.theme || lightTheme }>
-        <Routes />
-        <CssBaseline />
+        <ThemeProvider
+          theme={
+            generalPropertiesState.darkMode === true
+              ? darkTheme
+              : themes.find(
+                  (colorTheme) =>
+                    colorTheme.color === generalPropertiesState.colorMode
+                )?.theme || lightTheme
+          }
+        >
+          <Routes />
+          <CssBaseline />
         </ThemeProvider>
       </>
     </GoogleOAuthProvider>

@@ -20,6 +20,7 @@ import TagIcon from "@mui/icons-material/Tag";
 import { TiDelete } from "react-icons/ti";
 import { getTopicsList } from "../../helpers/topics";
 import SearchBar from "../../components/SearchBar/SearchBar";
+import CannotMakeActionAsGuestModal from "../../components/Modals/CannotMakeActionAsGuestModal/CannotMakeActionAsGuestModal";
 
 type Props = {
   type: UserType;
@@ -48,6 +49,7 @@ const FeatureRequests = (props: Props) => {
     const topicsListResponse = await getTopicsList();
     setTopicsList(topicsListResponse.data);
   };
+  const generalPropertiesState = useAppSelector(state => state.generalProperties);
 
   useEffect(() => {
     handleSetTopicsList();

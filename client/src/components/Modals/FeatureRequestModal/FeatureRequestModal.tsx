@@ -90,7 +90,6 @@ export default function FeatureRequestModal(props: {
 
   useEffect(() => {
     if (props.modalIsOpen && loggedUserState.user) {
-      console.log(props.featureRequestProperties, ' are the feature request properties')
       if (
         props.featureRequestProperties &&
         props.modalMode === FeatureRequestModalMode.update

@@ -9,16 +9,20 @@ import styles from "./index.module.scss";
 import Roadmap from "../pages/Roadmap/Roadmap";
 import { AuthPageType, UserType } from "../helpers/types";
 import Login from "../components/Login/Login";
-import { useAppSelector } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import BoardCreation from "../pages/BoardCreation/BoardCreation";
 import Integrations from "../pages/Integrations/Integrations";
 import ViewBoard from "../pages/ViewBoard/ViewBoard";
+import CannotMakeActionAsGuestModal from "../components/Modals/CannotMakeActionAsGuestModal/CannotMakeActionAsGuestModal";
+import { setGeneralProperties } from "../redux/features/generalPropertiesSlice";
 
 export default function Index() {
   const loggedUser = useAppSelector((state) => state.loggedUser);
-  const activeBoard = useAppSelector(
-    (state) => state.generalProperties.activeBoard
+  const generalPropertiesState = useAppSelector(
+    (state) => state.generalProperties
   );
+  const activeBoard = generalPropertiesState.activeBoard;
+  const dispatch = useAppDispatch();
 
   return (
     <div className={styles.container}>
@@ -63,6 +67,14 @@ export default function Index() {
             <Route path="/roadmap" element={<Roadmap />} />
           </>
         </Routes>
+        <CannotMakeActionAsGuestModal
+          modalIsOpen={generalPropertiesState.cannotMakeActionModalOpen}
+          handleClose={() =>
+            dispatch(setGeneralProperties({
+              cannotMakeActionModalOpen: false,
+            }))
+          }
+        />
       </Router>
     </div>
   );

@@ -14,6 +14,7 @@ import {
   removeFromVotedFeatures,
 } from "../../redux/features/loggedUserSlice";
 import { websiteUrl } from "../../helpers/constants";
+import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
 
 type Props = {
   featureRequestProperties: FeatureRequest;
@@ -87,6 +88,32 @@ function FeatureRequestBox(props: Props) {
     }
   }, [loggedUser?.user?.voted, menuSelectedState]);
 
+  const handleMakeClickedAtLeastOnce = () => {
+    setIsClickedAtLeastOnce(true)
+  }
+
+  const handleChangeToggleBtn = () => {
+    if (loggedUser.user) {
+      setIsVoted(!isVoted)
+    } else {
+      dispatch(setGeneralProperties({
+        cannotMakeActionModalOpen: true,
+      }))
+    }
+  }
+
+  const handleOpenNewFeatureRequestsModal = () => {
+    if (loggedUser.user) {
+      setNewFeatureRequestsModalOpen(true);
+    } else {
+      dispatch(
+        setGeneralProperties({
+          cannotMakeActionModalOpen: true,
+        })
+      );
+    }
+  }
+
   const theme = useTheme();
 
   return (
@@ -94,7 +121,7 @@ function FeatureRequestBox(props: Props) {
       <div className={styles.newFeatureRequestsBox}>
         <Card
           className={styles.contentBox}
-          onClick={() => setNewFeatureRequestsModalOpen(true)}
+          onClick={handleOpenNewFeatureRequestsModal}
         >
           <h3 className={styles.featureRequestTitle}>
             {props.featureRequestProperties.title.slice(0,30)}
@@ -113,8 +140,8 @@ function FeatureRequestBox(props: Props) {
         <ToggleButton
           value="check"
           selected={isVoted}
-          onChange={() => setIsVoted(!isVoted)}
-          onClick={() => setIsClickedAtLeastOnce(true)}
+          onChange={handleChangeToggleBtn}
+          onClick={handleMakeClickedAtLeastOnce}
           className={styles.checkButton}
            sx={{
             "&.Mui-selected": {
