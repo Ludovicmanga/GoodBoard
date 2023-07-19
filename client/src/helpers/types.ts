@@ -30,6 +30,8 @@ export type Board = {
 export enum UserType {
   user = "user",
   admin = "admin",
+  member = "member",
+  externalUser = "external user"
 }
 
 export enum FeatureRequestStatus {

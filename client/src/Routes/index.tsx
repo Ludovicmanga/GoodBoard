@@ -13,8 +13,6 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import BoardCreation from "../pages/BoardCreation/BoardCreation";
 import Integrations from "../pages/Integrations/Integrations";
 import ViewBoard from "../pages/ViewBoard/ViewBoard";
-import CannotMakeActionAsGuestModal from "../components/Modals/CannotMakeActionAsGuestModal/CannotMakeActionAsGuestModal";
-import { setGeneralProperties } from "../redux/features/generalPropertiesSlice";
 
 export default function Index() {
   const loggedUser = useAppSelector((state) => state.loggedUser);

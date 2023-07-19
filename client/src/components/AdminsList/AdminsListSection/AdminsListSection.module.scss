@@ -1,8 +1,5 @@
-@import '../../../styles/useSpacing';
 
 .container {
     display: flex;
-    @include useSpacing(margin, s, 0);
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
 }

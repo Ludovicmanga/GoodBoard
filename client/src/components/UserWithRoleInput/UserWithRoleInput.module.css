@@ -60,28 +60,39 @@
  */
 .container {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
 }
 @media screen {
   .container {
-    margin: 0.5rem 0 0.5rem 0;
+    margin: 0 0 0.75rem 0;
   }
 }
 @media screen and (min-width: 64.0625rem) {
   .container {
-    margin: 0.5rem 0 0.5rem 0;
+    margin: 0 0 0.75rem 0;
   }
 }
 @media screen and (min-width: 105.0625rem) {
   .container {
-    margin: 0.5rem 0 0.5rem 0;
+    margin: 0 0 0.75rem 0;
   }
 }
 
-.deleteBtnContainer {
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}/*# sourceMappingURL=AdminInListBox.module.css.map */
+.outlinedInput {
+  padding-right: 0px;
+}
+
+@media screen {
+  .roleInput {
+    margin: 0 0 0 1rem;
+  }
+}
+@media screen and (min-width: 64.0625rem) {
+  .roleInput {
+    margin: 0 0 0 1rem;
+  }
+}
+@media screen and (min-width: 105.0625rem) {
+  .roleInput {
+    margin: 0 0 0 1rem;
+  }
+}/*# sourceMappingURL=UserWithRoleInput.module.css.map */

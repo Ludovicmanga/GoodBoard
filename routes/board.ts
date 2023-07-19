@@ -12,6 +12,7 @@ import {
   deleteUserFromBoard,
   updateUserRole,
   getBoardUsersList,
+  inviteUsers,
 } from "../controllers/board.controller";
 
 const router = express();
@@ -19,6 +20,7 @@ const router = express();
 router.get("/get/user-boards", getUserBoards);
 router.get("/get/:boardId", getBoard);
 router.get('/get-board-users-list/:boardId', getBoardUsersList);
+router.post('/invite-users', inviteUsers)
 router.post("/create", createBoard);
 router.post("/get-public-status", getPublicStatus);
 router.post("/update-color", updateColor);

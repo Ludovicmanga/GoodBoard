@@ -153,6 +153,38 @@
   font-weight: 600;
 }
 
+.adminInviteSection {
+  display: flex;
+}
+
+.inviteSectionLeft {
+  width: 85%;
+  display: flex;
+  flex-direction: column;
+}
+
+.inviteSectionRight {
+  width: 15%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+@media screen {
+  .inviteSectionRight {
+    margin: 0 0 0 1rem;
+  }
+}
+@media screen and (min-width: 64.0625rem) {
+  .inviteSectionRight {
+    margin: 0 0 0 1rem;
+  }
+}
+@media screen and (min-width: 105.0625rem) {
+  .inviteSectionRight {
+    margin: 0 0 0 1rem;
+  }
+}
+
 .outlinedInput {
   padding-right: 0px;
   font-size: 0.875rem;
@@ -195,11 +227,6 @@
   }
 }
 
-.textFieldWithBtnInsideContainer {
-  display: flex;
-  justify-content: space-between;
-}
-
 @media screen {
   .urlTextFieldContainer {
     margin: 0.75rem 0 0 0;
@@ -222,28 +249,22 @@
   align-items: center;
 }
 
-/* .linkIsPublicContainer {
-    display: flex;
-    justify-content: space-between;
-    @include useTypography(commonText);
-}
- */
 .inviteBtn {
   max-height: 100%;
 }
 
 @media screen {
-  .shareWithTheWorldSectionContainer {
+  .sectionContainer {
     margin: 1rem 0 0 0;
   }
 }
 @media screen and (min-width: 64.0625rem) {
-  .shareWithTheWorldSectionContainer {
+  .sectionContainer {
     margin: 1rem 0 0 0;
   }
 }
 @media screen and (min-width: 105.0625rem) {
-  .shareWithTheWorldSectionContainer {
+  .sectionContainer {
     margin: 1rem 0 0 0;
   }
 }

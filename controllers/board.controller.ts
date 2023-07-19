@@ -4,6 +4,8 @@ import { getAllBoardFeatureRequestsHelper } from "../helpers/featureRequests";
 import { secretKey, verifyJwtToken, websiteUrl } from "../helpers/auth";
 import { UserRoles } from "../helpers/types";
 import userModel from "../models/user.model";
+import { checkUserHasAccessToBoard, giveAccessToBoard, sendEmailToUser } from "../helpers/boards";
+import { generateStrongPassword } from "../utils/utils";
 
 export const updateColor = async (req, res) => {
   try {
@@ -90,13 +92,7 @@ export const createBoard = async (req, res) => {
 export const getShareUrl = async (req, res) => {
   try {
     const foundBoard = await boardModel.findOne({ _id: req.body.boardId });
-    if (req.body.publicStatus === true) {
-      res.status(200).send({ url: foundBoard.url });
-    }
-    if (req.body.publicStatus === false) {
-      res.status(200).send({ url: foundBoard.url });
-    }
-    return null;
+    res.status(200).send({ url: foundBoard.url });
   } catch (e) {
     console.log(e, " is the error");
   }
@@ -156,9 +152,9 @@ export const getPublicStatus = async (req, res) => {
 
 export const deleteUserFromBoard = async (req, res) => {
   try {
-    const userFound = await userModel.find({ email: req.body.userEmail });
+    const userFound = await userModel.findOne({ email: req.body.userEmail });
     const deletedUser = await boardUserRelModel.findOneAndDelete({
-      user: userFound.toString(),
+      user: userFound._id,
       board: req.body.boardId,
     });
     if (deletedUser) {
@@ -196,7 +192,7 @@ export const getBoardUsersList = async (req, res) => {
       board: req.params.boardId,
     });
 
-     const userIds = boardUserRels.map((boardUserRel) => boardUserRel.user);
+    const userIds = boardUserRels.map((boardUserRel) => boardUserRel.user);
 
     const usersLinkedToBoard = await userModel.find({
       _id: {
@@ -204,15 +200,62 @@ export const getBoardUsersList = async (req, res) => {
       },
     });
     if (usersLinkedToBoard) {
-      const usersMappedWithRole = usersLinkedToBoard.map((user) => {
+      const usersMappedWithRole = usersLinkedToBoard
+        .map((user) => {
           return {
             email: user.email,
-            role: boardUserRels.find(rel => rel.user.toString() === user._id.toString()).userRole
+            role: boardUserRels.find(
+              (rel) => rel.user.toString() === user._id.toString()
+            ).userRole,
           };
-      }).filter(userMapped => userMapped.email !== req.user.email);
+        })
+        .filter((userMapped) => userMapped && userMapped.email !== req.user.email);
       res.send(usersMappedWithRole || []);
-    } 
+    }
   } catch (e) {
-    console.log(e, ' is the error')
+    console.log(e, " is the error");
+  }
+};
+
+export const inviteUsers = async (req, res) => {
+  try {
+    /// Gérer la logique d'invitation, de A à Z.
+/*     const userEmails = req.body.usersToInviteList.map(
+      (userToInvite) => userToInvite.email
+    ); */
+
+    for (const userToInvite of req.body.usersToInviteList) {
+      const foundUser = await userModel.findOne({
+        email: userToInvite.email,
+      });
+      if (foundUser) {
+        const userHasAccessToBoard = await checkUserHasAccessToBoard(
+          foundUser._id,
+          req.body.boardId
+        );
+        if (userHasAccessToBoard) {
+          console.log("user already has access to board");
+        } else {
+          await giveAccessToBoard(foundUser._id, req.body.boardId, userToInvite.role);
+        }
+      } else {
+        console.log('user doesnt exist yet')
+        const randomPassword = generateStrongPassword(10);
+         const newUser = new userModel({
+          email: userToInvite.email,
+          password: randomPassword,
+          type: "user",
+        }); 
+
+        const newUserSaved = await newUser.save().catch((error) => {
+          console.log("didnt work because ", error);
+        });
+        await giveAccessToBoard(newUserSaved._id, req.body.boardId, userToInvite.role);
+        await sendEmailToUser(userToInvite.email, randomPassword); 
+      }
+    }
+    res.send('all good');
+  } catch (e) {
+    console.log(e, " is the error");
   }
 };

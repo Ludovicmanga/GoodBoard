@@ -14,7 +14,7 @@ type Props = {
 
 const AdminInListBox = (props: Props) => {
   return (
-    <>
+    <div className={styles.container}>
       <div>{props.boardAdmin.email}</div>
       <FormControl size="small">
         <div>
@@ -31,7 +31,7 @@ const AdminInListBox = (props: Props) => {
       <div className={styles.deleteBtnContainer} onClick={() => props.handleDeleteAdmin(props.boardAdmin.email)}>
         <AiOutlineDelete size={20} />
       </div>
-    </>
+    </div>
   );
 };
 

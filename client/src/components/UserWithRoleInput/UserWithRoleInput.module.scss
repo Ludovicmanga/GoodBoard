@@ -1,0 +1,14 @@
+@import "../../styles/useSpacing";
+
+.container {
+  display: flex;
+  @include useSpacing(margin, 0, 0, s, 0);
+}
+
+.outlinedInput {
+  padding-right: 0px;
+}
+
+.roleInput {
+  @include useSpacing(margin, 0, 0, 0, m);
+}

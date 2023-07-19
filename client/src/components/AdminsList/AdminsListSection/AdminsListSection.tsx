@@ -3,13 +3,15 @@ import AdminInListBox from "../AdminInListBox/AdminInListBox";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { websiteUrl } from "../../../helpers/constants";
-import { useAppSelector } from "../../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { setGeneralProperties } from "../../../redux/features/generalPropertiesSlice";
 
 type Props = {};
 
 const AdminsListSection = (props: Props) => {
   const generalPropertiesState = useAppSelector(state => state.generalProperties);
   const activeBoardId = generalPropertiesState.activeBoard;
+  const dispatch = useAppDispatch();
   const [boardAdminsList, setBoardAdminsList] = useState<
     {
       email: string;
@@ -45,10 +47,18 @@ const AdminsListSection = (props: Props) => {
       method: "post",
       url: `${websiteUrl}/api/board/delete-user`,
       withCredentials: true,
-      data: { userEmail, boardId: activeBoardId, },
+      data: { userEmail, boardId: activeBoardId },
     });
     if (response.data) {
-      setBoardAdminsList(response.data);
+      setBoardAdminsList(currArray => currArray.filter(boardUser => boardUser.email !== userEmail));
+      dispatch(
+        setGeneralProperties({
+          mainSnackBar: {
+            isOpen: true,
+            message: `the access of ${userEmail} was deleted from this board`,
+          },
+        })
+      )
     }
   };
 

@@ -18,3 +18,10 @@ export const websiteUrl =
   process.env.NODE_ENV === "production"
     ? "https://goodboard-app.herokuapp.com"
     : "http://localhost:8080";
+
+export const rolesList: UserType[] = [
+  UserType.admin,
+  UserType.externalUser,
+  UserType.member,
+  UserType.user,
+];
