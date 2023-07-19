@@ -215,6 +215,16 @@ function App() {
           <CssBaseline />
         </ThemeProvider>
       </>
+      <CannotMakeActionAsGuestModal
+        modalIsOpen={generalPropertiesState.cannotMakeActionModalOpen}
+        handleClose={() =>
+          dispatch(
+            setGeneralProperties({
+              cannotMakeActionModalOpen: false,
+            })
+          )
+        }
+      />
     </GoogleOAuthProvider>
   );
 }

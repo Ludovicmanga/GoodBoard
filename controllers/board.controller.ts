@@ -3,6 +3,7 @@ import boardUserRelModel from "../models/boardUserRel.model";
 import { getAllBoardFeatureRequestsHelper } from "../helpers/featureRequests";
 import { secretKey, verifyJwtToken, websiteUrl } from "../helpers/auth";
 import { UserRoles } from "../helpers/types";
+import userModel from "../models/user.model";
 
 export const updateColor = async (req, res) => {
   try {
@@ -142,11 +143,76 @@ export const updatePublicStatus = async (req, res) => {
 
 export const getPublicStatus = async (req, res) => {
   try {
-    const foundBoardStatus = await boardModel.findById(req.body.activeBoard).select('isPublic');
+    const foundBoardStatus = await boardModel
+      .findById(req.body.activeBoard)
+      .select("isPublic");
     if (foundBoardStatus) {
-      res.send(foundBoardStatus.isPublic)
+      res.send(foundBoardStatus.isPublic);
     }
   } catch (e) {
     console.log(e, "is the error");
+  }
+};
+
+export const deleteUserFromBoard = async (req, res) => {
+  try {
+    const userFound = await userModel.find({ email: req.body.userEmail });
+    const deletedUser = await boardUserRelModel.findOneAndDelete({
+      user: userFound.toString(),
+      board: req.body.boardId,
+    });
+    if (deletedUser) {
+      res.send("deleted");
+    }
+  } catch (e) {
+    console.log(e, " is the error");
+  }
+};
+
+export const updateUserRole = async (req, res) => {
+  try {
+    const userFound = await userModel.find({ email: req.body.userEmail });
+    const updatedUser = await boardUserRelModel.findOneAndUpdate(
+      {
+        user: userFound.toString(),
+        board: req.body.boardId,
+      },
+      {
+        role: req.body.role,
+      },
+      { new: true }
+    );
+    if (updatedUser) {
+      res.status(200).send(updatedUser);
+    }
+  } catch (e) {
+    console.log(e, " is the error");
+  }
+};
+
+export const getBoardUsersList = async (req, res) => {
+  try {
+    const boardUserRels = await boardUserRelModel.find({
+      board: req.params.boardId,
+    });
+
+     const userIds = boardUserRels.map((boardUserRel) => boardUserRel.user);
+
+    const usersLinkedToBoard = await userModel.find({
+      _id: {
+        $in: userIds,
+      },
+    });
+    if (usersLinkedToBoard) {
+      const usersMappedWithRole = usersLinkedToBoard.map((user) => {
+          return {
+            email: user.email,
+            role: boardUserRels.find(rel => rel.user.toString() === user._id.toString()).userRole
+          };
+      }).filter(userMapped => userMapped.email !== req.user.email);
+      res.send(usersMappedWithRole || []);
+    } 
+  } catch (e) {
+    console.log(e, ' is the error')
   }
 };

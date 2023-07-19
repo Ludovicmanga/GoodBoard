@@ -1,0 +1,100 @@
+/*
+ * Return the rem of a pixel's value
+ *
+ * Sample: pxToRem(50)
+ * Result: 3.125rem
+ */
+/*
+ * Return the percent ratio from width and height
+ *
+ * Sample: ratio(16, 9)
+ * Result: 56.25%
+ */
+/*
+ * Return the rem of a pixel's value
+ *
+ * Sample: pxToRem(50)
+ * Result: 3.125rem
+ */
+/*
+ * Return the percent ratio from width and height
+ *
+ * Sample: ratio(16, 9)
+ * Result: 56.25%
+ */
+/*
+ * Return the rem of a pixel's value
+ *
+ * Sample: pxToRem(50)
+ * Result: 3.125rem
+ */
+/*
+ * Return the percent ratio from width and height
+ *
+ * Sample: ratio(16, 9)
+ * Result: 56.25%
+ */
+/*
+ * Return the value for font size
+ * Used in useTypography mixin
+ */
+/*
+ * Return the value for line height
+ * Used in useTypography mixin
+ */
+/*
+ * Return the value for font family
+ * Used in useTypography mixin
+ */
+/*
+ * Return the value for spacing size for small screen
+ * Used in useSpacing mixin
+ */
+/*
+ * Return the value for spacing size for medium screen
+ * Used in useSpacing mixin
+ */
+/*
+ * Return the value for spacing size for large screen
+ * Used in useSpacing mixin
+ */
+.integrationsContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+@media screen {
+  .integrationsContainer {
+    margin: 1.5rem 1.5rem 1.5rem 1.5rem;
+  }
+}
+@media screen and (min-width: 64.0625rem) {
+  .integrationsContainer {
+    margin: 1.5rem 1.5rem 1.5rem 1.5rem;
+  }
+}
+@media screen and (min-width: 105.0625rem) {
+  .integrationsContainer {
+    margin: 1.5rem 1.5rem 1.5rem 1.5rem;
+  }
+}
+
+.integrationBoxContainer {
+  width: 30%;
+}
+@media screen {
+  .integrationBoxContainer {
+    margin: 0.75rem 0.75rem 0.75rem 0.75rem;
+  }
+}
+@media screen and (min-width: 64.0625rem) {
+  .integrationBoxContainer {
+    margin: 0.75rem 0.75rem 0.75rem 0.75rem;
+  }
+}
+@media screen and (min-width: 105.0625rem) {
+  .integrationBoxContainer {
+    margin: 0.75rem 0.75rem 0.75rem 0.75rem;
+  }
+}/*# sourceMappingURL=Integrations.module.css.map */

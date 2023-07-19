@@ -9,19 +9,10 @@
     border: 0.5px solid #000;
     border-radius: 8px;
     box-shadow: 24px;
-    @include useSpacing(padding, l, xl, xl, xl);
+    @include useSpacing(padding, m, xxl);
 }
 
-.userRoleContainer {
-    display: flex;
-    @include useSpacing(margin, s, 0);
-    justify-content: space-between;
-    align-items: center;
-}
-
-.deleteBtnContainer {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.sectionTitle {
+    font-size: 14px;
+    @include useSpacing(margin,l,0,s,0);
 }

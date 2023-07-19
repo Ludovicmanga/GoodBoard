@@ -17,6 +17,7 @@ import axios from "axios";
 import { websiteUrl } from "../../../helpers/constants";
 import { useAppSelector } from "../../../redux/hooks";
 import BoardIsPublicBtn from "../../BoardIsPublicBtn/BoardIsPublicBtn";
+import AdminsListSection from "../../AdminsList/AdminsListSection/AdminsListSection";
 
 type Props = {
   modalIsOpen: boolean;
@@ -25,20 +26,28 @@ type Props = {
 
 const ManageBoardModal = (props: Props) => {
   const [boardIsPublic, setBoardIsPublic] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [role, setRole] = useState("admin");
 
-  const generalPropertiesState = useAppSelector(state => state.generalProperties)
+  const generalPropertiesState = useAppSelector(
+    (state) => state.generalProperties
+  );
+
 
   const handleChangeBoardStatus = async (event: boolean) => {
+    setIsLoading(true);
     const response = await axios({
       method: "post",
       url: `${websiteUrl}/api/board/update-public-status`,
       withCredentials: true,
-      data: { publicStatus: event, activeBoard: generalPropertiesState.activeBoard },
+      data: {
+        publicStatus: event,
+        activeBoard: generalPropertiesState.activeBoard,
+      },
     });
-    if (response.data !== null && response.data !== undefined ) {
-      console.log('i set the data to ', response.data)
-      setBoardIsPublic(response.data)
+    setIsLoading(false);
+    if (response.data !== null && response.data !== undefined) {
+      setBoardIsPublic(response.data);
     }
   };
 
@@ -49,15 +58,18 @@ const ManageBoardModal = (props: Props) => {
       withCredentials: true,
       data: { activeBoard: generalPropertiesState.activeBoard },
     });
-    console.log(response, ' is the res')
     if (response.data) {
-      setBoardIsPublic(response.data)
+      setBoardIsPublic(response.data);
     }
-  }
+  };
 
   useEffect(() => {
     handleGetPublicStatus();
-  }, [props.modalIsOpen])
+  }, [props.modalIsOpen]);
+
+  useEffect(() => {
+    //getUsersList();
+  }, []);
 
   return (
     <div>
@@ -74,28 +86,16 @@ const ManageBoardModal = (props: Props) => {
       >
         <Fade in={props.modalIsOpen}>
           <Paper className={styles.modalContentContainer}>
+            <h2 className={styles.sectionTitle}>Manage board users</h2>
+            <AdminsListSection />
+            <h2 className={styles.sectionTitle}>Manage board privacy</h2>
+            <BoardIsPublicBtn
+              handleChangeBoardStatus={handleChangeBoardStatus}
+              boardIsPublic={boardIsPublic}
+              isLoading={isLoading}
+            />
+            <h2 className={styles.sectionTitle}>Choose your board color</h2>
             <ChooseBoardColor mode="update" />
-            <div>
-              <div>Manage board users</div>
-              <div className={styles.userRoleContainer}>
-                <div>Ludovic@gmail.com</div>
-                <FormControl size="small">
-                  <InputLabel>Role</InputLabel>
-                  <Select
-                    value={role}
-                    label="Role"
-                    onChange={(e) => setRole(e.target.value)}
-                  >
-                    <MenuItem value="admin">Admin</MenuItem>
-                    <MenuItem value="member">Member</MenuItem>
-                  </Select>
-                </FormControl>
-                <div className={styles.deleteBtnContainer}>
-                  <AiOutlineDelete />
-                </div>
-              </div>
-            </div>
-            <BoardIsPublicBtn handleChangeBoardStatus={handleChangeBoardStatus} boardIsPublic={boardIsPublic} />
           </Paper>
         </Fade>
       </Modal>

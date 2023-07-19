@@ -23,10 +23,15 @@ export const getAllBoardFeatureRequests = async (req, res) => {
         );
         res.status(200).send(mapped);
       } else {
-        const userHasAccessToTheBoard = await checkUserHasAccessToBoard(
-          req.user.id,
-          req.body.boardId
-        );
+        let userHasAccessToTheBoard;
+        if (req.user) {
+          userHasAccessToTheBoard = await checkUserHasAccessToBoard(
+            req.user.id,
+            req.body.boardId
+          );
+        } else {
+          userHasAccessToTheBoard = false;
+        }
        if (userHasAccessToTheBoard) {
           const mapped = await getAllBoardFeatureRequestsMappedWithTopics(
             req.body.boardId

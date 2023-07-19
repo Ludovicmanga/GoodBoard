@@ -75,8 +75,10 @@ const ShareBoardModal = (props: Props) => {
   };
 
   useEffect(() => {
-    handleGetBoardShareableUrl();
-  }, [linkIsPublic]);
+    if (boardId) {
+      handleGetBoardShareableUrl();
+    }
+  }, [linkIsPublic, boardId]);
 
   return (
     <div>

@@ -67,14 +67,6 @@ export default function Index() {
             <Route path="/roadmap" element={<Roadmap />} />
           </>
         </Routes>
-        <CannotMakeActionAsGuestModal
-          modalIsOpen={generalPropertiesState.cannotMakeActionModalOpen}
-          handleClose={() =>
-            dispatch(setGeneralProperties({
-              cannotMakeActionModalOpen: false,
-            }))
-          }
-        />
       </Router>
     </div>
   );

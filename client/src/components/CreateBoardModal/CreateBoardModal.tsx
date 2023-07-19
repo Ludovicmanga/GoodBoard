@@ -84,7 +84,7 @@ const CreateBoardModal = (props: Props) => {
       <Avatar variant="rounded">
         <Add />
       </Avatar>
-      <BoardIsPublicBtn boardIsPublic={boardIsPublic} handleChangeBoardStatus={handleChangeBoardStatus} />
+      <BoardIsPublicBtn boardIsPublic={boardIsPublic} handleChangeBoardStatus={handleChangeBoardStatus} isLoading={false} />
       <Button
         className={styles.submitBtn}
         onClick={handleBoardCreation}

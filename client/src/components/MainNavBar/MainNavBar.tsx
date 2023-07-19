@@ -37,6 +37,10 @@ const pages: {
     title: "roadmap",
     url: `/roadmap`,
   },
+  {
+    title: "changelog",
+    url: `/changelog`,
+  },
 ];
 
 const MainNavBar = () => {
