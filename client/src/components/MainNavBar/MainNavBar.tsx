@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -44,12 +44,12 @@ const pages: {
 ];
 
 const MainNavBar = () => {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null
-  );
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
+  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+  const [settingsRoleFiltered, setSettingsRoleFiltered] = useState<{
+    linkText: string;
+    onClick: () => void;
+  }[]>([]);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const generalPropertiesState = useAppSelector(
@@ -63,8 +63,7 @@ const MainNavBar = () => {
       withCredentials: true,
     });
     if (response.data.loggedOut) {
-      /*       localStorage.removeItem("board");
-       */ dispatch(
+      dispatch(
         setLoggedUserState({
           user: null,
         })
@@ -117,15 +116,7 @@ const MainNavBar = () => {
     );
   };
 
-  const handleDisplayChangeBoardColor = () => {
-    dispatch(
-      setGeneralProperties({
-        changeBoardColorModalOpen: true,
-      })
-    );
-  };
-
-  const settings = [
+  const settingsList = [
     {
       linkText: "My account",
       onClick: handleSettingsModal,
@@ -142,10 +133,6 @@ const MainNavBar = () => {
       linkText: "Share your board",
       onClick: handleShareBoard,
     },
-    /*     {
-      linkText: "Change board color",
-      onClick: handleDisplayChangeBoardColor,
-    }, */
     {
       linkText: "Integrations",
       onClick: handleDisplayIntegrations,
@@ -155,6 +142,29 @@ const MainNavBar = () => {
       onClick: handleLogout,
     },
   ];
+
+  /*   const handleDisplayChangeBoardColor = () => {
+    dispatch(
+      setGeneralProperties({
+        changeBoardColorModalOpen: true,
+      })
+    );
+  }; */
+
+  useEffect(() => {
+    if (false) {
+      setSettingsRoleFiltered(settingsList);
+    } else {
+      setSettingsRoleFiltered(
+        settingsList.filter(
+          (setting) =>
+            setting.linkText !== "Manage this board" &&
+            setting.linkText !== "Share your board" &&
+            setting.linkText !== "Integrations"
+        )
+      );
+    }
+  }, []);
 
   const handleCloseSettingsModal = () => {
     dispatch(
@@ -243,7 +253,7 @@ const MainNavBar = () => {
           {loggedUser.user ? (
             <SettingsMenu
               anchorElUser={anchorElUser}
-              settings={settings}
+              settings={settingsRoleFiltered}
               handleCloseUserMenu={handleCloseUserMenu}
               handleOpenUserMenu={handleOpenUserMenu}
             />
