@@ -13,18 +13,28 @@ const EmptyImage = (props: Props) => {
     setSelectedFile(e.target.files?.[0]!);
   };
 
-  const handleUploadFile = async (selectedFile: File) => {
-    await axios({
-      method: 'post',
-      url: `${websiteUrl}/api/board/upload-image`,
-      data: { selectedFile },
-      withCredentials: true,
-    });
-  }
+  const handleUploadFile = async () => {
+    if (!selectedFile) return;
+
+    const formData = new FormData();
+    formData.append("image", selectedFile);
+
+    try {
+      await axios.post(`${websiteUrl}/api/board/upload-image`, formData, {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "multipart/form-data", // Make sure to set the correct content type for file uploads
+        },
+      });
+      console.log("Image uploaded successfully!");
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
+  };
 
   useEffect(() => {
     if (selectedFile) {
-      handleUploadFile(selectedFile)
+      handleUploadFile()
     }
   }, [selectedFile]);
 

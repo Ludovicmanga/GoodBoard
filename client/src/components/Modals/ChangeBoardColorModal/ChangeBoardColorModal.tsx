@@ -1,6 +1,7 @@
 import { Backdrop, Fade, Modal, Paper } from "@mui/material";
 import ChooseBoardColor from "../../ChooseBoardColor/ChooseBoardColor";
 import styles from "./ChangeBoardColorModal.module.scss";
+import React from 'react';
 
 type Props = {
   modalIsOpen: boolean;

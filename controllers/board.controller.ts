@@ -119,7 +119,7 @@ export const getPublicBoard = async (req, res) => {
 };
 
 export const uploadImage = (req, res) => {
-  console.log("I will upload the image");
+  console.log("I will upload the image ", req.body.selectedFile);
 };
 
 export const updatePublicStatus = async (req, res) => {
