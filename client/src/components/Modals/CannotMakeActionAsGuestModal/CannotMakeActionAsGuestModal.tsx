@@ -2,6 +2,7 @@ import { Backdrop, Button, Fade, Modal, Paper } from "@mui/material";
 import styles from "./CannotMakeActionAsGuestModal.module.scss";
 import React from "react";
 import logInImg from "../../../icons/undraw_Join_re_w1lh.png";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   modalIsOpen: boolean;
@@ -9,8 +10,11 @@ type Props = {
 };
 
 const CannotMakeActionAsGuestModal = (props: Props) => {
-  /* const navigate = useNavigate();
-  const handleGoToLoginPage = navigate('/login'); */
+  const navigate = useNavigate();
+  const handleGoToLoginPage = () => {
+    navigate('/login');
+    props.handleClose();
+  }
   return (
     <div>
       <Modal
@@ -35,7 +39,7 @@ const CannotMakeActionAsGuestModal = (props: Props) => {
                 You need to log in to be able to create, vote, or view the
                 details of a feature request
               </p>
-              <Button variant='outlined'>Log in</Button>
+              <Button variant='outlined' onClick={handleGoToLoginPage}>Log in</Button>
             </div>
           </Paper>
         </Fade>

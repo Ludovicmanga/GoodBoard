@@ -9,7 +9,7 @@ import styles from "./index.module.scss";
 import Roadmap from "../pages/Roadmap/Roadmap";
 import { AuthPageType, UserType } from "../helpers/types";
 import Login from "../components/Login/Login";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { useAppSelector } from "../redux/hooks";
 import BoardCreation from "../pages/BoardCreation/BoardCreation";
 import Integrations from "../pages/Integrations/Integrations";
 import ViewBoard from "../pages/ViewBoard/ViewBoard";
@@ -20,7 +20,6 @@ export default function Index() {
     (state) => state.generalProperties
   );
   const activeBoard = generalPropertiesState.activeBoard;
-  const dispatch = useAppDispatch();
 
   return (
     <div className={styles.container}>
@@ -51,7 +50,6 @@ export default function Index() {
               <Route path="/integrations" element={<Integrations />} />
             </>
           )}
-
           <>
             <Route
               path="/company-feature-requests"

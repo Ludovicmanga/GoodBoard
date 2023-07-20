@@ -9,11 +9,12 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { Board } from "../../helpers/types";
 import EmptyImage from "../EmptyImage/EmptyImage";
 import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
+import CannotMakeActionAsGuestModal from "../Modals/CannotMakeActionAsGuestModal/CannotMakeActionAsGuestModal";
 
 type Props = {};
 
 const MainHero = (props: Props) => {
-  const generalProperties = useAppSelector((state) => state.generalProperties);
+  const generalPropertiesState = useAppSelector((state) => state.generalProperties);
   const dispatch = useAppDispatch();
   const [boardData, setBoardData] = useState<Board>({
     _id: "",
@@ -25,12 +26,12 @@ const MainHero = (props: Props) => {
 
   useEffect(() => {
     if (
-      generalProperties.activeBoard &&
-      generalProperties.activeBoard.length > 0
+      generalPropertiesState.activeBoard &&
+      generalPropertiesState.activeBoard.length > 0
     ) {
-      getActiveBoardData(generalProperties.activeBoard);
+      getActiveBoardData(generalPropertiesState.activeBoard);
     }
-  }, [generalProperties.activeBoard]);
+  }, [generalPropertiesState.activeBoard]);
 
   useEffect(() => {
     if (boardData.themeColor.length > 0) {
@@ -41,12 +42,12 @@ const MainHero = (props: Props) => {
   }, [boardData.themeColor])
 
   const getActiveBoardData = async (activeBoard: string) => {
-    handleDispatchActiveBoardData(activeBoard);
+    handleDispatchActiveBoardData();
   };
 
-  const handleDispatchActiveBoardData = async (activeBoard: string) => {
+  const handleDispatchActiveBoardData = async () => {
     const response = await axios({
-      url: `${websiteUrl}/api/board/get/${generalProperties.activeBoard}`,
+      url: `${websiteUrl}/api/board/get/${generalPropertiesState.activeBoard}`,
     });
     if (response.data) {
       setBoardData(response.data);
@@ -91,6 +92,16 @@ const MainHero = (props: Props) => {
           </div>
         </div>
       </div>
+      <CannotMakeActionAsGuestModal
+        modalIsOpen={generalPropertiesState.cannotMakeActionModalOpen}
+        handleClose={() =>
+          dispatch(
+            setGeneralProperties({
+              cannotMakeActionModalOpen: false,
+            })
+          )
+        }
+      />
     </Box>
   );
 };
