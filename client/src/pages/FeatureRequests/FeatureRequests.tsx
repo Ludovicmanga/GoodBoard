@@ -51,14 +51,12 @@ const FeatureRequests = (props: Props) => {
 
   
   const handleSetCorrespondingFeatures = () => {
-    console.log(props.type, ' is the props type');
     if (props.type === UserType.externalUser) {
       const featureRequestsWithCorrespondingPropsType = allFeatureRequests.filter(
         (featureRequest) => featureRequest.creatorType === UserType.externalUser
       );
       setFilteredFeatureRequests(featureRequestsWithCorrespondingPropsType);
     } else {
-      console.log('im heree!!!')
       const featureRequestsWithCorrespondingPropsType = allFeatureRequests.filter(
         (featureRequest) => featureRequest.creatorType !== UserType.externalUser
       );
