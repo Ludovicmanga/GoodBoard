@@ -92,7 +92,11 @@ export const createBoard = async (req, res) => {
 export const getShareUrl = async (req, res) => {
   try {
     const foundBoard = await boardModel.findOne({ _id: req.body.boardId });
-    res.status(200).send({ url: foundBoard.url });
+    if (foundBoard) {
+      res.status(200).send({ url: foundBoard.url });
+    } else {
+      res.status(200).send({ url: '' });
+    }
   } catch (e) {
     console.log(e, " is the error");
   }

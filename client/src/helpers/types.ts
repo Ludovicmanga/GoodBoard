@@ -16,7 +16,7 @@ export type User = {
   _id: string;
   email: string;
   voted: string[];
-  type: UserType | null;
+  roleOnThisBoard: UserType | null;
 };
 
 export type Board = {

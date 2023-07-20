@@ -5,10 +5,9 @@ import {
   Snackbar,
   ThemeProvider,
 } from "@mui/material";
-import { red } from "@mui/material/colors";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import axios from "axios";
-import React, { useState } from "react";
+import React from "react";
 import { useEffect } from "react";
 import { websiteUrl } from "../helpers/constants";
 import { setAllFeatureRequests } from "../redux/features/allFeatureRequestsSlice";
@@ -18,12 +17,16 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import Routes from "../Routes";
 import "./App.module.scss";
 import CannotMakeActionAsGuestModal from "../components/Modals/CannotMakeActionAsGuestModal/CannotMakeActionAsGuestModal";
+import { getLoggedUser } from "../helpers/users";
 
 function App() {
   const dispatch = useAppDispatch();
 
   const generalPropertiesState = useAppSelector(
     (state) => state.generalProperties
+  );
+  const loggedUserState = useAppSelector(
+    (state) => state.loggedUser
   );
 
   const lightTheme = createTheme({
@@ -137,35 +140,33 @@ function App() {
     }
   }, [generalPropertiesState.activeBoard]);
 
+  const handleGetLoggedUser = async () => {
+    const userResponse = await getLoggedUser(generalPropertiesState.activeBoard);
+    if (userResponse.data.user) {
+      const user = userResponse.data.user;
+      dispatch(
+        setLoggedUserState({
+          user: {
+            _id: user._id,
+            email: user.email,
+            roleOnThisBoard: userResponse.data.roleUserOnThisBoard,
+            voted: user.voted,
+          },
+        })
+      );
+    }
+    if (userResponse.data.notAuthenticated) {
+      dispatch(
+        setLoggedUserState({
+          user: null,
+        })
+      );
+    }
+  };
+
   useEffect(() => {
-    const getLoggedUser = async () => {
-      const userResponse = await axios({
-        url: `${websiteUrl}/api/users/checkIfAuthenticated`,
-        withCredentials: true,
-      });
-      if (userResponse.data.user) {
-        const user = userResponse.data.user;
-        dispatch(
-          setLoggedUserState({
-            user: {
-              _id: user._id,
-              email: user.email,
-              type: user.type,
-              voted: user.voted,
-            },
-          })
-        );
-      }
-      if (userResponse.data.notAuthenticated) {
-        dispatch(
-          setLoggedUserState({
-            user: null,
-          })
-        );
-      }
-    };
-    getLoggedUser();
-  }, []);
+    handleGetLoggedUser();
+  }, [generalPropertiesState.activeBoard, dispatch, loggedUserState.user]);
 
   return (
     <GoogleOAuthProvider clientId="359793701193-uesb1dbegpv1batpku2ro9le0fjnf8il.apps.googleusercontent.com">

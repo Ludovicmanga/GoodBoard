@@ -104,13 +104,13 @@ export default function FeatureRequestModal(props: {
   const handleSetTopicsList = async () => {
     const topicsListResponse = await getTopicsList();
     setTopicsList(topicsListResponse.data);
-  }
+  };
 
   useEffect(() => {
     if (props.modalIsOpen) {
       handleSetTopicsList();
     }
-  }, [props.modalIsOpen])
+  }, [props.modalIsOpen]);
 
   useEffect(() => {
     if (
@@ -119,12 +119,12 @@ export default function FeatureRequestModal(props: {
       props.modalMode === FeatureRequestModalMode.update
     ) {
       setHasUpdateRights(
-        loggedUserState?.user.type === UserType.admin ||
+        loggedUserState?.user.roleOnThisBoard === UserType.admin ||
+          loggedUserState?.user.roleOnThisBoard === UserType.member ||
           featureRequestProperties?.creator === loggedUserState.user?._id
       );
     }
   }, [featureRequestProperties.creator]);
-
 
   const deleteRequest = async () => {
     const deletedFeature = await axios({
@@ -321,7 +321,7 @@ export default function FeatureRequestModal(props: {
                           keyof typeof FeatureRequestStatus
                         >
                       ).map((status) => (
-                        <MenuItem value={status}>
+                        <MenuItem value={status} key={status}>
                           {capitalizeFirstLetter(status)}
                         </MenuItem>
                       ))}
@@ -331,6 +331,10 @@ export default function FeatureRequestModal(props: {
               )}
               <div className={styles.statusSection}>
                 <Autocomplete
+                  readOnly={
+                    props.modalMode === FeatureRequestModalMode.update &&
+                    !hasUpdateRights
+                  }
                   multiple
                   onChange={(e, value) => {
                     setFeatureRequestProperties((propertiesState) => {

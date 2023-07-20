@@ -20,6 +20,7 @@ import styles from "./MainNavBar.module.scss";
 import ChangeBoardColorModal from "../Modals/ChangeBoardColorModal/ChangeBoardColorModal";
 import ManageBoardModal from "../Modals/ManageBoardModal/ManageBoardModal";
 import SettingsMenu from "../SettingsMenu/SettingsMenu";
+import { UserType } from "../../helpers/types";
 
 const pages: {
   title: string;
@@ -52,6 +53,7 @@ const MainNavBar = () => {
   }[]>([]);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const loggedUser = useAppSelector((state) => state.loggedUser);
   const generalPropertiesState = useAppSelector(
     (state) => state.generalProperties
   );
@@ -152,7 +154,7 @@ const MainNavBar = () => {
   }; */
 
   useEffect(() => {
-    if (false) {
+    if (loggedUser.user?.roleOnThisBoard === UserType.admin) {
       setSettingsRoleFiltered(settingsList);
     } else {
       setSettingsRoleFiltered(
@@ -164,7 +166,7 @@ const MainNavBar = () => {
         )
       );
     }
-  }, []);
+  }, [generalPropertiesState.activeBoard, loggedUser.user]);
 
   const handleCloseSettingsModal = () => {
     dispatch(
@@ -211,8 +213,6 @@ const MainNavBar = () => {
   };
 
   const handleGoToLoginPage = () => navigate("/login");
-
-  const loggedUser = useAppSelector((state) => state.loggedUser);
 
   return (
     <AppBar position="static">

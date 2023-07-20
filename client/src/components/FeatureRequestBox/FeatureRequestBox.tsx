@@ -133,7 +133,7 @@ function FeatureRequestBox(props: Props) {
           </div>
           <div className={styles.tagsContainer}>
             {props.featureRequestProperties.topics.map((category) => (
-              <Chip className={styles.tag} label={category} />
+              <Chip className={styles.tag} label={category} key={category} />
             ))}
           </div>
         </Card>

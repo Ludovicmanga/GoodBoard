@@ -144,6 +144,7 @@ const FeatureRequests = (props: Props) => {
                   <ListItemButton
                     sx={{ pl: 4 }}
                     onClick={() => handleChangeSelectedStatus(statusChoice)}
+                    key={statusChoice.label}
                   >
                     <ListItemIcon>
                       <PanoramaFishEyeIcon
@@ -180,6 +181,7 @@ const FeatureRequests = (props: Props) => {
                   <ListItemButton
                     sx={{ pl: 4 }}
                     onClick={() => handleChangeSelectedTopic(topicChoice)}
+                    key={topicChoice}
                   >
                     <ListItemIcon>
                       <TagIcon fontSize="small" />
