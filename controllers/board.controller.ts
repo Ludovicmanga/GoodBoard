@@ -4,8 +4,16 @@ import { getAllBoardFeatureRequestsHelper } from "../helpers/featureRequests";
 import { secretKey, verifyJwtToken, websiteUrl } from "../helpers/auth";
 import { UserRoles } from "../helpers/types";
 import userModel from "../models/user.model";
-import { checkUserHasAccessToBoard, giveAccessToBoard, sendEmailToUser } from "../helpers/boards";
+import {
+  checkUserHasAccessToBoard,
+  giveAccessToBoard,
+  sendEmailToUser,
+} from "../helpers/boards";
 import { generateStrongPassword } from "../utils/utils";
+import path from "path";
+import { fileURLToPath } from "url";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export const updateColor = async (req, res) => {
   try {
@@ -95,7 +103,7 @@ export const getShareUrl = async (req, res) => {
     if (foundBoard) {
       res.status(200).send({ url: foundBoard.url });
     } else {
-      res.status(200).send({ url: '' });
+      res.status(200).send({ url: "" });
     }
   } catch (e) {
     console.log(e, " is the error");
@@ -119,7 +127,17 @@ export const getPublicBoard = async (req, res) => {
 };
 
 export const uploadImage = (req, res) => {
-  console.log("I will upload the image ", req.body.selectedFile);
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: "No image file provided." });
+    }
+    const imagePath = path.join(__dirname, req.file.path);
+    console.log("Image uploaded:", imagePath);
+
+    return res.status(200).json({ message: "Image uploaded successfully." });
+  } catch (e) {
+    console.log(e, " is the error");
+  }
 };
 
 export const updatePublicStatus = async (req, res) => {
@@ -213,7 +231,9 @@ export const getBoardUsersList = async (req, res) => {
             ).userRole,
           };
         })
-        .filter((userMapped) => userMapped && userMapped.email !== req.user.email);
+        .filter(
+          (userMapped) => userMapped && userMapped.email !== req.user.email
+        );
       res.send(usersMappedWithRole || []);
     }
   } catch (e) {
@@ -224,7 +244,7 @@ export const getBoardUsersList = async (req, res) => {
 export const inviteUsers = async (req, res) => {
   try {
     /// Gérer la logique d'invitation, de A à Z.
-/*     const userEmails = req.body.usersToInviteList.map(
+    /*     const userEmails = req.body.usersToInviteList.map(
       (userToInvite) => userToInvite.email
     ); */
 
@@ -240,24 +260,32 @@ export const inviteUsers = async (req, res) => {
         if (userHasAccessToBoard) {
           console.log("user already has access to board");
         } else {
-          await giveAccessToBoard(foundUser._id, req.body.boardId, userToInvite.role);
+          await giveAccessToBoard(
+            foundUser._id,
+            req.body.boardId,
+            userToInvite.role
+          );
         }
       } else {
         const randomPassword = generateStrongPassword(10);
-         const newUser = new userModel({
+        const newUser = new userModel({
           email: userToInvite.email,
           password: randomPassword,
           type: "user",
-        }); 
+        });
 
         const newUserSaved = await newUser.save().catch((error) => {
           console.log("didnt work because ", error);
         });
-        await giveAccessToBoard(newUserSaved._id, req.body.boardId, userToInvite.role);
-        await sendEmailToUser(userToInvite.email, randomPassword); 
+        await giveAccessToBoard(
+          newUserSaved._id,
+          req.body.boardId,
+          userToInvite.role
+        );
+        await sendEmailToUser(userToInvite.email, randomPassword);
       }
     }
-    res.send('all good');
+    res.send("all good");
   } catch (e) {
     console.log(e, " is the error");
   }

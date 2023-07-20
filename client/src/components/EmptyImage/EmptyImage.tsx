@@ -1,5 +1,5 @@
 import { Avatar, Badge, IconButton } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./EmptyImage.module.scss";
 import Add from "@mui/icons-material/Add";
 import axios from "axios";
@@ -8,24 +8,35 @@ import { websiteUrl } from "../../helpers/constants";
 type Props = {};
 
 const EmptyImage = (props: Props) => {
-  const [selectedFile, setSelectedFile] = useState<File>();
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const handleSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedFile(e.target.files?.[0]!);
   };
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleUploadFile = async () => {
+    console.log('ok', selectedFile);
     if (!selectedFile) return;
 
     const formData = new FormData();
     formData.append("image", selectedFile);
 
     try {
-      await axios.post(`${websiteUrl}/api/board/upload-image`, formData, {
+      const res = await axios({
+        url: `${websiteUrl}/api/board/upload-image`,
+        method: "post",
         withCredentials: true,
         headers: {
-          "Content-Type": "multipart/form-data", // Make sure to set the correct content type for file uploads
+          "Content-Type": "multipart/form-data",
         },
+        data: formData,
       });
+      if (res.data) {
+        setSelectedFile(null);
+        if (fileInputRef.current) {
+          fileInputRef.current.value = "";
+        }
+      }
       console.log("Image uploaded successfully!");
     } catch (error) {
       console.error("Error uploading image:", error);
@@ -34,7 +45,7 @@ const EmptyImage = (props: Props) => {
 
   useEffect(() => {
     if (selectedFile) {
-      handleUploadFile()
+      handleUploadFile();
     }
   }, [selectedFile]);
 
@@ -55,6 +66,7 @@ const EmptyImage = (props: Props) => {
               hidden
               accept="image/*"
               type="file"
+              ref={fileInputRef}
             />
             <Add sx={{ fontSize: 40 }} />
           </IconButton>

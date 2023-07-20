@@ -16,7 +16,6 @@ import { setLoggedUserState } from "../redux/features/loggedUserSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import Routes from "../Routes";
 import "./App.module.scss";
-import CannotMakeActionAsGuestModal from "../components/Modals/CannotMakeActionAsGuestModal/CannotMakeActionAsGuestModal";
 import { getLoggedUser } from "../helpers/users";
 
 function App() {
@@ -166,7 +165,7 @@ function App() {
 
   useEffect(() => {
     handleGetLoggedUser();
-  }, [generalPropertiesState.activeBoard, dispatch, loggedUserState.user]);
+  }, [generalPropertiesState.activeBoard]);
 
   return (
     <GoogleOAuthProvider clientId="359793701193-uesb1dbegpv1batpku2ro9le0fjnf8il.apps.googleusercontent.com">
