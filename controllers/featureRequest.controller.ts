@@ -1,9 +1,12 @@
 import featureRequestModel from "../models/featureRequest.model";
-import mongoose from "mongoose";
 import userModel from "../models/user.model";
-import { request } from "express";
-import topicModel from "../models/topic.module";
+import topicModel from "../models/topic.model";
 import featureTopicRelModel from "../models/featureTopicRelModel";
+import { UserRoles } from "../helpers/types";
+import boardModel from "../models/board.model";
+import { getAllBoardFeatureRequestsMappedWithTopics } from "../helpers/featureRequests";
+import { checkUserHasAccessToBoard } from "../helpers/boards";
+import boardUserRelModel from "../models/boardUserRel.model";
 
 export const getAllFeatureRequests = async (req, res) => {
   await featureRequestModel
@@ -13,36 +16,49 @@ export const getAllFeatureRequests = async (req, res) => {
 
 export const getAllBoardFeatureRequests = async (req, res) => {
   try {
-    const features = await featureRequestModel.find({ board: req.body.boardId });
-
-    const mapped = await Promise.all(
-      features.map(async (feature) => {
-        const featureRel = await featureTopicRelModel.find({ feature: feature._id });
-        let topics = [];
-        if (featureRel.length > 0) {
-          topics = await topicModel.find({ _id: { $in: featureRel.map((feat) => feat.topic) } });
+    const activeBoard = await boardModel.findById(req.body.boardId);
+    if (activeBoard) {
+      if (activeBoard.isPublic) {
+        const mapped = await getAllBoardFeatureRequestsMappedWithTopics(
+          req.body.boardId
+        );
+        res.status(200).send(mapped);
+      } else {
+        let userHasAccessToTheBoard;
+        if (req.user) {
+          userHasAccessToTheBoard = await checkUserHasAccessToBoard(
+            req.user.id,
+            req.body.boardId
+          );
+        } else {
+          userHasAccessToTheBoard = false;
         }
-        return {...feature.toObject(), topics: topics.map(top => top.title)};
-      })
-    );
-    res.status(200).send(mapped);
+        if (userHasAccessToTheBoard) {
+          const mapped = await getAllBoardFeatureRequestsMappedWithTopics(
+            req.body.boardId
+          );
+          res.status(200).send(mapped);
+        } else {
+          res.send("user doesn't have access to the board");
+        }
+      }
+    }
   } catch (error) {
     console.error(error);
-    res.status(500).send('Internal Server Error');
+    res.status(500).send("Internal Server Error");
   }
 };
 
-
 export const getAllCompanyFeatureRequests = async (req, res) => {
   await featureRequestModel
-    .find({ creatorType: "company" })
+    .find({ creatorType: { $in: [UserRoles.admin, UserRoles.member] } })
     .then((allCompanyFeatureRequests) =>
       res.status(200).send(allCompanyFeatureRequests)
     );
 };
 export const getAllUserFeatureRequests = async (req, res) => {
   await featureRequestModel
-    .find({ creatorType: "user" })
+    .find({ creatorType: UserRoles.externalUser })
     .then((allUserFeatureRequests) =>
       res.status(200).send(allUserFeatureRequests)
     );
@@ -50,7 +66,8 @@ export const getAllUserFeatureRequests = async (req, res) => {
 
 export const updateFeatureRequest = async (req, res) => {
   try {
-    const { title, details, creatorType, status, creator, topics } = req.body.featureRequest;
+    const { title, details, creatorType, status, creator, topics } =
+      req.body.featureRequest;
     if (req.body.featureRequest._id.length > 0) {
       const updated = await featureRequestModel.findOneAndUpdate(
         { _id: req.body.featureRequest._id },
@@ -86,33 +103,45 @@ export const updateFeatureRequest = async (req, res) => {
           // Update the feature-topic relationships
           await featureTopicRelModel.deleteMany({ feature: updated._id });
           await featureTopicRelModel.insertMany(
-            topicIds.map((topicId) => ({ feature: updated._id, topic: topicId }))
+            topicIds.map((topicId) => ({
+              feature: updated._id,
+              topic: topicId,
+            }))
           );
         }
         res.send(updated);
       }
     }
   } catch (e) {
-    console.log(e, ' is the error');
+    console.log(e, " is the error");
   }
 };
 
 export const createFeatureRequest = async (req, res) => {
-  const featureRequestData = req.body.featureRequest;
+  try {
+    const featureRequestData = req.body.featureRequest;
 
-  const newFeatureRequest = new featureRequestModel({
-    title: featureRequestData.title,
-    details: featureRequestData.details,
-    creatorType: req.user.type,
-    status: featureRequestData.status,
-    creator: req.user.id,
-    board: req.body.board,
-  });
+    const foundUserBoardRel = await boardUserRelModel.findOne({
+      user: req.user.id,
+      board: req.body.boardId,
+    });
 
-  newFeatureRequest
-    .save()
-    .then((featureRequest) => res.status(200).send(featureRequest))
-    .catch((error) => console.log(error));
+    const newFeatureRequest = new featureRequestModel({
+      title: featureRequestData.title,
+      details: featureRequestData.details,
+      creatorType: foundUserBoardRel.userRole,
+      status: featureRequestData.status,
+      creator: req.user.id,
+      board: req.body.boardId,
+    });
+
+    newFeatureRequest
+      .save()
+      .then((featureRequest) => res.status(200).send(featureRequest))
+      .catch((error) => console.log(error));
+  } catch (e) {
+    console.log(e, " is the error message");
+  }
 };
 
 export const upVote = async (req, res) => {

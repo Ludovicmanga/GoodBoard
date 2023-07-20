@@ -1,0 +1,18 @@
+@import '../../../styles/useSpacing';
+
+.modalContentContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: $modal-width-mobile-screen;
+    border: 0.5px solid #000;
+    border-radius: 8px;
+    box-shadow: 24px;
+    @include useSpacing(padding, m, xxl);
+}
+
+.sectionTitle {
+    font-size: 14px;
+    @include useSpacing(margin,l,0,s,0);
+}

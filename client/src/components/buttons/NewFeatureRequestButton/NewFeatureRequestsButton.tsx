@@ -5,22 +5,31 @@ import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
 import FeatureRequestModal from "../../Modals/FeatureRequestModal/FeatureRequestModal";
 import { FeatureRequestModalMode } from "../../../helpers/types";
-import { useAppSelector } from "../../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { setGeneralProperties } from "../../../redux/features/generalPropertiesSlice";
 
 type Props = {};
 
 function NewFeatureRequestsButton({}: Props) {
   const [newFeatureRequestsModalOpen, setNewFeatureRequestsModalOpen] =
     useState(false);
+  const dispatch = useAppDispatch();
+  const loggedUser = useAppSelector((state) => state.loggedUser);
   const handleOpenNewFeatureRequestModal = () => {
-    setNewFeatureRequestsModalOpen(true);
+    if (loggedUser.user) {
+      setNewFeatureRequestsModalOpen(true);
+    } else {
+      dispatch(
+        setGeneralProperties({
+          cannotMakeActionModalOpen: true,
+        })
+      );
+    }
   };
 
   const handleCloseModal = () => {
     setNewFeatureRequestsModalOpen(false);
   };
-
-  const generalPropertiesState = useAppSelector(state => state.generalProperties);
 
   return (
     <>
@@ -29,10 +38,6 @@ function NewFeatureRequestsButton({}: Props) {
         variant="extended"
         className={styles.button}
         onClick={handleOpenNewFeatureRequestModal}
-/*         sx={{
-          bgcolor: generalPropertiesState.colorMode === 'light' ? '' : 'black',
-          color: generalPropertiesState.colorMode === 'light' ? '' : 'white'
-        }} */
       >
         <AddIcon className={styles.addIcon} />
         New request

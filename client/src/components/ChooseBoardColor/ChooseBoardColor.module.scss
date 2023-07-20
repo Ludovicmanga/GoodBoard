@@ -1,10 +1,5 @@
 @import '../../styles/useSpacing';
 
-.inputLabel {
-    font-size: 12px;
-    @include useSpacing(margin,m,0,s,0);
-}
-
 .colorPaletteBoxContainer {
     display: flex;
     flex-wrap: wrap;

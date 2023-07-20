@@ -6,7 +6,7 @@ import { getUser, updateEmail } from "../controllers/user.controller";
 const router = express();
 
 router.get("/get/:id", getUser);
-router.get('/checkIfAuthenticated', getUser);
+router.post('/checkIfAuthenticated', getUser);
 router.post("/login", passport.authenticate("local"), (req: any, res) => {
   res.json({
     user: req.user,

@@ -123,8 +123,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 17.5rem;
-  background: white;
+  width: 37.5rem;
   border: 0.5px solid #000;
   border-radius: 8px;
   box-shadow: 24px;
@@ -241,6 +240,6 @@
 
 @media screen and (min-width: 40rem) {
   .modalContentContainer {
-    width: 25rem;
+    width: 37.5rem;
   }
 }/*# sourceMappingURL=SettingsModal.module.css.map */

@@ -85,7 +85,6 @@ const ChooseBoardColor = (props: Props) => {
 
   return (
     <>
-      <h2 className={styles.inputLabel}>Choose your board color</h2>
       <div className={styles.colorPaletteBoxContainer}>
         {colors.map((color) => (
           <div onClick={async () => await handleChangeColorTheme(color)}>

@@ -1,19 +1,18 @@
 import userModel from "../models/user.model";
-import { signUpErrors } from '../utils/errors.utils';
+import { signUpErrors } from "../utils/errors.utils";
 
 const maxAge = 3 * 24 * 60 * 1000;
 
 export const signUp = (req, res) => {
-    const { email, password, type} = req.body;
-    const user = new userModel({email, password, type});
+  const { email, password } = req.body;
+  const user = new userModel({ email, password });
 
-    console.log('Ill sign up ', user, ' body is ', req.body);
-
-    user.save()
-        .then(user => res.status(201).json({ user: user._id }))
-        .catch (error => {
-            console.log('didnt work because ', error);
-            const formattedErrors = signUpErrors(error);
-            res.status(200).json( error );
-        })
-}
+  user
+    .save()
+    .then((user) => res.status(201).json({ user: user._id }))
+    .catch((error) => {
+      console.log("didnt work because ", error);
+      const formattedErrors = signUpErrors(error);
+      res.status(200).json(error);
+    });
+};

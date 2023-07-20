@@ -1,65 +1,77 @@
 import NewFeatureRequestsButton from "../../components/buttons/NewFeatureRequestButton/NewFeatureRequestsButton";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import FeatureRequestBox from "../../components/FeatureRequestBox/FeatureRequestBox";
-import { EmptyPageType, MenuSelected, UserType } from "../../helpers/types";
+import { EmptyPageType, FeatureRequest, MenuSelected, UserType } from "../../helpers/types";
 import React, { useEffect, useState } from "react";
 import EmptyData from "../../components/EmptyData/EmptyData";
 import styles from "./FeatureRequests.module.scss";
 import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
 import {
-  Button,
   Collapse,
-  IconButton,
   List,
-  ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Popover,
-  TextField,
-  Typography,
 } from "@mui/material";
 import PanoramaFishEyeIcon from "@mui/icons-material/PanoramaFishEye";
 import MainNavBar from "../../components/MainNavBar/MainNavBar";
 import MainHero from "../../components/MainHero/MainHero";
 import TagIcon from "@mui/icons-material/Tag";
-import { BiFilter } from "react-icons/bi";
 import { TiDelete } from "react-icons/ti";
 import { getTopicsList } from "../../helpers/topics";
+import SearchBar from "../../components/SearchBar/SearchBar";
 
 type Props = {
   type: UserType;
 };
 
 const FeatureRequests = (props: Props) => {
-  const allFeatureRequests = useAppSelector(
-    (state) => state.allFeatureRequests
-  );
-  const featureRequestsWithCorrespondingPropsType = allFeatureRequests.filter(
-    (featureRequest) => featureRequest.creatorType === props.type
-  );
-  const dispatch = useAppDispatch();
-  const menuSelectedState = useAppSelector(
-    (state) => state.generalProperties.menuSelected
-  );
-
   const [statusListOpen, setStatusListOpen] = useState(true);
   const [topicsListOpen, setTopicsListOpen] = useState(true);
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
   const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
   const [topicsList, setTopicsList] = useState<string[]>([]);
+  const [searchedWord, setSearchedWord] = useState<string | null>(null);
+  const [filteredFeatureRequests, setFilteredFeatureRequests] = useState<FeatureRequest[]>([]);
+
+  const allFeatureRequests = useAppSelector(
+    (state) => state.allFeatureRequests
+  );
+
+  const dispatch = useAppDispatch();
+  const menuSelectedState = useAppSelector(
+    (state) => state.generalProperties.menuSelected
+  );
+
 
   const handleSetTopicsList = async () => {
     const topicsListResponse = await getTopicsList();
     setTopicsList(topicsListResponse.data);
+  };
+
+  
+  const handleSetCorrespondingFeatures = () => {
+    console.log(props.type, ' is the props type');
+    if (props.type === UserType.externalUser) {
+      const featureRequestsWithCorrespondingPropsType = allFeatureRequests.filter(
+        (featureRequest) => featureRequest.creatorType === UserType.externalUser
+      );
+      setFilteredFeatureRequests(featureRequestsWithCorrespondingPropsType);
+    } else {
+      console.log('im heree!!!')
+      const featureRequestsWithCorrespondingPropsType = allFeatureRequests.filter(
+        (featureRequest) => featureRequest.creatorType !== UserType.externalUser
+      );
+      setFilteredFeatureRequests(featureRequestsWithCorrespondingPropsType);
+    }
   }
 
   useEffect(() => {
     handleSetTopicsList();
-  }, [])
+  }, []);
 
   useEffect(() => {
-    if (props.type === UserType.user) {
+    if (props.type === UserType.externalUser) {
       dispatch(
         setGeneralProperties({
           menuSelected: MenuSelected.yourIdeas,
@@ -73,6 +85,12 @@ const FeatureRequests = (props: Props) => {
       );
     }
   }, [menuSelectedState]);
+
+  useEffect(()=> {
+    if (allFeatureRequests.length > 0) {
+      handleSetCorrespondingFeatures();
+    }
+  }, [allFeatureRequests, props.type])
 
   const statusChoices = [
     {
@@ -89,26 +107,24 @@ const FeatureRequests = (props: Props) => {
     },
   ];
 
-  //const featureCategoriesChoices = ["Change font", "Faster website"];
-
   const handleChangeSelectedTopic = (featureCategoryChoice: string) => {
     if (selectedTopic === featureCategoryChoice) {
       setSelectedTopic(null);
     } else {
-      setSelectedTopic(featureCategoryChoice)
+      setSelectedTopic(featureCategoryChoice);
     }
-  }
+  };
 
   const handleChangeSelectedStatus = (statusClicked: {
-    label: string,
-    btnColor: string,
+    label: string;
+    btnColor: string;
   }) => {
     if (selectedStatus === statusClicked.label) {
       setSelectedStatus(null);
     } else {
       setSelectedStatus(statusClicked.label);
     }
-  }
+  };
 
   return (
     <>
@@ -128,6 +144,7 @@ const FeatureRequests = (props: Props) => {
                   <ListItemButton
                     sx={{ pl: 4 }}
                     onClick={() => handleChangeSelectedStatus(statusChoice)}
+                    key={statusChoice.label}
                   >
                     <ListItemIcon>
                       <PanoramaFishEyeIcon
@@ -161,7 +178,11 @@ const FeatureRequests = (props: Props) => {
             <Collapse in={topicsListOpen} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
                 {topicsList.map((topicChoice) => (
-                  <ListItemButton sx={{ pl: 4 }} onClick={() => handleChangeSelectedTopic(topicChoice)}>
+                  <ListItemButton
+                    sx={{ pl: 4 }}
+                    onClick={() => handleChangeSelectedTopic(topicChoice)}
+                    key={topicChoice}
+                  >
                     <ListItemIcon>
                       <TagIcon fontSize="small" />
                     </ListItemIcon>
@@ -169,10 +190,7 @@ const FeatureRequests = (props: Props) => {
                       <div className={styles.listItem}>{topicChoice}</div>
                     </ListItemText>
                     {selectedTopic === topicChoice && (
-                      <TiDelete
-                        size={22}
-                        color="grey"
-                      />
+                      <TiDelete size={22} color="grey" />
                     )}
                   </ListItemButton>
                 ))}
@@ -181,29 +199,45 @@ const FeatureRequests = (props: Props) => {
           </List>
         </div>
         <div className={styles.featuresSectionContainer}>
-          {featureRequestsWithCorrespondingPropsType.length > 0 ? (
+          {filteredFeatureRequests.length > 0 ? (
             <div className={styles.featuresContainer}>
-              {featureRequestsWithCorrespondingPropsType.filter(featReq => {
-                if (selectedTopic) {
-                  return featReq.topics.includes(selectedTopic!)
-                } else {
-                  return featReq;
-                }
-              }).filter(featReq => {
-                if (selectedStatus) {
-                  return featReq.status.toLowerCase() === selectedStatus.toLowerCase()
-                } else {
-                  return featReq;
-                }
-              }).map(
-                (featureRequest) => {
-                  console.log(featureRequest, ' is the damn feature request man!!');
-                  return <FeatureRequestBox
-                  key={featureRequest._id}
-                  featureRequestProperties={featureRequest}
-                />
-                }
-              )}
+              <SearchBar
+                onSearch={(searchedWord) => setSearchedWord(searchedWord)}
+              />
+
+              {filteredFeatureRequests
+                .filter((featReq) => {
+                  if (selectedTopic) {
+                    return featReq.topics.includes(selectedTopic!);
+                  } else {
+                    return featReq;
+                  }
+                })
+                .filter((featReq) => {
+                  if (selectedStatus) {
+                    return (
+                      featReq.status.toLowerCase() ===
+                      selectedStatus.toLowerCase()
+                    );
+                  } else {
+                    return featReq;
+                  }
+                })
+                .filter((featReq) => {
+                  if (searchedWord) {
+                    return featReq.title.toLowerCase().includes(searchedWord.toLowerCase());
+                  } else {
+                    return featReq;
+                  }
+                })
+                .map((featureRequest) => {
+                  return (
+                    <FeatureRequestBox
+                      key={featureRequest._id}
+                      featureRequestProperties={featureRequest}
+                    />
+                  );
+                })}
             </div>
           ) : (
             <div className={styles.emptyDataContainer}>

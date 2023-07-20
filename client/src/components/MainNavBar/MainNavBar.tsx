@@ -1,15 +1,11 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
 import EventNoteIcon from "@mui/icons-material/EventNote";
-import Menu from "@mui/material/Menu";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
 import { SettingsModal } from "../Modals/Settings/SettingsModal";
@@ -21,20 +17,43 @@ import SwitchBoardModal from "../Modals/FeatureRequestModal/SwitchBoard/SwitchBo
 import ShareBoardModal from "../Modals/ShareBoard/ShareBoardModal";
 import DarkModeToggle from "../buttons/DarkModeToggle/DarkModeToggle";
 import styles from "./MainNavBar.module.scss";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ChangeBoardColorModal from "../Modals/ChangeBoardColorModal/ChangeBoardColorModal";
+import ManageBoardModal from "../Modals/ManageBoardModal/ManageBoardModal";
+import SettingsMenu from "../SettingsMenu/SettingsMenu";
+import { UserType } from "../../helpers/types";
 
-const pages: string[] = [];
+const pages: {
+  title: string;
+  url: string;
+}[] = [
+  {
+    title: "your ideas",
+    url: `/user-feature-requests`,
+  },
+  {
+    title: "our ideas",
+    url: `/company-feature-requests`,
+  },
+  {
+    title: "roadmap",
+    url: `/roadmap`,
+  },
+  {
+    title: "changelog",
+    url: `/changelog`,
+  },
+];
 
 const MainNavBar = () => {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null
-  );
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
+  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+  const [settingsRoleFiltered, setSettingsRoleFiltered] = useState<{
+    linkText: string;
+    onClick: () => void;
+  }[]>([]);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const loggedUser = useAppSelector((state) => state.loggedUser);
   const generalPropertiesState = useAppSelector(
     (state) => state.generalProperties
   );
@@ -46,8 +65,7 @@ const MainNavBar = () => {
       withCredentials: true,
     });
     if (response.data.loggedOut) {
-      /*       localStorage.removeItem("board");
-       */ dispatch(
+      dispatch(
         setLoggedUserState({
           user: null,
         })
@@ -80,6 +98,14 @@ const MainNavBar = () => {
     );
   };
 
+  const handleManageBoard = () => {
+    dispatch(
+      setGeneralProperties({
+        manageBoardModalOpen: true,
+      })
+    );
+  };
+
   const handleDisplayIntegrations = () => {
     navigate("/integrations");
   };
@@ -92,18 +118,14 @@ const MainNavBar = () => {
     );
   };
 
-  const handleDisplayChangeBoardColor = () => {
-    dispatch(
-      setGeneralProperties({
-        changeBoardColorModalOpen: true,
-      })
-    );
-  }
-
-  const settings = [
+  const settingsList = [
     {
       linkText: "My account",
       onClick: handleSettingsModal,
+    },
+    {
+      linkText: "Manage this board",
+      onClick: handleManageBoard,
     },
     {
       linkText: "Switch board",
@@ -114,10 +136,6 @@ const MainNavBar = () => {
       onClick: handleShareBoard,
     },
     {
-      linkText: "Change board color",
-      onClick: handleDisplayChangeBoardColor,
-    },
-    {
       linkText: "Integrations",
       onClick: handleDisplayIntegrations,
     },
@@ -126,6 +144,29 @@ const MainNavBar = () => {
       onClick: handleLogout,
     },
   ];
+
+  /*   const handleDisplayChangeBoardColor = () => {
+    dispatch(
+      setGeneralProperties({
+        changeBoardColorModalOpen: true,
+      })
+    );
+  }; */
+
+  useEffect(() => {
+    if (loggedUser.user?.roleOnThisBoard === UserType.admin) {
+      setSettingsRoleFiltered(settingsList);
+    } else {
+      setSettingsRoleFiltered(
+        settingsList.filter(
+          (setting) =>
+            setting.linkText !== "Manage this board" &&
+            setting.linkText !== "Share your board" &&
+            setting.linkText !== "Integrations"
+        )
+      );
+    }
+  }, [generalPropertiesState.activeBoard, loggedUser.user]);
 
   const handleCloseSettingsModal = () => {
     dispatch(
@@ -151,6 +192,14 @@ const MainNavBar = () => {
     );
   };
 
+  const handleCloseManageBoardModal = () => {
+    dispatch(
+      setGeneralProperties({
+        manageBoardModalOpen: false,
+      })
+    );
+  };
+
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -162,6 +211,8 @@ const MainNavBar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const handleGoToLoginPage = () => navigate("/login");
 
   return (
     <AppBar position="static">
@@ -185,71 +236,32 @@ const MainNavBar = () => {
           >
             GOODBOARD
           </Typography>
-          <EventNoteIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            GOODBOARD
-          </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
-                key={page}
-                onClick={handleCloseNavMenu}
+                key={page.title}
+                onClick={() => navigate(page.url)}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
-                {page}
+                {page.title}
               </Button>
             ))}
           </Box>
           <div className={styles.darkModeBtnContainer}>
             <DarkModeToggle />
           </div>
-
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Paramètres">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                {/*                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                 */}{" "}
-                <AccountCircleIcon sx={{ fontSize: 40, color: '#F6F6F6' }} />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting.linkText} onClick={setting.onClick}>
-                  <Typography textAlign="center">{setting.linkText}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+          {loggedUser.user ? (
+            <SettingsMenu
+              anchorElUser={anchorElUser}
+              settings={settingsRoleFiltered}
+              handleCloseUserMenu={handleCloseUserMenu}
+              handleOpenUserMenu={handleOpenUserMenu}
+            />
+          ) : (
+            <div onClick={handleGoToLoginPage} className={styles.logInBtn}>
+              Log in
+            </div>
+          )}
         </Toolbar>
       </Container>
       <SettingsModal
@@ -264,13 +276,20 @@ const MainNavBar = () => {
         modalIsOpen={generalPropertiesState.shareBoardModalOpen}
         handleClose={handleCloseShareBoardModal}
       />
+      <ManageBoardModal
+        modalIsOpen={generalPropertiesState.manageBoardModalOpen}
+        handleClose={handleCloseManageBoardModal}
+      />
       <ChangeBoardColorModal
         modalIsOpen={generalPropertiesState.changeBoardColorModalOpen}
-        handleClose={() => dispatch(setGeneralProperties({
-          changeBoardColorModalOpen: false,
-        }))}
+        handleClose={() =>
+          dispatch(
+            setGeneralProperties({
+              changeBoardColorModalOpen: false,
+            })
+          )
+        }
       />
-      
     </AppBar>
   );
 };

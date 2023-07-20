@@ -1,0 +1,15 @@
+@import '../../../styles/useSpacing';
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    @include useSpacing(margin, xs, 0);
+}
+
+.deleteBtnContainer {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

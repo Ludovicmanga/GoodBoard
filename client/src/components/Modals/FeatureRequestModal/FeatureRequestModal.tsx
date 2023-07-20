@@ -90,7 +90,6 @@ export default function FeatureRequestModal(props: {
 
   useEffect(() => {
     if (props.modalIsOpen && loggedUserState.user) {
-      console.log(props.featureRequestProperties, ' are the feature request properties')
       if (
         props.featureRequestProperties &&
         props.modalMode === FeatureRequestModalMode.update
@@ -105,13 +104,13 @@ export default function FeatureRequestModal(props: {
   const handleSetTopicsList = async () => {
     const topicsListResponse = await getTopicsList();
     setTopicsList(topicsListResponse.data);
-  }
+  };
 
   useEffect(() => {
     if (props.modalIsOpen) {
       handleSetTopicsList();
     }
-  }, [props.modalIsOpen])
+  }, [props.modalIsOpen]);
 
   useEffect(() => {
     if (
@@ -120,12 +119,12 @@ export default function FeatureRequestModal(props: {
       props.modalMode === FeatureRequestModalMode.update
     ) {
       setHasUpdateRights(
-        loggedUserState?.user.type === UserType.admin ||
+        loggedUserState?.user.roleOnThisBoard === UserType.admin ||
+          loggedUserState?.user.roleOnThisBoard === UserType.member ||
           featureRequestProperties?.creator === loggedUserState.user?._id
       );
     }
   }, [featureRequestProperties.creator]);
-
 
   const deleteRequest = async () => {
     const deletedFeature = await axios({
@@ -161,7 +160,7 @@ export default function FeatureRequestModal(props: {
         method: "post",
         data: {
           featureRequest: featureRequestProperties,
-          board: generalPropertiesState.activeBoard,
+          boardId: generalPropertiesState.activeBoard,
         },
         withCredentials: true,
       });
@@ -322,7 +321,7 @@ export default function FeatureRequestModal(props: {
                           keyof typeof FeatureRequestStatus
                         >
                       ).map((status) => (
-                        <MenuItem value={status}>
+                        <MenuItem value={status} key={status}>
                           {capitalizeFirstLetter(status)}
                         </MenuItem>
                       ))}
@@ -331,8 +330,11 @@ export default function FeatureRequestModal(props: {
                 </div>
               )}
               <div className={styles.statusSection}>
-                <div className={styles.statusSectionTitle}>Topic :</div>
                 <Autocomplete
+                  readOnly={
+                    props.modalMode === FeatureRequestModalMode.update &&
+                    !hasUpdateRights
+                  }
                   multiple
                   onChange={(e, value) => {
                     setFeatureRequestProperties((propertiesState) => {

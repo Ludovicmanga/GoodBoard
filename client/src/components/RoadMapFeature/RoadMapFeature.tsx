@@ -9,6 +9,8 @@ import {
   UserType,
 } from "../../helpers/types";
 import FeatureRequestModal from "../Modals/FeatureRequestModal/FeatureRequestModal";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
 
 type Props = {
   featureRequest: FeatureRequest;
@@ -19,8 +21,18 @@ const RoadMapFeature = (props: Props) => {
     extendedFeatureRequestsModalOpen,
     setExtendedFeatureRequestsModalOpen,
   ] = useState(false);
+  const dispatch = useAppDispatch();
+  const loggedUser = useAppSelector(state => state.loggedUser);
   const handleOpenFeatureRequestModal = () => {
-    setExtendedFeatureRequestsModalOpen(true);
+    if (loggedUser.user) {
+      setExtendedFeatureRequestsModalOpen(true);
+    } else {
+      dispatch(
+        setGeneralProperties({
+          cannotMakeActionModalOpen: true,
+        })
+      );
+    }
   };
 
   const handleCloseModal = () => {

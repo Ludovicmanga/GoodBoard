@@ -1,12 +1,11 @@
 import boardModel from "../models/board.model";
 import boardUserRelModel from "../models/boardUserRel.model";
 import { getAllBoardFeatureRequestsHelper } from "../helpers/featureRequests";
-import {
-  generateJwtToken,
-  secretKey,
-  verifyJwtToken,
-  websiteUrl,
-} from "../helpers/auth";
+import { secretKey, verifyJwtToken, websiteUrl } from "../helpers/auth";
+import { UserRoles } from "../helpers/types";
+import userModel from "../models/user.model";
+import { checkUserHasAccessToBoard, giveAccessToBoard, sendEmailToUser } from "../helpers/boards";
+import { generateStrongPassword } from "../utils/utils";
 
 export const updateColor = async (req, res) => {
   try {
@@ -63,16 +62,13 @@ export const createBoard = async (req, res) => {
         name: req.body.name,
         description: req.body.description,
         themeColor: req.body.themeColor,
-        privateUrl: "emptyUrl",
-        publicUrl: "emptyUrl",
+        isPublic: req.body.boardIsPublic,
       });
       newBoard
         .save()
         .then((savedObject) => {
-          const token = generateJwtToken(savedObject.id, secretKey);
-          const publicUrl = `${websiteUrl}/api/board/${token}`;
-          savedObject.privateUrl = `${websiteUrl}/api/board/${savedObject.id}`;
-          savedObject.publicUrl = publicUrl;
+          //const token = generateJwtToken(savedObject.id, secretKey);
+          savedObject.url = `${websiteUrl}/view-board/${savedObject.id}`;
           savedObject.save();
         })
         .catch((error) => console.log(error));
@@ -80,7 +76,7 @@ export const createBoard = async (req, res) => {
       const newBoardUserRelation = new boardUserRelModel({
         user: req.user.id,
         board: newBoard.id,
-        userRole: "company",
+        userRole: UserRoles.admin,
       });
 
       newBoardUserRelation.save().catch((error) => console.log(error));
@@ -96,13 +92,11 @@ export const createBoard = async (req, res) => {
 export const getShareUrl = async (req, res) => {
   try {
     const foundBoard = await boardModel.findOne({ _id: req.body.boardId });
-    if (req.body.publicStatus === true) {
-      res.status(200).send({ url: foundBoard.publicUrl });
+    if (foundBoard) {
+      res.status(200).send({ url: foundBoard.url });
+    } else {
+      res.status(200).send({ url: '' });
     }
-    if (req.body.publicStatus === false) {
-      res.status(200).send({ url: foundBoard.privateUrl });
-    }
-    return null;
   } catch (e) {
     console.log(e, " is the error");
   }
@@ -119,6 +113,151 @@ export const getPublicBoard = async (req, res) => {
     } else {
       new Error("no board id found");
     }
+  } catch (e) {
+    console.log(e, " is the error");
+  }
+};
+
+export const uploadImage = (req, res) => {
+  console.log("I will upload the image");
+};
+
+export const updatePublicStatus = async (req, res) => {
+  try {
+    const updatedBoard = await boardModel.findOneAndUpdate(
+      { _id: req.body.activeBoard },
+      {
+        isPublic: req.body.publicStatus,
+      },
+      {
+        new: true,
+      }
+    );
+    if (updatedBoard) {
+      res.send(req.body.publicStatus);
+    }
+  } catch (e) {
+    console.log(e, "is the error");
+  }
+};
+
+export const getPublicStatus = async (req, res) => {
+  try {
+    const foundBoardStatus = await boardModel
+      .findById(req.body.activeBoard)
+      .select("isPublic");
+    if (foundBoardStatus) {
+      res.send(foundBoardStatus.isPublic);
+    }
+  } catch (e) {
+    console.log(e, "is the error");
+  }
+};
+
+export const deleteUserFromBoard = async (req, res) => {
+  try {
+    const userFound = await userModel.findOne({ email: req.body.userEmail });
+    const deletedUser = await boardUserRelModel.findOneAndDelete({
+      user: userFound._id,
+      board: req.body.boardId,
+    });
+    if (deletedUser) {
+      res.send("deleted");
+    }
+  } catch (e) {
+    console.log(e, " is the error");
+  }
+};
+
+export const updateUserRole = async (req, res) => {
+  try {
+    const userFound = await userModel.findOne({ email: req.body.userEmail });
+    const updatedUser = await boardUserRelModel.findOneAndUpdate(
+      {
+        user: userFound._id,
+        board: req.body.boardId,
+      },
+      {
+        userRole: req.body.role,
+      },
+      { new: true }
+    );
+    if (updatedUser) {
+      res.status(200).send(updatedUser);
+    }
+  } catch (e) {
+    console.log(e, " is the error");
+  }
+};
+
+export const getBoardUsersList = async (req, res) => {
+  try {
+    const boardUserRels = await boardUserRelModel.find({
+      board: req.params.boardId,
+    });
+
+    const userIds = boardUserRels.map((boardUserRel) => boardUserRel.user);
+
+    const usersLinkedToBoard = await userModel.find({
+      _id: {
+        $in: userIds,
+      },
+    });
+    if (usersLinkedToBoard) {
+      const usersMappedWithRole = usersLinkedToBoard
+        .map((user) => {
+          return {
+            email: user.email,
+            role: boardUserRels.find(
+              (rel) => rel.user.toString() === user._id.toString()
+            ).userRole,
+          };
+        })
+        .filter((userMapped) => userMapped && userMapped.email !== req.user.email);
+      res.send(usersMappedWithRole || []);
+    }
+  } catch (e) {
+    console.log(e, " is the error");
+  }
+};
+
+export const inviteUsers = async (req, res) => {
+  try {
+    /// Gérer la logique d'invitation, de A à Z.
+/*     const userEmails = req.body.usersToInviteList.map(
+      (userToInvite) => userToInvite.email
+    ); */
+
+    for (const userToInvite of req.body.usersToInviteList) {
+      const foundUser = await userModel.findOne({
+        email: userToInvite.email,
+      });
+      if (foundUser) {
+        const userHasAccessToBoard = await checkUserHasAccessToBoard(
+          foundUser._id,
+          req.body.boardId
+        );
+        if (userHasAccessToBoard) {
+          console.log("user already has access to board");
+        } else {
+          await giveAccessToBoard(foundUser._id, req.body.boardId, userToInvite.role);
+        }
+      } else {
+        const randomPassword = generateStrongPassword(10);
+         const newUser = new userModel({
+          email: userToInvite.email,
+          password: randomPassword,
+          type: "user",
+        }); 
+
+        const newUserSaved = await newUser.save().catch((error) => {
+          console.log("didnt work because ", error);
+        });
+        await giveAccessToBoard(newUserSaved._id, req.body.boardId, userToInvite.role);
+        await sendEmailToUser(userToInvite.email, randomPassword); 
+      }
+    }
+    res.send('all good');
   } catch (e) {
     console.log(e, " is the error");
   }
