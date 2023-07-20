@@ -1,11 +1,12 @@
 import featureRequestModel from "../models/featureRequest.model";
 import userModel from "../models/user.model";
-import topicModel from "../models/topic.module";
+import topicModel from "../models/topic.model";
 import featureTopicRelModel from "../models/featureTopicRelModel";
 import { UserRoles } from "../helpers/types";
 import boardModel from "../models/board.model";
 import { getAllBoardFeatureRequestsMappedWithTopics } from "../helpers/featureRequests";
 import { checkUserHasAccessToBoard } from "../helpers/boards";
+import boardUserRelModel from "../models/boardUserRel.model";
 
 export const getAllFeatureRequests = async (req, res) => {
   await featureRequestModel
@@ -32,7 +33,7 @@ export const getAllBoardFeatureRequests = async (req, res) => {
         } else {
           userHasAccessToTheBoard = false;
         }
-       if (userHasAccessToTheBoard) {
+        if (userHasAccessToTheBoard) {
           const mapped = await getAllBoardFeatureRequestsMappedWithTopics(
             req.body.boardId
           );
@@ -117,21 +118,30 @@ export const updateFeatureRequest = async (req, res) => {
 };
 
 export const createFeatureRequest = async (req, res) => {
-  const featureRequestData = req.body.featureRequest;
+  try {
+    const featureRequestData = req.body.featureRequest;
 
-  const newFeatureRequest = new featureRequestModel({
-    title: featureRequestData.title,
-    details: featureRequestData.details,
-    creatorType: req.user.type,
-    status: featureRequestData.status,
-    creator: req.user.id,
-    board: req.body.board,
-  });
+    const foundUserBoardRel = await boardUserRelModel.findOne({
+      user: req.user.id,
+      board: req.body.boardId,
+    });
 
-  newFeatureRequest
-    .save()
-    .then((featureRequest) => res.status(200).send(featureRequest))
-    .catch((error) => console.log(error));
+    const newFeatureRequest = new featureRequestModel({
+      title: featureRequestData.title,
+      details: featureRequestData.details,
+      creatorType: foundUserBoardRel.userRole,
+      status: featureRequestData.status,
+      creator: req.user.id,
+      board: req.body.boardId,
+    });
+
+    newFeatureRequest
+      .save()
+      .then((featureRequest) => res.status(200).send(featureRequest))
+      .catch((error) => console.log(error));
+  } catch (e) {
+    console.log(e, " is the error message");
+  }
 };
 
 export const upVote = async (req, res) => {

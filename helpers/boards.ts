@@ -13,7 +13,7 @@ export const checkUserHasAccessToBoard = async (
     .map((boardUserRel) => boardUserRel.board)
     .find((board) => board.toString() === boardId);
 
-  return boardFound.toString().length > 0;
+  return boardFound && boardFound.toString().length > 0;
 };
 
 export const sendEmailToUser = async (userEmail: string[], password: string) => {

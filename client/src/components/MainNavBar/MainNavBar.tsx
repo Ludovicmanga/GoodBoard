@@ -26,11 +26,11 @@ const pages: {
   url: string;
 }[] = [
   {
-    title: "our ideas",
+    title: "your ideas",
     url: `/user-feature-requests`,
   },
   {
-    title: "your ideas",
+    title: "our ideas",
     url: `/company-feature-requests`,
   },
   {
@@ -186,7 +186,7 @@ const MainNavBar = () => {
         manageBoardModalOpen: false,
       })
     );
-  };  
+  };
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -199,7 +199,7 @@ const MainNavBar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-  
+
   const handleGoToLoginPage = () => navigate("/login");
 
   const loggedUser = useAppSelector((state) => state.loggedUser);
@@ -240,7 +240,18 @@ const MainNavBar = () => {
           <div className={styles.darkModeBtnContainer}>
             <DarkModeToggle />
           </div>
-          { loggedUser.user ? (<SettingsMenu anchorElUser={anchorElUser} settings={settings} handleCloseUserMenu={handleCloseUserMenu} handleOpenUserMenu={handleOpenUserMenu} />) : <div onClick={handleGoToLoginPage} className={styles.logInBtn}>Log in</div> }
+          {loggedUser.user ? (
+            <SettingsMenu
+              anchorElUser={anchorElUser}
+              settings={settings}
+              handleCloseUserMenu={handleCloseUserMenu}
+              handleOpenUserMenu={handleOpenUserMenu}
+            />
+          ) : (
+            <div onClick={handleGoToLoginPage} className={styles.logInBtn}>
+              Log in
+            </div>
+          )}
         </Toolbar>
       </Container>
       <SettingsModal

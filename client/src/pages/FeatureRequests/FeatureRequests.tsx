@@ -1,7 +1,7 @@
 import NewFeatureRequestsButton from "../../components/buttons/NewFeatureRequestButton/NewFeatureRequestsButton";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import FeatureRequestBox from "../../components/FeatureRequestBox/FeatureRequestBox";
-import { EmptyPageType, MenuSelected, UserType } from "../../helpers/types";
+import { EmptyPageType, FeatureRequest, MenuSelected, UserType } from "../../helpers/types";
 import React, { useEffect, useState } from "react";
 import EmptyData from "../../components/EmptyData/EmptyData";
 import styles from "./FeatureRequests.module.scss";
@@ -20,43 +20,58 @@ import TagIcon from "@mui/icons-material/Tag";
 import { TiDelete } from "react-icons/ti";
 import { getTopicsList } from "../../helpers/topics";
 import SearchBar from "../../components/SearchBar/SearchBar";
-import CannotMakeActionAsGuestModal from "../../components/Modals/CannotMakeActionAsGuestModal/CannotMakeActionAsGuestModal";
 
 type Props = {
   type: UserType;
 };
 
 const FeatureRequests = (props: Props) => {
-  const allFeatureRequests = useAppSelector(
-    (state) => state.allFeatureRequests
-  );
-  const featureRequestsWithCorrespondingPropsType = allFeatureRequests.filter(
-    (featureRequest) => featureRequest.creatorType === props.type
-  );
-  const dispatch = useAppDispatch();
-  const menuSelectedState = useAppSelector(
-    (state) => state.generalProperties.menuSelected
-  );
-
   const [statusListOpen, setStatusListOpen] = useState(true);
   const [topicsListOpen, setTopicsListOpen] = useState(true);
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
   const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
   const [topicsList, setTopicsList] = useState<string[]>([]);
   const [searchedWord, setSearchedWord] = useState<string | null>(null);
+  const [filteredFeatureRequests, setFilteredFeatureRequests] = useState<FeatureRequest[]>([]);
+
+  const allFeatureRequests = useAppSelector(
+    (state) => state.allFeatureRequests
+  );
+
+  const dispatch = useAppDispatch();
+  const menuSelectedState = useAppSelector(
+    (state) => state.generalProperties.menuSelected
+  );
+
 
   const handleSetTopicsList = async () => {
     const topicsListResponse = await getTopicsList();
     setTopicsList(topicsListResponse.data);
   };
-  const generalPropertiesState = useAppSelector(state => state.generalProperties);
+
+  
+  const handleSetCorrespondingFeatures = () => {
+    console.log(props.type, ' is the props type');
+    if (props.type === UserType.externalUser) {
+      const featureRequestsWithCorrespondingPropsType = allFeatureRequests.filter(
+        (featureRequest) => featureRequest.creatorType === UserType.externalUser
+      );
+      setFilteredFeatureRequests(featureRequestsWithCorrespondingPropsType);
+    } else {
+      console.log('im heree!!!')
+      const featureRequestsWithCorrespondingPropsType = allFeatureRequests.filter(
+        (featureRequest) => featureRequest.creatorType !== UserType.externalUser
+      );
+      setFilteredFeatureRequests(featureRequestsWithCorrespondingPropsType);
+    }
+  }
 
   useEffect(() => {
     handleSetTopicsList();
   }, []);
 
   useEffect(() => {
-    if (props.type === UserType.user) {
+    if (props.type === UserType.externalUser) {
       dispatch(
         setGeneralProperties({
           menuSelected: MenuSelected.yourIdeas,
@@ -70,6 +85,12 @@ const FeatureRequests = (props: Props) => {
       );
     }
   }, [menuSelectedState]);
+
+  useEffect(()=> {
+    if (allFeatureRequests.length > 0) {
+      handleSetCorrespondingFeatures();
+    }
+  }, [allFeatureRequests, props.type])
 
   const statusChoices = [
     {
@@ -176,13 +197,13 @@ const FeatureRequests = (props: Props) => {
           </List>
         </div>
         <div className={styles.featuresSectionContainer}>
-          {featureRequestsWithCorrespondingPropsType.length > 0 ? (
+          {filteredFeatureRequests.length > 0 ? (
             <div className={styles.featuresContainer}>
               <SearchBar
                 onSearch={(searchedWord) => setSearchedWord(searchedWord)}
               />
 
-              {featureRequestsWithCorrespondingPropsType
+              {filteredFeatureRequests
                 .filter((featReq) => {
                   if (selectedTopic) {
                     return featReq.topics.includes(selectedTopic!);

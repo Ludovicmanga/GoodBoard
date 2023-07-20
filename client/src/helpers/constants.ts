@@ -21,7 +21,6 @@ export const websiteUrl =
 
 export const rolesList: UserType[] = [
   UserType.admin,
-  UserType.externalUser,
   UserType.member,
-  UserType.user,
+  UserType.externalUser,
 ];

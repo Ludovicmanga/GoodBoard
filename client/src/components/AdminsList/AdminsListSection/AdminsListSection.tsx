@@ -30,16 +30,30 @@ const AdminsListSection = (props: Props) => {
     }
   };
 
-  const handleChangeUserRole = async (userEmail: string, role: string) => {
-    const response = await axios({
+  const handleChangeUserRole = async (userEmail: string, newRole: string) => {
+     const response = await axios({
       method: "put",
       url: `${websiteUrl}/api/board/update-user-role`,
       withCredentials: true,
-      data: { boardId: activeBoardId, userEmail, role },
+      data: { boardId: activeBoardId, userEmail, role: newRole },
     });
     if (response.data) {
-      setBoardAdminsList(response.data);
-    }
+      setBoardAdminsList(currList => currList.map(adminInList => {
+        if (adminInList.email === userEmail) {
+          return { ...adminInList, role: newRole }
+        } else {
+          return adminInList;
+        }
+      }));
+      dispatch(
+        setGeneralProperties({
+          mainSnackBar: {
+            isOpen: true,
+            message: `The role of ${userEmail} was successfully changed to ${newRole}`,
+          },
+        })
+      )
+    } 
   };
 
   const handleDeleteAdmin = async (userEmail: string) => {
@@ -55,7 +69,7 @@ const AdminsListSection = (props: Props) => {
         setGeneralProperties({
           mainSnackBar: {
             isOpen: true,
-            message: `the access of ${userEmail} was deleted from this board`,
+            message: `The access of ${userEmail} was deleted from this board`,
           },
         })
       )

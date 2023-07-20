@@ -59,7 +59,7 @@ export default function Index() {
             />
             <Route
               path="/user-feature-requests"
-              element={<FeatureRequests type={UserType.user} />}
+              element={<FeatureRequests type={UserType.externalUser} />}
             />
 
             <Route path="/roadmap" element={<Roadmap />} />

@@ -160,7 +160,7 @@ export default function FeatureRequestModal(props: {
         method: "post",
         data: {
           featureRequest: featureRequestProperties,
-          board: generalPropertiesState.activeBoard,
+          boardId: generalPropertiesState.activeBoard,
         },
         withCredentials: true,
       });

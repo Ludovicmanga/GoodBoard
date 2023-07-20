@@ -167,14 +167,14 @@ export const deleteUserFromBoard = async (req, res) => {
 
 export const updateUserRole = async (req, res) => {
   try {
-    const userFound = await userModel.find({ email: req.body.userEmail });
+    const userFound = await userModel.findOne({ email: req.body.userEmail });
     const updatedUser = await boardUserRelModel.findOneAndUpdate(
       {
-        user: userFound.toString(),
+        user: userFound._id,
         board: req.body.boardId,
       },
       {
-        role: req.body.role,
+        userRole: req.body.role,
       },
       { new: true }
     );
@@ -239,7 +239,6 @@ export const inviteUsers = async (req, res) => {
           await giveAccessToBoard(foundUser._id, req.body.boardId, userToInvite.role);
         }
       } else {
-        console.log('user doesnt exist yet')
         const randomPassword = generateStrongPassword(10);
          const newUser = new userModel({
           email: userToInvite.email,

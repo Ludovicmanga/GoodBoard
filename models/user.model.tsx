@@ -16,11 +16,6 @@ const userSchema = new mongoose.Schema(
             max: 1024,
             minlength: 6
         },
-        type: {
-            type: String,
-            required: true,
-            max: 1024
-        },
         picture: {
             type: String,
             required: false,

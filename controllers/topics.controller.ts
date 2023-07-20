@@ -1,4 +1,4 @@
-import topicModel from "../models/topic.module"
+import topicModel from "../models/topic.model"
 
 export const getAllTopics = async (req, res) => {
     const topics = await topicModel.find();

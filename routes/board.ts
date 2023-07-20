@@ -28,7 +28,7 @@ router.post("/update-public-status", updatePublicStatus);
 router.post("/get-share-url", getShareUrl);
 router.post("/upload-image", uploadImage);
 router.post('/delete-user', deleteUserFromBoard);
-router.post('/update-user-role', updateUserRole);
+router.put('/update-user-role', updateUserRole);
 //router.get('/:token', getPublicBoard);
 
 export default router;

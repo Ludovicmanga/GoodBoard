@@ -72,7 +72,6 @@ const Login = (props: Props) => {
         data: {
           email,
           password,
-          type: UserType.user
         }
       });
       setButtonIsLoading(false);

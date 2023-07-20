@@ -27,7 +27,6 @@ type Props = {
 const ManageBoardModal = (props: Props) => {
   const [boardIsPublic, setBoardIsPublic] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [role, setRole] = useState("admin");
 
   const generalPropertiesState = useAppSelector(
     (state) => state.generalProperties
@@ -66,10 +65,6 @@ const ManageBoardModal = (props: Props) => {
   useEffect(() => {
     handleGetPublicStatus();
   }, [props.modalIsOpen]);
-
-  useEffect(() => {
-    //getUsersList();
-  }, []);
 
   return (
     <div>

@@ -1,6 +1,6 @@
 import featureRequestModel from "../models/featureRequest.model";
 import featureTopicRelModel from "../models/featureTopicRelModel";
-import topicModel from "../models/topic.module";
+import topicModel from "../models/topic.model";
 
 export const getAllBoardFeatureRequestsHelper = async (boardId: string) => {
   return await featureRequestModel.find({ board: boardId });
