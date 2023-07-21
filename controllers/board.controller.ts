@@ -10,10 +10,6 @@ import {
   sendEmailToUser,
 } from "../helpers/boards";
 import { generateStrongPassword } from "../utils/utils";
-import path from "path";
-import { fileURLToPath } from "url";
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 export const updateColor = async (req, res) => {
   try {
@@ -71,6 +67,7 @@ export const createBoard = async (req, res) => {
         description: req.body.description,
         themeColor: req.body.themeColor,
         isPublic: req.body.boardIsPublic,
+        websiteUrl: req.body.website,
       });
       newBoard
         .save()
@@ -126,15 +123,28 @@ export const getPublicBoard = async (req, res) => {
   }
 };
 
-export const uploadImage = (req, res) => {
+export const setBoardImage = async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ message: "No image file provided." });
     }
-    const imagePath = path.join(__dirname, req.file.path);
-    console.log("Image uploaded:", imagePath);
+    const { boardId } = req.body;
+    const fileUrl = req.file.location;
 
-    return res.status(200).json({ message: "Image uploaded successfully." });
+    if (req.body.boardId) {
+      const boardFoundInDB = await boardModel.findOneAndUpdate(
+        { _id: boardId },
+        {
+          picture: fileUrl,
+        },
+        {
+          new: true,
+        }
+      );
+      if (boardFoundInDB) {
+        res.status(200).json({ url: fileUrl });
+      }
+    }
   } catch (e) {
     console.log(e, " is the error");
   }
@@ -243,11 +253,6 @@ export const getBoardUsersList = async (req, res) => {
 
 export const inviteUsers = async (req, res) => {
   try {
-    /// Gérer la logique d'invitation, de A à Z.
-    /*     const userEmails = req.body.usersToInviteList.map(
-      (userToInvite) => userToInvite.email
-    ); */
-
     for (const userToInvite of req.body.usersToInviteList) {
       const foundUser = await userModel.findOne({
         email: userToInvite.email,

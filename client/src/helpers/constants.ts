@@ -12,6 +12,7 @@ export const emptyFeatureRequest: FeatureRequest = {
   updatedAt: "",
   board: "",
   topics: [],
+  votersPics: []
 };
 
 export const websiteUrl =

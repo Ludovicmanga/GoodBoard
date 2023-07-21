@@ -40,6 +40,12 @@
     justify-content: center;
 }
 
+.changePictureBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .submitButton {
     @include useSpacing(margin, m, 0, 0, 0);
 }

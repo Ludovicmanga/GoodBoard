@@ -16,7 +16,6 @@ import {
   TextField,
 } from "@mui/material";
 import styles from "./FeatureRequestModal.module.scss";
-import ludoPhoto from "../../../photos/ludoImg.jpg";
 import { useState } from "react";
 import {
   FeatureRequest,
@@ -280,14 +279,14 @@ export default function FeatureRequestModal(props: {
                       className={styles.avatarGroup}
                       total={featureRequestProperties.voters?.length}
                     >
-                      {featureRequestProperties.voters.length > 0 ? (
-                        featureRequestProperties.voters
-                          ?.slice(0, 4)
-                          .map((voter) => (
+                      {featureRequestProperties.votersPics.length > 0 ? (
+                        featureRequestProperties.votersPics
+                          .slice(0, 4)
+                          .map((voterPic) => (
                             <Avatar
-                              key={voter}
+                              key={voterPic}
                               alt="Voters pic"
-                              src={ludoPhoto}
+                              src={voterPic}
                             />
                           ))
                       ) : (

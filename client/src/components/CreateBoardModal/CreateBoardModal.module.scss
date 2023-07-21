@@ -5,6 +5,10 @@
     @include useSpacing(margin,m,0,s,0);
 }
 
+.uploadImgBtnContainer {
+    @include useSpacing(margin,s,0,0,0);
+}
+
 .submitBtn {
     @include useSpacing(margin,m,0,0,0);
 }

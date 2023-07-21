@@ -1,11 +1,13 @@
-import { Avatar, Badge, IconButton } from "@mui/material";
+import { Avatar, IconButton } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./EmptyImage.module.scss";
 import Add from "@mui/icons-material/Add";
-import axios from "axios";
-import { websiteUrl } from "../../helpers/constants";
 
-type Props = {};
+type Props = {
+  handleUploadedImage: (selectedFile: File) => void;
+  height: number;
+  width: number;
+};
 
 const EmptyImage = (props: Props) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -15,31 +17,8 @@ const EmptyImage = (props: Props) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleUploadFile = async () => {
-    console.log('ok', selectedFile);
-    if (!selectedFile) return;
-
-    const formData = new FormData();
-    formData.append("image", selectedFile);
-
-    try {
-      const res = await axios({
-        url: `${websiteUrl}/api/board/upload-image`,
-        method: "post",
-        withCredentials: true,
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-        data: formData,
-      });
-      if (res.data) {
-        setSelectedFile(null);
-        if (fileInputRef.current) {
-          fileInputRef.current.value = "";
-        }
-      }
-      console.log("Image uploaded successfully!");
-    } catch (error) {
-      console.error("Error uploading image:", error);
+    if (selectedFile) {
+      await props.handleUploadedImage(selectedFile);
     }
   };
 
@@ -53,8 +32,8 @@ const EmptyImage = (props: Props) => {
     <div className={styles.container}>
       <Avatar
         sx={{
-          height: 85,
-          width: 85,
+          height: props.height,
+          width: props.width,
           bgcolor: "white",
         }}
         variant="rounded"

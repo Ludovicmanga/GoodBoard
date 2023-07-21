@@ -150,6 +150,7 @@ function App() {
             email: user.email,
             roleOnThisBoard: userResponse.data.roleUserOnThisBoard,
             voted: user.voted,
+            picture: user.picture,
           },
         })
       );
