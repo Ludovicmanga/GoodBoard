@@ -1,40 +1,76 @@
 import { useState } from "react";
 import styles from "./Login.module.scss";
 import Avatar from "@mui/material/Avatar";
-import LoadingButton from '@mui/lab/LoadingButton';
+import LoadingButton from "@mui/lab/LoadingButton";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { GoogleLogin } from "@react-oauth/google";
+import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
 import { Divider, Grid } from "@mui/material";
 import axios from "axios";
 import { AuthPageType, User } from "../../helpers/types";
 import { useAppDispatch } from "../../redux/hooks";
 import { setLoggedUserState } from "../../redux/features/loggedUserSlice";
 import { useNavigate } from "react-router-dom";
-import Link from '@mui/material/Link'
+import Link from "@mui/material/Link";
 import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
 import { websiteUrl } from "../../helpers/constants";
-import React from 'react';
-
+import React from "react";
 
 type Props = {
   authType: AuthPageType;
 };
 
 const Login = (props: Props) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [buttonIsLoading, setButtonIsLoading] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleAuthOnEnter = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if(e.key === 'Enter'){
+    if (e.key === "Enter") {
       handleAuth();
     }
+  };
+
+  const handleGoogleAuth = async (credentialResponse: CredentialResponse) => {
+    try {
+      setButtonIsLoading(true);
+      const userResponse = await axios({
+        url: `${websiteUrl}/api/users/login-google`,
+        method: "post",
+        data: { credentialResponse },
+        withCredentials: true,
+      });
+      if (userResponse.data.user) {
+        handleSuccessfulLogin(userResponse.data.user);
+      }
+      setButtonIsLoading(false);
+    } catch (e) {
+      setButtonIsLoading(false);
+      console.log(e, ' is the error');
+    }
+  }
+
+
+  const handleSuccessfulLogin = (user: User) => {
+      dispatch(
+        setLoggedUserState({
+          user,
+        })
+      );
+      navigate("/");
+      dispatch(
+        setGeneralProperties({
+          mainSnackBar: {
+            isOpen: true,
+            message: `Welcome ${user.email} !`,
+          },
+        })
+      );
   }
 
   const handleAuth = async () => {
@@ -51,18 +87,7 @@ const Login = (props: Props) => {
       });
       setButtonIsLoading(false);
       if (userResponse.data.user) {
-        dispatch(setLoggedUserState({
-          user: userResponse.data.user,
-        }));
-        navigate("/");
-        dispatch(
-          setGeneralProperties({
-            mainSnackBar: {
-              isOpen: true,
-              message: `Welcome ${userResponse.data.user.email} !`,
-            },
-          })
-        )
+        handleSuccessfulLogin(userResponse.data.user);
       }
     }
     if (props.authType === AuthPageType.signUp) {
@@ -73,7 +98,7 @@ const Login = (props: Props) => {
         data: {
           email,
           password,
-        }
+        },
       });
       setButtonIsLoading(false);
       if (signUpResponse.data.user) {
@@ -85,11 +110,11 @@ const Login = (props: Props) => {
               message: "Successful sign up !",
             },
           })
-        )
+        );
       }
     }
-  }
-
+  };
+  
   return (
     <div className={styles.container}>
       <Container component="main" maxWidth="xs">
@@ -104,11 +129,11 @@ const Login = (props: Props) => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            { props.authType === AuthPageType.login ? 'Sign In' :  'Sign up' }
+            {props.authType === AuthPageType.login ? "Sign In" : "Sign up"}
           </Typography>
           <Box component="form" noValidate sx={{ mt: 1 }}>
             <TextField
-              onChange={(e) => setEmail(e.target.value) }
+              onChange={(e) => setEmail(e.target.value)}
               margin="normal"
               required
               fullWidth
@@ -119,7 +144,7 @@ const Login = (props: Props) => {
               autoFocus
             />
             <TextField
-              onChange={(e) => setPassword(e.target.value) }
+              onChange={(e) => setPassword(e.target.value)}
               onKeyDown={handleAuthOnEnter}
               margin="normal"
               required
@@ -137,8 +162,18 @@ const Login = (props: Props) => {
                 </Link>
               </Grid>
               <Grid item>
-                <Link className={styles.link} href={ props.authType === AuthPageType.login ? `${websiteUrl}/sign-up` : `${websiteUrl}/login`} variant="body2">
-                  {props.authType === AuthPageType.login ? "Don't have an account? Sign Up" : "Already have an account? Log in"}
+                <Link
+                  className={styles.link}
+                  href={
+                    props.authType === AuthPageType.login
+                      ? `${websiteUrl}/sign-up`
+                      : `${websiteUrl}/login`
+                  }
+                  variant="body2"
+                >
+                  {props.authType === AuthPageType.login
+                    ? "Don't have an account? Sign Up"
+                    : "Already have an account? Log in"}
                 </Link>
               </Grid>
             </Grid>
@@ -150,12 +185,12 @@ const Login = (props: Props) => {
                 variant="contained"
                 className={styles.button}
               >
-                { props.authType === AuthPageType.login ? 'Sign In' :  'Sign up' }
+                {props.authType === AuthPageType.login ? "Sign In" : "Sign up"}
               </LoadingButton>
               <Divider className={styles.divider} />
               <GoogleLogin
-                onSuccess={(credentialResponse) => {
-                  console.log(credentialResponse);
+                onSuccess={async (credentialResponse) => {
+                  await handleGoogleAuth(credentialResponse);
                 }}
                 onError={() => {
                   console.log("Login Failed");

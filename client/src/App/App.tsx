@@ -24,9 +24,7 @@ function App() {
   const generalPropertiesState = useAppSelector(
     (state) => state.generalProperties
   );
-  const loggedUserState = useAppSelector(
-    (state) => state.loggedUser
-  );
+
 
   const lightTheme = createTheme({
     palette: {
