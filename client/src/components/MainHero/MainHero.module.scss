@@ -64,7 +64,8 @@
 }
 
 .companyLogo {
-    @include useSpacing(margin, m , m, m, m);
+    @include useSpacing(margin, m , 0, m, m);
+    cursor: pointer;
 }
 
 .socialNetworkIcon {

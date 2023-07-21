@@ -9,11 +9,15 @@ import { Avatar, Button, Card, Paper, TextField } from "@mui/material";
 import axios from "axios";
 import { websiteUrl } from "../../../helpers/constants";
 import { setGeneralProperties } from "../../../redux/features/generalPropertiesSlice";
-import { setEmail as setEmailRedux } from "../../../redux/features/loggedUserSlice";
+import {
+  setEmail as setEmailRedux,
+  setLoggedUserState,
+} from "../../../redux/features/loggedUserSlice";
 import { validateEmail } from "../../../helpers/utils";
 import styles from "./SettingsModal.module.scss";
-import Add from "@mui/icons-material/Add";
 import { FaPortrait } from "react-icons/fa";
+import EmptyImage from "../../EmptyImage/EmptyImage";
+import { updateUserProfilePictureApiCall } from "../../../helpers/users";
 
 type Props = {
   modalIsOpen: boolean;
@@ -25,7 +29,6 @@ export const SettingsModal = (props: Props) => {
   const [email, setEmail] = useState(loggedUser?.user?.email);
   const [wrongFormatEmail, setWrongFormatEmail] = useState<boolean>(false);
   const [emailErrorHelperText, setEmailErrorHelperText] = useState<string>("");
-
   const dispatch = useAppDispatch();
 
   const handleChangeUserEmail = async () => {
@@ -61,6 +64,17 @@ export const SettingsModal = (props: Props) => {
           setEmailErrorHelperText("");
         }, 3000);
       }
+    }
+  };
+
+  const handleChangeProfilePicture = async (selectedFile: File) => {
+    const response = await updateUserProfilePictureApiCall(selectedFile);
+    if (response.data) {
+      dispatch(
+        setLoggedUserState({
+          user: response.data,
+        })
+      );
     }
   };
 
@@ -109,9 +123,17 @@ export const SettingsModal = (props: Props) => {
                 </div>
                 <div className={styles.iconSubtext}>Picture</div>
               </Card>
-              <Avatar variant="rounded">
-                <Add />
-              </Avatar>
+              <div className={styles.changePictureBtn}>
+                {loggedUser?.user?.picture ? (
+                  <Avatar src={loggedUser?.user?.picture} variant='rounded' />
+                ) : (
+                  <EmptyImage
+                    handleUploadedImage={handleChangeProfilePicture}
+                    height={30}
+                    width={30}
+                  />
+                )}
+              </div>
             </div>
             <Button
               className={styles.submitButton}

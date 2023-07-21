@@ -10,77 +10,115 @@ import { Board } from "../../helpers/types";
 import EmptyImage from "../EmptyImage/EmptyImage";
 import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
 import CannotMakeActionAsGuestModal from "../Modals/CannotMakeActionAsGuestModal/CannotMakeActionAsGuestModal";
+import { setActiveBoardData } from "../../redux/features/activeBoardSlice";
+import { setBoardImageApiCall } from "../../helpers/boards";
 
 type Props = {};
 
 const MainHero = (props: Props) => {
-  const generalPropertiesState = useAppSelector((state) => state.generalProperties);
+  const generalPropertiesState = useAppSelector(
+    (state) => state.generalProperties
+  );
+  const activeBoardState = useAppSelector((state) => state.activeBoard);
   const dispatch = useAppDispatch();
-  const [boardData, setBoardData] = useState<Board>({
-    _id: "",
-    name: "",
-    description: "",
-    picture: "",
-    themeColor: "",
-  });
 
   useEffect(() => {
     if (
       generalPropertiesState.activeBoard &&
       generalPropertiesState.activeBoard.length > 0
     ) {
-      getActiveBoardData(generalPropertiesState.activeBoard);
+      handleDispatchActiveBoardData();
     }
   }, [generalPropertiesState.activeBoard]);
 
   useEffect(() => {
-    if (boardData.themeColor.length > 0) {
-      dispatch(setGeneralProperties({
-        colorMode: boardData.themeColor,
-      }))
-    }
-  }, [boardData.themeColor])
+    console.log(activeBoardState, " is the new state board");
+  }, [activeBoardState]);
 
-  const getActiveBoardData = async (activeBoard: string) => {
-    handleDispatchActiveBoardData();
-  };
+  useEffect(() => {
+    if (activeBoardState.themeColor.length > 0) {
+      dispatch(
+        setGeneralProperties({
+          colorMode: activeBoardState.themeColor,
+        })
+      );
+    }
+  }, [activeBoardState.themeColor]);
 
   const handleDispatchActiveBoardData = async () => {
     const response = await axios({
       url: `${websiteUrl}/api/board/get/${generalPropertiesState.activeBoard}`,
     });
     if (response.data) {
-      setBoardData(response.data);
+      dispatch(
+        setActiveBoardData({
+          _id: "",
+          name: "",
+          description: "",
+          picture: "",
+          themeColor: "",
+          websiteUrl: "",
+        })
+      );
+      dispatch(setActiveBoardData(response.data as Board));
     }
   };
 
   const theme = useTheme();
 
+  const handleUploadImageToBoard = async (selectedFile: File) => {
+    const res = await setBoardImageApiCall(
+      selectedFile,
+      generalPropertiesState.activeBoard!
+    );
+    if (res.data.url) {
+      dispatch(
+        setActiveBoardData({
+          picture: res.data.url,
+        })
+      );
+    }
+  }
+
   return (
-    <Box className={styles.container} sx={{
-      background: theme.palette.primary.main,
-    }}>
+    <Box
+      className={styles.container}
+      sx={{
+        background: theme.palette.primary.main,
+      }}
+    >
       <div className={styles.contentWrapper}>
-        {boardData.picture ? (
-          <Avatar
+        {activeBoardState.picture ? (
+          <div className={styles.companyLogoContainer}>
+            <Avatar
+            variant="rounded"
             className={styles.companyLogo}
             alt="Company logo pic"
-            src={boardData.picture}
+            src={activeBoardState.picture}
             sx={{
-              height: 85,
-              width: 85,
+              height: 100,
+              width: 100,
             }}
           />
+          </div>
         ) : (
-          <EmptyImage />
+          <EmptyImage
+            handleUploadedImage={handleUploadImageToBoard}
+            height={85}
+            width={85}
+          />
         )}
 
         <div className={styles.text}>
-          <div className={styles.companyName}>{boardData.name}</div>
+          <div className={styles.companyName}>{activeBoardState.name}</div>
           <div className={styles.companyDescription}>
-            {boardData.description}
+            {activeBoardState.description}
           </div>
-          <a rel="noreferrer" target="_blank" href="https://www.apple.com/">
+          <a
+            rel="noreferrer"
+            target="_blank"
+            href={activeBoardState.websiteUrl}
+          >
             <div className={styles.companyLink}>Voir le site web</div>
           </a>
           <div>

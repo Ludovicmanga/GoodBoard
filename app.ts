@@ -10,6 +10,8 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+export const rootDirname = __dirname;
+
 const corsOptions = {
     origin: ['http://localhost:3000', 'http://localhost:5000', 'https://goodboard-app.herokuapp.com'],
     credentials: true,

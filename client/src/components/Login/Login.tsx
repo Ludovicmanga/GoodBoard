@@ -1,7 +1,6 @@
 import { useState } from "react";
 import styles from "./Login.module.scss";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import LoadingButton from '@mui/lab/LoadingButton';
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
@@ -11,13 +10,15 @@ import Container from "@mui/material/Container";
 import { GoogleLogin } from "@react-oauth/google";
 import { Divider, Grid } from "@mui/material";
 import axios from "axios";
-import { AuthPageType, User, UserType } from "../../helpers/types";
+import { AuthPageType, User } from "../../helpers/types";
 import { useAppDispatch } from "../../redux/hooks";
 import { setLoggedUserState } from "../../redux/features/loggedUserSlice";
 import { useNavigate } from "react-router-dom";
 import Link from '@mui/material/Link'
 import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
 import { websiteUrl } from "../../helpers/constants";
+import React from 'react';
+
 
 type Props = {
   authType: AuthPageType;

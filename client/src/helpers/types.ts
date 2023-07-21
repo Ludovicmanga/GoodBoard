@@ -10,6 +10,7 @@ export type FeatureRequest = {
   updatedAt: any;
   board: string;
   topics: string[];
+  votersPics: string[];
 };
 
 export type User = {
@@ -17,6 +18,7 @@ export type User = {
   email: string;
   voted: string[];
   roleOnThisBoard: UserType | null;
+  picture: string;
 };
 
 export type Board = {
@@ -25,6 +27,7 @@ export type Board = {
   description: string;
   picture: string;
   themeColor: string;
+  websiteUrl: string;
 };
 
 export enum UserType {

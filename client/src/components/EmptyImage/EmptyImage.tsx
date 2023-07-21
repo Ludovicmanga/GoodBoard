@@ -1,30 +1,30 @@
-import { Avatar, Badge, IconButton } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { Avatar, IconButton } from "@mui/material";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./EmptyImage.module.scss";
 import Add from "@mui/icons-material/Add";
-import axios from "axios";
-import { websiteUrl } from "../../helpers/constants";
 
-type Props = {};
+type Props = {
+  handleUploadedImage: (selectedFile: File) => void;
+  height: number;
+  width: number;
+};
 
 const EmptyImage = (props: Props) => {
-  const [selectedFile, setSelectedFile] = useState<File>();
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const handleSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedFile(e.target.files?.[0]!);
   };
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleUploadFile = async (selectedFile: File) => {
-    await axios({
-      method: 'post',
-      url: `${websiteUrl}/api/board/upload-image`,
-      data: { selectedFile },
-      withCredentials: true,
-    });
-  }
+  const handleUploadFile = async () => {
+    if (selectedFile) {
+      await props.handleUploadedImage(selectedFile);
+    }
+  };
 
   useEffect(() => {
     if (selectedFile) {
-      handleUploadFile(selectedFile)
+      handleUploadFile();
     }
   }, [selectedFile]);
 
@@ -32,8 +32,8 @@ const EmptyImage = (props: Props) => {
     <div className={styles.container}>
       <Avatar
         sx={{
-          height: 85,
-          width: 85,
+          height: props.height,
+          width: props.width,
           bgcolor: "white",
         }}
         variant="rounded"
@@ -45,6 +45,7 @@ const EmptyImage = (props: Props) => {
               hidden
               accept="image/*"
               type="file"
+              ref={fileInputRef}
             />
             <Add sx={{ fontSize: 40 }} />
           </IconButton>

@@ -4,7 +4,11 @@ import { getAllBoardFeatureRequestsHelper } from "../helpers/featureRequests";
 import { secretKey, verifyJwtToken, websiteUrl } from "../helpers/auth";
 import { UserRoles } from "../helpers/types";
 import userModel from "../models/user.model";
-import { checkUserHasAccessToBoard, giveAccessToBoard, sendEmailToUser } from "../helpers/boards";
+import {
+  checkUserHasAccessToBoard,
+  giveAccessToBoard,
+  sendEmailToUser,
+} from "../helpers/boards";
 import { generateStrongPassword } from "../utils/utils";
 
 export const updateColor = async (req, res) => {
@@ -63,6 +67,7 @@ export const createBoard = async (req, res) => {
         description: req.body.description,
         themeColor: req.body.themeColor,
         isPublic: req.body.boardIsPublic,
+        websiteUrl: req.body.website,
       });
       newBoard
         .save()
@@ -95,7 +100,7 @@ export const getShareUrl = async (req, res) => {
     if (foundBoard) {
       res.status(200).send({ url: foundBoard.url });
     } else {
-      res.status(200).send({ url: '' });
+      res.status(200).send({ url: "" });
     }
   } catch (e) {
     console.log(e, " is the error");
@@ -118,8 +123,31 @@ export const getPublicBoard = async (req, res) => {
   }
 };
 
-export const uploadImage = (req, res) => {
-  console.log("I will upload the image");
+export const setBoardImage = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: "No image file provided." });
+    }
+    const { boardId } = req.body;
+    const fileUrl = req.file.location;
+
+    if (req.body.boardId) {
+      const boardFoundInDB = await boardModel.findOneAndUpdate(
+        { _id: boardId },
+        {
+          picture: fileUrl,
+        },
+        {
+          new: true,
+        }
+      );
+      if (boardFoundInDB) {
+        res.status(200).json({ url: fileUrl });
+      }
+    }
+  } catch (e) {
+    console.log(e, " is the error");
+  }
 };
 
 export const updatePublicStatus = async (req, res) => {
@@ -213,7 +241,9 @@ export const getBoardUsersList = async (req, res) => {
             ).userRole,
           };
         })
-        .filter((userMapped) => userMapped && userMapped.email !== req.user.email);
+        .filter(
+          (userMapped) => userMapped && userMapped.email !== req.user.email
+        );
       res.send(usersMappedWithRole || []);
     }
   } catch (e) {
@@ -223,11 +253,6 @@ export const getBoardUsersList = async (req, res) => {
 
 export const inviteUsers = async (req, res) => {
   try {
-    /// Gérer la logique d'invitation, de A à Z.
-/*     const userEmails = req.body.usersToInviteList.map(
-      (userToInvite) => userToInvite.email
-    ); */
-
     for (const userToInvite of req.body.usersToInviteList) {
       const foundUser = await userModel.findOne({
         email: userToInvite.email,
@@ -240,24 +265,32 @@ export const inviteUsers = async (req, res) => {
         if (userHasAccessToBoard) {
           console.log("user already has access to board");
         } else {
-          await giveAccessToBoard(foundUser._id, req.body.boardId, userToInvite.role);
+          await giveAccessToBoard(
+            foundUser._id,
+            req.body.boardId,
+            userToInvite.role
+          );
         }
       } else {
         const randomPassword = generateStrongPassword(10);
-         const newUser = new userModel({
+        const newUser = new userModel({
           email: userToInvite.email,
           password: randomPassword,
           type: "user",
-        }); 
+        });
 
         const newUserSaved = await newUser.save().catch((error) => {
           console.log("didnt work because ", error);
         });
-        await giveAccessToBoard(newUserSaved._id, req.body.boardId, userToInvite.role);
-        await sendEmailToUser(userToInvite.email, randomPassword); 
+        await giveAccessToBoard(
+          newUserSaved._id,
+          req.body.boardId,
+          userToInvite.role
+        );
+        await sendEmailToUser(userToInvite.email, randomPassword);
       }
     }
-    res.send('all good');
+    res.send("all good");
   } catch (e) {
     console.log(e, " is the error");
   }

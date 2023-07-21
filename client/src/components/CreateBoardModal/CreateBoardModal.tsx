@@ -1,15 +1,16 @@
-import Add from "@mui/icons-material/Add";
 import { Avatar, Button, TextField } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { handleSetActiveBoard } from "../../helpers/boards";
+import { handleSetActiveBoard, setBoardImageApiCall } from "../../helpers/boards";
 import { websiteUrl } from "../../helpers/constants";
-import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
-import { useAppDispatch } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import ChooseBoardColor from "../ChooseBoardColor/ChooseBoardColor";
 import styles from "./CreateBoardModal.module.scss";
 import BoardIsPublicBtn from "../BoardIsPublicBtn/BoardIsPublicBtn";
+import EmptyImage from "../EmptyImage/EmptyImage";
+import { BsFillCheckCircleFill } from "react-icons/bs";
+import { setActiveBoardData } from "../../redux/features/activeBoardSlice";
 
 type Props = {};
 
@@ -17,10 +18,12 @@ const CreateBoardModal = (props: Props) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [website, setWebsite] = useState("");
-  const [themeColor, setThemeColor] = useState('blue');
+  const [themeColor, setThemeColor] = useState("blue");
   const [boardIsPublic, setBoardIsPublic] = useState(false);
+  const [pictureUrl, setPictureUrl] = useState("");
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const generalPropertiesState = useAppSelector(state => state.generalProperties);
   const handleBoardCreation = async () => {
     const boardCreationResponse = await axios({
       url: `${websiteUrl}/api/board/create`,
@@ -29,7 +32,9 @@ const CreateBoardModal = (props: Props) => {
         name,
         description,
         themeColor,
-        boardIsPublic
+        boardIsPublic,
+        pictureUrl,
+        website,
       },
       withCredentials: true,
     });
@@ -40,6 +45,20 @@ const CreateBoardModal = (props: Props) => {
 
   const handleChangeBoardStatus = async (publicStatus: boolean) => {
     setBoardIsPublic(publicStatus);
+  };
+
+  const handleUploadImageToBoard = async (selectedFile: File) => {
+    const res = await setBoardImageApiCall(
+      selectedFile,
+      generalPropertiesState.activeBoard!
+    );
+    if (res.data.url) {
+      dispatch(
+        setActiveBoardData({
+          picture: res.data.url,
+        })
+      );
+    }
   }
 
   return (
@@ -79,12 +98,24 @@ const CreateBoardModal = (props: Props) => {
         autoFocus
         value={website}
       />
-      <ChooseBoardColor mode='creation' setThemeColor={setThemeColor} />
+      <ChooseBoardColor mode="creation" setThemeColor={setThemeColor} />
       <h2 className={styles.inputLabel}>Board logo</h2>
-      <Avatar variant="rounded">
-        <Add />
-      </Avatar>
-      <BoardIsPublicBtn boardIsPublic={boardIsPublic} handleChangeBoardStatus={handleChangeBoardStatus} isLoading={false} />
+      <div className={styles.uploadImgBtnContainer}>
+        { pictureUrl ? (
+          <div>
+            <BsFillCheckCircleFill color="#4BB543" size={40} />
+          </div>
+        ) : (<EmptyImage
+          handleUploadedImage={handleUploadImageToBoard}
+          height={30}
+          width={30}
+        />) }
+      </div>
+      <BoardIsPublicBtn
+        boardIsPublic={boardIsPublic}
+        handleChangeBoardStatus={handleChangeBoardStatus}
+        isLoading={false}
+      />
       <Button
         className={styles.submitBtn}
         onClick={handleBoardCreation}

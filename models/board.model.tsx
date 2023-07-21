@@ -23,6 +23,13 @@ const boardSchema = new mongoose.Schema(
             unique: true,
             trim: true,
         },
+        websiteUrl: {
+            type: String,
+            required: false,
+            lowercase: true,
+            unique: true,
+            trim: true,
+        },
         isPublic: {
             type: Boolean,
             required: true,
