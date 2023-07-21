@@ -87,7 +87,7 @@ const ChooseBoardColor = (props: Props) => {
     <>
       <div className={styles.colorPaletteBoxContainer}>
         {colors.map((color) => (
-          <div onClick={async () => await handleChangeColorTheme(color)}>
+          <div key={color.name} onClick={async () => await handleChangeColorTheme(color)}>
             <Avatar
               sx={{
                 background: `${color.hex}`,

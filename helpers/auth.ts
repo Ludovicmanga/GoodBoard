@@ -15,4 +15,3 @@ export function verifyJwtToken(token: string, secret: string) {
         console.log(error, ' is the invalid token error')
     }
 }
-  

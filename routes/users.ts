@@ -1,6 +1,6 @@
 import express from "express";
 import passport from "passport";
-import { signUp } from "../controllers/auth.controller";
+import { loginOrSignupGoogle, signUp } from "../controllers/auth.controller";
 import {
   getUser,
   updateEmail,
@@ -11,6 +11,7 @@ import { multerUpload } from "../middleware/multer";
 const router = express();
 
 router.get("/get/:id", getUser);
+router.post('/login-google', loginOrSignupGoogle)
 router.post("/checkIfAuthenticated", getUser);
 router.post("/login", passport.authenticate("local"), (req: any, res) => {
   res.json({
