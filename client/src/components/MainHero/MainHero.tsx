@@ -12,6 +12,7 @@ import { setGeneralProperties } from "../../redux/features/generalPropertiesSlic
 import CannotMakeActionAsGuestModal from "../Modals/CannotMakeActionAsGuestModal/CannotMakeActionAsGuestModal";
 import { setActiveBoardData } from "../../redux/features/activeBoardSlice";
 import { setBoardImageApiCall } from "../../helpers/boards";
+import NeedToUpgradeModal from "../Modals/NeedToUpgradeModal/NeedToUpgradeModal";
 
 type Props = {};
 
@@ -136,6 +137,16 @@ const MainHero = (props: Props) => {
           dispatch(
             setGeneralProperties({
               cannotMakeActionModalOpen: false,
+            })
+          )
+        }
+      />
+      <NeedToUpgradeModal
+        modalIsOpen={generalPropertiesState.needToUpgradeModalOpen}
+        handleClose={() =>
+          dispatch(
+            setGeneralProperties({
+              needToUpgradeModalOpen: false,
             })
           )
         }

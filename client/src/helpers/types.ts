@@ -28,6 +28,7 @@ export type Board = {
   picture: string;
   themeColor: string;
   websiteUrl: string;
+  billingPlan: BillingPlan | null;
 };
 
 export enum UserType {
@@ -62,4 +63,10 @@ export enum EmptyPageType {
 export enum AuthPageType {
   login = "login",
   signUp = "signUp",
+}
+
+export enum BillingPlan {
+  free = "free",
+  basic = "basic",
+  business = "business"
 }

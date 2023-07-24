@@ -9,7 +9,7 @@ import axios from "axios";
 import { websiteUrl } from "../../../helpers/constants";
 import { useAppSelector } from "../../../redux/hooks";
 import { AiOutlinePlusCircle } from "react-icons/ai";
-import { UserType } from "../../../helpers/types";
+import { BillingPlan, UserType } from "../../../helpers/types";
 import UserWithRoleInput from "../../UserWithRoleInput/UserWithRoleInput";
 import { getBoardShareableUrl } from "../../../helpers/boards";
 
@@ -32,6 +32,7 @@ const ShareBoardModal = (props: Props) => {
       role: UserType.member,
     },
   ]);
+  const activeBoardState = useAppSelector((state) => state.activeBoard);
 
   const boardId = useAppSelector(
     (state) => state.generalProperties.activeBoard
@@ -79,7 +80,7 @@ const ShareBoardModal = (props: Props) => {
   useEffect(() => {
     handleGetShareableUrl();
   }, [boardId]);
-  
+
   useEffect(() => {
     if (!props.modalIsOpen) {
       setUsersToInviteList([
@@ -88,9 +89,9 @@ const ShareBoardModal = (props: Props) => {
           email: "",
           role: UserType.member,
         },
-      ])
+      ]);
     }
-  }, [props.modalIsOpen])
+  }, [props.modalIsOpen]);
 
   return (
     <div>
@@ -107,35 +108,42 @@ const ShareBoardModal = (props: Props) => {
       >
         <Fade in={props.modalIsOpen}>
           <Paper className={styles.modalContentContainer}>
-            <div className={styles.sectionTitle}>
-              Invite new members to your board
-            </div>
-            <div
-              className={`${styles.sectionContainer} ${styles.adminInviteSection}`}
-            >
-              <div className={styles.inviteSectionLeft}>
-                <div className={styles.adminInputsContainer}>
-                  {usersToInviteList.map((userToInvite) => (
-                    <UserWithRoleInput
-                      key={userToInvite.id}
-                      id={userToInvite.id}
-                      setUsersToInviteList={setUsersToInviteList}
-                      usersToInviteList={usersToInviteList}
-                    />
-                  ))}
+            {activeBoardState.billingPlan !== BillingPlan.free && (
+              <>
+                <div className={styles.sectionTitle}>
+                  Invite new members to your board
                 </div>
-                <Button variant="contained" onClick={sendAdminInvitations}>
-                  Send invites
-                </Button>
-              </div>
-              <div className={styles.inviteSectionRight}>
-                <IconButton aria-label="delete" onClick={handleAddNewUserToInvite} color="primary">
-                  <AiOutlinePlusCircle
-                    size={25}
-                  />
-                </IconButton>
-              </div>
-            </div>
+                <div
+                  className={`${styles.sectionContainer} ${styles.adminInviteSection}`}
+                >
+                  <div className={styles.inviteSectionLeft}>
+                    <div className={styles.adminInputsContainer}>
+                      {usersToInviteList.map((userToInvite) => (
+                        <UserWithRoleInput
+                          key={userToInvite.id}
+                          id={userToInvite.id}
+                          setUsersToInviteList={setUsersToInviteList}
+                          usersToInviteList={usersToInviteList}
+                        />
+                      ))}
+                    </div>
+                    <Button variant="contained" onClick={sendAdminInvitations}>
+                      Send invites
+                    </Button>
+                  </div>
+                  <div className={styles.inviteSectionRight}>
+                    <IconButton
+                      aria-label="delete"
+                      onClick={handleAddNewUserToInvite}
+                      color="primary"
+                    >
+                      <AiOutlinePlusCircle size={25} />
+                    </IconButton>
+                  </div>
+                </div>
+              </>
+            )}
+
             <div
               className={`${styles.sectionTitle} ${styles.shareBoardSectionTitle}`}
             >

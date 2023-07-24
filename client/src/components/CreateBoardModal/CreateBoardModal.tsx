@@ -1,8 +1,11 @@
-import { Avatar, Button, TextField } from "@mui/material";
+import { Avatar, Button, ButtonGroup, TextField } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { handleSetActiveBoard, setBoardImageApiCall } from "../../helpers/boards";
+import {
+  handleSetActiveBoard,
+  setBoardImageApiCall,
+} from "../../helpers/boards";
 import { websiteUrl } from "../../helpers/constants";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import ChooseBoardColor from "../ChooseBoardColor/ChooseBoardColor";
@@ -11,6 +14,8 @@ import BoardIsPublicBtn from "../BoardIsPublicBtn/BoardIsPublicBtn";
 import EmptyImage from "../EmptyImage/EmptyImage";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { setActiveBoardData } from "../../redux/features/activeBoardSlice";
+import { BillingPlan } from "../../helpers/types";
+import { capitalizeFirstLetter } from "../../helpers/utils";
 
 type Props = {};
 
@@ -21,9 +26,14 @@ const CreateBoardModal = (props: Props) => {
   const [themeColor, setThemeColor] = useState("blue");
   const [boardIsPublic, setBoardIsPublic] = useState(false);
   const [pictureUrl, setPictureUrl] = useState("");
+  const [billingPlan, setBillingPlan] = useState<BillingPlan>(
+    BillingPlan.free
+  );
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const generalPropertiesState = useAppSelector(state => state.generalProperties);
+  const generalPropertiesState = useAppSelector(
+    (state) => state.generalProperties
+  );
   const handleBoardCreation = async () => {
     const boardCreationResponse = await axios({
       url: `${websiteUrl}/api/board/create`,
@@ -32,9 +42,10 @@ const CreateBoardModal = (props: Props) => {
         name,
         description,
         themeColor,
-        boardIsPublic,
+        isPublic: boardIsPublic,
         pictureUrl,
-        website,
+        websiteUrl,
+        billingPlan,
       },
       withCredentials: true,
     });
@@ -59,7 +70,7 @@ const CreateBoardModal = (props: Props) => {
         })
       );
     }
-  }
+  };
 
   return (
     <>
@@ -74,6 +85,7 @@ const CreateBoardModal = (props: Props) => {
         name="board-name"
         autoFocus
         value={name}
+        size="small"
       />
       <TextField
         onChange={(e) => setDescription(e.target.value)}
@@ -86,6 +98,7 @@ const CreateBoardModal = (props: Props) => {
         name="board-description"
         autoFocus
         value={description}
+        size="small"
       />
       <TextField
         onChange={(e) => setWebsite(e.target.value)}
@@ -97,32 +110,51 @@ const CreateBoardModal = (props: Props) => {
         name="board-url"
         autoFocus
         value={website}
+        size="small"
       />
       <ChooseBoardColor mode="creation" setThemeColor={setThemeColor} />
       <h2 className={styles.inputLabel}>Board logo</h2>
       <div className={styles.uploadImgBtnContainer}>
-        { pictureUrl ? (
+        {pictureUrl ? (
           <div>
             <BsFillCheckCircleFill color="#4BB543" size={40} />
           </div>
-        ) : (<EmptyImage
-          handleUploadedImage={handleUploadImageToBoard}
-          height={30}
-          width={30}
-        />) }
+        ) : (
+          <EmptyImage
+            handleUploadedImage={handleUploadImageToBoard}
+            height={30}
+            width={30}
+          />
+        )}
       </div>
-      <BoardIsPublicBtn
+      {/*       <BoardIsPublicBtn
         boardIsPublic={boardIsPublic}
         handleChangeBoardStatus={handleChangeBoardStatus}
         isLoading={false}
-      />
-      <Button
-        className={styles.submitBtn}
-        onClick={handleBoardCreation}
-        variant="contained"
-      >
-        Create board
-      </Button>
+      /> */}
+      <h2 className={styles.inputLabel}>Board plan</h2>
+      <div>
+        <ButtonGroup>
+          {Object.values(BillingPlan).map((plan) => (
+            <Button
+              key={plan}
+              onClick={() => setBillingPlan(plan)}
+              variant={billingPlan === plan ? "contained" : "outlined"}
+            >
+              {capitalizeFirstLetter(plan)}
+            </Button>
+          ))}
+        </ButtonGroup>
+      </div>
+      <div className={styles.submitBtnContainer}>
+        <Button
+          className={styles.submitBtn}
+          onClick={handleBoardCreation}
+          variant="contained"
+        >
+          Create board
+        </Button>
+      </div>
     </>
   );
 };

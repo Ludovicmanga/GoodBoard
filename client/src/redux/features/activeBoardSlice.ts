@@ -7,7 +7,8 @@ const initialState: Board = {
     description: '',
     picture: '',
     themeColor: '',
-    websiteUrl: ''
+    websiteUrl: '',
+    billingPlan: null
 };
 export const activeBoardSlice = createSlice({
   name: "active board properties",

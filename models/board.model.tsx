@@ -30,6 +30,13 @@ const boardSchema = new mongoose.Schema(
             unique: true,
             trim: true,
         },
+        billingPlan: {
+            type: String,
+            required: true,
+            lowercase: true,
+            unique: false,
+            trim: true,
+        },
         isPublic: {
             type: Boolean,
             required: true,

@@ -17,12 +17,11 @@ import SwitchBoardModal from "../Modals/FeatureRequestModal/SwitchBoard/SwitchBo
 import ShareBoardModal from "../Modals/ShareBoard/ShareBoardModal";
 import DarkModeToggle from "../buttons/DarkModeToggle/DarkModeToggle";
 import styles from "./MainNavBar.module.scss";
-import ChangeBoardColorModal from "../Modals/ChangeBoardColorModal/ChangeBoardColorModal";
 import ManageBoardModal from "../Modals/ManageBoardModal/ManageBoardModal";
 import SettingsMenu from "../SettingsMenu/SettingsMenu";
-import { UserType } from "../../helpers/types";
+import { BillingPlan, UserType } from "../../helpers/types";
 
-const pages: {
+const allPages: {
   title: string;
   url: string;
 }[] = [
@@ -46,17 +45,17 @@ const pages: {
 
 const MainNavBar = () => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+  const [pagesList, setPagesList] = useState<{ title: string; url: string }[]>(
+    []
+  );
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-  const [settingsRoleFiltered, setSettingsRoleFiltered] = useState<{
-    linkText: string;
-    onClick: () => void;
-  }[]>([]);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const loggedUser = useAppSelector((state) => state.loggedUser);
   const generalPropertiesState = useAppSelector(
     (state) => state.generalProperties
   );
+  const activeBoardState = useAppSelector((state) => state.activeBoard);
 
   const handleLogout = async () => {
     const response = await axios<{ loggedOut: boolean }>({
@@ -118,6 +117,25 @@ const MainNavBar = () => {
     );
   };
 
+  useEffect(() => {
+    if (activeBoardState.billingPlan === BillingPlan.business) {
+      if (loggedUser.user?.roleOnThisBoard !== UserType.admin) {
+        setSettingsRoleFiltered((currArray) =>
+          currArray.filter(
+            (setting) =>
+              setting.linkText !== "Manage this board" &&
+              setting.linkText !== "Share your board" &&
+              setting.linkText !== "Integrations"
+          )
+        );
+      }
+    } else {
+      setSettingsRoleFiltered((currArray) =>
+        currArray.filter((setting) => setting.linkText !== "Integrations")
+      );
+    }
+  }, [generalPropertiesState.activeBoard, loggedUser.user?._id]);
+
   const settingsList = [
     {
       linkText: "My account",
@@ -145,28 +163,29 @@ const MainNavBar = () => {
     },
   ];
 
-  /*   const handleDisplayChangeBoardColor = () => {
-    dispatch(
-      setGeneralProperties({
-        changeBoardColorModalOpen: true,
-      })
-    );
-  }; */
+  const [settingsRoleFiltered, setSettingsRoleFiltered] = useState<
+    {
+      linkText: string;
+      onClick: () => void;
+    }[]
+  >(settingsList);
 
   useEffect(() => {
-    if (loggedUser.user?.roleOnThisBoard === UserType.admin) {
-      setSettingsRoleFiltered(settingsList);
+    if (activeBoardState.billingPlan === BillingPlan.business) {
+      setPagesList(allPages);
     } else {
-      setSettingsRoleFiltered(
-        settingsList.filter(
-          (setting) =>
-            setting.linkText !== "Manage this board" &&
-            setting.linkText !== "Share your board" &&
-            setting.linkText !== "Integrations"
-        )
-      );
+      setPagesList([
+        {
+          title: "your ideas",
+          url: `/user-feature-requests`,
+        },
+        {
+          title: "our ideas",
+          url: `/company-feature-requests`,
+        },
+      ]);
     }
-  }, [generalPropertiesState.activeBoard, loggedUser.user]);
+  }, [activeBoardState]);
 
   const handleCloseSettingsModal = () => {
     dispatch(
@@ -237,7 +256,7 @@ const MainNavBar = () => {
             GOODBOARD
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
+            {pagesList.map((page) => (
               <Button
                 key={page.title}
                 onClick={() => navigate(page.url)}
@@ -279,16 +298,6 @@ const MainNavBar = () => {
       <ManageBoardModal
         modalIsOpen={generalPropertiesState.manageBoardModalOpen}
         handleClose={handleCloseManageBoardModal}
-      />
-      <ChangeBoardColorModal
-        modalIsOpen={generalPropertiesState.changeBoardColorModalOpen}
-        handleClose={() =>
-          dispatch(
-            setGeneralProperties({
-              changeBoardColorModalOpen: false,
-            })
-          )
-        }
       />
     </AppBar>
   );

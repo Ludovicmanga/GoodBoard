@@ -18,6 +18,7 @@ import { websiteUrl } from "../../../helpers/constants";
 import { useAppSelector } from "../../../redux/hooks";
 import BoardIsPublicBtn from "../../BoardIsPublicBtn/BoardIsPublicBtn";
 import AdminsListSection from "../../AdminsList/AdminsListSection/AdminsListSection";
+import { BillingPlan } from "../../../helpers/types";
 
 type Props = {
   modalIsOpen: boolean;
@@ -31,7 +32,7 @@ const ManageBoardModal = (props: Props) => {
   const generalPropertiesState = useAppSelector(
     (state) => state.generalProperties
   );
-
+  const activeBoardState = useAppSelector((state) => state.activeBoard);
 
   const handleChangeBoardStatus = async (event: boolean) => {
     setIsLoading(true);
@@ -81,14 +82,23 @@ const ManageBoardModal = (props: Props) => {
       >
         <Fade in={props.modalIsOpen}>
           <Paper className={styles.modalContentContainer}>
-            <h2 className={styles.sectionTitle}>Manage board users</h2>
-            <AdminsListSection />
-            <h2 className={styles.sectionTitle}>Manage board privacy</h2>
-            <BoardIsPublicBtn
-              handleChangeBoardStatus={handleChangeBoardStatus}
-              boardIsPublic={boardIsPublic}
-              isLoading={isLoading}
-            />
+            {activeBoardState.billingPlan !== BillingPlan.free && (
+              <>
+                <h2 className={styles.sectionTitle}>Manage board users</h2>
+                <AdminsListSection />
+              </>
+            )}
+            {activeBoardState.billingPlan === BillingPlan.business && (
+              <>
+                <h2 className={styles.sectionTitle}>Manage board privacy</h2>
+                <BoardIsPublicBtn
+                  handleChangeBoardStatus={handleChangeBoardStatus}
+                  boardIsPublic={boardIsPublic}
+                  isLoading={isLoading}
+                />
+              </>
+            )}
+
             <h2 className={styles.sectionTitle}>Choose your board color</h2>
             <ChooseBoardColor mode="update" />
           </Paper>

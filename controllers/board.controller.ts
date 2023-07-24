@@ -60,19 +60,20 @@ export const getUserBoards = async (req, res) => {
 };
 
 export const createBoard = async (req, res) => {
+  const { name, description, themeColor, isPublic, websiteUrl, billingPlan } = req.body;
   try {
     if (req.user) {
       const newBoard = new boardModel({
-        name: req.body.name,
-        description: req.body.description,
-        themeColor: req.body.themeColor,
-        isPublic: req.body.boardIsPublic,
-        websiteUrl: req.body.website,
+        name,
+        description,
+        themeColor,
+        isPublic,
+        websiteUrl,
+        billingPlan,
       });
       newBoard
         .save()
         .then((savedObject) => {
-          //const token = generateJwtToken(savedObject.id, secretKey);
           savedObject.url = `${websiteUrl}/view-board/${savedObject.id}`;
           savedObject.save();
         })

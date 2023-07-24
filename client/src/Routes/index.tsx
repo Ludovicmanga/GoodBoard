@@ -7,7 +7,7 @@ import {
 import FeatureRequests from "../pages/FeatureRequests/FeatureRequests";
 import styles from "./index.module.scss";
 import Roadmap from "../pages/Roadmap/Roadmap";
-import { AuthPageType, UserType } from "../helpers/types";
+import { AuthPageType, BillingPlan, UserType } from "../helpers/types";
 import Login from "../components/Login/Login";
 import { useAppSelector } from "../redux/hooks";
 import BoardCreation from "../pages/BoardCreation/BoardCreation";
@@ -20,6 +20,7 @@ export default function Index() {
     (state) => state.generalProperties
   );
   const activeBoard = generalPropertiesState.activeBoard;
+  const activeBoardState = useAppSelector((state) => state.activeBoard);
 
   return (
     <div className={styles.container}>
@@ -41,6 +42,11 @@ export default function Index() {
           {loggedUser.user && !activeBoard && (
             <Route path="*" element={<Navigate to="/choose-board" replace />} />
           )}
+          {activeBoardState.billingPlan === BillingPlan.business && (
+            <>
+              <Route path="/roadmap" element={<Roadmap />} />
+            </>
+          )}
           {loggedUser.user && activeBoard && (
             <>
               <Route
@@ -59,8 +65,6 @@ export default function Index() {
               path="/user-feature-requests"
               element={<FeatureRequests type={UserType.user} />}
             />
-
-            <Route path="/roadmap" element={<Roadmap />} />
           </>
         </Routes>
       </Router>

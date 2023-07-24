@@ -18,6 +18,7 @@ import {
 import styles from "./FeatureRequestModal.module.scss";
 import { useState } from "react";
 import {
+  BillingPlan,
   FeatureRequest,
   FeatureRequestModalMode,
   FeatureRequestStatus,
@@ -59,6 +60,7 @@ export default function FeatureRequestModal(props: {
   const generalPropertiesState = useAppSelector(
     (state) => state.generalProperties
   );
+  const activeBoardState = useAppSelector((state) => state.activeBoard);
   const [trelloBoardsList, setTrelloBoardsList] = useState<
     {
       id: string;
@@ -294,66 +296,71 @@ export default function FeatureRequestModal(props: {
                       )}
                     </AvatarGroup>
                   </div>
-                  <div className={styles.statusSection}>
-                    <div className={styles.statusSectionTitle}>Status :</div>
-                    <Select
-                      inputProps={{
-                        readOnly:
-                          props.modalMode === FeatureRequestModalMode.update &&
-                          !hasUpdateRights,
-                      }}
-                      labelId="status"
-                      id="status"
-                      value={featureRequestProperties.status}
-                      label="Status"
-                      onChange={(e: SelectChangeEvent<string>) => {
-                        setFeatureRequestProperties((propertiesState) => {
-                          return {
-                            ...propertiesState,
-                            status: e.target.value,
-                          };
-                        });
-                      }}
-                    >
-                      {(
-                        Object.keys(FeatureRequestStatus) as Array<
-                          keyof typeof FeatureRequestStatus
-                        >
-                      ).map((status) => (
-                        <MenuItem value={status} key={status}>
-                          {capitalizeFirstLetter(status)}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </div>
+                  {activeBoardState.billingPlan === BillingPlan.business && (
+                    <div className={styles.statusSection}>
+                      <div className={styles.statusSectionTitle}>Status :</div>
+                      <Select
+                        inputProps={{
+                          readOnly:
+                            props.modalMode ===
+                              FeatureRequestModalMode.update &&
+                            !hasUpdateRights,
+                        }}
+                        labelId="status"
+                        id="status"
+                        value={featureRequestProperties.status}
+                        label="Status"
+                        onChange={(e: SelectChangeEvent<string>) => {
+                          setFeatureRequestProperties((propertiesState) => {
+                            return {
+                              ...propertiesState,
+                              status: e.target.value,
+                            };
+                          });
+                        }}
+                      >
+                        {(
+                          Object.keys(FeatureRequestStatus) as Array<
+                            keyof typeof FeatureRequestStatus
+                          >
+                        ).map((status) => (
+                          <MenuItem value={status} key={status}>
+                            {capitalizeFirstLetter(status)}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </div>
+                  )}
                 </div>
               )}
-              <div className={styles.statusSection}>
-                <Autocomplete
-                  readOnly={
-                    props.modalMode === FeatureRequestModalMode.update &&
-                    !hasUpdateRights
-                  }
-                  multiple
-                  onChange={(e, value) => {
-                    setFeatureRequestProperties((propertiesState) => {
-                      return { ...propertiesState, topics: value };
-                    });
-                  }}
-                  value={featureRequestProperties?.topics || []}
-                  limitTags={3}
-                  options={topicsList}
-                  getOptionLabel={(option) => option}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Feature topics"
-                      placeholder="Topics of the feature"
-                    />
-                  )}
-                  sx={{ width: "500px" }}
-                />
-              </div>
+              {activeBoardState.billingPlan !== BillingPlan.free && (
+                <div className={styles.statusSection}>
+                  <Autocomplete
+                    readOnly={
+                      props.modalMode === FeatureRequestModalMode.update &&
+                      !hasUpdateRights
+                    }
+                    multiple
+                    onChange={(e, value) => {
+                      setFeatureRequestProperties((propertiesState) => {
+                        return { ...propertiesState, topics: value };
+                      });
+                    }}
+                    value={featureRequestProperties?.topics || []}
+                    limitTags={3}
+                    options={topicsList}
+                    getOptionLabel={(option) => option}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="Feature topics"
+                        placeholder="Topics of the feature"
+                      />
+                    )}
+                    sx={{ width: "500px" }}
+                  />
+                </div>
+              )}
 
               <TextField
                 InputProps={{
@@ -392,24 +399,18 @@ export default function FeatureRequestModal(props: {
                 className={`${styles.textInput} ${styles.textArea}`}
               />
             </div>
-            <div className={styles.rightNavbar}>
-              <div className={styles.rightNavbarTitle}>Integrations</div>
-              <Card
-                onClick={handleDisplayTrelloCards}
-                className={styles.integrationChip}
-              >
-                <FaTrello color="#007AC0" />
-                <div className={styles.integrationChipText}>Trello</div>
-              </Card>
-              <Card className={styles.integrationChip}>
-                <FaSalesforce color="#009EDB" />
-                <div className={styles.integrationChipText}>Salesforce</div>
-              </Card>
-              <Card className={styles.integrationChip}>
-                <RxNotionLogo />
-                <div className={styles.integrationChipText}>Notion</div>
-              </Card>
-            </div>
+            {activeBoardState.billingPlan === BillingPlan.business && (
+              <div className={styles.rightNavbar}>
+                <div className={styles.rightNavbarTitle}>Integrations</div>
+                <Card
+                  onClick={handleDisplayTrelloCards}
+                  className={styles.integrationChip}
+                >
+                  <FaTrello color="#007AC0" />
+                  <div className={styles.integrationChipText}>Trello</div>
+                </Card>
+              </div>
+            )}
           </div>
           <div className={styles.mainButtonsContainer}>
             {(hasUpdateRights ||

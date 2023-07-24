@@ -1,0 +1,40 @@
+@import '../../../styles/useSpacing';
+@import '../../../styles/variables';
+@import '../../../styles/useTypography';
+
+.modalContentContainer {
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    right: 25%;
+    bottom: 25%;
+    border: 0.5px solid #000;
+    border-radius: 8px;
+    box-shadow: 24px;
+    @include useSpacing(padding, xxl);
+    display: flex;
+}
+
+.imgContainer {
+    width: 50%;
+    //@include useSpacing(margin, l, l, l, 0 );
+}
+
+.infoTextContainer {
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+}
+
+.infoTextTitle {
+    @include useSpacing(margin, m, 0);
+    @include useTypography(title-m);
+    display: flex;
+    justify-content: center;
+    font-weight: 600;
+}
+
+.infoTextDetails {
+    @include useSpacing(margin, 0, 0, m, 0);
+    text-align: center;
+}
