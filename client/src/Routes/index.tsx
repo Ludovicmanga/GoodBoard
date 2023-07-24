@@ -13,6 +13,7 @@ import { useAppSelector } from "../redux/hooks";
 import BoardCreation from "../pages/BoardCreation/BoardCreation";
 import Integrations from "../pages/Integrations/Integrations";
 import ViewBoard from "../pages/ViewBoard/ViewBoard";
+import PaymentSuccessPage from "../pages/PaymentSuccessPage/PaymentSuccessPage";
 
 export default function Index() {
   const loggedUser = useAppSelector((state) => state.loggedUser);
@@ -47,6 +48,7 @@ export default function Index() {
               <Route path="/roadmap" element={<Roadmap />} />
             </>
           )}
+          <Route path="/successful-stripe-payment" element={<PaymentSuccessPage />} />
           {loggedUser.user && activeBoard && (
             <>
               <Route

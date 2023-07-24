@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "@aws-amplify/storage": "^5.1.5",
+    "@fortawesome/fontawesome-svg-core": "^6.4.0",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@mui/icons-material": "^5.10.6",
     "@mui/lab": "^5.0.0-alpha.115",
     "@mui/material": "^5.11.4",
@@ -55,6 +57,7 @@
     ]
   },
   "devDependencies": {
+    "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@redux-devtools/core": "^3.13.1",
     "override-material-ui-css": "^1.1.4"
   }

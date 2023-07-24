@@ -135,7 +135,7 @@ const MainNavBar = () => {
       );
     }
   }, [generalPropertiesState.activeBoard, loggedUser.user?._id]);
-
+  
   const settingsList = [
     {
       linkText: "My account",
