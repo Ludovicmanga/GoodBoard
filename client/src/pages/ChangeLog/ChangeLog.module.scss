@@ -1,0 +1,19 @@
+@import '../../styles/useSpacing';
+@import '../../styles/useTypography';
+
+.container {
+    @include useSpacing(padding, s);
+}
+
+.dateTitle {
+    @include useSpacing(margin, m);
+    @include useTypography(title-l);
+    font-weight: 600;
+}
+
+.changeLogBoxContainer {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    @include useSpacing(margin, s);
+}

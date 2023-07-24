@@ -33,10 +33,6 @@ const MainHero = (props: Props) => {
   }, [generalPropertiesState.activeBoard]);
 
   useEffect(() => {
-    console.log(activeBoardState, " is the new state board");
-  }, [activeBoardState]);
-
-  useEffect(() => {
     if (activeBoardState.themeColor.length > 0) {
       dispatch(
         setGeneralProperties({

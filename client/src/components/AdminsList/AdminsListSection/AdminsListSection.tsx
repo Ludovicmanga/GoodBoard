@@ -88,7 +88,7 @@ const AdminsListSection = (props: Props) => {
           handleDeleteAdmin={handleDeleteAdmin}
           boardAdmin={boardAdmin}
         />
-      )) : (<div>You are the only admin on this board</div>)}
+      )) : (<div className={styles.onlyAdminText}>You are the only admin on this board</div>)}
     </div>
   );
 };
