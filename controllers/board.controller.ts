@@ -10,6 +10,13 @@ import {
   sendEmailToUser,
 } from "../helpers/boards";
 import { generateStrongPassword } from "../utils/utils";
+import Stripe from "stripe";
+//const STRIPE_KEY = "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"
+const STRIPE_KEY = "sk_test_JaQdbPBGQK1WZpu83jOtm9MU00EItXeAHs";
+const stripe = new Stripe(STRIPE_KEY, {
+  //@ts-ignore
+  apiVersion: null,
+});
 
 export const updateColor = async (req, res) => {
   try {
@@ -60,19 +67,21 @@ export const getUserBoards = async (req, res) => {
 };
 
 export const createBoard = async (req, res) => {
+  const { name, description, themeColor, isPublic, websiteUrl, billingPlan } =
+    req.body;
   try {
     if (req.user) {
       const newBoard = new boardModel({
-        name: req.body.name,
-        description: req.body.description,
-        themeColor: req.body.themeColor,
-        isPublic: req.body.boardIsPublic,
-        websiteUrl: req.body.website,
+        name,
+        description,
+        themeColor,
+        isPublic,
+        websiteUrl,
+        billingPlan,
       });
       newBoard
         .save()
         .then((savedObject) => {
-          //const token = generateJwtToken(savedObject.id, secretKey);
           savedObject.url = `${websiteUrl}/view-board/${savedObject.id}`;
           savedObject.save();
         })
@@ -293,5 +302,86 @@ export const inviteUsers = async (req, res) => {
     res.send("all good");
   } catch (e) {
     console.log(e, " is the error");
+  }
+};
+
+export const createCheckoutSession = async (req, res) => {
+  const session = await stripe.checkout.sessions.create({
+    billing_address_collection: "auto",
+    line_items: [
+      {
+        price: req.body.selectedPlan.stripeId,
+        quantity: 1,
+      },
+    ],
+    mode: "subscription",
+    success_url: `http://localhost:3000/successful-stripe-payment?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `http://localhost:3000?canceled-stripe-payment`,
+  });
+
+  res.send(session.url);
+};
+
+export const createPortalSession = async (req, res) => {
+  try {
+    const { session_id } = req.body;
+    const checkoutSession = await stripe.checkout.sessions.retrieve(session_id);
+
+    const returnUrl = websiteUrl;
+
+    const portalSession = await stripe.billingPortal.sessions.create({
+      //@ts-ignore
+      customer: checkoutSession.customer,
+      return_url: returnUrl,
+    });
+    if (portalSession.url) {
+      res.send(portalSession.url);
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const updateBoardBillingPlan = async (req, res) => {
+  try {
+    const { session_id, boardId } = req.body;
+    const session = await stripe.checkout.sessions.retrieve(session_id, {
+      expand: ["line_items.data.price.product"], // Expand the line items to include product details
+    });
+
+    if (session.payment_status === "paid") {
+      const lineItems = session?.line_items?.data;
+      //@ts-ignore
+      const productName = lineItems?.[0]?.price?.product.name as string;
+      if (productName) {
+        const foundBoard = await boardModel.findOneAndUpdate(
+          {
+            _id: boardId,
+          },
+          {
+            billingPlan: productName.toLowerCase(),
+          },
+          {
+            new: true,
+          }
+        );
+        if (foundBoard) {
+          res.status(200).send(foundBoard);
+        }
+      }
+    } else {
+      // Payment not successful, or session not found
+      res
+        .status(400)
+        .json({ status: "failed", message: "Payment not successful." });
+    }
+  } catch (error) {
+    // Error occurred during the request
+    res
+      .status(500)
+      .json({
+        status: "error",
+        message: "An error occurred while fetching payment details.",
+      });
   }
 };

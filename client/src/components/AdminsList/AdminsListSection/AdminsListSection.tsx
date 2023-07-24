@@ -82,13 +82,13 @@ const AdminsListSection = (props: Props) => {
 
   return (
     <div className={styles.container}>
-      {boardAdminsList.map((boardAdmin) => (
+      {boardAdminsList.length > 0 ? boardAdminsList.map((boardAdmin) => (
         <AdminInListBox
           handleChangeUserRole={handleChangeUserRole}
           handleDeleteAdmin={handleDeleteAdmin}
           boardAdmin={boardAdmin}
         />
-      ))}
+      )) : (<div>You are the only admin on this board</div>)}
     </div>
   );
 };

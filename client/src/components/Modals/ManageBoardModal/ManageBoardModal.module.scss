@@ -16,3 +16,7 @@
     font-size: 14px;
     @include useSpacing(margin,l,0,s,0);
 }
+
+.billingBtnsContainer {
+    @include useSpacing(margin,m,0);
+}

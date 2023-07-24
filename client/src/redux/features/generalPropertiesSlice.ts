@@ -6,10 +6,10 @@ interface GeneralProperties {
   featureRequestModalOpen: boolean;
   generalSettingsModalOpen: boolean;
   shareBoardModalOpen: boolean;
-  changeBoardColorModalOpen: boolean;
   switchBoardModalOpen: boolean;
   manageBoardModalOpen: boolean;
   cannotMakeActionModalOpen: boolean;
+  needToUpgradeModalOpen: boolean;
   menuSelected: MenuSelected | null;
   mainSnackBar: {
     isOpen: boolean;
@@ -27,12 +27,12 @@ const initialState: GeneralProperties = {
   manageBoardModalOpen: false,
   switchBoardModalOpen: false,
   cannotMakeActionModalOpen: false,
+  needToUpgradeModalOpen: false,
   menuSelected: null,
   mainSnackBar: {
     isOpen: false,
     message: "",
   },
-  changeBoardColorModalOpen: false,
   colorMode: null,
   darkMode: null,
 };
