@@ -262,7 +262,7 @@ export default function FeatureRequestModal(props: {
           </div>
           <Divider className={styles.divider} />
           <div className={styles.middle}>
-            <div className={styles.mainContentMiddleContainer}>
+            <div className={activeBoardState.billingPlan === BillingPlan.business ? styles.mainContentMiddleContainerWithSidebar : styles.mainContentMiddleContainerAlone}>
               {props.modalMode === FeatureRequestModalMode.update && (
                 <div>
                   <div className={styles.votersSection}>

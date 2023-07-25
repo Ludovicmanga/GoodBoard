@@ -24,7 +24,11 @@
     display: flex;
 }
 
-.mainContentMiddleContainer {
+.mainContentMiddleContainerAlone {
+    width: 100%;
+}
+
+.mainContentMiddleContainerWithSidebar {
     width: 70%;
 }
 
