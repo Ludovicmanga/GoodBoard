@@ -26,6 +26,7 @@ const MainHero = (props: Props) => {
   const generalPropertiesState = useAppSelector(
     (state) => state.generalProperties
   );
+  const loggedUserState = useAppSelector(state => state.loggedUser).user;
   const activeBoardState = useAppSelector((state) => state.activeBoard);
   const dispatch = useAppDispatch();
 
@@ -112,6 +113,7 @@ const MainHero = (props: Props) => {
                 hidden
                 accept="image/*"
                 type="file"
+                disabled={!loggedUserState}
               />
               <BsPencilFill className={styles.penIcon} size={15} />
             </IconButton>

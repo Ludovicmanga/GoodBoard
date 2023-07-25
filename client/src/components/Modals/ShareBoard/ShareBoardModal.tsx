@@ -12,6 +12,7 @@ import { AiOutlinePlusCircle } from "react-icons/ai";
 import { BillingPlan, UserType } from "../../../helpers/types";
 import UserWithRoleInput from "../../UserWithRoleInput/UserWithRoleInput";
 import { getBoardShareableUrl } from "../../../helpers/boards";
+import { generateRandomId } from "../../../helpers/utils";
 
 type Props = {
   modalIsOpen: boolean;
@@ -21,13 +22,13 @@ type Props = {
 const ShareBoardModal = (props: Props) => {
   const [usersToInviteList, setUsersToInviteList] = useState<
     {
-      id: number;
+      id: string;
       email: string;
       role: UserType;
     }[]
   >([
     {
-      id: Math.floor(Math.random() * 10),
+      id: generateRandomId(10),
       email: "",
       role: UserType.member,
     },
@@ -70,7 +71,7 @@ const ShareBoardModal = (props: Props) => {
     setUsersToInviteList((currArray) => [
       ...currArray,
       {
-        id: Math.floor(Math.random() * 10),
+        id: generateRandomId(10),
         email: "",
         role: UserType.member,
       },
@@ -85,7 +86,7 @@ const ShareBoardModal = (props: Props) => {
     if (!props.modalIsOpen) {
       setUsersToInviteList([
         {
-          id: Math.floor(Math.random() * 10),
+          id: generateRandomId(10),
           email: "",
           role: UserType.member,
         },
@@ -116,29 +117,23 @@ const ShareBoardModal = (props: Props) => {
                 <div
                   className={`${styles.sectionContainer} ${styles.adminInviteSection}`}
                 >
-                  <div className={styles.inviteSectionLeft}>
-                    <div className={styles.adminInputsContainer}>
-                      {usersToInviteList.map((userToInvite) => (
-                        <UserWithRoleInput
-                          key={userToInvite.id}
-                          id={userToInvite.id}
-                          setUsersToInviteList={setUsersToInviteList}
-                          usersToInviteList={usersToInviteList}
-                        />
-                      ))}
-                    </div>
-                    <Button variant="contained" onClick={sendAdminInvitations}>
+                  <div className={styles.adminInputsContainer}>
+                    {usersToInviteList.map((userToInvite) => (
+                      <UserWithRoleInput
+                        key={userToInvite.id}
+                        id={userToInvite.id}
+                        setUsersToInviteList={setUsersToInviteList}
+                        usersToInviteList={usersToInviteList}
+                        handleAddNewUserToInvite={handleAddNewUserToInvite}
+                      />
+                    ))}
+                  </div>
+                  <div className={styles.btnContainer}>
+                    <Button variant="contained" onClick={sendAdminInvitations} sx={{ 
+                      width: "85%"
+                    }}>
                       Send invites
                     </Button>
-                  </div>
-                  <div className={styles.inviteSectionRight}>
-                    <IconButton
-                      aria-label="delete"
-                      onClick={handleAddNewUserToInvite}
-                      color="primary"
-                    >
-                      <AiOutlinePlusCircle size={25} />
-                    </IconButton>
                   </div>
                 </div>
               </>

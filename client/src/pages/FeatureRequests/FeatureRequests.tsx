@@ -95,11 +95,7 @@ const FeatureRequests = (props: Props) => {
       <MainNavBar />
       <MainHero />
       <div
-        className={
-          activeBoardState.billingPlan === BillingPlan.free
-            ? `${styles.sectionContainer} ${styles.sectionContainerWithoutNavBar}`
-            : styles.sectionContainer
-        }
+        className={styles.sectionContainer}
       >
         {activeBoardState.billingPlan !== BillingPlan.free && (
           <div className={styles.sidebarContainer}>

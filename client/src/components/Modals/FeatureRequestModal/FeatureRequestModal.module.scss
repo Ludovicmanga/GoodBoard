@@ -7,7 +7,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: $modal-width-mobile-screen;
+    width: 90%;
     border: 0.5px solid #000;
     border-radius: 8px;
     box-shadow: 24px;
@@ -32,11 +32,6 @@
     width: 70%;
 }
 
-.rightNavbar {
-    width: 30%;
-    @include useSpacing(margin, 0, 0, 0, xxl);
-}
-
 .integrationChip {
     display: flex;
     align-items: center;
@@ -50,8 +45,14 @@
     @include useSpacing(margin, 0, 0, 0, m);
 }
 
+.rightNavbar {
+    width: 30%;
+    @include useSpacing(margin, 0, 0, 0, s);
+}
+
 .rightNavbarTitle {
     display: flex;
+    justify-content: center;
     @include useTypography(legals);
     @include useSpacing(margin, 0, 0, xs, 0);
     font-weight:550;
@@ -90,6 +91,10 @@
 
 @media screen and (min-width: $main-breakpoint) {
     .modalContentContainer {
-        width: $modal-width-computer-screen;
+        width: 40%;
+    }
+
+    .rightNavbar {
+        @include useSpacing(margin, 0, 0, 0, xxl);
     }
 }

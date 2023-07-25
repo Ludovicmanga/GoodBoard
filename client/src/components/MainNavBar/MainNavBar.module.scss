@@ -1,8 +1,22 @@
 @import '../../styles/useSpacing';
 
 .container {
-    //height: 10%;
     flex: 0 0 10%;
+}
+
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.drawerContent {
+    width: 250px;
+    padding: 20px;
+     /* Replace with your desired background color */
+  }
+
+.navBtn {
+    color: #333;
 }
 
 .darkModeBtnContainer {
@@ -12,4 +26,7 @@
 .logInBtn {
     @include useSpacing(margin, s);
     cursor: pointer;
+}
+
+@media screen and (min-width: $main-breakpoint) {
 }

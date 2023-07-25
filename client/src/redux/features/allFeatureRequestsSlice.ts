@@ -41,12 +41,16 @@ export const allFeatureRequestsSlice = createSlice({
     deleteFeatureRequest: (state, action: PayloadAction<{ featureRequest: FeatureRequest }>) => {
       return state.filter(featureRequest => featureRequest._id !== action.payload.featureRequest._id);
     },
-    updateFeatureRequest: (state, action: PayloadAction<{ featureRequestToUpdate: FeatureRequest }>) => {
-      return state.map(featureRequest => {
+    updateFeatureRequest: (state, action) => {
+      return state.map((featureRequest) => {
         if (featureRequest._id === action.payload.featureRequestToUpdate._id) {
-          featureRequest = action.payload.featureRequestToUpdate;
-          return featureRequest;
+          // Create a new object with the updated data
+          return {
+            ...featureRequest,
+            ...action.payload.featureRequestToUpdate,
+          };
         } else {
+          // If it's not the featureRequest to update, return the original object
           return featureRequest;
         }
       });

@@ -180,11 +180,12 @@ export default function FeatureRequestModal(props: {
         withCredentials: true,
       });
       if (updatedFeatureRequest) {
-        dispatch(
+        console.log(updatedFeatureRequest.data, ' is the data')
+         dispatch(
           updateFeatureRequest({
             featureRequestToUpdate: updatedFeatureRequest.data,
           })
-        );
+        ); 
         dispatch(
           setGeneralProperties({
             mainSnackBar: {

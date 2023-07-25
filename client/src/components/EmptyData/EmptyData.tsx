@@ -60,7 +60,7 @@ const EmptyData = (props: Props) => {
       <div className={styles.details}>{props.details}</div>
       {props.type === EmptyPageType.featureRequests && (
         <Button onClick={openFeatureRequestsModal} variant="contained">
-          Create your first feature
+          Create your first request
         </Button>
       )}
     </div>

@@ -3,31 +3,40 @@ import {
   OutlinedInput,
   Select,
   SelectChangeEvent,
+  IconButton,
 } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import styles from "./UserWithRoleInput.module.scss";
 import { UserType } from "../../helpers/types";
 import { rolesList } from "../../helpers/constants";
+import { Close } from "@mui/icons-material"; // Import the close icon
+import { AiOutlinePlusCircle } from "react-icons/ai";
 
 type Props = {
-  id: number;
+  id: string;
   usersToInviteList: {
-    id: number;
+    id: string;
     email: string;
     role: UserType;
   }[];
   setUsersToInviteList: React.Dispatch<
     React.SetStateAction<
       {
-        id: number;
+        id: string;
         email: string;
         role: UserType;
       }[]
     >
   >;
+  handleAddNewUserToInvite: () => void;
 };
 
 const UserWithRoleInput = (props: Props) => {
+  const handleDelete = () => {
+    props.setUsersToInviteList((currArray) =>
+      currArray.filter((item) => item.id !== props.id)
+    );
+  };
   const handleChangeAdminEmail = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
@@ -40,7 +49,7 @@ const UserWithRoleInput = (props: Props) => {
       });
     });
   };
-  
+
   const handleSelectedRole = (e: SelectChangeEvent<UserType>) => {
     props.setUsersToInviteList((currArray) => {
       return currArray.map((userInArray) => {
@@ -51,32 +60,50 @@ const UserWithRoleInput = (props: Props) => {
       });
     });
   };
-  
+
   const foundAdmin = props.usersToInviteList.find(
     (userToInvite) => userToInvite.id === props.id
   );
-  
+
   return (
     <div className={styles.container}>
-      <OutlinedInput
-        placeholder="admin email"
-        value={foundAdmin?.email}
-        fullWidth
-        onChange={handleChangeAdminEmail}
-        size="small"
-        className={styles.outlinedInput}
-      />
-      <Select
-        value={foundAdmin?.role}
-        fullWidth
-        onChange={handleSelectedRole}
-        size="small"
-        className={`${styles.outlinedInput} ${styles.roleInput}`}
-      >
-        {rolesList.map((role) => (
-          <MenuItem value={role}>{role}</MenuItem>
-        ))}
-      </Select>
+      <div className={styles.left}>
+        <OutlinedInput
+          placeholder="admin email"
+          value={foundAdmin?.email}
+          fullWidth
+          onChange={handleChangeAdminEmail}
+          size="small"
+          className={styles.outlinedInput}
+        />
+        <Select
+          value={foundAdmin?.role}
+          fullWidth
+          onChange={handleSelectedRole}
+          size="small"
+          className={`${styles.outlinedInput} ${styles.roleInput}`}
+        >
+          {rolesList.map((role) => (
+            <MenuItem key={role} value={role}>
+              {role}
+            </MenuItem>
+          ))}
+        </Select>
+      </div>
+      <div className={styles.rightBtnContainer}>
+        <IconButton
+          size="small"
+          onClick={props.handleAddNewUserToInvite}
+          color="primary"
+        >
+          <AiOutlinePlusCircle size={25} />
+        </IconButton>
+        {props.id !== props.usersToInviteList[0].id && (
+          <IconButton size="small" onClick={handleDelete}>
+            <Close />
+          </IconButton>
+        )}
+      </div>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { handleSetActiveBoard } from "../../helpers/boards";
-import { useAppDispatch } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 
 type Props = {};
 
@@ -15,6 +15,7 @@ const ViewBoard = (props: Props) => {
       handleSetActiveBoard(params.boardId, dispatch, navigate);
     }
   }, [params.boardId]);
+
   return <div></div>;
 };
 

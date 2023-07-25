@@ -37,7 +37,7 @@ export const getFirstLetterInUpperCase = (stringToParse: string) => {
 };
 
 export const getMonthForYear = (monthNumber: number | undefined) => {
-  if (!monthNumber) return '';
+  if (!monthNumber) return "";
   const months = [
     "January",
     "February",
@@ -53,7 +53,7 @@ export const getMonthForYear = (monthNumber: number | undefined) => {
     "December",
   ];
 
-  if ((monthNumber + 1) >= 1 && (monthNumber + 1) <= 12) {
+  if (monthNumber + 1 >= 1 && monthNumber + 1 <= 12) {
     return months[monthNumber];
   } else {
     throw new Error(
@@ -61,3 +61,16 @@ export const getMonthForYear = (monthNumber: number | undefined) => {
     );
   }
 };
+
+export const generateRandomId = (length: number) => {
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let randomId = "";
+
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    randomId += characters.charAt(randomIndex);
+  }
+
+  return randomId;
+}

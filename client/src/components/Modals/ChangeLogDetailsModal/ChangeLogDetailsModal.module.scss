@@ -1,33 +1,40 @@
-@import '../../../styles/useSpacing';
-@import '../../../styles/useTypography';
+@import "../../../styles/useSpacing";
 
 .modalContentContainer {
-    position: absolute;
-    top: 15%;
-    left: 25%;
-    border: 0.5px solid #000;
-    border-radius: 8px;
-    box-shadow: 24px;
-    @include useSpacing(padding, xxl);
-    display: flex;
-    flex-direction: column;
-    overflow: auto;
-    width: 40rem;
-    height: 30rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border: 0.5px solid #000;
+  border-radius: 8px;
+  box-shadow: 24px;
+  @include useSpacing(padding, xxl);
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  width: 90%; /* Set a maximum width to avoid overflowing on small screens */
+  transform: translate(-50%, -50%);
 }
 
 .timestamp {
-    font-style: italic;
-    @include useTypography(title-s);
-    @include useSpacing(margin, 0, 0, m, 0);
+  font-style: italic;
+  @include useTypography(title-s);
+  @include useSpacing(margin, 0, 0, m, 0);
 }
 
 .title {
-    @include useTypography(title-l);
-    font-weight: 600;
-    @include useSpacing(margin, m, 0);
+  @include useTypography(title-l);
+  font-weight: 600;
+  @include useSpacing(margin, m, 0);
 }
 
 .details {
+  @include useTypography(body-s); /* Add typography style for the details */
+  @include useSpacing(margin, m, 0);
+}
 
+/* Add a media query for small screens */
+@media screen and (min-width: $main-breakpoint) {
+    .modalContentContainer {
+        width: 50%;
+    }
 }

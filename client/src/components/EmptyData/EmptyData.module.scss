@@ -18,13 +18,20 @@
   .title {
     @include useSpacing(margin, xs, 0, xxs, 0);
     font-family: 'Roboto', sans-serif; // Apply the new font
-    font-size: 25px; // Adjust the font size as needed
+    font-size: 19px; // Adjust the font size as needed
     font-weight: 700; // Set the font weight (bold in this case)
   }
 
   .details {
     font-family: 'Roboto', sans-serif;
-    font-size: 15px;
+    font-size: 14px;
+    text-align: center;
     @include useSpacing(margin, 0, 0, l, 0);
+  }
+}
+
+@media screen and (min-width: $main-breakpoint) {
+  .title {
+    font-size: 25px;
   }
 }

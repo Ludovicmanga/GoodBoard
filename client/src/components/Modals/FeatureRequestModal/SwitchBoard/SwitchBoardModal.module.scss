@@ -6,9 +6,15 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: $modal-width-mobile-screen;
+    width: 90%;
     border: 0.5px solid #000;
     border-radius: 8px;
     box-shadow: 24px;
     @include useSpacing(padding, l, xl, xl, xl);
+}
+
+@media screen and (min-width: $main-breakpoint) {
+    .modalContentContainer {
+        width: 40%;
+    }
 }

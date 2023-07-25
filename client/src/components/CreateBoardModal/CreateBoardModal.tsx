@@ -34,7 +34,7 @@ const CreateBoardModal = (props: Props) => {
     formData.append("description", description);
     formData.append("themeColor", themeColor);
     formData.append("isPublic", boardIsPublic.toString());
-    formData.append("websiteUrl", websiteUrl);
+    formData.append("companyWebsiteUrl", website);
 
     const boardCreationResponse = await axios({
       url: `${websiteUrl}/api/board/create`,

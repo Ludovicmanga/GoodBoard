@@ -5,10 +5,32 @@
   @include useSpacing(margin, 0, 0, s, 0);
 }
 
+.left {
+  display: flex;
+  width: 68%;
+}
+
+.rightBtnContainer {
+  display: flex;
+  @include useSpacing(margin, 0, 0, 0, m);
+}
+
 .outlinedInput {
   padding-right: 0px;
 }
 
 .roleInput {
   @include useSpacing(margin, 0, 0, 0, m);
+}
+
+@media screen and (min-width: $main-breakpoint) {
+  .left {
+    display: flex;
+    width: 79%;
+  }
+
+  .rightBtnContainer {
+    display: flex;
+    @include useSpacing(margin, 0, 0, 0, m);
+  }
 }

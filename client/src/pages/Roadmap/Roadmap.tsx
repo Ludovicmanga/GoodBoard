@@ -48,7 +48,7 @@ function Roadmap({}: Props) {
                   (featureRequest) => featureRequest.status === status
                 );
               return (
-                <Paper elevation={3} className={styles.paperContainer}>
+                <Paper elevation={3} className={styles.paperContainer} key={status}>
                   <Card
                     className={styles.title}
                     sx={{
@@ -68,6 +68,7 @@ function Roadmap({}: Props) {
                       featureRequestsWithCorrespondingStatus.map(
                         (featureRequestWithCorrespondingStatus) => (
                           <RoadMapFeature
+                            key={featureRequestWithCorrespondingStatus._id}
                             featureRequest={
                               featureRequestWithCorrespondingStatus
                             }
