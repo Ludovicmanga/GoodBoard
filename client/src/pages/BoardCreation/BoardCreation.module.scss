@@ -30,7 +30,7 @@
 }
 
 .stepBackIcon {
-    @include useSpacing(margin, 0, 0, 0, m);
+    @include useSpacing(margin, 0, 0, 0, 0);
 }
 
 .createBoardBtnContainer {

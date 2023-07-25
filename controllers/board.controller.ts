@@ -67,34 +67,37 @@ export const getUserBoards = async (req, res) => {
 };
 
 export const createBoard = async (req, res) => {
-  const { name, description, themeColor, isPublic, websiteUrl, billingPlan } =
+  const { name, description, themeColor, isPublic, websiteUrl } =
     req.body;
   try {
     if (req.user) {
-      const newBoard = new boardModel({
+      const fileUrl = req.file.location;
+      const newBoard = await boardModel.create({
         name,
         description,
         themeColor,
         isPublic,
         websiteUrl,
-        billingPlan,
+        picture: fileUrl,
       });
-      newBoard
-        .save()
-        .then((savedObject) => {
-          savedObject.url = `${websiteUrl}/view-board/${savedObject.id}`;
-          savedObject.save();
-        })
-        .catch((error) => console.log(error));
+      const updatedNewBoard = await boardModel.findOneAndUpdate({
+        _id: newBoard.id,
+      }, {
+        url: `${websiteUrl}/view-board/${newBoard.id}`
+      }, 
+      {
+        new: true,
+      })
 
-      const newBoardUserRelation = new boardUserRelModel({
+      const newBoardUserRelation = await boardUserRelModel.create({
         user: req.user.id,
         board: newBoard.id,
         userRole: UserRoles.admin,
       });
 
-      newBoardUserRelation.save().catch((error) => console.log(error));
-      res.send(newBoard);
+      if (newBoardUserRelation) {
+        res.send(updatedNewBoard);
+      }
     } else {
       console.log("user not logged in");
     }

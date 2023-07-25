@@ -5,6 +5,12 @@
     @include useSpacing(padding, s);
 }
 
+.emptyDataContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .dateTitle {
     @include useSpacing(margin, m);
     @include useTypography(title-l);

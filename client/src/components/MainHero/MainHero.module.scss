@@ -1,103 +1,114 @@
-@import '../../styles/variables';
-@import '../../styles/useSpacing';
+@import "../../styles/variables";
+@import "../../styles/useSpacing";
 
 .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    @include useSpacing(padding, l, 0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @include useSpacing(padding, l, 0);
+  flex: 0 0 30%;
 }
 
 .contentWrapper {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
 }
 
 .imgContainer {
-    border-radius: 50%;
-    background: $white;
-    width: 50px;
-    height: 50px;
-    @include useSpacing(margin, m , m, m, m);
+  border-radius: 50%;
+  background: $white;
+  width: 50px;
+  height: 50px;
+  @include useSpacing(margin, m, m, m, m);
 }
 
 .text {
-    color: $white;
-    width: 62%;
-    @include useSpacing(padding, m);
-    max-height: $max-descrition-height;
-    overflow-y: hidden;
+  color: $white;
+  width: 62%;
+  @include useSpacing(padding, m);
+  max-height: $max-descrition-height;
+  overflow-y: hidden;
 }
 
 .companyName {
-    font-weight: bold;
-    display: flex;
-    justify-content: center;
-    @include useSpacing(margin, 0 , 0, xs, 0);
-    @include useTypography(companyName);
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  @include useSpacing(margin, 0, 0, xs, 0);
+  @include useTypography(companyName);
 }
 
 .companyDescription {
-    text-align: center;
-    @include useTypography(commonText);
-    overflow-y: auto;
+  text-align: center;
+  @include useTypography(commonText);
+  overflow-y: auto;
 }
 
 .socialLinks {
-    display: flex;
-    justify-content: center;
-    @include useSpacing(margin, xs , 0, 0, 0);
+  display: flex;
+  justify-content: center;
+  @include useSpacing(margin, xs, 0, 0, 0);
 }
 
 .companyLink {
-    text-decoration: none;
-    color: white;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    @include useTypography(title-xs);
-    @include useSpacing(margin, s , 0, 0, 0);
+  text-decoration: none;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  @include useTypography(title-xs);
+  @include useSpacing(margin, s, 0, 0, 0);
 }
 
 .companyLogo {
-    @include useSpacing(margin, m , 0, m, m);
-    cursor: pointer;
+  @include useSpacing(margin, m, 0, m, m);
+}
+
+.companyLogoContainer {
+    position: relative;
+}
+
+.penIconContainer {
+  position: absolute;
+  bottom: 13%;
+  right: 5%;
+  z-index: 1;
+  cursor: pointer;
 }
 
 .socialNetworkIcon {
-    color: white;
-    @include useSpacing(margin, 0 , xs, 0, 0);
+  color: white;
+  @include useSpacing(margin, 0, xs, 0, 0);
 }
 
-
 @media screen and (min-width: $main-breakpoint) {
-    .contentWrapper {
-        display: flex;
-        flex-direction: row;
-        width: 46%;
-    }
+  .contentWrapper {
+    display: flex;
+    flex-direction: row;
+    width: 46%;
+  }
 
-    .text {
-        @include useSpacing(margin, 0 , 0, 0, l);
-    }
+  .text {
+    @include useSpacing(margin, 0, 0, 0, l);
+  }
 
-    .companyName {
-        justify-content: flex-start;
-    }
+  .companyName {
+    justify-content: flex-start;
+  }
 
-    .companyDescription {
-        text-align: left;
-    }
+  .companyDescription {
+    text-align: left;
+  }
 
-    .companyLink {
-        justify-content: flex-start;
-    }
+  .companyLink {
+    justify-content: flex-start;
+  }
 
-    .socialLinks {
-        justify-content: flex-start;
-    }
+  .socialLinks {
+    justify-content: flex-start;
+  }
 }

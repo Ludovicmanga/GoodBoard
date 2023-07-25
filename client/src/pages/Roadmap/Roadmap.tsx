@@ -4,7 +4,6 @@ import EmptyData from "../../components/EmptyData/EmptyData";
 import MainHero from "../../components/MainHero/MainHero";
 import MainNavBar from "../../components/MainNavBar/MainNavBar";
 import RoadMapFeature from "../../components/RoadMapFeature/RoadMapFeature";
-import SiteMainHeader from "../../components/Sections/SiteMainHeader/SiteMainHeader";
 import {
   EmptyPageType,
   FeatureRequestStatus,
@@ -78,7 +77,8 @@ function Roadmap({}: Props) {
                     ) : (
                       <div className={styles.emptyDataContainer}>
                         <EmptyData
-                          text="Nothing planned yet"
+                          title="Nothing planned yet"
+                          details="Nothing in the roadmap for this status"
                           type={EmptyPageType.roadmap}
                         />
                       </div>

@@ -27,7 +27,7 @@ const boardSchema = new mongoose.Schema(
             type: String,
             required: false,
             lowercase: true,
-            unique: true,
+            unique: false,
             trim: true,
         },
         billingPlan: {

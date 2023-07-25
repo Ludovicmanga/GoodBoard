@@ -17,6 +17,7 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import Routes from "../Routes";
 import "./App.module.scss";
 import { getLoggedUser } from "../helpers/users";
+import FeatureRequestModal from "../components/Modals/FeatureRequestModal/FeatureRequestModal";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -24,7 +25,6 @@ function App() {
   const generalPropertiesState = useAppSelector(
     (state) => state.generalProperties
   );
-
 
   const lightTheme = createTheme({
     palette: {
@@ -138,7 +138,9 @@ function App() {
   }, [generalPropertiesState.activeBoard]);
 
   const handleGetLoggedUser = async () => {
-    const userResponse = await getLoggedUser(generalPropertiesState.activeBoard);
+    const userResponse = await getLoggedUser(
+      generalPropertiesState.activeBoard
+    );
     if (userResponse.data.user) {
       const user = userResponse.data.user;
       dispatch(
@@ -213,6 +215,17 @@ function App() {
           <Routes />
           <CssBaseline />
         </ThemeProvider>
+        <FeatureRequestModal
+          modalMode={generalPropertiesState.featureRequestModal.mode!}
+          modalIsOpen={generalPropertiesState.featureRequestModal.isOpen}
+          handleCloseModal={() =>
+            dispatch(
+              setGeneralProperties({
+                featureRequestModal: { isOpen: false, mode: null },
+              })
+            )
+          }
+        />
       </>
     </GoogleOAuthProvider>
   );

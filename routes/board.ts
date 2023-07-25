@@ -24,7 +24,7 @@ router.get("/get/user-boards", getUserBoards);
 router.get("/get/:boardId", getBoard);
 router.get("/get-board-users-list/:boardId", getBoardUsersList);
 router.post("/invite-users", inviteUsers);
-router.post("/create", createBoard);
+router.post("/create", multerUpload.single("image"), createBoard);
 router.post("/get-public-status", getPublicStatus);
 router.post("/update-color", updateColor);
 router.post("/update-public-status", updatePublicStatus);
@@ -34,7 +34,7 @@ router.post("/delete-user", deleteUserFromBoard);
 router.put("/update-user-role", updateUserRole);
 router.post("/create-checkout-session", createCheckoutSession);
 router.post("/create-portal-session", createPortalSession);
-router.post('/update-board-billing-plan', updateBoardBillingPlan);
+router.post("/update-board-billing-plan", updateBoardBillingPlan);
 
 //router.get('/:token', getPublicBoard);
 

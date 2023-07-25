@@ -6,7 +6,7 @@
 }
 
 .colorPaletteBox {
-    @include useSpacing(margin,s);
+    @include useSpacing(margin, xxs, l, s, 0);
     cursor: pointer;
     border: $c-black 1px solid;
     width: 3rem;

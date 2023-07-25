@@ -1,21 +1,19 @@
-import { Avatar, Button, ButtonGroup, TextField } from "@mui/material";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import {
-  handleSetActiveBoard,
-  setBoardImageApiCall,
-} from "../../helpers/boards";
+  Avatar,
+  Button,
+  TextField,
+  useTheme,
+} from "@mui/material";
+import axios from "axios";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { handleSetActiveBoard } from "../../helpers/boards";
 import { websiteUrl } from "../../helpers/constants";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { useAppDispatch } from "../../redux/hooks";
 import ChooseBoardColor from "../ChooseBoardColor/ChooseBoardColor";
 import styles from "./CreateBoardModal.module.scss";
-import BoardIsPublicBtn from "../BoardIsPublicBtn/BoardIsPublicBtn";
 import EmptyImage from "../EmptyImage/EmptyImage";
-import { BsFillCheckCircleFill } from "react-icons/bs";
-import { setActiveBoardData } from "../../redux/features/activeBoardSlice";
-import { BillingPlan } from "../../helpers/types";
-import { capitalizeFirstLetter } from "../../helpers/utils";
+import CheckIcon from "@mui/icons-material/Check";
 
 type Props = {};
 
@@ -25,28 +23,23 @@ const CreateBoardModal = (props: Props) => {
   const [website, setWebsite] = useState("");
   const [themeColor, setThemeColor] = useState("blue");
   const [boardIsPublic, setBoardIsPublic] = useState(true);
-  const [pictureUrl, setPictureUrl] = useState("");
-  const [billingPlan, setBillingPlan] = useState<BillingPlan>(
-    BillingPlan.free
-  );
+  const [picture, setPicture] = useState<File>();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const generalPropertiesState = useAppSelector(
-    (state) => state.generalProperties
-  );
+
   const handleBoardCreation = async () => {
+    const formData = new FormData();
+    formData.append("image", picture || "");
+    formData.append("name", name);
+    formData.append("description", description);
+    formData.append("themeColor", themeColor);
+    formData.append("isPublic", boardIsPublic.toString());
+    formData.append("websiteUrl", websiteUrl);
+
     const boardCreationResponse = await axios({
       url: `${websiteUrl}/api/board/create`,
       method: "post",
-      data: {
-        name,
-        description,
-        themeColor,
-        isPublic: boardIsPublic,
-        pictureUrl,
-        websiteUrl,
-        billingPlan,
-      },
+      data: formData,
       withCredentials: true,
     });
     if (boardCreationResponse.data) {
@@ -59,17 +52,7 @@ const CreateBoardModal = (props: Props) => {
   };
 
   const handleUploadImageToBoard = async (selectedFile: File) => {
-    const res = await setBoardImageApiCall(
-      selectedFile,
-      generalPropertiesState.activeBoard!
-    );
-    if (res.data.url) {
-      dispatch(
-        setActiveBoardData({
-          picture: res.data.url,
-        })
-      );
-    }
+    setPicture(selectedFile);
   };
 
   return (
@@ -112,13 +95,14 @@ const CreateBoardModal = (props: Props) => {
         value={website}
         size="small"
       />
+      <h2 className={styles.inputLabel}>Board color</h2>
       <ChooseBoardColor mode="creation" setThemeColor={setThemeColor} />
       <h2 className={styles.inputLabel}>Board logo</h2>
       <div className={styles.uploadImgBtnContainer}>
-        {pictureUrl ? (
-          <div>
-            <BsFillCheckCircleFill color="#4BB543" size={40} />
-          </div>
+        {picture ? (
+          <Avatar className={styles.colorPaletteBox} variant="rounded">
+            <CheckIcon />
+          </Avatar>
         ) : (
           <EmptyImage
             handleUploadedImage={handleUploadImageToBoard}
@@ -126,25 +110,6 @@ const CreateBoardModal = (props: Props) => {
             width={30}
           />
         )}
-      </div>
-      {/*       <BoardIsPublicBtn
-        boardIsPublic={boardIsPublic}
-        handleChangeBoardStatus={handleChangeBoardStatus}
-        isLoading={false}
-      /> */}
-      <h2 className={styles.inputLabel}>Board plan</h2>
-      <div>
-        <ButtonGroup>
-          {Object.values(BillingPlan).map((plan) => (
-            <Button
-              key={plan}
-              onClick={() => setBillingPlan(plan)}
-              variant={billingPlan === plan ? "contained" : "outlined"}
-            >
-              {capitalizeFirstLetter(plan)}
-            </Button>
-          ))}
-        </ButtonGroup>
       </div>
       <div className={styles.submitBtnContainer}>
         <Button
