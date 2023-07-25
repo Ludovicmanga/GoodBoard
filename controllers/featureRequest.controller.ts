@@ -7,9 +7,9 @@ import {
   addToChangeLog,
   getAllBoardFeatureRequestsMappedWithTopics,
 } from "../helpers/featureRequests";
-import { checkUserHasAccessToBoard } from "../helpers/boards";
 import boardUserRelModel from "../models/boardUserRel.model";
 import changeLogModel from "../models/changeLog.model";
+import { checkUserHasAccessToBoardHelper } from "../helpers/boards";
 
 export const getAllFeatureRequests = async (req, res) => {
   await featureRequestModel
@@ -29,7 +29,7 @@ export const getAllBoardFeatureRequests = async (req, res) => {
       } else {
         let userHasAccessToTheBoard;
         if (req.user) {
-          userHasAccessToTheBoard = await checkUserHasAccessToBoard(
+          userHasAccessToTheBoard = await checkUserHasAccessToBoardHelper(
             req.user.id,
             req.body.boardId
           );

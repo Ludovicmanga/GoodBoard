@@ -120,12 +120,34 @@ function App() {
     dispatch(setAllFeatureRequests(allFeatureRequests));
   };
 
+  const checkUserAccessAPICall = async (boardId: string) => {
+    return await axios({
+      method: "post",
+      withCredentials: true,
+      url: `${websiteUrl}/api/board/check-user-has-access-to-board`,
+      data: {
+        boardId,
+      },
+    });
+  };
+
+  const checkUserHasAccessToBoard = async (boardId: string | null) => {
+    if (boardId) {
+      const res = await checkUserAccessAPICall(boardId);
+      if (res.data) {
+        dispatch(
+          setGeneralProperties({
+            activeBoard: boardId,
+          })
+        );
+      }
+    }
+  };
+
   useEffect(() => {
-    dispatch(
-      setGeneralProperties({
-        activeBoard: localStorage.getItem("board"),
-      })
-    );
+    if (localStorage.getItem("board")) {
+      checkUserHasAccessToBoard(localStorage.getItem("board"));
+    }
   }, []);
 
   useEffect(() => {

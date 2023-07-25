@@ -15,3 +15,13 @@ export function verifyJwtToken(token: string, secret: string) {
         console.log(error, ' is the invalid token error')
     }
 }
+
+export const logUserIn = (userToLog, req, res) => {
+    req.login(userToLog, async err => {
+      if (err) {
+        console.log(err, ' is the err');
+      } else {
+        res.json({ user: userToLog });
+      }
+    });
+  }

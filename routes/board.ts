@@ -15,6 +15,7 @@ import {
   createCheckoutSession,
   createPortalSession,
   updateBoardBillingPlan,
+  checkUserHasAccessToBoard,
 } from "../controllers/board.controller";
 import { multerUpload } from "../middleware/multer";
 
@@ -35,6 +36,7 @@ router.put("/update-user-role", updateUserRole);
 router.post("/create-checkout-session", createCheckoutSession);
 router.post("/create-portal-session", createPortalSession);
 router.post("/update-board-billing-plan", updateBoardBillingPlan);
+router.post('/check-user-has-access-to-board', checkUserHasAccessToBoard);
 
 //router.get('/:token', getPublicBoard);
 

@@ -32,8 +32,8 @@ const SettingsMenu = (props: Props) => {
             src={loggedUser?.picture}
             sx={{
               background: "white",
-              width: "50px",
-              height: "50px",
+              width: "40px",
+              height: "40px",
               "& img": {
                 width: "100%",
                 height: "100%",

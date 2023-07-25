@@ -5,7 +5,7 @@ import { secretKey, verifyJwtToken, websiteUrl } from "../helpers/auth";
 import { UserRoles } from "../helpers/types";
 import userModel from "../models/user.model";
 import {
-  checkUserHasAccessToBoard,
+  checkUserHasAccessToBoardHelper,
   giveAccessToBoard,
   sendEmailToUser,
 } from "../helpers/boards";
@@ -67,27 +67,33 @@ export const getUserBoards = async (req, res) => {
 };
 
 export const createBoard = async (req, res) => {
-  const { name, description, themeColor, isPublic, websiteUrl } =
-    req.body;
+  const { name, description, themeColor, isPublic, websiteUrl } = req.body;
   try {
     if (req.user) {
-      const fileUrl = req.file.location;
+      let fileUrl;
+      if (req.file && req.file.location) {
+        fileUrl = req.file.location;
+      }
       const newBoard = await boardModel.create({
         name,
         description,
-        themeColor,
+        themeColor: themeColor || "blue",
         isPublic,
         websiteUrl,
         picture: fileUrl,
+        billingPlan: "free",
       });
-      const updatedNewBoard = await boardModel.findOneAndUpdate({
-        _id: newBoard.id,
-      }, {
-        url: `${websiteUrl}/view-board/${newBoard.id}`
-      }, 
-      {
-        new: true,
-      })
+      const updatedNewBoard = await boardModel.findOneAndUpdate(
+        {
+          _id: newBoard.id,
+        },
+        {
+          url: `${websiteUrl}/view-board/${newBoard.id}`,
+        },
+        {
+          new: true,
+        }
+      );
 
       const newBoardUserRelation = await boardUserRelModel.create({
         user: req.user.id,
@@ -270,7 +276,7 @@ export const inviteUsers = async (req, res) => {
         email: userToInvite.email,
       });
       if (foundUser) {
-        const userHasAccessToBoard = await checkUserHasAccessToBoard(
+        const userHasAccessToBoard = await checkUserHasAccessToBoardHelper(
           foundUser._id,
           req.body.boardId
         );
@@ -380,11 +386,25 @@ export const updateBoardBillingPlan = async (req, res) => {
     }
   } catch (error) {
     // Error occurred during the request
-    res
-      .status(500)
-      .json({
-        status: "error",
-        message: "An error occurred while fetching payment details.",
+    res.status(500).json({
+      status: "error",
+      message: "An error occurred while fetching payment details.",
+    });
+  }
+};
+
+export const checkUserHasAccessToBoard = async (req, res) => {
+  try {
+    const { boardId } = req.body;
+    if (req.user) {
+      const boardToFind = await boardUserRelModel.findOne({
+        user: req.user.id,
+        board: boardId,
       });
+
+      res.send(boardToFind);
+    }
+  } catch (e) {
+    console.log(e);
   }
 };

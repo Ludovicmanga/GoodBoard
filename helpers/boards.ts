@@ -1,7 +1,7 @@
 import boardUserRelModel from "../models/boardUserRel.model";
 import nodemailer from "nodemailer";
 
-export const checkUserHasAccessToBoard = async (
+export const checkUserHasAccessToBoardHelper = async (
   userId: number,
   boardId: number
 ) => {

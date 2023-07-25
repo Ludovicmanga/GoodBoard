@@ -1,3 +1,4 @@
+import { logUserIn } from "../helpers/auth";
 import userModel from "../models/user.model";
 import { signUpErrors } from "../utils/errors.utils";
 import jwtDecode from 'jwt-decode';
@@ -34,26 +35,17 @@ export const loginOrSignupGoogle = async (req, res) => {
       email: infos.email,
     });
 
-    const logUserIn = () => {
-      req.login(foundUser, async err => {
-        if (err) {
-          console.log(err, ' is the err');
-        } else {
-          res.json({ user: foundUser });
-        }
-      });
-    }
-
     if (foundUser) {
-      logUserIn();
+      logUserIn(foundUser, req, res);
     } else {
       const createdUser = await userModel.create({
         email: infos.email,
         password: req.body.credentialResponse.credential,
         picture: infos.picture,
       });
+      console.log()
       if (createdUser) {
-        logUserIn();
+        logUserIn(createdUser, req, res);
       }
     }
 

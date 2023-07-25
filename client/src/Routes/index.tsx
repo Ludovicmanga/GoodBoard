@@ -28,16 +28,11 @@ export default function Index() {
     <div className={styles.container}>
       <Router>
         <Routes>
-          <Route
-            path="/sign-up"
-            element={<Login authType={AuthPageType.signUp} />}
-          />
-          <Route
-            path="/login"
-            element={<Login authType={AuthPageType.login} />}
-          />
-          <Route path="/choose-board" element={<BoardCreation />} />
-          <Route path="/view-board/:boardId" element={<ViewBoard />} />
+          {loggedUser.user && activeBoard && (
+            <>
+              <Route path="/integrations" element={<Integrations />} />
+            </>
+          )}
           {loggedUser.user && !activeBoard && (
             <Route path="*" element={<Navigate to="/choose-board" replace />} />
           )}
@@ -48,14 +43,19 @@ export default function Index() {
             </>
           )}
           <Route
+            path="/sign-up"
+            element={<Login authType={AuthPageType.signUp} />}
+          />
+          <Route
+            path="/login"
+            element={<Login authType={AuthPageType.login} />}
+          />
+          <Route path="/choose-board" element={<BoardCreation />} />
+          <Route path="/view-board/:boardId" element={<ViewBoard />} />
+          <Route
             path="/successful-stripe-payment"
             element={<PaymentSuccessPage />}
           />
-          {loggedUser.user && activeBoard && (
-            <>
-              <Route path="/integrations" element={<Integrations />} />
-            </>
-          )}
           <>
             <Route
               path="/company-feature-requests"
@@ -63,7 +63,7 @@ export default function Index() {
             />
             <Route
               path="/user-feature-requests"
-              element={<FeatureRequests type={UserType.user} />}
+              element={<FeatureRequests type={UserType.externalUser} />}
             />
           </>
           <Route
