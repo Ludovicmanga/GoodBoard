@@ -118,57 +118,72 @@ const MainNavBar = () => {
   };
 
   useEffect(() => {
+    const settingsList = [
+      {
+        linkText: "My account",
+        onClick: handleSettingsModal,
+      },
+      {
+        linkText: "Manage this board",
+        onClick: handleManageBoard,
+      },
+      {
+        linkText: "Switch board",
+        onClick: handleChangeBoard,
+      },
+      {
+        linkText: "Share your board",
+        onClick: handleShareBoard,
+      },
+      {
+        linkText: "Integrations",
+        onClick: handleDisplayIntegrations,
+      },
+      {
+        linkText: "Logout",
+        onClick: handleLogout,
+      },
+    ];
+
     if (activeBoardState.billingPlan === BillingPlan.business) {
-      if (loggedUser.user?.roleOnThisBoard !== UserType.admin) {
-        setSettingsRoleFiltered((currArray) =>
-          currArray.filter(
+      if (loggedUser.user?.roleOnThisBoard === UserType.admin) {
+        setSettingsRoleFiltered(settingsList);
+      } else {
+        setSettingsRoleFiltered(() =>
+          settingsList.filter(
             (setting) =>
               setting.linkText !== "Manage this board" &&
-              setting.linkText !== "Share your board" &&
               setting.linkText !== "Integrations"
           )
         );
       }
     } else {
-      setSettingsRoleFiltered((currArray) =>
-        currArray.filter((setting) => setting.linkText !== "Integrations")
-      );
+      if (loggedUser.user?.roleOnThisBoard === UserType.admin) {
+        setSettingsRoleFiltered(() =>
+          settingsList.filter((setting) => setting.linkText !== "Integrations")
+        );
+      } else {
+        setSettingsRoleFiltered(() =>
+          settingsList.filter(
+            (setting) =>
+              setting.linkText !== "Manage this board" &&
+              setting.linkText !== "Integrations"
+          )
+        );
+      }
     }
-  }, [generalPropertiesState.activeBoard, loggedUser.user?._id]);
-  
-  const settingsList = [
-    {
-      linkText: "My account",
-      onClick: handleSettingsModal,
-    },
-    {
-      linkText: "Manage this board",
-      onClick: handleManageBoard,
-    },
-    {
-      linkText: "Switch board",
-      onClick: handleChangeBoard,
-    },
-    {
-      linkText: "Share your board",
-      onClick: handleShareBoard,
-    },
-    {
-      linkText: "Integrations",
-      onClick: handleDisplayIntegrations,
-    },
-    {
-      linkText: "Logout",
-      onClick: handleLogout,
-    },
-  ];
+  }, [
+    generalPropertiesState.activeBoard,
+    loggedUser.user,
+    activeBoardState.billingPlan,
+  ]);
 
   const [settingsRoleFiltered, setSettingsRoleFiltered] = useState<
     {
       linkText: string;
       onClick: () => void;
     }[]
-  >(settingsList);
+  >([]);
 
   useEffect(() => {
     if (activeBoardState.billingPlan === BillingPlan.business) {

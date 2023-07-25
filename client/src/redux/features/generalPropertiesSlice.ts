@@ -7,6 +7,12 @@ interface GeneralProperties {
   generalSettingsModalOpen: boolean;
   shareBoardModalOpen: boolean;
   switchBoardModalOpen: boolean;
+  changeLogDetailsModalOpen: {
+    isOpen: boolean;
+    title: string;
+    details: string;
+    createdAt: string;
+  };
   manageBoardModalOpen: boolean;
   cannotMakeActionModalOpen: boolean;
   needToUpgradeModalOpen: boolean;
@@ -28,6 +34,12 @@ const initialState: GeneralProperties = {
   switchBoardModalOpen: false,
   cannotMakeActionModalOpen: false,
   needToUpgradeModalOpen: false,
+  changeLogDetailsModalOpen: {
+    isOpen: false,
+    title: '',
+    details: '',
+    createdAt: '',
+  },
   menuSelected: null,
   mainSnackBar: {
     isOpen: false,

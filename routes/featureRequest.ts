@@ -1,5 +1,5 @@
 import express from 'express';
-import { createFeatureRequest, deleteFeatureRequest, downVote, getAllBoardFeatureRequests, getAllCompanyFeatureRequests, getAllFeatureRequests, getAllUserFeatureRequests, updateFeatureRequest, upVote } from '../controllers/featureRequest.controller';
+import { createFeatureRequest, deleteFeatureRequest, downVote, getAllBoardFeatureRequests, getAllCompanyFeatureRequests, getAllFeatureRequests, getAllUserFeatureRequests, getChangeLogList, updateFeatureRequest, upVote } from '../controllers/featureRequest.controller';
 import { checkAuthenticated } from '../middleware/auth.middleware';
 const router = express.Router();
 
@@ -12,5 +12,6 @@ router.post('/update', updateFeatureRequest);
 router.post('/up-vote/:id', upVote);
 router.post('/down-vote/:id', downVote);
 router.post('/delete', deleteFeatureRequest);
+router.post('/get-changelog-list', getChangeLogList);
 
 export default router;

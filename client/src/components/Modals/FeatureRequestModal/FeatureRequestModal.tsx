@@ -34,7 +34,11 @@ import {
   updateFeatureRequest,
 } from "../../../redux/features/allFeatureRequestsSlice";
 import { setGeneralProperties } from "../../../redux/features/generalPropertiesSlice";
-import { emptyFeatureRequest, topicsList, websiteUrl } from "../../../helpers/constants";
+import {
+  emptyFeatureRequest,
+  topicsList,
+  websiteUrl,
+} from "../../../helpers/constants";
 import TrelloBoardsListModal from "../TrelloBoardsListModal/TrelloBoardsListModal";
 import { FaTrello } from "react-icons/fa";
 

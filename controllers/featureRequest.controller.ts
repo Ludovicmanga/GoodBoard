@@ -1,12 +1,15 @@
 import featureRequestModel from "../models/featureRequest.model";
 import userModel from "../models/user.model";
 import topicModel from "../models/topic.model";
-import featureTopicRelModel from "../models/featureTopicRelModel";
 import { UserRoles } from "../helpers/types";
 import boardModel from "../models/board.model";
-import { getAllBoardFeatureRequestsMappedWithTopics } from "../helpers/featureRequests";
+import {
+  addToChangeLog,
+  getAllBoardFeatureRequestsMappedWithTopics,
+} from "../helpers/featureRequests";
 import { checkUserHasAccessToBoard } from "../helpers/boards";
 import boardUserRelModel from "../models/boardUserRel.model";
+import changeLogModel from "../models/changeLog.model";
 
 export const getAllFeatureRequests = async (req, res) => {
   await featureRequestModel
@@ -66,7 +69,7 @@ export const getAllUserFeatureRequests = async (req, res) => {
 
 export const updateFeatureRequest = async (req, res) => {
   try {
-    const { title, details, creatorType, status, creator, topics } =
+    const { title, details, creatorType, status, creator, topics, boardId } =
       req.body.featureRequest;
     if (req.body.featureRequest._id.length > 0) {
       const updated = await featureRequestModel.findOneAndUpdate(
@@ -77,37 +80,15 @@ export const updateFeatureRequest = async (req, res) => {
           creatorType,
           status,
           creator,
+          topics,
         },
         {
           new: true,
         }
       );
       if (updated) {
-        if (topics.length > 0) {
-          // Create an array to store the topic IDs
-          const topicIds = [];
-
-          // Iterate over each topic title in the 'topics' array
-          for (const topicTitle of topics) {
-            // Find or create a new topic based on the title
-            const topic = await topicModel.findOneAndUpdate(
-              { title: topicTitle },
-              { title: topicTitle },
-              { upsert: true, new: true }
-            );
-
-            // Push the topic ID to the array
-            topicIds.push(topic._id);
-          }
-
-          // Update the feature-topic relationships
-          await featureTopicRelModel.deleteMany({ feature: updated._id });
-          await featureTopicRelModel.insertMany(
-            topicIds.map((topicId) => ({
-              feature: updated._id,
-              topic: topicId,
-            }))
-          );
+        if (updated.status === "done") {
+          await addToChangeLog(updated.board, updated._id);
         }
         res.send(updated);
       }
@@ -126,7 +107,7 @@ export const createFeatureRequest = async (req, res) => {
       board: req.body.boardId,
     });
 
-    const newFeatureRequest = new featureRequestModel({
+    const newFeatureRequest = await featureRequestModel.create({
       title: featureRequestData.title,
       details: featureRequestData.details,
       creatorType: foundUserBoardRel.userRole,
@@ -135,10 +116,12 @@ export const createFeatureRequest = async (req, res) => {
       board: req.body.boardId,
     });
 
-    newFeatureRequest
-      .save()
-      .then((featureRequest) => res.status(200).send(featureRequest))
-      .catch((error) => console.log(error));
+    if (newFeatureRequest.status === "done") {
+      await addToChangeLog(newFeatureRequest.board, newFeatureRequest._id);
+    }
+    if (newFeatureRequest) {
+      res.status(200).send(newFeatureRequest);
+    }
   } catch (e) {
     console.log(e, " is the error message");
   }
@@ -179,4 +162,16 @@ export const deleteFeatureRequest = async (req, res) => {
   res.json({
     deleted: true,
   });
+};
+
+export const getChangeLogList = async (req, res) => {
+  try {
+    const { boardId } = req.body;
+
+    const changeLogList = await changeLogModel.find({
+      boardId,
+    });
+
+    res.status(200).send(changeLogList);
+  } catch (e) {}
 };

@@ -1,0 +1,33 @@
+@import '../../../styles/useSpacing';
+@import '../../../styles/useTypography';
+
+.modalContentContainer {
+    position: absolute;
+    top: 15%;
+    left: 25%;
+    border: 0.5px solid #000;
+    border-radius: 8px;
+    box-shadow: 24px;
+    @include useSpacing(padding, xxl);
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    width: 40rem;
+    height: 30rem;
+}
+
+.timestamp {
+    font-style: italic;
+    @include useTypography(title-s);
+    @include useSpacing(margin, 0, 0, m, 0);
+}
+
+.title {
+    @include useTypography(title-l);
+    font-weight: 600;
+    @include useSpacing(margin, m, 0);
+}
+
+.details {
+
+}
