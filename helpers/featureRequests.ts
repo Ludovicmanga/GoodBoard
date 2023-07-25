@@ -1,5 +1,5 @@
+import changeLogModel from "../models/changeLog.model";
 import featureRequestModel from "../models/featureRequest.model";
-import featureTopicRelModel from "../models/featureTopicRelModel";
 import topicModel from "../models/topic.model";
 import userModel from "../models/user.model";
 
@@ -32,21 +32,29 @@ const usersList = await userModel.find({
 
   const mapped = await Promise.all(
     features.map(async (feature) => {
-      const featureRel = await featureTopicRelModel.find({
-        feature: feature._id,
-      });
-      let topics = [];
-      if (featureRel.length > 0) {
-        topics = await topicModel.find({
-          _id: { $in: featureRel.map((feat) => feat.topic) },
-        });
-      }
       return {
         ...feature.toObject(),
-        topics: topics.map((top) => top.title),
         votersPics: usersList.filter(user => feature.voters.includes(user.id )).map(user => user.picture)
       };
     })
   );
   return mapped;
+};
+
+export const addToChangeLog = async (boardId: string, featureRequestId: string) => {
+  try {
+    const foundFeatureRequest = await featureRequestModel.findById(
+      featureRequestId
+    );
+    if (foundFeatureRequest) {
+      const newChangeLogItem = await changeLogModel.create({
+        title: foundFeatureRequest.title,
+        details: foundFeatureRequest.details,
+        boardId,
+      });
+      if (newChangeLogItem) {
+        return newChangeLogItem;
+      }
+    }
+  } catch (e) {}
 };

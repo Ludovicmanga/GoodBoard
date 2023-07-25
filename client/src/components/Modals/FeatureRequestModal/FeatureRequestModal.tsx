@@ -34,11 +34,13 @@ import {
   updateFeatureRequest,
 } from "../../../redux/features/allFeatureRequestsSlice";
 import { setGeneralProperties } from "../../../redux/features/generalPropertiesSlice";
-import { emptyFeatureRequest, websiteUrl } from "../../../helpers/constants";
-import { FaSalesforce, FaTrello } from "react-icons/fa";
-import { RxNotionLogo } from "react-icons/rx";
+import {
+  emptyFeatureRequest,
+  topicsList,
+  websiteUrl,
+} from "../../../helpers/constants";
 import TrelloBoardsListModal from "../TrelloBoardsListModal/TrelloBoardsListModal";
-import { getTopicsList } from "../../../helpers/topics";
+import { FaTrello } from "react-icons/fa";
 
 export default function FeatureRequestModal(props: {
   modalMode: FeatureRequestModalMode;
@@ -87,7 +89,6 @@ export default function FeatureRequestModal(props: {
   >([]);
   const [trelloBoardsListModalOpen, setTrelloBoardsListModalOpen] =
     useState(false);
-  const [topicsList, setTopicsList] = useState<string[]>([]);
 
   useEffect(() => {
     if (props.modalIsOpen && loggedUserState.user) {
@@ -101,17 +102,6 @@ export default function FeatureRequestModal(props: {
       }
     }
   }, [props.modalIsOpen, props.featureRequestProperties, props.modalMode]);
-
-  const handleSetTopicsList = async () => {
-    const topicsListResponse = await getTopicsList();
-    setTopicsList(topicsListResponse.data);
-  };
-
-  useEffect(() => {
-    if (props.modalIsOpen) {
-      handleSetTopicsList();
-    }
-  }, [props.modalIsOpen]);
 
   useEffect(() => {
     if (

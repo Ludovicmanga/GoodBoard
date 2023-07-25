@@ -10,9 +10,9 @@ import PanoramaFishEyeIcon from "@mui/icons-material/PanoramaFishEye";
 import styles from "./FilterFeatureRequestsSidebar.module.scss";
 import TagIcon from "@mui/icons-material/Tag";
 import { TiDelete } from "react-icons/ti";
-import { getTopicsList } from "../../helpers/topics";
 import { useAppSelector } from "../../redux/hooks";
 import { BillingPlan } from "../../helpers/types";
+import { topicsList } from "../../helpers/constants";
 
 const statusChoices = [
   {
@@ -42,8 +42,6 @@ type Props = {
 const FilterFeatureRequestsSidebar = (props: Props) => {
   const [statusListOpen, setStatusListOpen] = useState(true);
   const [topicsListOpen, setTopicsListOpen] = useState(true);
-  const [topicsList, setTopicsList] = useState<string[]>([]);
-  const loggedUser = useAppSelector((state) => state.loggedUser);
   const activeBoardState = useAppSelector((state) => state.activeBoard);
 
   const handleChangeSelectedTopic = (featureCategoryChoice: string) => {
@@ -53,17 +51,6 @@ const FilterFeatureRequestsSidebar = (props: Props) => {
       props.setSelectedTopic(featureCategoryChoice);
     }
   };
-
-  const handleSetTopicsList = async () => {
-    const topicsListResponse = await getTopicsList();
-    setTopicsList(topicsListResponse.data);
-  };
-
-  useEffect(() => {
-    if (loggedUser.user) {
-      handleSetTopicsList();
-    }
-  }, [loggedUser.user]);
 
   return (
     <List>

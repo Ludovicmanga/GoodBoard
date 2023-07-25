@@ -1,5 +1,5 @@
 import { Avatar, Box, useTheme } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styles from "./MainHero.module.scss";
 import { BsFacebook } from "react-icons/bs";
 import { AiFillInstagram, AiFillTwitterCircle } from "react-icons/ai";
@@ -13,6 +13,7 @@ import CannotMakeActionAsGuestModal from "../Modals/CannotMakeActionAsGuestModal
 import { setActiveBoardData } from "../../redux/features/activeBoardSlice";
 import { setBoardImageApiCall } from "../../helpers/boards";
 import NeedToUpgradeModal from "../Modals/NeedToUpgradeModal/NeedToUpgradeModal";
+import { capitalizeFirstLetter } from "../../helpers/utils";
 
 type Props = {};
 
@@ -31,10 +32,6 @@ const MainHero = (props: Props) => {
       handleDispatchActiveBoardData();
     }
   }, [generalPropertiesState.activeBoard]);
-
-  useEffect(() => {
-    console.log(activeBoardState, " is the new state board");
-  }, [activeBoardState]);
 
   useEffect(() => {
     if (activeBoardState.themeColor.length > 0) {
@@ -111,9 +108,9 @@ const MainHero = (props: Props) => {
         )}
 
         <div className={styles.text}>
-          <div className={styles.companyName}>{activeBoardState.name}</div>
+          <div className={styles.companyName}>{capitalizeFirstLetter(activeBoardState.name)}</div>
           <div className={styles.companyDescription}>
-            {activeBoardState.description}
+            {capitalizeFirstLetter(activeBoardState.description)}
           </div>
           <a
             rel="noreferrer"

@@ -14,7 +14,7 @@ const ViewBoard = (props: Props) => {
     if (params.boardId) {
       handleSetActiveBoard(params.boardId, dispatch, navigate);
     }
-  }, [params]);
+  }, [params.boardId]);
   return <div></div>;
 };
 

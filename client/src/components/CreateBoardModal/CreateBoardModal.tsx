@@ -24,7 +24,7 @@ const CreateBoardModal = (props: Props) => {
   const [description, setDescription] = useState("");
   const [website, setWebsite] = useState("");
   const [themeColor, setThemeColor] = useState("blue");
-  const [boardIsPublic, setBoardIsPublic] = useState(false);
+  const [boardIsPublic, setBoardIsPublic] = useState(true);
   const [pictureUrl, setPictureUrl] = useState("");
   const [billingPlan, setBillingPlan] = useState<BillingPlan>(
     BillingPlan.free

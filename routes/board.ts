@@ -36,7 +36,6 @@ router.post("/create-checkout-session", createCheckoutSession);
 router.post("/create-portal-session", createPortalSession);
 router.post('/update-board-billing-plan', updateBoardBillingPlan);
 
-
 //router.get('/:token', getPublicBoard);
 
 export default router;

@@ -14,6 +14,7 @@ import BoardCreation from "../pages/BoardCreation/BoardCreation";
 import Integrations from "../pages/Integrations/Integrations";
 import ViewBoard from "../pages/ViewBoard/ViewBoard";
 import PaymentSuccessPage from "../pages/PaymentSuccessPage/PaymentSuccessPage";
+import ChangeLog from "../pages/ChangeLog/ChangeLog";
 
 export default function Index() {
   const loggedUser = useAppSelector((state) => state.loggedUser);
@@ -37,24 +38,21 @@ export default function Index() {
           />
           <Route path="/choose-board" element={<BoardCreation />} />
           <Route path="/view-board/:boardId" element={<ViewBoard />} />
-          {/*        {loggedUser.user === null && (
-            <Route path="*" element={<Navigate to="/login" replace />} />
-          )} */}
           {loggedUser.user && !activeBoard && (
             <Route path="*" element={<Navigate to="/choose-board" replace />} />
           )}
           {activeBoardState.billingPlan === BillingPlan.business && (
             <>
               <Route path="/roadmap" element={<Roadmap />} />
+              <Route path="/changeLog" element={<ChangeLog />} />
             </>
           )}
-          <Route path="/successful-stripe-payment" element={<PaymentSuccessPage />} />
+          <Route
+            path="/successful-stripe-payment"
+            element={<PaymentSuccessPage />}
+          />
           {loggedUser.user && activeBoard && (
             <>
-              <Route
-                path="*"
-                element={<Navigate to="/user-feature-requests" replace />}
-              />
               <Route path="/integrations" element={<Integrations />} />
             </>
           )}
@@ -68,6 +66,10 @@ export default function Index() {
               element={<FeatureRequests type={UserType.user} />}
             />
           </>
+          <Route
+            path="*"
+            element={<Navigate to="/user-feature-requests" replace />}
+          />
         </Routes>
       </Router>
     </div>

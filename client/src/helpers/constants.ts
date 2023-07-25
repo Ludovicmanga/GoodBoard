@@ -25,3 +25,10 @@ export const rolesList: UserType[] = [
   UserType.member,
   UserType.externalUser,
 ];
+
+export const topicsList = [
+  'Website UX',
+  'Website design',
+  'Speed',
+  'Features'
+]

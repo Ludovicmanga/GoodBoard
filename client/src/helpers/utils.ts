@@ -31,7 +31,33 @@ export const validateEmail = (inputText: string) => {
   }
 };
 
-export const getFirstLetterInUpperCase = (stringToParse : string) => {
+export const getFirstLetterInUpperCase = (stringToParse: string) => {
   const firstLetter = stringToParse.charAt(0).toUpperCase();
   return firstLetter;
-}
+};
+
+export const getMonthForYear = (monthNumber: number | undefined) => {
+  if (!monthNumber) return '';
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  if ((monthNumber + 1) >= 1 && (monthNumber + 1) <= 12) {
+    return months[monthNumber];
+  } else {
+    throw new Error(
+      "Invalid month number. Month number should be between 1 and 12."
+    );
+  }
+};
