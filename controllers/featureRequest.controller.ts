@@ -72,6 +72,7 @@ export const updateFeatureRequest = async (req, res) => {
     const { title, details, creatorType, status, creator, topics, boardId } =
       req.body.featureRequest;
     if (req.body.featureRequest._id.length > 0) {
+      const beforeUpdate = await featureRequestModel.findById(req.body.featureRequest._id);
       const updated = await featureRequestModel.findOneAndUpdate(
         { _id: req.body.featureRequest._id },
         {
@@ -87,7 +88,7 @@ export const updateFeatureRequest = async (req, res) => {
         }
       );
       if (updated) {
-        if (updated.status === "done") {
+        if (updated.status === "done" && beforeUpdate.status !== "done") {
           await addToChangeLog(updated.board, updated._id);
         }
         res.send(updated);
