@@ -11,18 +11,26 @@ export const allFeatureRequestsSlice = createSlice({
       state = action.payload;
       return state;
     },
-    upVote: (state, action: PayloadAction<{ featureRequestId: string; userId: string }>) => {
-      return state.map(featureRequest => (
-          featureRequest._id === action.payload.featureRequestId ?
-          {...featureRequest, voters: [action.payload.userId, ...featureRequest.voters]}
-          : featureRequest
-        )
-      )
+    upVote: (
+      state: FeatureRequest[],
+      action: PayloadAction<{ featureRequestId: string; userId: string; userPic: string }>
+    ): FeatureRequest[] => {
+      return state.map(featureRequest => {
+        if (featureRequest._id === action.payload.featureRequestId) {
+          return {
+            ...featureRequest,
+            voters: [action.payload.userId, ...featureRequest.voters],
+            votersPics: [action.payload.userPic, ...featureRequest.votersPics],
+          };
+        } else {
+          return featureRequest;
+        }
+      });
     },
-    downVote: (state, action: PayloadAction<{ featureRequestId: string; userId: string }>) => {
+    downVote: (state, action: PayloadAction<{ featureRequestId: string; userId: string; userPic: string }>) => {
       return state.map(featureRequest => (
           featureRequest._id === action.payload.featureRequestId ?
-          {...featureRequest, voters: featureRequest.voters.filter( voter => voter !== action.payload.userId )}
+          {...featureRequest, voters: featureRequest.voters.filter( voter => voter !== action.payload.userId ), votersPics: featureRequest.votersPics.filter(voterPic => voterPic !== action.payload.userPic )}
           : featureRequest
         )
       )

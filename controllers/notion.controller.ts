@@ -124,17 +124,11 @@ const oauth_secrets = {};
 export const loginTrello = (request, response) => {
   oauth.getOAuthRequestToken(function (error, token, tokenSecret, results) {
     oauth_secrets[token] = tokenSecret;
-    console.log(
-      `${authorizeURL}?oauth_token=${token}&name=${appName}&scope=${scope}&expiration=${expiration}`,
-      " is the url"
-    );
     response.send(
       `${authorizeURL}?oauth_token=${token}&name=${appName}&scope=${scope}&expiration=${expiration}`
     );
   });
 };
-
-let token, tokenSecret;
 
 export const setOauthCodeTrello = async (req, res) => {
   //const query = url.parse(req.url, true).query;
