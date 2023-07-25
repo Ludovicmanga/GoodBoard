@@ -1,5 +1,10 @@
 @import '../../styles/useSpacing';
 
+.container {
+    //height: 10%;
+    flex: 0 0 10%;
+}
+
 .darkModeBtnContainer {
     @include useSpacing(margin, 0, l);
 }

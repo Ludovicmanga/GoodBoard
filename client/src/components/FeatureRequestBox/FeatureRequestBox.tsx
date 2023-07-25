@@ -43,6 +43,7 @@ function FeatureRequestBox(props: Props) {
           upVote({
             featureRequestId: props.featureRequestProperties._id,
             userId: loggedUser.user._id,
+            userPic: loggedUser.user.picture,
           })
         );
         dispatch(
@@ -56,6 +57,7 @@ function FeatureRequestBox(props: Props) {
           downVote({
             featureRequestId: props.featureRequestProperties._id,
             userId: loggedUser.user._id,
+            userPic: loggedUser.user.picture
           })
         );
         dispatch(

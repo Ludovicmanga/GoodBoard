@@ -249,7 +249,7 @@ const MainNavBar = () => {
   const handleGoToLoginPage = () => navigate("/login");
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" className={styles.container}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <EventNoteIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />

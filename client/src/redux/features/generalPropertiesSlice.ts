@@ -1,9 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { MenuSelected } from "../../helpers/types";
+import { FeatureRequestModalMode, MenuSelected } from "../../helpers/types";
 
 interface GeneralProperties {
   activeBoard: string | null;
-  featureRequestModalOpen: boolean;
+  featureRequestModal: {
+    isOpen: boolean;
+    mode: FeatureRequestModalMode | null;
+  };
   generalSettingsModalOpen: boolean;
   shareBoardModalOpen: boolean;
   switchBoardModalOpen: boolean;
@@ -27,7 +30,10 @@ interface GeneralProperties {
 
 const initialState: GeneralProperties = {
   activeBoard: null,
-  featureRequestModalOpen: false,
+  featureRequestModal: {
+    isOpen: false,
+    mode: null,
+  },
   generalSettingsModalOpen: false,
   shareBoardModalOpen: false,
   manageBoardModalOpen: false,

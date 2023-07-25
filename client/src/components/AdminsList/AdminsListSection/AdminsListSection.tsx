@@ -19,6 +19,8 @@ const AdminsListSection = (props: Props) => {
     }[]
   >([]);
 
+  console.log('rendered');
+
   const getUsersList = async () => {
     const response = await axios({
       method: "get",
@@ -82,7 +84,7 @@ const AdminsListSection = (props: Props) => {
 
   return (
     <div className={styles.container}>
-      {boardAdminsList.length > 0 ? boardAdminsList.map((boardAdmin) => (
+      {boardAdminsList.length > 1 ? boardAdminsList.map((boardAdmin) => (
         <AdminInListBox
           handleChangeUserRole={handleChangeUserRole}
           handleDeleteAdmin={handleDeleteAdmin}

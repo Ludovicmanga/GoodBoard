@@ -10,6 +10,8 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { capitalizeFirstLetter, getMonthForYear } from "../../helpers/utils";
 import ChangeLogDetailsModal from "../../components/Modals/ChangeLogDetailsModal/ChangeLogDetailsModal";
 import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
+import EmptyData from "../../components/EmptyData/EmptyData";
+import { EmptyPageType } from "../../helpers/types";
 
 type Props = {};
 
@@ -77,27 +79,37 @@ const ChangeLog = (props: Props) => {
       <MainNavBar />
       <MainHero />
       <div className={styles.pageTitleContainer}>
-        <div className={styles.container}>
-          {changeLogItemsMappedByDate.map((item) => (
-            <div key={`${item.month} - ${item.year}`} >
-              <div className={styles.dateTitle}>
-                {getMonthForYear(item.month)} - {item.year}
-              </div>
-              {item.objects.map((changeLogItem) => (
-                <div
-                  key={changeLogItem.createdAt}
-                  className={styles.changeLogBoxContainer}
-                >
-                  <ChangeLogBox
-                    title={changeLogItem.title}
-                    details={changeLogItem.details}
-                    createdAt={changeLogItem.createdAt}
-                  />
+        {changeLogItemsMappedByDate.length > 0 ? (
+          <div className={styles.container}>
+            {changeLogItemsMappedByDate.map((item) => (
+              <div key={`${item.month} - ${item.year}`}>
+                <div className={styles.dateTitle}>
+                  {getMonthForYear(item.month)} - {item.year}
                 </div>
-              ))}
-            </div>
-          ))}
-        </div>
+                {item.objects.map((changeLogItem) => (
+                  <div
+                    key={changeLogItem.createdAt}
+                    className={styles.changeLogBoxContainer}
+                  >
+                    <ChangeLogBox
+                      title={changeLogItem.title}
+                      details={changeLogItem.details}
+                      createdAt={changeLogItem.createdAt}
+                    />
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className={styles.emptyDataContainer}>
+            <EmptyData
+              title="Nothing in the changelog yet !"
+              details="Change the status of some features to done to fill it"
+              type={EmptyPageType.changeLog}
+            />
+          </div>
+        )}
       </div>
       <ChangeLogDetailsModal
         handleClose={() =>
@@ -105,9 +117,9 @@ const ChangeLog = (props: Props) => {
             setGeneralProperties({
               changeLogDetailsModalOpen: {
                 isOpen: false,
-                title: '',
-                details: '',
-                createdAt: ''
+                title: "",
+                details: "",
+                createdAt: "",
               },
             })
           )

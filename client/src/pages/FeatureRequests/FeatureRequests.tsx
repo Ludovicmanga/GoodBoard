@@ -94,7 +94,13 @@ const FeatureRequests = (props: Props) => {
     <>
       <MainNavBar />
       <MainHero />
-      <div className={activeBoardState.billingPlan !== BillingPlan.free ? styles.sectionContainerWithNavBar : styles.sectionContainerWithoutNavBar}>
+      <div
+        className={
+          activeBoardState.billingPlan === BillingPlan.free
+            ? `${styles.sectionContainer} ${styles.sectionContainerWithoutNavBar}`
+            : styles.sectionContainer
+        }
+      >
         {activeBoardState.billingPlan !== BillingPlan.free && (
           <div className={styles.sidebarContainer}>
             <FilterFeatureRequestsSidebar
@@ -105,7 +111,13 @@ const FeatureRequests = (props: Props) => {
             />
           </div>
         )}
-        <div className={styles.featuresSectionContainer}>
+        <div
+          className={
+            filteredFeatureRequests.length > 0
+              ? styles.featuresSectionContainer
+              : `${styles.featuresSectionContainer} ${styles.featuresSectionContainerEmpty}`
+          }
+        >
           {filteredFeatureRequests.length > 0 ? (
             <div className={styles.featuresContainer}>
               <SearchBar
@@ -151,16 +163,19 @@ const FeatureRequests = (props: Props) => {
           ) : (
             <div className={styles.emptyDataContainer}>
               <EmptyData
-                text="No feature request yet"
+                title="No feature request yet !"
+                details="Setup your board with creative ideas"
                 type={EmptyPageType.featureRequests}
               />
             </div>
           )}
         </div>
       </div>
-      <NewFeatureRequestsButton
-        numberOfFeatureRequests={filteredFeatureRequests.length}
-      />
+      {filteredFeatureRequests.length > 0 && (
+        <NewFeatureRequestsButton
+          numberOfFeatureRequests={filteredFeatureRequests.length}
+        />
+      )}
     </>
   );
 };

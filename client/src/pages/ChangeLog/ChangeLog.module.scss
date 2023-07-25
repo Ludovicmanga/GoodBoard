@@ -5,6 +5,12 @@
     @include useSpacing(padding, s);
 }
 
+.emptyDataContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .dateTitle {
     @include useSpacing(margin, m);
     @include useTypography(title-l);
@@ -14,6 +20,7 @@
 .changeLogBoxContainer {
     display: flex;
     justify-content: center;
+    @include useSpacing(margin, 0, xxl);
     width: 100%;
     @include useSpacing(margin, s);
 }

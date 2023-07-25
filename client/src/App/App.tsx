@@ -17,6 +17,7 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import Routes from "../Routes";
 import "./App.module.scss";
 import { getLoggedUser } from "../helpers/users";
+import FeatureRequestModal from "../components/Modals/FeatureRequestModal/FeatureRequestModal";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -24,7 +25,6 @@ function App() {
   const generalPropertiesState = useAppSelector(
     (state) => state.generalProperties
   );
-
 
   const lightTheme = createTheme({
     palette: {
@@ -120,12 +120,34 @@ function App() {
     dispatch(setAllFeatureRequests(allFeatureRequests));
   };
 
+  const checkUserAccessAPICall = async (boardId: string) => {
+    return await axios({
+      method: "post",
+      withCredentials: true,
+      url: `${websiteUrl}/api/board/check-user-has-access-to-board`,
+      data: {
+        boardId,
+      },
+    });
+  };
+
+  const checkUserHasAccessToBoard = async (boardId: string | null) => {
+    if (boardId) {
+      const res = await checkUserAccessAPICall(boardId);
+      if (res.data) {
+        dispatch(
+          setGeneralProperties({
+            activeBoard: boardId,
+          })
+        );
+      }
+    }
+  };
+
   useEffect(() => {
-    dispatch(
-      setGeneralProperties({
-        activeBoard: localStorage.getItem("board"),
-      })
-    );
+    if (localStorage.getItem("board")) {
+      checkUserHasAccessToBoard(localStorage.getItem("board"));
+    }
   }, []);
 
   useEffect(() => {
@@ -138,7 +160,9 @@ function App() {
   }, [generalPropertiesState.activeBoard]);
 
   const handleGetLoggedUser = async () => {
-    const userResponse = await getLoggedUser(generalPropertiesState.activeBoard);
+    const userResponse = await getLoggedUser(
+      generalPropertiesState.activeBoard
+    );
     if (userResponse.data.user) {
       const user = userResponse.data.user;
       dispatch(
@@ -213,6 +237,17 @@ function App() {
           <Routes />
           <CssBaseline />
         </ThemeProvider>
+        <FeatureRequestModal
+          modalMode={generalPropertiesState.featureRequestModal.mode!}
+          modalIsOpen={generalPropertiesState.featureRequestModal.isOpen}
+          handleCloseModal={() =>
+            dispatch(
+              setGeneralProperties({
+                featureRequestModal: { isOpen: false, mode: null },
+              })
+            )
+          }
+        />
       </>
     </GoogleOAuthProvider>
   );

@@ -1,56 +1,64 @@
-@import '../../styles/useSpacing';
+@import "../../styles/useSpacing";
 
 .emptyDataContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30%;
+  @include useSpacing(padding, xl, 0, 0, 0);
 }
 
-.sectionContainerWithNavBar {
-    display: flex;
+.sectionContainer {
+  display: flex;
+  justify-content: center;
+  height: 50%;
 }
 
 .sectionContainerWithoutNavBar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50%;
 }
 
 .sidebarContainer {
-    @include useSpacing(padding, 0, 0, 0, xl);
-    width: 22%;
+  @include useSpacing(padding, 0, 0, 0, xl);
+  width: 22%;
 }
 
 .featuresSectionContainer {
-    width: 80%;
-    display: flex;
-    align-items: center;
+  width: 80%;
+  display: flex;
+  align-items: center;
+}
+
+.featuresSectionContainerEmpty {
+  justify-content: center;
 }
 
 .featuresContainer {
-    width: 90%;
+  width: 90%;
 }
 
 .listItemButton {
-    color: #8f9399;
-    font-size: 14px;
+  color: #8f9399;
+  font-size: 14px;
 }
 
 .listItem {
-    font-size: 14px;
+  font-size: 14px;
 }
 
 .featuresSectionContainer {
-    display: flex;
-    flex-direction: column;
-    @include useSpacing(margin, l, 0)
+  display: flex;
+  flex-direction: column;
+  @include useSpacing(margin, l, 0);
 }
 
 .filtersTextContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 13px;
-    @include useSpacing(margin, 0, 0, 0, s);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 13px;
+  @include useSpacing(margin, 0, 0, 0, s);
 }

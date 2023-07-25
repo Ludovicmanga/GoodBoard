@@ -4,6 +4,7 @@
 .container {
     border-radius: 10px;
     @include useSpacing(padding, m);
+    @include useSpacing(margin, 0, xxl);
     width: 100%;
     height: 8rem;
     cursor: pointer;

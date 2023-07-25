@@ -58,6 +58,7 @@ export enum MenuSelected {
 export enum EmptyPageType {
   roadmap = "roadmap",
   featureRequests = "feature requests",
+  changeLog = "changelog"
 }
 
 export enum AuthPageType {
