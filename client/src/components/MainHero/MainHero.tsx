@@ -1,7 +1,12 @@
 import { Avatar, Box, IconButton, useTheme } from "@mui/material";
 import React, { useEffect } from "react";
 import styles from "./MainHero.module.scss";
-import { BsFacebook, BsFillPenFill, BsPencil, BsPencilFill } from "react-icons/bs";
+import {
+  BsFacebook,
+  BsFillPenFill,
+  BsPencil,
+  BsPencilFill,
+} from "react-icons/bs";
 import { AiFillInstagram, AiFillTwitterCircle } from "react-icons/ai";
 import axios from "axios";
 import { websiteUrl } from "../../helpers/constants";
@@ -64,13 +69,15 @@ const MainHero = (props: Props) => {
 
   const theme = useTheme();
 
-   const handleUpdateBoardImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleUpdateBoardImage = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const selectedFile = e.target.files?.[0];
     if (selectedFile) {
       await handleUploadImageToBoard(selectedFile);
     }
-};
- 
+  };
+
   const handleUploadImageToBoard = async (selectedFile: File) => {
     const res = await setBoardImageApiCall(
       selectedFile,
@@ -95,15 +102,19 @@ const MainHero = (props: Props) => {
       <div className={styles.contentWrapper}>
         {activeBoardState.picture ? (
           <div className={styles.companyLogoContainer}>
-            <IconButton className={styles.penIconContainer} aria-label="upload picture" component="label">
-            <input
-              onChange={handleUpdateBoardImage}
-              hidden
-              accept="image/*"
-              type="file"
-            />
-            <BsPencilFill className={styles.penIcon} size={15} />
-          </IconButton>
+            <IconButton
+              className={styles.penIconContainer}
+              aria-label="upload picture"
+              component="label"
+            >
+              <input
+                onChange={handleUpdateBoardImage}
+                hidden
+                accept="image/*"
+                type="file"
+              />
+              <BsPencilFill className={styles.penIcon} size={15} />
+            </IconButton>
             <Avatar
               variant="rounded"
               className={styles.companyLogo}

@@ -46,6 +46,18 @@
     align-items: center;
 }
 
+.userPicContainer {
+    position: relative;
+}
+
+.penIconContainer {
+  position: absolute;
+  bottom: 0%;
+  right: 0%;
+  z-index: 1;
+  cursor: pointer;
+}
+
 .submitButton {
     @include useSpacing(margin, m, 0, 0, 0);
 }

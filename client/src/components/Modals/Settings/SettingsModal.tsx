@@ -5,7 +5,14 @@ import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { AiOutlineMail, AiFillBank } from "react-icons/ai";
-import { Avatar, Button, Card, Paper, TextField } from "@mui/material";
+import {
+  Avatar,
+  Button,
+  Card,
+  IconButton,
+  Paper,
+  TextField,
+} from "@mui/material";
 import axios from "axios";
 import { websiteUrl } from "../../../helpers/constants";
 import { setGeneralProperties } from "../../../redux/features/generalPropertiesSlice";
@@ -18,6 +25,7 @@ import styles from "./SettingsModal.module.scss";
 import { FaPortrait } from "react-icons/fa";
 import EmptyImage from "../../EmptyImage/EmptyImage";
 import { updateUserProfilePictureApiCall } from "../../../helpers/users";
+import { BsPencilFill } from "react-icons/bs";
 
 type Props = {
   modalIsOpen: boolean;
@@ -66,6 +74,15 @@ export const SettingsModal = (props: Props) => {
       }
     }
   };
+
+  const handleUpdateProfilePic = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const selectedFile = e.target.files?.[0];
+    if (selectedFile) {
+      handleChangeProfilePicture(selectedFile)
+    }
+  }
 
   const handleChangeProfilePicture = async (selectedFile: File) => {
     const response = await updateUserProfilePictureApiCall(selectedFile);
@@ -125,7 +142,22 @@ export const SettingsModal = (props: Props) => {
               </Card>
               <div className={styles.changePictureBtn}>
                 {loggedUser?.user?.picture ? (
-                  <Avatar src={loggedUser?.user?.picture} variant='rounded' />
+                  <div className={styles.userPicContainer}>
+                    <IconButton
+                      className={styles.penIconContainer}
+                      aria-label="upload picture"
+                      component="label"
+                    >
+                      <input
+                        onChange={handleUpdateProfilePic}
+                        hidden
+                        accept="image/*"
+                        type="file"
+                      />
+                      <BsPencilFill className={styles.penIcon} size={16} />
+                    </IconButton>
+                    <Avatar src={loggedUser?.user?.picture} variant="rounded" />
+                  </div>
                 ) : (
                   <EmptyImage
                     handleUploadedImage={handleChangeProfilePicture}
