@@ -20,6 +20,9 @@ import styles from "./MainNavBar.module.scss";
 import ManageBoardModal from "../Modals/ManageBoardModal/ManageBoardModal";
 import SettingsMenu from "../SettingsMenu/SettingsMenu";
 import { BillingPlan, UserType } from "../../helpers/types";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import Drawer from "@mui/material/Drawer";
 
 const allPages: {
   title: string;
@@ -248,10 +251,20 @@ const MainNavBar = () => {
 
   const handleGoToLoginPage = () => navigate("/login");
 
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const handleDrawerOpen = () => {
+    setIsDrawerOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setIsDrawerOpen(false);
+  };
+
   return (
     <AppBar position="static" className={styles.container}>
       <Container maxWidth="xl">
-        <Toolbar disableGutters>
+        <Toolbar disableGutters className={styles.toolbar}>
           <EventNoteIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
           <Typography
             variant="h6"
@@ -281,6 +294,15 @@ const MainNavBar = () => {
               </Button>
             ))}
           </Box>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerOpen}
+            sx={{ display: { md: "none" } }}
+          >
+            <MenuIcon />
+          </IconButton>
           <div className={styles.darkModeBtnContainer}>
             <DarkModeToggle />
           </div>
@@ -314,6 +336,31 @@ const MainNavBar = () => {
         modalIsOpen={generalPropertiesState.manageBoardModalOpen}
         handleClose={handleCloseManageBoardModal}
       />
+      <Drawer
+        anchor="left"
+        open={isDrawerOpen}
+        onClose={handleDrawerClose}
+        sx={{ display: { md: "none" } }}
+      >
+        <Box
+          role="presentation"
+          onClick={handleDrawerClose}
+          onKeyDown={handleDrawerClose}
+        >
+          <div className={styles.drawerContent}>
+            {pagesList.map((page) => (
+              <Button
+                key={page.title}
+                onClick={() => navigate(page.url)}
+                sx={{ my: 2, color: "white", display: "block" }}
+                className={styles.navBtn}
+              >
+                {page.title}
+              </Button>
+            ))}
+          </div>
+        </Box>
+      </Drawer>
     </AppBar>
   );
 };

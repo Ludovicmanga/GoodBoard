@@ -5,14 +5,24 @@ import { websiteUrl } from "./constants";
 import axios from "axios";
 import { setActiveBoardData } from "../redux/features/activeBoardSlice";
 
-export const handleSetActiveBoard = (boardId: string, dispatch: Dispatch, navigate: NavigateFunction) => {
+export const handleSetActiveBoard = async (
+  boardId: string,
+  dispatch: Dispatch,
+  navigate: NavigateFunction
+) => {
   localStorage.setItem("board", boardId);
-  dispatch(
-    setGeneralProperties({
-      activeBoard: boardId,
-    })
-  );
-  navigate("/");
+  const hasAccessResponse = await checkUserAccessAPICall(boardId);
+  if (hasAccessResponse.data) {
+    dispatch(
+      setGeneralProperties({
+        activeBoard: boardId,
+      })
+    );
+    navigate("/");
+  } else {
+    navigate("/login");
+  }
+
   dispatch(
     setGeneralProperties({
       switchBoardModalOpen: false,
@@ -33,7 +43,10 @@ export const getBoardShareableUrl = async (boardId: string) => {
   }
 };
 
-export const setBoardImageApiCall = async (selectedFile: File, boardId: string) => {
+export const setBoardImageApiCall = async (
+  selectedFile: File,
+  boardId: string
+) => {
   const formData = new FormData();
   formData.append("image", selectedFile);
   formData.append("boardId", boardId);
@@ -45,15 +58,16 @@ export const setBoardImageApiCall = async (selectedFile: File, boardId: string) 
     headers: {
       "Content-Type": "multipart/form-data",
     },
-    data: formData
+    data: formData,
   });
-}
+};
 
-export const handleUploadImageToBoard = async (selectedFile: File, dispatch: Dispatch, boardId: string) => {
-  const res = await setBoardImageApiCall(
-    selectedFile,
-    boardId,
-  );
+export const handleUploadImageToBoard = async (
+  selectedFile: File,
+  dispatch: Dispatch,
+  boardId: string
+) => {
+  const res = await setBoardImageApiCall(selectedFile, boardId);
   if (res.data.url) {
     dispatch(
       setActiveBoardData({
@@ -61,4 +75,15 @@ export const handleUploadImageToBoard = async (selectedFile: File, dispatch: Dis
       })
     );
   }
-}
+};
+
+export const checkUserAccessAPICall = async (boardId: string) => {
+  return await axios({
+    method: "post",
+    withCredentials: true,
+    url: `${websiteUrl}/api/board/check-user-has-access-to-board`,
+    data: {
+      boardId,
+    },
+  });
+};

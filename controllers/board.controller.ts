@@ -9,7 +9,7 @@ import {
   giveAccessToBoard,
   sendEmailToUser,
 } from "../helpers/boards";
-import { generateStrongPassword } from "../utils/utils";
+import { generateStrongPassword, normalizeURL } from "../utils/utils";
 import Stripe from "stripe";
 //const STRIPE_KEY = "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"
 const STRIPE_KEY = "sk_test_JaQdbPBGQK1WZpu83jOtm9MU00EItXeAHs";
@@ -17,6 +17,7 @@ const stripe = new Stripe(STRIPE_KEY, {
   //@ts-ignore
   apiVersion: null,
 });
+import { S3Client, DeleteObjectCommand } from "@aws-sdk/client-s3";
 
 export const updateColor = async (req, res) => {
   try {
@@ -67,7 +68,8 @@ export const getUserBoards = async (req, res) => {
 };
 
 export const createBoard = async (req, res) => {
-  const { name, description, themeColor, isPublic, websiteUrl } = req.body;
+  const { name, description, themeColor, isPublic, companyWebsiteUrl } =
+    req.body;
   try {
     if (req.user) {
       let fileUrl;
@@ -79,7 +81,7 @@ export const createBoard = async (req, res) => {
         description,
         themeColor: themeColor || "blue",
         isPublic,
-        websiteUrl,
+        websiteUrl: normalizeURL(companyWebsiteUrl),
         picture: fileUrl,
         billingPlan: "free",
       });
@@ -141,6 +143,14 @@ export const getPublicBoard = async (req, res) => {
   }
 };
 
+const s3 = new S3Client({
+  region: "eu-central-1",
+  credentials: {
+    accessKeyId: "AKIAUOKDHNEHIBVHSDEY",
+    secretAccessKey: "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",
+  },
+});
+
 export const setBoardImage = async (req, res) => {
   try {
     if (!req.file) {
@@ -150,6 +160,17 @@ export const setBoardImage = async (req, res) => {
     const fileUrl = req.file.location;
 
     if (req.body.boardId) {
+      const oldBoardData = await boardModel.findById(boardId);
+
+      if (oldBoardData && oldBoardData.picture) {
+        const oldPictureKey = oldBoardData.picture.split("/").pop();
+        const deleteParams = {
+          Bucket: "goodboard",
+          Key: oldPictureKey,
+        };
+        await s3.send(new DeleteObjectCommand(deleteParams));
+      }
+
       const boardFoundInDB = await boardModel.findOneAndUpdate(
         { _id: boardId },
         {
@@ -159,12 +180,14 @@ export const setBoardImage = async (req, res) => {
           new: true,
         }
       );
+
       if (boardFoundInDB) {
         res.status(200).json({ url: fileUrl });
       }
     }
   } catch (e) {
     console.log(e, " is the error");
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };
 
@@ -396,13 +419,24 @@ export const updateBoardBillingPlan = async (req, res) => {
 export const checkUserHasAccessToBoard = async (req, res) => {
   try {
     const { boardId } = req.body;
-    if (req.user) {
-      const boardToFind = await boardUserRelModel.findOne({
-        user: req.user.id,
-        board: boardId,
-      });
-
-      res.send(boardToFind);
+    const board = await boardModel.findById(boardId);
+    if (board) {
+      if (board.isPublic) {
+        res.send(true);
+      } else {
+        if (req.user) {
+          const boardToFind = await boardUserRelModel.findOne({
+            user: req.user.id,
+            board: boardId,
+          });
+          res.send(boardToFind);
+        } else {
+          console.log('need to be logged to access a private board')
+          res.send(null);
+        }
+      }
+    } else {
+      res.send(null);
     }
   } catch (e) {
     console.log(e);

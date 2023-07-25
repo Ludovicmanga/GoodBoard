@@ -1,53 +1,53 @@
-@import '../../../styles/useSpacing';
-@import '../../../styles/variables';
-@import '../../../styles/useTypography';
+@import "../../../styles/useSpacing";
+@import "../../../styles/variables";
+@import "../../../styles/useTypography";
 
 .modalContentContainer {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: $modal-width-mobile-screen;
-    border: 0.5px solid #000;
-    border-radius: 8px;
-    box-shadow: 24px;
-    @include useSpacing(padding, l, xl, xl, xl);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  border: 0.5px solid #000;
+  border-radius: 8px;
+  box-shadow: 24px;
+  @include useSpacing(padding, l, xl, xl, xl);
 }
 
 .settingSection {
-    display: flex;
-    @include useSpacing(margin, m, 0);
+  display: flex;
+  @include useSpacing(margin, m, 0);
 }
 
 .settingIllustrationContainer {
-    display: flex;
-    flex-direction: column;
-    @include useSpacing(margin, 0, m, 0, 0);
-    @include useSpacing(padding, 0, m);
-    width: 10%;
-    justify-content: center
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @include useSpacing(margin, 0, m, 0, 0);
+  @include useSpacing(padding, 0, m);
+  min-width: 80px;
+  justify-content: center;
 }
-
 .iconContainer {
-    @include useTypography(modalIcon);
-    display: flex;
-    justify-content: center;
+  @include useTypography(modalIcon);
+  display: flex;
+  justify-content: center;
 }
 
 .iconSubtext {
-    @include useTypography(title-xs);
-    display: flex;
-    justify-content: center;
+  @include useTypography(title-xs);
+  display: flex;
+  justify-content: center;
 }
 
 .changePictureBtn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .userPicContainer {
-    position: relative;
+  position: relative;
 }
 
 .penIconContainer {
@@ -59,11 +59,11 @@
 }
 
 .submitButton {
-    @include useSpacing(margin, m, 0, 0, 0);
+  @include useSpacing(margin, m, 0, 0, 0);
 }
 
 @media screen and (min-width: $main-breakpoint) {
-    .modalContentContainer {
-        width: $modal-width-computer-screen;
-    }
+  .modalContentContainer {
+    width: 40%;
+  }
 }

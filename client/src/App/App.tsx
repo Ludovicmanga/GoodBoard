@@ -18,6 +18,7 @@ import Routes from "../Routes";
 import "./App.module.scss";
 import { getLoggedUser } from "../helpers/users";
 import FeatureRequestModal from "../components/Modals/FeatureRequestModal/FeatureRequestModal";
+import { checkUserAccessAPICall } from "../helpers/boards";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -120,35 +121,23 @@ function App() {
     dispatch(setAllFeatureRequests(allFeatureRequests));
   };
 
-  const checkUserAccessAPICall = async (boardId: string) => {
-    return await axios({
-      method: "post",
-      withCredentials: true,
-      url: `${websiteUrl}/api/board/check-user-has-access-to-board`,
-      data: {
-        boardId,
-      },
-    });
-  };
-
-  const checkUserHasAccessToBoard = async (boardId: string | null) => {
-    if (boardId) {
-      const res = await checkUserAccessAPICall(boardId);
-      if (res.data) {
-        dispatch(
-          setGeneralProperties({
-            activeBoard: boardId,
-          })
-        );
-      }
-    }
-  };
-
   useEffect(() => {
+    const checkUserHasAccessToBoard = async (boardId: string | null) => {
+      if (boardId) {
+        const res = await checkUserAccessAPICall(boardId);
+        if (res.data) {
+          dispatch(
+            setGeneralProperties({
+              activeBoard: boardId,
+            })
+          );
+        }
+      }
+    };
     if (localStorage.getItem("board")) {
       checkUserHasAccessToBoard(localStorage.getItem("board"));
     }
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (

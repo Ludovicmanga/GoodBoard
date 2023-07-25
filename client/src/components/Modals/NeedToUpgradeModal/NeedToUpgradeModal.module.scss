@@ -13,6 +13,7 @@
     box-shadow: 24px;
     @include useSpacing(padding, xxl);
     display: flex;
+    width: 90%;
 }
 
 .imgContainer {
@@ -37,4 +38,10 @@
 .infoTextDetails {
     @include useSpacing(margin, 0, 0, m, 0);
     text-align: center;
+}
+
+@media screen and (min-width: $main-breakpoint) {
+    .modalContentContainer {
+        width: 50%;
+    }
 }
