@@ -72,7 +72,9 @@ export const updateFeatureRequest = async (req, res) => {
     const { title, details, creatorType, status, creator, topics, boardId } =
       req.body.featureRequest;
     if (req.body.featureRequest._id.length > 0) {
-      const beforeUpdate = await featureRequestModel.findById(req.body.featureRequest._id);
+      const beforeUpdate = await featureRequestModel.findById(
+        req.body.featureRequest._id
+      );
       const updated = await featureRequestModel.findOneAndUpdate(
         { _id: req.body.featureRequest._id },
         {
@@ -129,31 +131,35 @@ export const createFeatureRequest = async (req, res) => {
 };
 
 export const upVote = async (req, res) => {
-  const updatedFeatureRequest = await featureRequestModel.updateOne(
-    { _id: req.params.id },
-    { $addToSet: { voters: req.body.userId } }
-  );
+  try {
+    const updatedFeatureRequest = await featureRequestModel.updateOne(
+      { _id: req.body.featureRequestId },
+      { $addToSet: { voters: req.user.id } }
+    );
 
-  await userModel.updateOne(
-    { _id: req.body.userId },
-    { $addToSet: { voted: req.params.id } }
-  );
+    await userModel.updateOne(
+      { _id: req.user.id },
+      { $addToSet: { voted: req.body.featureRequestId } }
+    );
 
-  res.status(200).json({ updatedFeatureRequest });
+    res.status(200).send(updatedFeatureRequest);
+  } catch (e) {
+    console.log(e, " is the err");
+  }
 };
 
 export const downVote = async (req, res) => {
   const updatedFeatureRequest = await featureRequestModel.updateOne(
-    { _id: req.params.id },
-    { $pull: { voters: req.body.userId } }
+    { _id: req.body.featureRequestId },
+    { $pull: { voters: req.user.id } }
   );
 
   await userModel.updateOne(
-    { _id: req.body.userId },
-    { $pull: { voted: req.params.id } }
+    { _id: req.user.id },
+    { $pull: { voted: req.body.featureRequestId } }
   );
 
-  res.status(200).json({ updatedFeatureRequest });
+  res.status(200).send(updatedFeatureRequest);
 };
 
 export const deleteFeatureRequest = async (req, res) => {

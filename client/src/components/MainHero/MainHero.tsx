@@ -16,9 +16,9 @@ import EmptyImage from "../EmptyImage/EmptyImage";
 import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
 import CannotMakeActionAsGuestModal from "../Modals/CannotMakeActionAsGuestModal/CannotMakeActionAsGuestModal";
 import { setActiveBoardData } from "../../redux/features/activeBoardSlice";
-import { setBoardImageApiCall } from "../../helpers/boards";
 import NeedToUpgradeModal from "../Modals/NeedToUpgradeModal/NeedToUpgradeModal";
 import { capitalizeFirstLetter } from "../../helpers/utils";
+import { updateBoardImageApiCall } from "../../helpers/boards";
 
 type Props = {};
 
@@ -80,7 +80,7 @@ const MainHero = (props: Props) => {
   };
 
   const handleUploadImageToBoard = async (selectedFile: File) => {
-    const res = await setBoardImageApiCall(
+    const res = await updateBoardImageApiCall(
       selectedFile,
       generalPropertiesState.activeBoard!
     );

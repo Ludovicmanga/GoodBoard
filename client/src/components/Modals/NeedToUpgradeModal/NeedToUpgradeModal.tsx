@@ -1,7 +1,7 @@
 import { Backdrop, Button, Fade, Modal, Paper } from "@mui/material";
 import styles from "./NeedToUpgradeModal.module.scss";
 import React from "react";
-import upgradeImg from "../../../icons/undraw_Stripe_payments_re_chlm.png";
+import { upgradeImg } from "../../../helpers/constants";
 
 type Props = {
   modalIsOpen: boolean;

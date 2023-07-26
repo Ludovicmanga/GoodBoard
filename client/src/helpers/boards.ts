@@ -4,6 +4,7 @@ import { setGeneralProperties } from "../redux/features/generalPropertiesSlice";
 import { websiteUrl } from "./constants";
 import axios from "axios";
 import { setActiveBoardData } from "../redux/features/activeBoardSlice";
+import { Board } from "./types";
 
 export const handleSetActiveBoard = async (
   boardId: string,
@@ -12,7 +13,7 @@ export const handleSetActiveBoard = async (
 ) => {
   localStorage.setItem("board", boardId);
   const hasAccessResponse = await checkUserAccessAPICall(boardId);
-  if (hasAccessResponse.data) {
+  if (hasAccessResponse.data.hasAccessToActiveBoard) {
     dispatch(
       setGeneralProperties({
         activeBoard: boardId,
@@ -43,7 +44,7 @@ export const getBoardShareableUrl = async (boardId: string) => {
   }
 };
 
-export const setBoardImageApiCall = async (
+export const updateBoardImageApiCall = async (
   selectedFile: File,
   boardId: string
 ) => {
@@ -52,7 +53,7 @@ export const setBoardImageApiCall = async (
   formData.append("boardId", boardId);
 
   return await axios({
-    url: `${websiteUrl}/api/board/set-board-image`,
+    url: `${websiteUrl}/api/board/update-board-image`,
     method: "post",
     withCredentials: true,
     headers: {
@@ -67,7 +68,7 @@ export const handleUploadImageToBoard = async (
   dispatch: Dispatch,
   boardId: string
 ) => {
-  const res = await setBoardImageApiCall(selectedFile, boardId);
+  const res = await updateBoardImageApiCall(selectedFile, boardId);
   if (res.data.url) {
     dispatch(
       setActiveBoardData({
@@ -78,7 +79,10 @@ export const handleUploadImageToBoard = async (
 };
 
 export const checkUserAccessAPICall = async (boardId: string) => {
-  return await axios({
+  return await axios<{
+    hasAccessToActiveBoard: boolean,
+    boardsUserHasAccessList: Board[],
+  }>({
     method: "post",
     withCredentials: true,
     url: `${websiteUrl}/api/board/check-user-has-access-to-board`,

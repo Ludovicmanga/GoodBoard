@@ -11,13 +11,13 @@ import {
 } from "../helpers/boards";
 import { generateStrongPassword, normalizeURL } from "../utils/utils";
 import Stripe from "stripe";
-//const STRIPE_KEY = "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"
-const STRIPE_KEY = "sk_test_JaQdbPBGQK1WZpu83jOtm9MU00EItXeAHs";
-const stripe = new Stripe(STRIPE_KEY, {
+console.log(process.env.STRIPE_TEST_KEY);
+const stripe = new Stripe(process.env.STRIPE_TEST_KEY || "", {
   //@ts-ignore
   apiVersion: null,
 });
-import { S3Client, DeleteObjectCommand } from "@aws-sdk/client-s3";
+import { DeleteObjectCommand } from "@aws-sdk/client-s3";
+import { s3 } from "../middleware/multer";
 
 export const updateColor = async (req, res) => {
   try {
@@ -143,15 +143,7 @@ export const getPublicBoard = async (req, res) => {
   }
 };
 
-const s3 = new S3Client({
-  region: "eu-central-1",
-  credentials: {
-    accessKeyId: "AKIAUOKDHNEHIBVHSDEY",
-    secretAccessKey: "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",
-  },
-});
-
-export const setBoardImage = async (req, res) => {
+export const updateBoardImage = async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ message: "No image file provided." });
@@ -419,25 +411,49 @@ export const updateBoardBillingPlan = async (req, res) => {
 export const checkUserHasAccessToBoard = async (req, res) => {
   try {
     const { boardId } = req.body;
-    const board = await boardModel.findById(boardId);
-    if (board) {
-      if (board.isPublic) {
-        res.send(true);
+    let hasAccessToActiveBoard;
+    let boardsUserHasAccessList = [];
+    const activeBoard = await boardModel.findById(boardId);
+
+    if (req.user) {
+      const boardUserRelListIds = (
+        await boardUserRelModel.find({
+          user: req.user.id,
+        })
+      ).map((rel) => rel.board);
+      if (boardUserRelListIds) {
+        boardsUserHasAccessList = await boardModel.find({
+          _id: {
+            $in: boardUserRelListIds,
+          },
+        });
+      }
+    }
+    if (activeBoard) {
+      if (activeBoard.isPublic) {
+        hasAccessToActiveBoard = true;
       } else {
         if (req.user) {
           const boardToFind = await boardUserRelModel.findOne({
             user: req.user.id,
             board: boardId,
           });
-          res.send(boardToFind);
+          if (boardToFind) {
+            hasAccessToActiveBoard = true;
+          } else {
+            hasAccessToActiveBoard = false;
+          }
         } else {
-          console.log('need to be logged to access a private board')
-          res.send(null);
+          hasAccessToActiveBoard = false;
         }
       }
     } else {
-      res.send(null);
+      hasAccessToActiveBoard = false;
     }
+    res.status(200).send({
+      hasAccessToActiveBoard,
+      boardsUserHasAccessList,
+    });
   } catch (e) {
     console.log(e);
   }

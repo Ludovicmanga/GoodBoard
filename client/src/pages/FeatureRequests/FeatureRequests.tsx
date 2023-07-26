@@ -16,6 +16,7 @@ import MainNavBar from "../../components/MainNavBar/MainNavBar";
 import MainHero from "../../components/MainHero/MainHero";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import FilterFeatureRequestsSidebar from "../../components/FilterFeatureRequestsSidebar/FilterFeatureRequestsSidebar";
+import LoadingSkeleton from "../../components/LoadingSkeleton/LoadingSkeleton";
 
 type Props = {
   type: UserType;
@@ -29,6 +30,9 @@ const FeatureRequests = (props: Props) => {
     FeatureRequest[]
   >([]);
   const activeBoardState = useAppSelector((state) => state.activeBoard);
+  const generalPropertiesState = useAppSelector(
+    (state) => state.generalProperties
+  );
 
   const allFeatureRequests = useAppSelector(
     (state) => state.allFeatureRequests
@@ -74,9 +78,7 @@ const FeatureRequests = (props: Props) => {
   }, [menuSelectedState]);
 
   useEffect(() => {
-    if (allFeatureRequests.length > 0) {
-      handleSetCorrespondingFeatures();
-    }
+    handleSetCorrespondingFeatures();
   }, [allFeatureRequests, props.type]);
 
   const handleChangeSelectedStatus = (statusClicked: {
@@ -94,79 +96,81 @@ const FeatureRequests = (props: Props) => {
     <>
       <MainNavBar />
       <MainHero />
-      <div
-        className={styles.sectionContainer}
-      >
-        {activeBoardState.billingPlan !== BillingPlan.free && (
-          <div className={styles.sidebarContainer}>
-            <FilterFeatureRequestsSidebar
-              setSelectedTopic={setSelectedTopic}
-              handleChangeSelectedStatus={handleChangeSelectedStatus}
-              selectedTopic={selectedTopic}
-              selectedStatus={selectedStatus}
-            />
-          </div>
-        )}
-        <div
-          className={
-            filteredFeatureRequests.length > 0
-              ? styles.featuresSectionContainer
-              : `${styles.featuresSectionContainer} ${styles.featuresSectionContainerEmpty}`
-          }
-        >
-          {filteredFeatureRequests.length > 0 ? (
-            <div className={styles.featuresContainer}>
-              <SearchBar
-                onSearch={(searchedWord) => setSearchedWord(searchedWord)}
-              />
-
-              {filteredFeatureRequests
-                .filter((featReq) => {
-                  if (selectedTopic) {
-                    return featReq.topics.includes(selectedTopic!);
-                  } else {
-                    return featReq;
-                  }
-                })
-                .filter((featReq) => {
-                  if (selectedStatus) {
-                    return (
-                      featReq.status.toLowerCase() ===
-                      selectedStatus.toLowerCase()
-                    );
-                  } else {
-                    return featReq;
-                  }
-                })
-                .filter((featReq) => {
-                  if (searchedWord) {
-                    return featReq.title
-                      .toLowerCase()
-                      .includes(searchedWord.toLowerCase());
-                  } else {
-                    return featReq;
-                  }
-                })
-                .map((featureRequest) => {
-                  return (
-                    <FeatureRequestBox
-                      key={featureRequest._id}
-                      featureRequestProperties={featureRequest}
-                    />
-                  );
-                })}
-            </div>
-          ) : (
-            <div className={styles.emptyDataContainer}>
-              <EmptyData
-                title="No feature request yet !"
-                details="Setup your board with creative ideas"
-                type={EmptyPageType.featureRequests}
+      {generalPropertiesState.featuresAreLoading ? (
+        <LoadingSkeleton />
+      ) : (
+        <div className={styles.sectionContainer}>
+          {activeBoardState.billingPlan !== BillingPlan.free && (
+            <div className={styles.sidebarContainer}>
+              <FilterFeatureRequestsSidebar
+                setSelectedTopic={setSelectedTopic}
+                handleChangeSelectedStatus={handleChangeSelectedStatus}
+                selectedTopic={selectedTopic}
+                selectedStatus={selectedStatus}
               />
             </div>
           )}
+          <div
+            className={
+              filteredFeatureRequests.length > 0
+                ? styles.featuresSectionContainer
+                : `${styles.featuresSectionContainer} ${styles.featuresSectionContainerEmpty}`
+            }
+          >
+            {filteredFeatureRequests.length > 0 ? (
+              <div className={styles.featuresContainer}>
+                <SearchBar
+                  onSearch={(searchedWord) => setSearchedWord(searchedWord)}
+                />
+
+                {filteredFeatureRequests
+                  .filter((featReq) => {
+                    if (selectedTopic) {
+                      return featReq.topics.includes(selectedTopic!);
+                    } else {
+                      return featReq;
+                    }
+                  })
+                  .filter((featReq) => {
+                    if (selectedStatus) {
+                      return (
+                        featReq.status.toLowerCase() ===
+                        selectedStatus.toLowerCase()
+                      );
+                    } else {
+                      return featReq;
+                    }
+                  })
+                  .filter((featReq) => {
+                    if (searchedWord) {
+                      return featReq.title
+                        .toLowerCase()
+                        .includes(searchedWord.toLowerCase());
+                    } else {
+                      return featReq;
+                    }
+                  })
+                  .map((featureRequest) => {
+                    return (
+                      <FeatureRequestBox
+                        key={featureRequest._id}
+                        featureRequestProperties={featureRequest}
+                      />
+                    );
+                  })}
+              </div>
+            ) : (
+              <div className={styles.emptyDataContainer}>
+                <EmptyData
+                  title="No feature request yet !"
+                  details="Setup your board with creative ideas"
+                  type={EmptyPageType.featureRequests}
+                />
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      )}
       {filteredFeatureRequests.length > 0 && (
         <NewFeatureRequestsButton
           numberOfFeatureRequests={filteredFeatureRequests.length}

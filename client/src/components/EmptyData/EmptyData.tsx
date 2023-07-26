@@ -1,11 +1,10 @@
 import React from "react";
 import { EmptyPageType, FeatureRequestModalMode } from "../../helpers/types";
-import emptyBox from "../../icons/box.png";
-import roadmapImg from "../../icons/maps.png";
 import styles from "./EmptyData.module.scss";
 import { Button } from "@mui/material";
 import { handleOpenNewFeatureRequestModal } from "../../helpers/features";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { emptyBox, roadmapImg } from "../../helpers/constants";
 
 type Props = {
   title: string;

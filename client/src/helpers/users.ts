@@ -2,7 +2,7 @@ import axios from "axios";
 import { websiteUrl } from "./constants";
 import { User } from "./types";
 
-export const getLoggedUser = async (boardId: string | null) => {
+export const getLoggedUser = async (boardId: string | null | undefined) => {
   return await axios({
     url: `${websiteUrl}/api/users/checkIfAuthenticated`,
     withCredentials: true,

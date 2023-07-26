@@ -1,5 +1,7 @@
+import { DeleteObjectCommand } from "@aws-sdk/client-s3";
 import boardUserRelModel from "../models/boardUserRel.model";
 import userModel from "../models/user.model";
+import { s3 } from "../middleware/multer";
 
 export const getUser = async (req, res, next) => {
   if (req.user) {
@@ -50,6 +52,16 @@ export const updatePicture = async (req, res) => {
       return res.status(400).json({ message: "No image file provided." });
     }
     const fileUrl = req.file.location;
+    const oldUserData = await userModel.findById(req.user.id);
+
+    if (oldUserData && oldUserData.picture && oldUserData.picture.includes('amazonaws.com')) {
+      const oldPictureKey = oldUserData.picture.split("/").pop();
+      const deleteParams = {
+        Bucket: "goodboard",
+        Key: oldPictureKey,
+      };
+      await s3.send(new DeleteObjectCommand(deleteParams));
+    }
     const updatedUser = await userModel.findOneAndUpdate(
       { _id: req.user.id },
       {

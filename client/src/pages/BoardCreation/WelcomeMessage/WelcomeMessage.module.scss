@@ -1,0 +1,67 @@
+@import "../../../styles/useSpacing";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  color: #333;
+  font-family: "Roboto", sans-serif;
+}
+
+.iframeContainer {
+  width: 100%;
+  height: 0;
+  padding-bottom: 55%;
+  position: relative;
+}
+
+.iframe {
+  width: 100%;
+  height: 100%;
+}
+
+.welcomeTitle {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+}
+
+.message {
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+  text-align: justify;
+  width: 65%;
+  @include useSpacing(margin, l, 0, 0, 0);
+}
+
+.createBoardBtn {
+  @include useSpacing(margin, l, 0, 0, 0);
+}
+
+//
+
+@media screen and (min-width: $main-breakpoint) {
+  .welcomeTitle {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  .iframeContainer {
+    padding-bottom: 25%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .iframe {
+    width: 50%;
+    height: 100%;
+  }
+
+  .message {
+    width: 35%;
+    font-size: 1rem;
+  }
+}

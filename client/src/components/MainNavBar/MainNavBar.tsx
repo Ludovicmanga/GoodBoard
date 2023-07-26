@@ -148,37 +148,49 @@ const MainNavBar = () => {
       },
     ];
 
-    if (activeBoardState.billingPlan === BillingPlan.business) {
-      if (loggedUser.user?.roleOnThisBoard === UserType.admin) {
-        setSettingsRoleFiltered(settingsList);
+    if (generalPropertiesState.boardsList && generalPropertiesState.boardsList.length > 0) {
+      if (activeBoardState.billingPlan === BillingPlan.business) {
+        if (loggedUser.user?.roleOnThisBoard === UserType.admin) {
+          setSettingsRoleFiltered(settingsList);
+        } else {
+          setSettingsRoleFiltered(() =>
+            settingsList.filter(
+              (setting) =>
+                setting.linkText !== "Manage this board" &&
+                setting.linkText !== "Integrations"
+            )
+          );
+        }
       } else {
-        setSettingsRoleFiltered(() =>
-          settingsList.filter(
-            (setting) =>
-              setting.linkText !== "Manage this board" &&
-              setting.linkText !== "Integrations"
-          )
-        );
+        if (loggedUser.user?.roleOnThisBoard === UserType.admin) {
+          setSettingsRoleFiltered(() =>
+            settingsList.filter(
+              (setting) => setting.linkText !== "Integrations"
+            )
+          );
+        } else {
+          setSettingsRoleFiltered(() =>
+            settingsList.filter(
+              (setting) =>
+                setting.linkText !== "Manage this board" &&
+                setting.linkText !== "Integrations"
+            )
+          );
+        }
       }
     } else {
-      if (loggedUser.user?.roleOnThisBoard === UserType.admin) {
-        setSettingsRoleFiltered(() =>
-          settingsList.filter((setting) => setting.linkText !== "Integrations")
-        );
-      } else {
-        setSettingsRoleFiltered(() =>
-          settingsList.filter(
-            (setting) =>
-              setting.linkText !== "Manage this board" &&
-              setting.linkText !== "Integrations"
-          )
-        );
-      }
+      setSettingsRoleFiltered(() =>
+        settingsList.filter(
+          (setting) =>
+            setting.linkText === "My account" || setting.linkText === "Logout"
+        )
+      );
     }
   }, [
     generalPropertiesState.activeBoard,
     loggedUser.user,
     activeBoardState.billingPlan,
+    generalPropertiesState.boardsList,
   ]);
 
   const [settingsRoleFiltered, setSettingsRoleFiltered] = useState<
@@ -284,15 +296,16 @@ const MainNavBar = () => {
             GOODBOARD
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pagesList.map((page) => (
-              <Button
-                key={page.title}
-                onClick={() => navigate(page.url)}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                {page.title}
-              </Button>
-            ))}
+            {generalPropertiesState.boardsList && generalPropertiesState.boardsList.length > 0 &&
+              pagesList.map((page) => (
+                <Button
+                  key={page.title}
+                  onClick={() => navigate(page.url)}
+                  sx={{ my: 2, color: "white", display: "block" }}
+                >
+                  {page.title}
+                </Button>
+              ))}
           </Box>
           <IconButton
             color="inherit"

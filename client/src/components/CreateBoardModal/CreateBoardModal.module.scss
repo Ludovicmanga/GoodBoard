@@ -3,10 +3,14 @@
 .inputLabel {
   font-size: 12px;
   @include useSpacing(margin, m, 0, s, 0);
+  display: flex;
+  justify-content: center;
 }
 
 .uploadImgBtnContainer {
   @include useSpacing(margin, s, 0, 0, 0);
+  display: flex;
+  justify-content: center;
 }
 
 .submitBtnContainer {
@@ -18,4 +22,14 @@
 
 .submitBtn {
   @include useSpacing(margin, m, 0, 0, 0);
+}
+
+@media screen and (min-width: $main-breakpoint) {
+  .inputLabel {
+    justify-content: flex-start;
+  }
+
+  .uploadImgBtnContainer {
+    justify-content: flex-start;
+  }
 }
