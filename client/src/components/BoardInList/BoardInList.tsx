@@ -1,9 +1,7 @@
-import { Avatar, IconButton, Paper, Typography } from "@mui/material";
+import { Avatar, IconButton, Typography } from "@mui/material";
 import styles from "./BoardInList.module.scss";
 import React from "react";
-import { MdAddPhotoAlternate } from "react-icons/md";
 import { getFirstLetterInUpperCase } from "../../helpers/utils";
-import Add from "@mui/icons-material/Add";
 
 type Props = {
   name: string;
