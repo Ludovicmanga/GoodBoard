@@ -5,8 +5,8 @@ import multerS3 from "multer-s3";
 export const s3 = new S3Client({
   region: "eu-central-1",
   credentials: {
-    accessKeyId: "AKIAUOKDHNEHIBVHSDEY",
-    secretAccessKey: "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",
+    accessKeyId: process.env.AMAZON_ACCESS_KEY_ID || '',
+    secretAccessKey: process.env.AMAZON_SECRET_KEY_ID || '',
   },
 });
 
