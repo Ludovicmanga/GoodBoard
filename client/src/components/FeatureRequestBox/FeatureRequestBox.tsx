@@ -1,9 +1,19 @@
-import { Card, Chip, ToggleButton, useTheme } from "@mui/material";
+import {
+  Card,
+  Chip,
+  CircularProgress,
+  ToggleButton,
+  useTheme,
+} from "@mui/material";
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import ArrowDropUpRoundedIcon from "@mui/icons-material/ArrowDropUpRounded";
 import React, { useState } from "react";
 import styles from "./FeatureRequestBox.module.scss";
-import { FeatureRequest, FeatureRequestModalMode } from "../../helpers/types";
+import {
+  BillingPlan,
+  FeatureRequest,
+  FeatureRequestModalMode,
+} from "../../helpers/types";
 import FeatureRequestModal from "../Modals/FeatureRequestModal/FeatureRequestModal";
 import axios from "axios";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
@@ -22,6 +32,7 @@ type Props = {
 
 function FeatureRequestBox(props: Props) {
   const [isVoted, setIsVoted] = useState(false);
+  const [isChangingVote, setIsChangingVote] = useState(false);
   const [isClickedAtLeastOnce, setIsClickedAtLeastOnce] = useState(false);
   const [newFeatureRequestsModalOpen, setNewFeatureRequestsModalOpen] =
     useState(false);
@@ -33,46 +44,69 @@ function FeatureRequestBox(props: Props) {
   const menuSelectedState = useAppSelector(
     (state) => state.generalProperties.menuSelected
   );
+  const activeBoardState = useAppSelector((state) => state.activeBoard);
 
   const handleVote = async () => {
     let url = "";
     if (loggedUser.user) {
+      setIsChangingVote(true);
       if (isVoted) {
-        url = `${websiteUrl}/api/feature-request/up-vote/${props.featureRequestProperties._id}`;
-        dispatch(
-          upVote({
-            featureRequestId: props.featureRequestProperties._id,
-            userId: loggedUser.user._id,
-            userPic: loggedUser.user.picture,
-          })
-        );
-        dispatch(
-          addToVotedFeatures({
-            featureRequestId: props.featureRequestProperties._id,
-          })
-        );
+        url = `${websiteUrl}/api/feature-request/up-vote`;
       } else {
-        url = `${websiteUrl}/api/feature-request/down-vote/${props.featureRequestProperties._id}`;
-        dispatch(
-          downVote({
-            featureRequestId: props.featureRequestProperties._id,
-            userId: loggedUser.user._id,
-            userPic: loggedUser.user.picture
-          })
-        );
-        dispatch(
-          removeFromVotedFeatures({
-            featureRequestId: props.featureRequestProperties._id,
-          })
-        );
+        url = `${websiteUrl}/api/feature-request/down-vote`;
       }
-      await axios({
+      const res = await axios({
         url,
         method: "post",
         data: {
-          userId: loggedUser.user._id,
+          featureRequestId: props.featureRequestProperties._id,
         },
+        withCredentials: true,
       });
+      setIsChangingVote(false);
+      if (res.data) {
+        handleSuccessFullChangeVote(
+          isVoted,
+          loggedUser.user._id,
+          loggedUser.user.picture
+        );
+      }
+    } else {
+      console.log("no damn user");
+    }
+  };
+
+  const handleSuccessFullChangeVote = (
+    isVoted: boolean,
+    userId: string,
+    userPic: string
+  ) => {
+    if (isVoted) {
+      dispatch(
+        upVote({
+          featureRequestId: props.featureRequestProperties._id,
+          userId,
+          userPic,
+        })
+      );
+      dispatch(
+        addToVotedFeatures({
+          featureRequestId: props.featureRequestProperties._id,
+        })
+      );
+    } else {
+      dispatch(
+        downVote({
+          featureRequestId: props.featureRequestProperties._id,
+          userId,
+          userPic,
+        })
+      );
+      dispatch(
+        removeFromVotedFeatures({
+          featureRequestId: props.featureRequestProperties._id,
+        })
+      );
     }
   };
 
@@ -91,18 +125,20 @@ function FeatureRequestBox(props: Props) {
   }, [loggedUser?.user?.voted, menuSelectedState]);
 
   const handleMakeClickedAtLeastOnce = () => {
-    setIsClickedAtLeastOnce(true)
-  }
+    setIsClickedAtLeastOnce(true);
+  };
 
   const handleChangeToggleBtn = () => {
     if (loggedUser.user) {
-      setIsVoted(!isVoted)
+      setIsVoted(!isVoted);
     } else {
-      dispatch(setGeneralProperties({
-        cannotMakeActionModalOpen: true,
-      }))
+      dispatch(
+        setGeneralProperties({
+          cannotMakeActionModalOpen: true,
+        })
+      );
     }
-  }
+  };
 
   const handleOpenNewFeatureRequestsModal = () => {
     if (loggedUser.user) {
@@ -114,7 +150,7 @@ function FeatureRequestBox(props: Props) {
         })
       );
     }
-  }
+  };
 
   const theme = useTheme();
 
@@ -126,7 +162,7 @@ function FeatureRequestBox(props: Props) {
           onClick={handleOpenNewFeatureRequestsModal}
         >
           <h3 className={styles.featureRequestTitle}>
-            {props.featureRequestProperties.title.slice(0,30)}
+            {props.featureRequestProperties.title.slice(0, 30)}
             {props.featureRequestProperties.title.length > 30 && "..."}
           </h3>
           <div className={styles.featureRequestDescription}>
@@ -134,9 +170,10 @@ function FeatureRequestBox(props: Props) {
             {props.featureRequestProperties.details.length > 50 && "..."}
           </div>
           <div className={styles.tagsContainer}>
-            {props.featureRequestProperties.topics.map((category) => (
-              <Chip className={styles.tag} label={category} key={category} />
-            ))}
+            {activeBoardState.billingPlan !== BillingPlan.free &&
+              props.featureRequestProperties.topics.map((category) => (
+                <Chip className={styles.tag} label={category} key={category} />
+              ))}
           </div>
         </Card>
         <ToggleButton
@@ -145,27 +182,31 @@ function FeatureRequestBox(props: Props) {
           onChange={handleChangeToggleBtn}
           onClick={handleMakeClickedAtLeastOnce}
           className={styles.checkButton}
-           sx={{
+          sx={{
             "&.Mui-selected": {
               bgcolor: theme.palette.primary.main,
             },
-            '&:hover': theme.palette.primary.main,
+            "&:hover": theme.palette.primary.main,
             color: theme.palette.text.primary,
           }}
         >
           <div className={styles.votesBox}>
-            {isVoted ? (
-              <div className={styles.iconContainer}>
-                <CheckRoundedIcon sx={{ fontSize: 15 }} />
-              </div>
+            {isChangingVote ? (
+              <CircularProgress size={10} />
             ) : (
-              <div className={styles.iconContainer}>
-                <ArrowDropUpRoundedIcon />
-              </div>
+              <>
+                <div className={styles.iconContainer}>
+                  {isVoted ? (
+                    <CheckRoundedIcon sx={{ fontSize: 15 }} />
+                  ) : (
+                    <ArrowDropUpRoundedIcon />
+                  )}
+                </div>
+                <div className={styles.voteCountContainer}>
+                  {props.featureRequestProperties.voters?.length || 0}
+                </div>
+              </>
             )}
-            <div className={styles.voteCountContainer}>
-              {props.featureRequestProperties.voters?.length || 0}
-            </div>
           </div>
         </ToggleButton>
       </div>

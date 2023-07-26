@@ -7,9 +7,27 @@
     @include useSpacing(margin, xs, 0);
 }
 
+.emailcontainer {
+  overflow-x: scroll;
+  @include useSpacing(margin, 0, s);
+}
+
 .deleteBtnContainer {
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  @include useSpacing(margin, 0, 0, 0, s);
+}
+
+
+@media screen and (min-width: $main-breakpoint) {
+  .emailcontainer {
+    overflow-x:unset;
+    @include useSpacing(margin, 0);
+  }
+
+  .deleteBtnContainer {
+    @include useSpacing(margin, 0);
+  }
 }

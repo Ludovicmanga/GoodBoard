@@ -32,3 +32,9 @@ export const topicsList = [
   'Speed',
   'Features'
 ]
+
+export const emptyBox = "https://goodboard.s3.eu-central-1.amazonaws.com/box.png";
+export const roadmapImg = "https://goodboard.s3.eu-central-1.amazonaws.com/maps.png";
+export const upgradeImg = "https://goodboard.s3.eu-central-1.amazonaws.com/undraw_Stripe_payments_re_chlm.png";
+export const logInImg =  "https://goodboard.s3.eu-central-1.amazonaws.com/undraw_Join_re_w1lh.png";
+

@@ -14,6 +14,8 @@ import ChooseBoardColor from "../ChooseBoardColor/ChooseBoardColor";
 import styles from "./CreateBoardModal.module.scss";
 import EmptyImage from "../EmptyImage/EmptyImage";
 import CheckIcon from "@mui/icons-material/Check";
+import { setGeneralProperties, addBoardToList } from "../../redux/features/generalPropertiesSlice";
+import { Board } from "../../helpers/types";
 
 type Props = {};
 
@@ -36,7 +38,7 @@ const CreateBoardModal = (props: Props) => {
     formData.append("isPublic", boardIsPublic.toString());
     formData.append("companyWebsiteUrl", website);
 
-    const boardCreationResponse = await axios({
+    const boardCreationResponse = await axios<Board>({
       url: `${websiteUrl}/api/board/create`,
       method: "post",
       data: formData,
@@ -44,6 +46,7 @@ const CreateBoardModal = (props: Props) => {
     });
     if (boardCreationResponse.data) {
       handleSetActiveBoard(boardCreationResponse.data._id, dispatch, navigate);
+      dispatch(addBoardToList(boardCreationResponse.data))
     }
   };
 

@@ -27,38 +27,33 @@ export default function Index() {
     <div className={styles.container}>
       <Router>
         <Routes>
-          {!activeBoard && loggedUser.user && (
+          {loggedUser.user && (
+            <Route path="/choose-board" element={<BoardCreation pageMode='page' />} />
+          )}
+          {loggedUser.user && !activeBoard && (
             <Route path="*" element={<Navigate to="/choose-board" replace />} />
           )}
-          <>
-            <Route
-              path="/company-feature-requests"
-              element={<FeatureRequests type={UserType.admin} />}
-            />
-            <Route
-              path="/user-feature-requests"
-              element={<FeatureRequests type={UserType.externalUser} />}
-            />
-            <Route
-              path="*"
-              element={<Navigate to="/user-feature-requests" replace />}
-            />
-          </>
-          {activeBoardState.billingPlan === BillingPlan.business && (
+          {activeBoard && (
+            <>
+              <Route
+                path="/company-feature-requests"
+                element={<FeatureRequests type={UserType.admin} />}
+              />
+              <Route
+                path="/user-feature-requests"
+                element={<FeatureRequests type={UserType.externalUser} />}
+              />
+              <Route
+                path="*"
+                element={<Navigate to="/user-feature-requests" replace />}
+              />
+            </>
+          )}
+          {loggedUser && activeBoardState.billingPlan === BillingPlan.business && (
             <>
               <Route path="/roadmap" element={<Roadmap />} />
               <Route path="/changeLog" element={<ChangeLog />} />
-            </>
-          )}
-          {loggedUser.user &&
-            activeBoardState.billingPlan === BillingPlan.business && (
-              <>
-                <Route path="/integrations" element={<Integrations />} />
-              </>
-            )}
-          {loggedUser.user && (
-            <>
-              <Route path="/choose-board" element={<BoardCreation />} />
+              <Route path="/integrations" element={<Integrations />} />
             </>
           )}
           <Route path="/view-board/:boardId" element={<ViewBoard />} />

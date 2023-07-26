@@ -1,8 +1,8 @@
 import { Backdrop, Button, Fade, Modal, Paper } from "@mui/material";
 import styles from "./CannotMakeActionAsGuestModal.module.scss";
 import React from "react";
-import logInImg from "../../../icons/undraw_Join_re_w1lh.png";
 import { useNavigate } from "react-router-dom";
+import { logInImg } from "../../../helpers/constants";
 
 type Props = {
   modalIsOpen: boolean;

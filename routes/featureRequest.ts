@@ -9,8 +9,8 @@ router.post('/get/all-from-board', getAllBoardFeatureRequests);
 router.get('/get/all-company', getAllCompanyFeatureRequests);
 router.post('/create', createFeatureRequest);
 router.post('/update', updateFeatureRequest);
-router.post('/up-vote/:id', upVote);
-router.post('/down-vote/:id', downVote);
+router.post('/up-vote', upVote);
+router.post('/down-vote', downVote);
 router.post('/delete', deleteFeatureRequest);
 router.post('/get-changelog-list', getChangeLogList);
 

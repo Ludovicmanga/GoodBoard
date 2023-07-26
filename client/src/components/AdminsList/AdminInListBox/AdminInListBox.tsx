@@ -17,7 +17,7 @@ type Props = {
 const AdminInListBox = (props: Props) => {
   return (
     <div className={styles.container}>
-      <div>{props.boardAdmin.email}</div>
+      <div className={styles.emailcontainer}>{props.boardAdmin.email}</div>
       <div>
         <Select
           size="small"

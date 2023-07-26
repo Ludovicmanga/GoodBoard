@@ -9,7 +9,9 @@ import { setGeneralProperties } from "../../../redux/features/generalPropertiesS
 type Props = {};
 
 const AdminsListSection = (props: Props) => {
-  const generalPropertiesState = useAppSelector(state => state.generalProperties);
+  const generalPropertiesState = useAppSelector(
+    (state) => state.generalProperties
+  );
   const activeBoardId = generalPropertiesState.activeBoard;
   const dispatch = useAppDispatch();
   const [boardAdminsList, setBoardAdminsList] = useState<
@@ -19,34 +21,35 @@ const AdminsListSection = (props: Props) => {
     }[]
   >([]);
 
-  console.log('rendered');
-
   const getUsersList = async () => {
     const response = await axios({
       method: "get",
       url: `${websiteUrl}/api/board/get-board-users-list/${activeBoardId}`,
       withCredentials: true,
     });
+    console.log(response, " is the ress");
     if (response.data) {
       setBoardAdminsList(response.data);
     }
   };
 
   const handleChangeUserRole = async (userEmail: string, newRole: string) => {
-     const response = await axios({
+    const response = await axios({
       method: "put",
       url: `${websiteUrl}/api/board/update-user-role`,
       withCredentials: true,
       data: { boardId: activeBoardId, userEmail, role: newRole },
     });
     if (response.data) {
-      setBoardAdminsList(currList => currList.map(adminInList => {
-        if (adminInList.email === userEmail) {
-          return { ...adminInList, role: newRole }
-        } else {
-          return adminInList;
-        }
-      }));
+      setBoardAdminsList((currList) =>
+        currList.map((adminInList) => {
+          if (adminInList.email === userEmail) {
+            return { ...adminInList, role: newRole };
+          } else {
+            return adminInList;
+          }
+        })
+      );
       dispatch(
         setGeneralProperties({
           mainSnackBar: {
@@ -54,8 +57,8 @@ const AdminsListSection = (props: Props) => {
             message: `The role of ${userEmail} was successfully changed to ${newRole}`,
           },
         })
-      )
-    } 
+      );
+    }
   };
 
   const handleDeleteAdmin = async (userEmail: string) => {
@@ -66,7 +69,9 @@ const AdminsListSection = (props: Props) => {
       data: { userEmail, boardId: activeBoardId },
     });
     if (response.data) {
-      setBoardAdminsList(currArray => currArray.filter(boardUser => boardUser.email !== userEmail));
+      setBoardAdminsList((currArray) =>
+        currArray.filter((boardUser) => boardUser.email !== userEmail)
+      );
       dispatch(
         setGeneralProperties({
           mainSnackBar: {
@@ -74,7 +79,7 @@ const AdminsListSection = (props: Props) => {
             message: `The access of ${userEmail} was deleted from this board`,
           },
         })
-      )
+      );
     }
   };
 
@@ -84,13 +89,20 @@ const AdminsListSection = (props: Props) => {
 
   return (
     <div className={styles.container}>
-      {boardAdminsList.length > 1 ? boardAdminsList.map((boardAdmin) => (
-        <AdminInListBox
-          handleChangeUserRole={handleChangeUserRole}
-          handleDeleteAdmin={handleDeleteAdmin}
-          boardAdmin={boardAdmin}
-        />
-      )) : (<div className={styles.onlyAdminText}>You are the only admin on this board</div>)}
+      {boardAdminsList.length > 0 ? (
+        boardAdminsList.map((boardAdmin) => (
+          <AdminInListBox
+            key={boardAdmin.email}
+            handleChangeUserRole={handleChangeUserRole}
+            handleDeleteAdmin={handleDeleteAdmin}
+            boardAdmin={boardAdmin}
+          />
+        ))
+      ) : (
+        <div className={styles.onlyAdminText}>
+          You are the only admin on this board
+        </div>
+      )}
     </div>
   );
 };

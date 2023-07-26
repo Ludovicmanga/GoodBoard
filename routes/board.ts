@@ -11,11 +11,11 @@ import {
   updateUserRole,
   getBoardUsersList,
   inviteUsers,
-  setBoardImage,
   createCheckoutSession,
   createPortalSession,
   updateBoardBillingPlan,
   checkUserHasAccessToBoard,
+  updateBoardImage,
 } from "../controllers/board.controller";
 import { multerUpload } from "../middleware/multer";
 
@@ -30,7 +30,7 @@ router.post("/get-public-status", getPublicStatus);
 router.post("/update-color", updateColor);
 router.post("/update-public-status", updatePublicStatus);
 router.post("/get-share-url", getShareUrl);
-router.post("/set-board-image", multerUpload.single("image"), setBoardImage);
+router.post("/update-board-image", multerUpload.single("image"), updateBoardImage);
 router.post("/delete-user", deleteUserFromBoard);
 router.put("/update-user-role", updateUserRole);
 router.post("/create-checkout-session", createCheckoutSession);

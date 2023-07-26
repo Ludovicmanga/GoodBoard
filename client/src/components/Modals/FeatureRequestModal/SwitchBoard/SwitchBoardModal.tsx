@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Backdrop from "@mui/material/Backdrop";
-import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import styles from './SwitchBoardModal.module.scss';
-import { Card, Paper } from "@mui/material";
+import { Paper } from "@mui/material";
 import BoardCreation from "../../../../pages/BoardCreation/BoardCreation";
 
 type Props = {
@@ -28,7 +27,7 @@ const SwitchBoardModal = (props: Props) => {
           >
             <Fade in={props.modalIsOpen}>
               <Paper className={styles.modalContentContainer}>
-                <BoardCreation />
+                <BoardCreation pageMode='modal' />
               </Paper>
             </Fade>
           </Modal>

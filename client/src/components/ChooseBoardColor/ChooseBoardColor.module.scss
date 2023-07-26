@@ -1,17 +1,24 @@
-@import '../../styles/useSpacing';
+@import "../../styles/useSpacing";
 
 .colorPaletteBoxContainer {
-    display: flex;
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
 }
 
 .colorPaletteBox {
-    @include useSpacing(margin, xxs, l, s, 0);
-    cursor: pointer;
-    border: $c-black 1px solid;
-    width: 3rem;
-    height: 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  @include useSpacing(margin, 0, s);
+  cursor: pointer;
+  border: $c-black 1px solid;
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (min-width: $main-breakpoint) {
+  .colorPaletteBoxContainer {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
 }

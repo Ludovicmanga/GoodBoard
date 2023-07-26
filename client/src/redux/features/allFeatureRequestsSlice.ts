@@ -20,7 +20,7 @@ export const allFeatureRequestsSlice = createSlice({
           return {
             ...featureRequest,
             voters: [action.payload.userId, ...featureRequest.voters],
-            votersPics: [action.payload.userPic, ...featureRequest.votersPics],
+            votersPics: [action.payload.userPic, ...featureRequest.votersPics || []],
           };
         } else {
           return featureRequest;
@@ -39,7 +39,7 @@ export const allFeatureRequestsSlice = createSlice({
       return [...state, action.payload.featureRequest];
     },
     deleteFeatureRequest: (state, action: PayloadAction<{ featureRequest: FeatureRequest }>) => {
-      return state.filter(featureRequest => featureRequest._id !== action.payload.featureRequest._id);
+      return state.filter(featureRequest => featureRequest._id !== action.payload.featureRequest._id) || [];
     },
     updateFeatureRequest: (state, action) => {
       return state.map((featureRequest) => {

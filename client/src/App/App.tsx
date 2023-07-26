@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 import { useEffect } from "react";
 import { websiteUrl } from "../helpers/constants";
 import { setAllFeatureRequests } from "../redux/features/allFeatureRequestsSlice";
@@ -19,13 +19,17 @@ import "./App.module.scss";
 import { getLoggedUser } from "../helpers/users";
 import FeatureRequestModal from "../components/Modals/FeatureRequestModal/FeatureRequestModal";
 import { checkUserAccessAPICall } from "../helpers/boards";
+import LoadingSkeleton from "../components/LoadingSkeleton/LoadingSkeleton";
+import ErrorBoundary from "../components/ErrorBoundary/ErrorBoundary";
 
 function App() {
   const dispatch = useAppDispatch();
+  const [isLoading, setIsLoading] = useState(true);
 
   const generalPropertiesState = useAppSelector(
     (state) => state.generalProperties
   );
+  const loggedUserState = useAppSelector((state) => state.loggedUser).user;
 
   const lightTheme = createTheme({
     palette: {
@@ -106,44 +110,62 @@ function App() {
     if (
       allUsersFeatureRequests.data === "user doesn't have access to the board"
     ) {
-      console.log(
-        "Afficher un simple message derreur indiquant que lutilisateur n a pas acces au board, qui est privé"
-      );
+      dispatch(setGeneralProperties({
+        activeBoard: null
+      }))
     } else {
       return allUsersFeatureRequests.data;
     }
   };
 
   const getAllBoardFeatureRequests = async (activeBoard: string) => {
+    dispatch(setGeneralProperties({
+      featuresAreLoading: true,
+    }));
     const allFeatureRequests = await getAllBoardFeatureRequestsApiCall(
       activeBoard
     );
     dispatch(setAllFeatureRequests(allFeatureRequests));
+    dispatch(setGeneralProperties({
+      featuresAreLoading: false,
+    }));
   };
 
   useEffect(() => {
     const checkUserHasAccessToBoard = async (boardId: string | null) => {
       if (boardId) {
         const res = await checkUserAccessAPICall(boardId);
-        if (res.data) {
+        if (res.data.hasAccessToActiveBoard) {
           dispatch(
             setGeneralProperties({
               activeBoard: boardId,
             })
           );
+        } else {
+          dispatch(
+            setGeneralProperties({
+              activeBoard: null,
+            })
+          );
         }
+        dispatch(setGeneralProperties({
+          boardsList: res.data.boardsUserHasAccessList,
+        }))
       }
     };
     if (localStorage.getItem("board")) {
       checkUserHasAccessToBoard(localStorage.getItem("board"));
+    } else {
+      dispatch(
+        setGeneralProperties({
+          activeBoard: null,
+        })
+      );
     }
   }, [dispatch]);
 
   useEffect(() => {
-    if (
-      generalPropertiesState.activeBoard &&
-      generalPropertiesState.activeBoard.length > 0
-    ) {
+    if (generalPropertiesState.activeBoard) {
       getAllBoardFeatureRequests(generalPropertiesState.activeBoard);
     }
   }, [generalPropertiesState.activeBoard]);
@@ -178,6 +200,15 @@ function App() {
   useEffect(() => {
     handleGetLoggedUser();
   }, [generalPropertiesState.activeBoard]);
+
+  useEffect(() => {
+    if (
+      loggedUserState !== undefined &&
+      generalPropertiesState.activeBoard !== undefined
+    ) {
+      setIsLoading(false);
+    }
+  }, [loggedUserState, generalPropertiesState.activeBoard]);
 
   return (
     <GoogleOAuthProvider clientId="359793701193-uesb1dbegpv1batpku2ro9le0fjnf8il.apps.googleusercontent.com">
@@ -223,7 +254,10 @@ function App() {
                 )?.theme || lightTheme
           }
         >
-          <Routes />
+          <ErrorBoundary>
+            {isLoading ? <LoadingSkeleton /> : <Routes />}
+          </ErrorBoundary>
+
           <CssBaseline />
         </ThemeProvider>
         <FeatureRequestModal

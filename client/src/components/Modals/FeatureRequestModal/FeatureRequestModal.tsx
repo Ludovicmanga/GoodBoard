@@ -270,9 +270,9 @@ export default function FeatureRequestModal(props: {
                     <div className={styles.votersSectionTitle}>Voters :</div>
                     <AvatarGroup
                       className={styles.avatarGroup}
-                      total={featureRequestProperties.voters?.length}
+                      total={featureRequestProperties.voters?.length || 0}
                     >
-                      {featureRequestProperties.votersPics.length > 0 ? (
+                      {featureRequestProperties.votersPics?.length > 0 ? (
                         featureRequestProperties.votersPics
                           .slice(0, 4)
                           .map((voterPic) => (

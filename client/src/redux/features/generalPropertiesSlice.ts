@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { FeatureRequestModalMode, MenuSelected } from "../../helpers/types";
+import { FeatureRequestModalMode, MenuSelected, Board } from "../../helpers/types";
 
 interface GeneralProperties {
-  activeBoard: string | null;
+  activeBoard: string | null | undefined;
   featureRequestModal: {
     isOpen: boolean;
     mode: FeatureRequestModalMode | null;
@@ -20,16 +20,18 @@ interface GeneralProperties {
   cannotMakeActionModalOpen: boolean;
   needToUpgradeModalOpen: boolean;
   menuSelected: MenuSelected | null;
+  featuresAreLoading: boolean;
   mainSnackBar: {
     isOpen: boolean;
     message: string;
   };
   darkMode: boolean | null;
   colorMode: string | null;
+  boardsList: Board[]
 }
 
 const initialState: GeneralProperties = {
-  activeBoard: null,
+  activeBoard: undefined,
   featureRequestModal: {
     isOpen: false,
     mode: null,
@@ -40,6 +42,7 @@ const initialState: GeneralProperties = {
   switchBoardModalOpen: false,
   cannotMakeActionModalOpen: false,
   needToUpgradeModalOpen: false,
+  featuresAreLoading: false,
   changeLogDetailsModalOpen: {
     isOpen: false,
     title: '',
@@ -53,6 +56,7 @@ const initialState: GeneralProperties = {
   },
   colorMode: null,
   darkMode: null,
+  boardsList: []
 };
 
 export const generalPropertiesSlice = createSlice({
@@ -66,9 +70,16 @@ export const generalPropertiesSlice = createSlice({
       state = { ...state, ...action.payload };
       return state;
     },
+    addBoardToList: (state, action: PayloadAction<Board>) => {
+      const newBoardsList = [...state.boardsList, action.payload];
+      return {
+        ...state,
+        boardsList: newBoardsList,
+      };
+    },
   },
 });
 
-export const { setGeneralProperties } = generalPropertiesSlice.actions;
+export const { setGeneralProperties, addBoardToList } = generalPropertiesSlice.actions;
 
 export default generalPropertiesSlice.reducer;
