@@ -10,13 +10,16 @@ import styles from "./PaymentSuccessPage.module.scss";
 import { websiteUrl } from "../../helpers/constants";
 import axios from "axios";
 import { useAppSelector } from "../../redux/hooks";
+import MainNavBar from "../../components/MainNavBar/MainNavBar";
 
 const PaymentSuccessPage = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const session_id = searchParams.get("session_id");
   const [loading, setLoading] = useState(false);
-  const generalPropertiesState = useAppSelector(state => state.generalProperties);
+  const generalPropertiesState = useAppSelector(
+    (state) => state.generalProperties
+  );
 
   const createPortalSession = async () => {
     if (process.env.NODE_ENV === "production") {
@@ -48,33 +51,48 @@ const PaymentSuccessPage = () => {
         setLoading(false);
       }
     }
-  }
+  };
 
   useEffect(() => {
     updateDB();
   }, [session_id, generalPropertiesState.activeBoard]);
 
   return (
-    <div className={styles.container}>
-      <FontAwesomeIcon icon={faCheck} className={styles.checkmark} />
-      <h1 className={styles.heading}>Payment Successful!</h1>
-      <p className={styles.message}>
-        Thank you for your purchase. Your payment was successful.
-      </p>
-      <div className={styles.buttonsContainer}>
-        <Link to={`/${websiteUrl}`} className={styles.button}>
-          <FontAwesomeIcon
-            icon={faClipboardList}
-            className={styles.buttonIcon}
-          />
-          Go to My Goodboard
-        </Link>
-        <div className={styles.button} onClick={createPortalSession}>
-          <FontAwesomeIcon icon={faCreditCard} className={styles.buttonIcon} />
-          View My Stripe Details
+    <>
+    <MainNavBar />
+      <div className={styles.container}>
+        <div className={styles.iconsContainer}>
+          <div className={styles.checkmarkContainer}>
+            <FontAwesomeIcon
+              icon={faCheck}
+              className={styles.checkmark}
+              color="green"
+            />
+          </div>
+          <div className={styles.partyEmojiContainer}>🎉</div>
+        </div>
+        <h1 className={styles.heading}>Payment Successful!</h1>
+        <p className={styles.message}>
+          Thank you for your purchase. Your payment was successful.
+        </p>
+        <div className={styles.buttonsContainer}>
+          <Link to={`/${websiteUrl}`} className={styles.button}>
+            <FontAwesomeIcon
+              icon={faClipboardList}
+              className={styles.buttonIcon}
+            />
+            Go to My Goodboard
+          </Link>
+          <div className={styles.button} onClick={createPortalSession}>
+            <FontAwesomeIcon
+              icon={faCreditCard}
+              className={styles.buttonIcon}
+            />
+            View My Stripe Details
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
