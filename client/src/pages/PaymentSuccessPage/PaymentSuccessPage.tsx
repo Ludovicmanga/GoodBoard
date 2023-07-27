@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom"; // Assuming you are using React Router for navigation
-//import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-/* import {
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
   faCheck,
   faClipboardList,
   faCreditCard,
-} from "@fortawesome/free-solid-svg-icons"; */
+} from "@fortawesome/free-solid-svg-icons";
 import styles from "./PaymentSuccessPage.module.scss";
 import { websiteUrl } from "../../helpers/constants";
 import axios from "axios";
@@ -56,7 +56,7 @@ const PaymentSuccessPage = () => {
 
   return (
     <div className={styles.container}>
-{/*       <FontAwesomeIcon icon={faCheck} className={styles.checkmark} />
+      <FontAwesomeIcon icon={faCheck} className={styles.checkmark} />
       <h1 className={styles.heading}>Payment Successful!</h1>
       <p className={styles.message}>
         Thank you for your purchase. Your payment was successful.
@@ -73,7 +73,7 @@ const PaymentSuccessPage = () => {
           <FontAwesomeIcon icon={faCreditCard} className={styles.buttonIcon} />
           View My Stripe Details
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };
