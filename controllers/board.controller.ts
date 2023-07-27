@@ -339,8 +339,8 @@ export const createCheckoutSession = async (req, res) => {
       },
     ],
     mode: "subscription",
-    success_url: `http://localhost:3000/successful-stripe-payment?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `http://localhost:3000?canceled-stripe-payment`,
+    success_url: `${websiteUrl}/successful-stripe-payment?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${websiteUrl}?canceled-stripe-payment`,
   });
 
   res.send(session.url);
