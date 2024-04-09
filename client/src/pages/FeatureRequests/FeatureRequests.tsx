@@ -18,17 +18,15 @@ import SearchBar from "../../components/SearchBar/SearchBar";
 import FilterFeatureRequestsSidebar from "../../components/FilterFeatureRequestsSidebar/FilterFeatureRequestsSidebar";
 import LoadingSkeleton from "../../components/LoadingSkeleton/LoadingSkeleton";
 
-type Props = {
-  type: UserType;
-};
+type Props = {};
 
 const FeatureRequests = (props: Props) => {
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
   const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
   const [searchedWord, setSearchedWord] = useState<string | null>(null);
-  const [filteredFeatureRequests, setFilteredFeatureRequests] = useState<
+/*   const [filteredFeatureRequests, setFilteredFeatureRequests] = useState<
     FeatureRequest[]
-  >([]);
+  >([]); */
   const activeBoardState = useAppSelector((state) => state.activeBoard);
   const generalPropertiesState = useAppSelector(
     (state) => state.generalProperties
@@ -37,13 +35,13 @@ const FeatureRequests = (props: Props) => {
   const allFeatureRequests = useAppSelector(
     (state) => state.allFeatureRequests
   );
-
+/* 
   const dispatch = useAppDispatch();
   const menuSelectedState = useAppSelector(
     (state) => state.generalProperties.menuSelected
-  );
+  ); */
 
-  const handleSetCorrespondingFeatures = () => {
+/*   const handleSetCorrespondingFeatures = () => {
     if (props.type === UserType.externalUser) {
       const featureRequestsWithCorrespondingPropsType =
         allFeatureRequests.filter(
@@ -75,11 +73,11 @@ const FeatureRequests = (props: Props) => {
         })
       );
     }
-  }, [menuSelectedState]);
-
+  }, [menuSelectedState]); */
+/* 
   useEffect(() => {
     handleSetCorrespondingFeatures();
-  }, [allFeatureRequests, props.type]);
+  }, [allFeatureRequests, props.type]); */
 
   const handleChangeSelectedStatus = (statusClicked: {
     label: string;
@@ -112,18 +110,18 @@ const FeatureRequests = (props: Props) => {
           )}
           <div
             className={
-              filteredFeatureRequests.length > 0
+              allFeatureRequests.length > 0
                 ? styles.featuresSectionContainer
                 : `${styles.featuresSectionContainer} ${styles.featuresSectionContainerEmpty}`
             }
           >
-            {filteredFeatureRequests.length > 0 ? (
+            {allFeatureRequests.length > 0 ? (
               <div className={styles.featuresContainer}>
                 <SearchBar
                   onSearch={(searchedWord) => setSearchedWord(searchedWord)}
                 />
 
-                {filteredFeatureRequests
+                {allFeatureRequests
                   .filter((featReq) => {
                     if (selectedTopic) {
                       return featReq.topics.includes(selectedTopic!);
@@ -171,9 +169,9 @@ const FeatureRequests = (props: Props) => {
           </div>
         </div>
       )}
-      {filteredFeatureRequests.length > 0 && (
+      {allFeatureRequests.length > 0 && (
         <NewFeatureRequestsButton
-          numberOfFeatureRequests={filteredFeatureRequests.length}
+          numberOfFeatureRequests={allFeatureRequests.length}
         />
       )}
     </>
