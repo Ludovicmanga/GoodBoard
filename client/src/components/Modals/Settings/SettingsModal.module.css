@@ -123,7 +123,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 37.5rem;
+  width: 90%;
   border: 0.5px solid #000;
   border-radius: 8px;
   box-shadow: 24px;
@@ -166,7 +166,8 @@
 .settingIllustrationContainer {
   display: flex;
   flex-direction: column;
-  width: 10%;
+  align-items: center;
+  min-width: 80px;
   justify-content: center;
 }
 @media screen {
@@ -222,6 +223,24 @@
   }
 }
 
+.changePictureBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.userPicContainer {
+  position: relative;
+}
+
+.penIconContainer {
+  position: absolute;
+  bottom: 0%;
+  right: 0%;
+  z-index: 1;
+  cursor: pointer;
+}
+
 @media screen {
   .submitButton {
     margin: 1rem 0 0 0;
@@ -240,6 +259,6 @@
 
 @media screen and (min-width: 40rem) {
   .modalContentContainer {
-    width: 37.5rem;
+    width: 40%;
   }
 }/*# sourceMappingURL=SettingsModal.module.css.map */

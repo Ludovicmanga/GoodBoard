@@ -1,0 +1,401 @@
+/*
+ * Return the rem of a pixel's value
+ *
+ * Sample: pxToRem(50)
+ * Result: 3.125rem
+ */
+/*
+ * Return the percent ratio from width and height
+ *
+ * Sample: ratio(16, 9)
+ * Result: 56.25%
+ */
+/*
+ * Return the rem of a pixel's value
+ *
+ * Sample: pxToRem(50)
+ * Result: 3.125rem
+ */
+/*
+ * Return the percent ratio from width and height
+ *
+ * Sample: ratio(16, 9)
+ * Result: 56.25%
+ */
+/*
+ * Return the rem of a pixel's value
+ *
+ * Sample: pxToRem(50)
+ * Result: 3.125rem
+ */
+/*
+ * Return the percent ratio from width and height
+ *
+ * Sample: ratio(16, 9)
+ * Result: 56.25%
+ */
+/*
+ * Return the value for font size
+ * Used in useTypography mixin
+ */
+/*
+ * Return the value for line height
+ * Used in useTypography mixin
+ */
+/*
+ * Return the value for font family
+ * Used in useTypography mixin
+ */
+/*
+ * Return the value for spacing size for small screen
+ * Used in useSpacing mixin
+ */
+/*
+ * Return the value for spacing size for medium screen
+ * Used in useSpacing mixin
+ */
+/*
+ * Return the value for spacing size for large screen
+ * Used in useSpacing mixin
+ */
+/*
+ * Return the rem of a pixel's value
+ *
+ * Sample: pxToRem(50)
+ * Result: 3.125rem
+ */
+/*
+ * Return the percent ratio from width and height
+ *
+ * Sample: ratio(16, 9)
+ * Result: 56.25%
+ */
+/*
+ * Return the value for font size
+ * Used in useTypography mixin
+ */
+/*
+ * Return the value for line height
+ * Used in useTypography mixin
+ */
+/*
+ * Return the value for font family
+ * Used in useTypography mixin
+ */
+/*
+ * Return the rem of a pixel's value
+ *
+ * Sample: pxToRem(50)
+ * Result: 3.125rem
+ */
+/*
+ * Return the percent ratio from width and height
+ *
+ * Sample: ratio(16, 9)
+ * Result: 56.25%
+ */
+/*
+ * Return the rem of a pixel's value
+ *
+ * Sample: pxToRem(50)
+ * Result: 3.125rem
+ */
+/*
+ * Return the percent ratio from width and height
+ *
+ * Sample: ratio(16, 9)
+ * Result: 56.25%
+ */
+/*
+ * Return the value for font size
+ * Used in useTypography mixin
+ */
+/*
+ * Return the value for line height
+ * Used in useTypography mixin
+ */
+/*
+ * Return the value for font family
+ * Used in useTypography mixin
+ */
+.modalContentContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  border: 0.5px solid #000;
+  border-radius: 8px;
+  box-shadow: 24px;
+}
+@media screen {
+  .modalContentContainer {
+    padding: 1.5rem 2rem 2rem 2rem;
+  }
+}
+@media screen and (min-width: 64.0625rem) {
+  .modalContentContainer {
+    padding: 1.5rem 2.5rem 2.5rem 2.5rem;
+  }
+}
+@media screen and (min-width: 105.0625rem) {
+  .modalContentContainer {
+    padding: 1.5rem 3rem 3rem 3rem;
+  }
+}
+
+.modalTitle {
+  text-align: center;
+  font-weight: bold;
+}
+@media screen {
+  .modalTitle {
+    margin: 0 0 1.5rem 0;
+  }
+}
+@media screen and (min-width: 64.0625rem) {
+  .modalTitle {
+    margin: 0 0 1.5rem 0;
+  }
+}
+@media screen and (min-width: 105.0625rem) {
+  .modalTitle {
+    margin: 0 0 1.5rem 0;
+  }
+}
+
+.middle {
+  display: flex;
+}
+
+.mainContentMiddleContainerAlone {
+  width: 100%;
+}
+
+.mainContentMiddleContainerWithSidebar {
+  width: 70%;
+}
+
+.integrationChip {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+@media screen {
+  .integrationChip {
+    margin: 0.75rem 0 0.75rem 0;
+  }
+}
+@media screen and (min-width: 64.0625rem) {
+  .integrationChip {
+    margin: 0.75rem 0 0.75rem 0;
+  }
+}
+@media screen and (min-width: 105.0625rem) {
+  .integrationChip {
+    margin: 0.75rem 0 0.75rem 0;
+  }
+}
+@media screen {
+  .integrationChip {
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+  }
+}
+@media screen and (min-width: 64.0625rem) {
+  .integrationChip {
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+  }
+}
+@media screen and (min-width: 105.0625rem) {
+  .integrationChip {
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+  }
+}
+@media screen and (max-width: 49.9375rem) {
+  .integrationChip {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+}
+
+@media screen {
+  .integrationChipText {
+    margin: 0 0 0 1rem;
+  }
+}
+@media screen and (min-width: 64.0625rem) {
+  .integrationChipText {
+    margin: 0 0 0 1rem;
+  }
+}
+@media screen and (min-width: 105.0625rem) {
+  .integrationChipText {
+    margin: 0 0 0 1rem;
+  }
+}
+
+.rightNavbar {
+  width: 30%;
+}
+@media screen {
+  .rightNavbar {
+    margin: 0 0 0 0.75rem;
+  }
+}
+@media screen and (min-width: 64.0625rem) {
+  .rightNavbar {
+    margin: 0 0 0 0.75rem;
+  }
+}
+@media screen and (min-width: 105.0625rem) {
+  .rightNavbar {
+    margin: 0 0 0 0.75rem;
+  }
+}
+
+.rightNavbarTitle {
+  display: flex;
+  justify-content: center;
+  font-size: 0.6875rem;
+  line-height: 1.1875rem;
+  font-weight: 550;
+}
+@media screen and (max-width: 49.9375rem) {
+  .rightNavbarTitle {
+    font-size: 0.6875rem;
+    line-height: 1.1875rem;
+  }
+}
+@media screen {
+  .rightNavbarTitle {
+    margin: 0 0 0.5rem 0;
+  }
+}
+@media screen and (min-width: 64.0625rem) {
+  .rightNavbarTitle {
+    margin: 0 0 0.5rem 0;
+  }
+}
+@media screen and (min-width: 105.0625rem) {
+  .rightNavbarTitle {
+    margin: 0 0 0.5rem 0;
+  }
+}
+
+.textInput {
+  width: 100%;
+}
+
+@media screen {
+  .titleInput {
+    margin: 0 0 1rem 0;
+  }
+}
+@media screen and (min-width: 64.0625rem) {
+  .titleInput {
+    margin: 0 0 1rem 0;
+  }
+}
+@media screen and (min-width: 105.0625rem) {
+  .titleInput {
+    margin: 0 0 1rem 0;
+  }
+}
+
+.votersSection, .statusSection {
+  display: flex;
+}
+@media screen {
+  .votersSection, .statusSection {
+    margin: 0 0 0.75rem 0;
+  }
+}
+@media screen and (min-width: 64.0625rem) {
+  .votersSection, .statusSection {
+    margin: 0 0 0.75rem 0;
+  }
+}
+@media screen and (min-width: 105.0625rem) {
+  .votersSection, .statusSection {
+    margin: 0 0 0.75rem 0;
+  }
+}
+
+.votersSectionTitle, .statusSectionTitle {
+  display: flex;
+  align-items: center;
+}
+@media screen {
+  .votersSectionTitle, .statusSectionTitle {
+    margin: 0 0.75rem 0 0;
+  }
+}
+@media screen and (min-width: 64.0625rem) {
+  .votersSectionTitle, .statusSectionTitle {
+    margin: 0 0.75rem 0 0;
+  }
+}
+@media screen and (min-width: 105.0625rem) {
+  .votersSectionTitle, .statusSectionTitle {
+    margin: 0 0.75rem 0 0;
+  }
+}
+
+@media screen {
+  .submitButton {
+    margin: 1.5rem 1rem 0.125rem 0;
+  }
+}
+@media screen and (min-width: 64.0625rem) {
+  .submitButton {
+    margin: 1.5rem 1rem 0.125rem 0;
+  }
+}
+@media screen and (min-width: 105.0625rem) {
+  .submitButton {
+    margin: 1.5rem 1rem 0.125rem 0;
+  }
+}
+
+@media screen {
+  .divider {
+    margin: 0 0 1.5rem 0;
+  }
+}
+@media screen and (min-width: 64.0625rem) {
+  .divider {
+    margin: 0 0 1.5rem 0;
+  }
+}
+@media screen and (min-width: 105.0625rem) {
+  .divider {
+    margin: 0 0 1.5rem 0;
+  }
+}
+
+.mainButtonsContainer {
+  display: flex;
+}
+
+@media screen and (min-width: 40rem) {
+  .modalContentContainer {
+    width: 40%;
+  }
+}
+@media screen and (min-width: 40rem) {
+  .rightNavbar {
+    margin: 0 0 0 4rem;
+  }
+}
+@media screen and (min-width: 40rem) and (min-width: 64.0625rem) {
+  .rightNavbar {
+    margin: 0 0 0 4rem;
+  }
+}
+@media screen and (min-width: 40rem) and (min-width: 105.0625rem) {
+  .rightNavbar {
+    margin: 0 0 0 5rem;
+  }
+}/*# sourceMappingURL=FeatureRequestModal.module.css.map */

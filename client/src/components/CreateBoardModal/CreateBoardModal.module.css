@@ -58,69 +58,89 @@
  * Return the value for spacing size for large screen
  * Used in useSpacing mixin
  */
-.modalContentContainer {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 90%;
-  border: 0.5px solid #000;
-  border-radius: 8px;
-  box-shadow: 24px;
+.inputLabel {
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
 }
 @media screen {
-  .modalContentContainer {
-    padding: 1rem 4rem 1rem 4rem;
+  .inputLabel {
+    margin: 1rem 0 0.75rem 0;
   }
 }
 @media screen and (min-width: 64.0625rem) {
-  .modalContentContainer {
-    padding: 1rem 4rem 1rem 4rem;
+  .inputLabel {
+    margin: 1rem 0 0.75rem 0;
   }
 }
 @media screen and (min-width: 105.0625rem) {
-  .modalContentContainer {
-    padding: 1rem 5rem 1rem 5rem;
+  .inputLabel {
+    margin: 1rem 0 0.75rem 0;
   }
 }
 
-.sectionTitle {
-  font-size: 14px;
+.uploadImgBtnContainer {
+  display: flex;
+  justify-content: center;
 }
 @media screen {
-  .sectionTitle {
-    margin: 1.5rem 0 0.75rem 0;
+  .uploadImgBtnContainer {
+    margin: 0.75rem 0 0 0;
   }
 }
 @media screen and (min-width: 64.0625rem) {
-  .sectionTitle {
-    margin: 1.5rem 0 0.75rem 0;
+  .uploadImgBtnContainer {
+    margin: 0.75rem 0 0 0;
   }
 }
 @media screen and (min-width: 105.0625rem) {
-  .sectionTitle {
-    margin: 1.5rem 0 0.75rem 0;
+  .uploadImgBtnContainer {
+    margin: 0.75rem 0 0 0;
+  }
+}
+
+.submitBtnContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@media screen {
+  .submitBtnContainer {
+    margin: 1rem 0 1rem 0;
+  }
+}
+@media screen and (min-width: 64.0625rem) {
+  .submitBtnContainer {
+    margin: 1rem 0 1rem 0;
+  }
+}
+@media screen and (min-width: 105.0625rem) {
+  .submitBtnContainer {
+    margin: 1rem 0 1rem 0;
   }
 }
 
 @media screen {
-  .billingBtnsContainer {
-    margin: 1rem 0 1rem 0;
+  .submitBtn {
+    margin: 1rem 0 0 0;
   }
 }
 @media screen and (min-width: 64.0625rem) {
-  .billingBtnsContainer {
-    margin: 1rem 0 1rem 0;
+  .submitBtn {
+    margin: 1rem 0 0 0;
   }
 }
 @media screen and (min-width: 105.0625rem) {
-  .billingBtnsContainer {
-    margin: 1rem 0 1rem 0;
+  .submitBtn {
+    margin: 1rem 0 0 0;
   }
 }
 
 @media screen and (min-width: 40rem) {
-  .modalContentContainer {
-    width: 50%;
+  .inputLabel {
+    justify-content: flex-start;
   }
-}/*# sourceMappingURL=ManageBoardModal.module.css.map */
+  .uploadImgBtnContainer {
+    justify-content: flex-start;
+  }
+}/*# sourceMappingURL=CreateBoardModal.module.css.map */
