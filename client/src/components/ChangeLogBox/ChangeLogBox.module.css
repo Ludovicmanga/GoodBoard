@@ -58,69 +58,93 @@
  * Return the value for spacing size for large screen
  * Used in useSpacing mixin
  */
-.modalContentContainer {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 90%;
-  border: 0.5px solid #000;
-  border-radius: 8px;
-  box-shadow: 24px;
+/*
+ * Return the rem of a pixel's value
+ *
+ * Sample: pxToRem(50)
+ * Result: 3.125rem
+ */
+/*
+ * Return the percent ratio from width and height
+ *
+ * Sample: ratio(16, 9)
+ * Result: 56.25%
+ */
+/*
+ * Return the value for font size
+ * Used in useTypography mixin
+ */
+/*
+ * Return the value for line height
+ * Used in useTypography mixin
+ */
+/*
+ * Return the value for font family
+ * Used in useTypography mixin
+ */
+.container {
+  border-radius: 10px;
+  width: 100%;
+  height: 8rem;
+  cursor: pointer;
 }
 @media screen {
-  .modalContentContainer {
-    padding: 1rem 4rem 1rem 4rem;
+  .container {
+    padding: 1rem 1rem 1rem 1rem;
   }
 }
 @media screen and (min-width: 64.0625rem) {
-  .modalContentContainer {
-    padding: 1rem 4rem 1rem 4rem;
+  .container {
+    padding: 1rem 1rem 1rem 1rem;
   }
 }
 @media screen and (min-width: 105.0625rem) {
-  .modalContentContainer {
-    padding: 1rem 5rem 1rem 5rem;
+  .container {
+    padding: 1rem 1rem 1rem 1rem;
   }
 }
-
-.sectionTitle {
-  font-size: 14px;
-}
 @media screen {
-  .sectionTitle {
-    margin: 1.5rem 0 0.75rem 0;
+  .container {
+    margin: 0 4rem 0 4rem;
   }
 }
 @media screen and (min-width: 64.0625rem) {
-  .sectionTitle {
-    margin: 1.5rem 0 0.75rem 0;
+  .container {
+    margin: 0 4rem 0 4rem;
   }
 }
 @media screen and (min-width: 105.0625rem) {
-  .sectionTitle {
-    margin: 1.5rem 0 0.75rem 0;
+  .container {
+    margin: 0 5rem 0 5rem;
   }
 }
 
+.title {
+  font-weight: 600;
+}
 @media screen {
-  .billingBtnsContainer {
+  .title {
     margin: 1rem 0 1rem 0;
   }
 }
 @media screen and (min-width: 64.0625rem) {
-  .billingBtnsContainer {
+  .title {
     margin: 1rem 0 1rem 0;
   }
 }
 @media screen and (min-width: 105.0625rem) {
-  .billingBtnsContainer {
+  .title {
     margin: 1rem 0 1rem 0;
   }
 }
 
-@media screen and (min-width: 40rem) {
-  .modalContentContainer {
-    width: 50%;
+.description {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+@media screen and (max-width: 49.9375rem) {
+  .description {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
   }
-}/*# sourceMappingURL=ManageBoardModal.module.css.map */
+}/*# sourceMappingURL=ChangeLogBox.module.css.map */

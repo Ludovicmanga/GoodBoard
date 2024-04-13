@@ -58,90 +58,134 @@
  * Return the value for spacing size for large screen
  * Used in useSpacing mixin
  */
-.container {
+.emptyDataContainer {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30%;
 }
 @media screen {
-  .container {
-    margin: 0 0 0.75rem 0;
+  .emptyDataContainer {
+    padding: 2rem 0 0 0;
   }
 }
 @media screen and (min-width: 64.0625rem) {
-  .container {
-    margin: 0 0 0.75rem 0;
+  .emptyDataContainer {
+    padding: 2.5rem 0 0 0;
   }
 }
 @media screen and (min-width: 105.0625rem) {
-  .container {
-    margin: 0 0 0.75rem 0;
+  .emptyDataContainer {
+    padding: 3rem 0 0 0;
   }
 }
 
-.left {
+.sectionContainer {
   display: flex;
-  width: 68%;
-}
-
-.rightBtnContainer {
-  display: flex;
-}
-@media screen {
-  .rightBtnContainer {
-    margin: 0 0 0 1rem;
-  }
-}
-@media screen and (min-width: 64.0625rem) {
-  .rightBtnContainer {
-    margin: 0 0 0 1rem;
-  }
-}
-@media screen and (min-width: 105.0625rem) {
-  .rightBtnContainer {
-    margin: 0 0 0 1rem;
-  }
-}
-
-.outlinedInput {
-  padding-right: 0px;
+  justify-content: center;
+  height: 50%;
+  position: relative;
 }
 
 @media screen {
-  .roleInput {
-    margin: 0 0 0 1rem;
+  .sectionContainerWithNavBar {
+    margin: 0 0 0 1.5rem;
   }
 }
 @media screen and (min-width: 64.0625rem) {
-  .roleInput {
-    margin: 0 0 0 1rem;
+  .sectionContainerWithNavBar {
+    margin: 0 0 0 1.5rem;
   }
 }
 @media screen and (min-width: 105.0625rem) {
-  .roleInput {
-    margin: 0 0 0 1rem;
+  .sectionContainerWithNavBar {
+    margin: 0 0 0 1.5rem;
+  }
+}
+
+.sidebarContainer {
+  position: absolute;
+  left: 1%;
+  top: 1%;
+  display: none;
+}
+
+.featuresSectionContainer {
+  width: 100%;
+}
+
+.featuresSectionContainerEmpty {
+  justify-content: center;
+}
+
+.listItemButton {
+  color: #8f9399;
+  font-size: 14px;
+}
+
+.listItem {
+  font-size: 14px;
+}
+
+.featuresSectionContainer {
+  display: flex;
+  flex-direction: column;
+}
+@media screen {
+  .featuresSectionContainer {
+    margin: 1.5rem 0 1.5rem 0;
+  }
+}
+@media screen and (min-width: 64.0625rem) {
+  .featuresSectionContainer {
+    margin: 1.5rem 0 1.5rem 0;
+  }
+}
+@media screen and (min-width: 105.0625rem) {
+  .featuresSectionContainer {
+    margin: 1.5rem 0 1.5rem 0;
+  }
+}
+
+.filtersTextContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 13px;
+}
+@media screen {
+  .filtersTextContainer {
+    margin: 0 0 0 0.75rem;
+  }
+}
+@media screen and (min-width: 64.0625rem) {
+  .filtersTextContainer {
+    margin: 0 0 0 0.75rem;
+  }
+}
+@media screen and (min-width: 105.0625rem) {
+  .filtersTextContainer {
+    margin: 0 0 0 0.75rem;
   }
 }
 
 @media screen and (min-width: 40rem) {
-  .left {
-    display: flex;
-    width: 79%;
-  }
-  .rightBtnContainer {
+  .sidebarContainer {
     display: flex;
   }
 }
 @media screen and (min-width: 40rem) {
-  .rightBtnContainer {
-    margin: 0 0 0 1rem;
+  .featuresContainer {
+    padding: 0 6rem 0 6rem;
   }
 }
 @media screen and (min-width: 40rem) and (min-width: 64.0625rem) {
-  .rightBtnContainer {
-    margin: 0 0 0 1rem;
+  .featuresContainer {
+    padding: 0 6rem 0 6rem;
   }
 }
 @media screen and (min-width: 40rem) and (min-width: 105.0625rem) {
-  .rightBtnContainer {
-    margin: 0 0 0 1rem;
+  .featuresContainer {
+    padding: 0 7.5rem 0 7.5rem;
   }
-}/*# sourceMappingURL=UserWithRoleInput.module.css.map */
+}/*# sourceMappingURL=FeatureRequests.module.css.map */

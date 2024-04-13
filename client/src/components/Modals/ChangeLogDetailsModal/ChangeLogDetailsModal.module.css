@@ -62,65 +62,107 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  width: 90%;
   border: 0.5px solid #000;
   border-radius: 8px;
   box-shadow: 24px;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  width: 90%; /* Set a maximum width to avoid overflowing on small screens */
+  transform: translate(-50%, -50%);
 }
 @media screen {
   .modalContentContainer {
-    padding: 1rem 4rem 1rem 4rem;
+    padding: 4rem 4rem 4rem 4rem;
   }
 }
 @media screen and (min-width: 64.0625rem) {
   .modalContentContainer {
-    padding: 1rem 4rem 1rem 4rem;
+    padding: 4rem 4rem 4rem 4rem;
   }
 }
 @media screen and (min-width: 105.0625rem) {
   .modalContentContainer {
-    padding: 1rem 5rem 1rem 5rem;
+    padding: 5rem 5rem 5rem 5rem;
   }
 }
 
-.sectionTitle {
-  font-size: 14px;
+.timestamp {
+  font-style: italic;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+@media screen and (max-width: 49.9375rem) {
+  .timestamp {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
 }
 @media screen {
-  .sectionTitle {
-    margin: 1.5rem 0 0.75rem 0;
+  .timestamp {
+    margin: 0 0 1rem 0;
   }
 }
 @media screen and (min-width: 64.0625rem) {
-  .sectionTitle {
-    margin: 1.5rem 0 0.75rem 0;
+  .timestamp {
+    margin: 0 0 1rem 0;
   }
 }
 @media screen and (min-width: 105.0625rem) {
-  .sectionTitle {
-    margin: 1.5rem 0 0.75rem 0;
+  .timestamp {
+    margin: 0 0 1rem 0;
   }
 }
 
+.title {
+  font-size: 1.375rem;
+  line-height: 1.875rem;
+  font-weight: 600;
+}
+@media screen and (max-width: 49.9375rem) {
+  .title {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+}
 @media screen {
-  .billingBtnsContainer {
+  .title {
     margin: 1rem 0 1rem 0;
   }
 }
 @media screen and (min-width: 64.0625rem) {
-  .billingBtnsContainer {
+  .title {
     margin: 1rem 0 1rem 0;
   }
 }
 @media screen and (min-width: 105.0625rem) {
-  .billingBtnsContainer {
+  .title {
     margin: 1rem 0 1rem 0;
   }
 }
 
+.details {
+  /* Add typography style for the details */
+}
+@media screen {
+  .details {
+    margin: 1rem 0 1rem 0;
+  }
+}
+@media screen and (min-width: 64.0625rem) {
+  .details {
+    margin: 1rem 0 1rem 0;
+  }
+}
+@media screen and (min-width: 105.0625rem) {
+  .details {
+    margin: 1rem 0 1rem 0;
+  }
+}
+
+/* Add a media query for small screens */
 @media screen and (min-width: 40rem) {
   .modalContentContainer {
     width: 50%;
   }
-}/*# sourceMappingURL=ManageBoardModal.module.css.map */
+}/*# sourceMappingURL=ChangeLogDetailsModal.module.css.map */

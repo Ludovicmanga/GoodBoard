@@ -58,69 +58,56 @@
  * Return the value for spacing size for large screen
  * Used in useSpacing mixin
  */
-.modalContentContainer {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 90%;
-  border: 0.5px solid #000;
-  border-radius: 8px;
-  box-shadow: 24px;
-}
-@media screen {
-  .modalContentContainer {
-    padding: 1rem 4rem 1rem 4rem;
-  }
-}
-@media screen and (min-width: 64.0625rem) {
-  .modalContentContainer {
-    padding: 1rem 4rem 1rem 4rem;
-  }
-}
-@media screen and (min-width: 105.0625rem) {
-  .modalContentContainer {
-    padding: 1rem 5rem 1rem 5rem;
-  }
+.container {
+  flex: 0 0 10%;
 }
 
-.sectionTitle {
-  font-size: 14px;
+.toolbar {
+  display: flex;
+  justify-content: space-between;
 }
-@media screen {
-  .sectionTitle {
-    margin: 1.5rem 0 0.75rem 0;
-  }
+
+.drawerContent {
+  width: 250px;
+  padding: 20px;
+  /* Replace with your desired background color */
 }
-@media screen and (min-width: 64.0625rem) {
-  .sectionTitle {
-    margin: 1.5rem 0 0.75rem 0;
-  }
-}
-@media screen and (min-width: 105.0625rem) {
-  .sectionTitle {
-    margin: 1.5rem 0 0.75rem 0;
-  }
+
+.navBtn {
+  color: #333;
 }
 
 @media screen {
-  .billingBtnsContainer {
-    margin: 1rem 0 1rem 0;
+  .darkModeBtnContainer {
+    margin: 0 1.5rem 0 1.5rem;
   }
 }
 @media screen and (min-width: 64.0625rem) {
-  .billingBtnsContainer {
-    margin: 1rem 0 1rem 0;
+  .darkModeBtnContainer {
+    margin: 0 1.5rem 0 1.5rem;
   }
 }
 @media screen and (min-width: 105.0625rem) {
-  .billingBtnsContainer {
-    margin: 1rem 0 1rem 0;
+  .darkModeBtnContainer {
+    margin: 0 1.5rem 0 1.5rem;
   }
 }
 
-@media screen and (min-width: 40rem) {
-  .modalContentContainer {
-    width: 50%;
+.logInBtn {
+  cursor: pointer;
+}
+@media screen {
+  .logInBtn {
+    margin: 0.75rem 0.75rem 0.75rem 0.75rem;
   }
-}/*# sourceMappingURL=ManageBoardModal.module.css.map */
+}
+@media screen and (min-width: 64.0625rem) {
+  .logInBtn {
+    margin: 0.75rem 0.75rem 0.75rem 0.75rem;
+  }
+}
+@media screen and (min-width: 105.0625rem) {
+  .logInBtn {
+    margin: 0.75rem 0.75rem 0.75rem 0.75rem;
+  }
+}/*# sourceMappingURL=MainNavBar.module.css.map */

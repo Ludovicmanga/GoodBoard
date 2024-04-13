@@ -1,0 +1,203 @@
+/*
+ * Return the rem of a pixel's value
+ *
+ * Sample: pxToRem(50)
+ * Result: 3.125rem
+ */
+/*
+ * Return the percent ratio from width and height
+ *
+ * Sample: ratio(16, 9)
+ * Result: 56.25%
+ */
+/*
+ * Return the rem of a pixel's value
+ *
+ * Sample: pxToRem(50)
+ * Result: 3.125rem
+ */
+/*
+ * Return the percent ratio from width and height
+ *
+ * Sample: ratio(16, 9)
+ * Result: 56.25%
+ */
+/*
+ * Return the rem of a pixel's value
+ *
+ * Sample: pxToRem(50)
+ * Result: 3.125rem
+ */
+/*
+ * Return the percent ratio from width and height
+ *
+ * Sample: ratio(16, 9)
+ * Result: 56.25%
+ */
+/*
+ * Return the value for font size
+ * Used in useTypography mixin
+ */
+/*
+ * Return the value for line height
+ * Used in useTypography mixin
+ */
+/*
+ * Return the value for font family
+ * Used in useTypography mixin
+ */
+/*
+ * Return the value for spacing size for small screen
+ * Used in useSpacing mixin
+ */
+/*
+ * Return the value for spacing size for medium screen
+ * Used in useSpacing mixin
+ */
+/*
+ * Return the value for spacing size for large screen
+ * Used in useSpacing mixin
+ */
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f9f9f9;
+}
+@media screen {
+  .container {
+    padding: 0 2rem 0 2rem;
+  }
+}
+@media screen and (min-width: 64.0625rem) {
+  .container {
+    padding: 0 2.5rem 0 2.5rem;
+  }
+}
+@media screen and (min-width: 105.0625rem) {
+  .container {
+    padding: 0 3rem 0 3rem;
+  }
+}
+
+.iconsContainer {
+  display: flex;
+}
+@media screen {
+  .iconsContainer {
+    margin: 0 0 1rem 0;
+  }
+}
+@media screen and (min-width: 64.0625rem) {
+  .iconsContainer {
+    margin: 0 0 1rem 0;
+  }
+}
+@media screen and (min-width: 105.0625rem) {
+  .iconsContainer {
+    margin: 0 0 1rem 0;
+  }
+}
+
+@media screen {
+  .checkmarkContainer {
+    padding: 1rem 0 0 0;
+  }
+}
+@media screen and (min-width: 64.0625rem) {
+  .checkmarkContainer {
+    padding: 1rem 0 0 0;
+  }
+}
+@media screen and (min-width: 105.0625rem) {
+  .checkmarkContainer {
+    padding: 1rem 0 0 0;
+  }
+}
+
+.partyEmojiContainer {
+  font-size: 4.1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@media screen {
+  .partyEmojiContainer {
+    margin: 0 0 0 1rem;
+  }
+}
+@media screen and (min-width: 64.0625rem) {
+  .partyEmojiContainer {
+    margin: 0 0 0 1rem;
+  }
+}
+@media screen and (min-width: 105.0625rem) {
+  .partyEmojiContainer {
+    margin: 0 0 0 1rem;
+  }
+}
+
+.checkmark {
+  width: 80px;
+  height: 80px;
+}
+
+.heading {
+  font-size: 36px;
+  margin-bottom: 10px;
+  color: #333;
+  text-align: center;
+}
+
+.message {
+  font-size: 18px;
+  color: #555;
+  text-align: center;
+}
+
+.buttonsContainer {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  padding: 12px 24px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+  cursor: pointer;
+}
+@media screen {
+  .button {
+    margin: 1rem 1rem 1rem 1rem;
+  }
+}
+@media screen and (min-width: 64.0625rem) {
+  .button {
+    margin: 1rem 1rem 1rem 1rem;
+  }
+}
+@media screen and (min-width: 105.0625rem) {
+  .button {
+    margin: 1rem 1rem 1rem 1rem;
+  }
+}
+
+.buttonIcon {
+  margin-right: 10px;
+}
+
+@media screen and (min-width: 40rem) {
+  .buttonsContainer {
+    display: flex;
+    flex-direction: row;
+  }
+}/*# sourceMappingURL=PaymentSuccessPage.module.css.map */
