@@ -12,12 +12,12 @@ export const emptyFeatureRequest: FeatureRequest = {
   updatedAt: "",
   board: "",
   topics: [],
-  votersPics: []
+  votersPics: [],
 };
 
 export const websiteUrl =
   process.env.NODE_ENV === "production"
-    ? "https://goodboard-app.herokuapp.com"
+    ? "https://goodboard-app-41de944b1f08.herokuapp.com"
     : "http://localhost:8080";
 
 export const rolesList: UserType[] = [
@@ -26,15 +26,13 @@ export const rolesList: UserType[] = [
   UserType.externalUser,
 ];
 
-export const topicsList = [
-  'Website UX',
-  'Website design',
-  'Speed',
-  'Features'
-]
+export const topicsList = ["Website UX", "Website design", "Speed", "Features"];
 
-export const emptyBox = "https://goodboard.s3.eu-central-1.amazonaws.com/box.png";
-export const roadmapImg = "https://goodboard.s3.eu-central-1.amazonaws.com/maps.png";
-export const upgradeImg = "https://goodboard.s3.eu-central-1.amazonaws.com/undraw_Stripe_payments_re_chlm.png";
-export const logInImg =  "https://goodboard.s3.eu-central-1.amazonaws.com/undraw_Join_re_w1lh.png";
-
+export const emptyBox =
+  "https://goodboard.s3.eu-central-1.amazonaws.com/box.png";
+export const roadmapImg =
+  "https://goodboard.s3.eu-central-1.amazonaws.com/maps.png";
+export const upgradeImg =
+  "https://goodboard.s3.eu-central-1.amazonaws.com/undraw_Stripe_payments_re_chlm.png";
+export const logInImg =
+  "https://goodboard.s3.eu-central-1.amazonaws.com/undraw_Join_re_w1lh.png";
