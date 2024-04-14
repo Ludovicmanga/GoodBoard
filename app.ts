@@ -16,7 +16,7 @@ const corsOptions = {
   origin: [
     "http://localhost:3000",
     "http://localhost:5000",
-    "https://goodboard-app.herokuapp.com",
+    "https://goodboard-app-41de944b1f08.herokuapp.com",
   ],
   credentials: true,
   "allowed-Headers": ["sessionId", "Content-type"],
