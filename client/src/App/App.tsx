@@ -110,25 +110,31 @@ function App() {
     if (
       allUsersFeatureRequests.data === "user doesn't have access to the board"
     ) {
-      dispatch(setGeneralProperties({
-        activeBoard: null
-      }))
+      dispatch(
+        setGeneralProperties({
+          activeBoard: null,
+        })
+      );
     } else {
       return allUsersFeatureRequests.data;
     }
   };
 
   const getAllBoardFeatureRequests = async (activeBoard: string) => {
-    dispatch(setGeneralProperties({
-      featuresAreLoading: true,
-    }));
+    dispatch(
+      setGeneralProperties({
+        featuresAreLoading: true,
+      })
+    );
     const allFeatureRequests = await getAllBoardFeatureRequestsApiCall(
       activeBoard
     );
     dispatch(setAllFeatureRequests(allFeatureRequests));
-    dispatch(setGeneralProperties({
-      featuresAreLoading: false,
-    }));
+    dispatch(
+      setGeneralProperties({
+        featuresAreLoading: false,
+      })
+    );
   };
 
   useEffect(() => {
@@ -148,9 +154,11 @@ function App() {
             })
           );
         }
-        dispatch(setGeneralProperties({
-          boardsList: res.data.boardsUserHasAccessList,
-        }))
+        dispatch(
+          setGeneralProperties({
+            boardsList: res.data.boardsUserHasAccessList,
+          })
+        );
       }
     };
     if (localStorage.getItem("board")) {
@@ -174,26 +182,28 @@ function App() {
     const userResponse = await getLoggedUser(
       generalPropertiesState.activeBoard
     );
-    if (userResponse.data.user) {
-      const user = userResponse.data.user;
-      dispatch(
-        setLoggedUserState({
-          user: {
-            _id: user._id,
-            email: user.email,
-            roleOnThisBoard: userResponse.data.roleUserOnThisBoard,
-            voted: user.voted,
-            picture: user.picture,
-          },
-        })
-      );
-    }
-    if (userResponse.data.notAuthenticated) {
-      dispatch(
-        setLoggedUserState({
-          user: null,
-        })
-      );
+    if (userResponse) {
+      if (userResponse.data.user) {
+        const user = userResponse.data.user;
+        dispatch(
+          setLoggedUserState({
+            user: {
+              _id: user._id,
+              email: user.email,
+              roleOnThisBoard: userResponse.data.roleUserOnThisBoard,
+              voted: user.voted,
+              picture: user.picture,
+            },
+          })
+        );
+      }
+      if (userResponse.data.notAuthenticated) {
+        dispatch(
+          setLoggedUserState({
+            user: null,
+          })
+        );
+      }
     }
   };
 
