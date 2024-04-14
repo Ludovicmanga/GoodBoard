@@ -3,12 +3,16 @@ import { websiteUrl } from "./constants";
 import { User } from "./types";
 
 export const getLoggedUser = async (boardId: string | null | undefined) => {
-  return await axios({
-    url: `${websiteUrl}/api/users/checkIfAuthenticated`,
-    withCredentials: true,
-    method: "post",
-    data: { boardId },
-  });
+  try {
+    return await axios({
+      url: `${websiteUrl}/api/users/checkIfAuthenticated`,
+      withCredentials: true,
+      method: "post",
+      data: { boardId },
+    });
+  } catch (e) {
+    console.log(e, " is the axios error");
+  }
 };
 
 export const updateUserProfilePictureApiCall = async (selectedFile: File) => {
@@ -16,9 +20,9 @@ export const updateUserProfilePictureApiCall = async (selectedFile: File) => {
   formData.append("image", selectedFile);
   const response = await axios<User>({
     url: `${websiteUrl}/api/users/update-picture`,
-    method: 'post',
+    method: "post",
     withCredentials: true,
     data: formData,
   });
   return response;
-}
+};
