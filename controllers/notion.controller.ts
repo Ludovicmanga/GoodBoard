@@ -6,7 +6,7 @@ import userModel from "../models/user.model";
 
 export const websiteUrl =
   process.env.NODE_ENV === "production"
-    ? "https://goodboard-app.herokuapp.com"
+    ? "https://goodboard-app-41de944b1f08.herokuapp.com"
     : "http://localhost:8080";
 
 export const searchNotion = async (req, res) => {
@@ -197,9 +197,9 @@ export const createTrelloCards = async (req, res) => {
       user.trelloAccessToken,
       user.trelloAccessTokenSecret,
       function (error, data, response) {
-        console.log(data, ' is the data')
+        console.log(data, " is the data");
       }
     );
   }
-  res.send('ok');
+  res.send("ok");
 };

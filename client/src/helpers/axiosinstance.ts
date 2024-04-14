@@ -1,8 +1,8 @@
-import http from 'http';
+import http from "http";
 
-import axios from 'axios';
-import { AxiosInstance } from 'axios';
-const BASE_URL = 'https://goodboard-app.herokuapp.com/api';
+import axios from "axios";
+import { AxiosInstance } from "axios";
+const BASE_URL = "https://goodboard-app-41de944b1f08.herokuapp.com/api";
 const httpAgent = new http.Agent();
 axios.defaults.httpAgent = httpAgent;
 

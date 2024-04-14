@@ -18,11 +18,11 @@ const corsOptions = {
     "http://localhost:5000",
     "https://goodboard-app-41de944b1f08.herokuapp.com",
   ],
-  /* credentials: true,
+  credentials: true,
   "allowed-Headers": ["sessionId", "Content-type"],
   exposedHeaders: ["sessionId"],
   methods: "GET, HEAD, PUT, PATCH, DELETE",
-  preflightContinue: false, */
+  preflightContinue: false,
 };
 
 import usersRouter from "./routes/users";
