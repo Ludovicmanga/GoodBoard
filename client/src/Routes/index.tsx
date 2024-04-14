@@ -15,6 +15,7 @@ import Integrations from "../pages/Integrations/Integrations";
 import ViewBoard from "../pages/ViewBoard/ViewBoard";
 import PaymentSuccessPage from "../pages/PaymentSuccessPage/PaymentSuccessPage";
 import ChangeLog from "../pages/ChangeLog/ChangeLog";
+import { useEffect } from "react";
 
 export default function Index() {
   const loggedUser = useAppSelector((state) => state.loggedUser);
@@ -23,12 +24,24 @@ export default function Index() {
   ).activeBoard;
   const activeBoardState = useAppSelector((state) => state.activeBoard);
 
+  useEffect(() => {
+    if (loggedUser.user === null && !activeBoard) {
+      console.log("i gooot you");
+    }
+  }, [loggedUser.user]);
+
   return (
     <div className={styles.container}>
       <Router>
         <Routes>
+          {loggedUser.user === null && !activeBoard && (
+            <Route path="*" element={<Navigate to="/login" replace />} />
+          )}
           {loggedUser.user && (
-            <Route path="/choose-board" element={<BoardCreation pageMode='page' />} />
+            <Route
+              path="/choose-board"
+              element={<BoardCreation pageMode="page" />}
+            />
           )}
           {loggedUser.user && !activeBoard && (
             <Route path="*" element={<Navigate to="/choose-board" replace />} />
@@ -43,23 +56,18 @@ export default function Index() {
                 path="/user-feature-requests"
                 element={<FeatureRequests type={UserType.externalUser} />}
               /> */}
-              <Route
-                path="/ideas"
-                element={<FeatureRequests />}
-              />
-              <Route
-                path="*"
-                element={<Navigate to="/ideas" replace />}
-              />
+              <Route path="/ideas" element={<FeatureRequests />} />
+              <Route path="*" element={<Navigate to="/ideas" replace />} />
             </>
           )}
-          {loggedUser && activeBoardState.billingPlan === BillingPlan.business && (
-            <>
-              <Route path="/roadmap" element={<Roadmap />} />
-              <Route path="/changeLog" element={<ChangeLog />} />
-              <Route path="/integrations" element={<Integrations />} />
-            </>
-          )}
+          {loggedUser &&
+            activeBoardState.billingPlan === BillingPlan.business && (
+              <>
+                <Route path="/roadmap" element={<Roadmap />} />
+                <Route path="/changeLog" element={<ChangeLog />} />
+                <Route path="/integrations" element={<Integrations />} />
+              </>
+            )}
           <Route path="/view-board/:boardId" element={<ViewBoard />} />
           <Route
             path="/successful-stripe-payment"
