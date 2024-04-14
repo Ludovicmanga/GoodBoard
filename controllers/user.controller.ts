@@ -4,30 +4,35 @@ import userModel from "../models/user.model";
 import { s3 } from "../middleware/multer";
 
 export const getUser = async (req, res, next) => {
-  if (req.user) {
-    const { boardId } = req.body;
-    let roleUserOnThisBoard;
-    const user = await userModel.findById(req.user.id);
-    if (boardId) {
-      const userBoardRel = await boardUserRelModel.findOne({
-        user: req.user.id,
-        board: boardId,
-      });
-      if (userBoardRel) {
-        roleUserOnThisBoard = userBoardRel.userRole;
+  console.log("im here??");
+  try {
+    if (req.user) {
+      const { boardId } = req.body;
+      let roleUserOnThisBoard;
+      const user = await userModel.findById(req.user.id);
+      if (boardId) {
+        const userBoardRel = await boardUserRelModel.findOne({
+          user: req.user.id,
+          board: boardId,
+        });
+        if (userBoardRel) {
+          roleUserOnThisBoard = userBoardRel.userRole;
+        }
       }
-    }
 
-    if (user) {
+      if (user) {
+        res.send({
+          user,
+          roleUserOnThisBoard,
+        });
+      }
+    } else {
       res.send({
-        user,
-        roleUserOnThisBoard,
+        notAuthenticated: true,
       });
     }
-  } else {
-    res.send({
-      notAuthenticated: true,
-    });
+  } catch (e) {
+    console.log(e, " is the god damn error");
   }
 };
 
@@ -54,7 +59,11 @@ export const updatePicture = async (req, res) => {
     const fileUrl = req.file.location;
     const oldUserData = await userModel.findById(req.user.id);
 
-    if (oldUserData && oldUserData.picture && oldUserData.picture.includes('amazonaws.com')) {
+    if (
+      oldUserData &&
+      oldUserData.picture &&
+      oldUserData.picture.includes("amazonaws.com")
+    ) {
       const oldPictureKey = oldUserData.picture.split("/").pop();
       const deleteParams = {
         Bucket: "goodboard",
