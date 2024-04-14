@@ -3,16 +3,12 @@ import { websiteUrl } from "./constants";
 import { User } from "./types";
 
 export const getLoggedUser = async (boardId: string | null | undefined) => {
-  try {
-    return await axios({
-      url: `${websiteUrl}/api/users/checkIfAuthenticated`,
-      withCredentials: true,
-      method: "post",
-      data: { boardId },
-    });
-  } catch (e) {
-    console.log(e, " is the axios error");
-  }
+  return await axios({
+    url: `${websiteUrl}/api/users/checkIfAuthenticated`,
+    withCredentials: true,
+    method: "post",
+    data: { boardId },
+  });
 };
 
 export const updateUserProfilePictureApiCall = async (selectedFile: File) => {

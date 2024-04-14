@@ -1,9 +1,4 @@
-import {
-  Avatar,
-  Button,
-  TextField,
-  useTheme,
-} from "@mui/material";
+import { Avatar, Button, TextField, useTheme } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -14,7 +9,10 @@ import ChooseBoardColor from "../ChooseBoardColor/ChooseBoardColor";
 import styles from "./CreateBoardModal.module.scss";
 import EmptyImage from "../EmptyImage/EmptyImage";
 import CheckIcon from "@mui/icons-material/Check";
-import { setGeneralProperties, addBoardToList } from "../../redux/features/generalPropertiesSlice";
+import {
+  setGeneralProperties,
+  addBoardToList,
+} from "../../redux/features/generalPropertiesSlice";
 import { Board } from "../../helpers/types";
 
 type Props = {};
@@ -46,7 +44,7 @@ const CreateBoardModal = (props: Props) => {
     });
     if (boardCreationResponse.data) {
       handleSetActiveBoard(boardCreationResponse.data._id, dispatch, navigate);
-      dispatch(addBoardToList(boardCreationResponse.data))
+      dispatch(addBoardToList(boardCreationResponse.data));
     }
   };
 

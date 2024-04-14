@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import axios from "axios";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useEffect } from "react";
 import { websiteUrl } from "../helpers/constants";
 import { setAllFeatureRequests } from "../redux/features/allFeatureRequestsSlice";
