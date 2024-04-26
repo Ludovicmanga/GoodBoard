@@ -38,7 +38,7 @@ app.use(session({
   resave: false,
   saveUnitialized: false,
   store: MongoStore.create({
-    mongoUrl: "mongodb+srv://ludovicmangaj:M433c'm442B@cluster0.fhytx.mongodb.net/goodboard",
+    mongoUrl: process.env.MONGODB_URL,
     collectionName: 'sessions'
   }),
   cookie: {
