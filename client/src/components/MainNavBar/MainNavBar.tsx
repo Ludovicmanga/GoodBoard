@@ -23,6 +23,7 @@ import { BillingPlan, UserType } from "../../helpers/types";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Drawer from "@mui/material/Drawer";
+import { GoodboardLogo } from "../Logo/GoodboardLogo";
 
 const allPages: {
   title: string;
@@ -281,24 +282,7 @@ const MainNavBar = () => {
     <AppBar position="static" className={styles.container}>
       <Container maxWidth="xl">
         <Toolbar disableGutters className={styles.toolbar}>
-          <EventNoteIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            GOODBOARD
-          </Typography>
+          <GoodboardLogo />
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {generalPropertiesState.boardsList && generalPropertiesState.boardsList.length > 0 &&
               pagesList.map((page) => (
