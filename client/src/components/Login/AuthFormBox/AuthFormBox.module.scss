@@ -1,0 +1,28 @@
+@import '../../../styles/useSpacing';
+
+.container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.buttonsContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.link {
+	color: white;
+	text-decoration: none
+}
+
+.button {
+    width: 260px;
+	@include useSpacing(margin,s,0,s,0);
+}
+
+.divider {
+	@include useSpacing(margin,m,0,m,0);
+}
