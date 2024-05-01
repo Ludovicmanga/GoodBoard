@@ -10,10 +10,14 @@ type Props = {
 const Login = (props: Props) => {
   return (
     <div className={styles.container}>
-      <div className={styles.sectionBoxContainer}>
+      <div
+        className={`${styles.sectionBoxContainer} ${styles.infoBoxContainer}`}
+      >
         <InfosBox />
       </div>
-      <div className={styles.sectionBoxContainer}>
+      <div
+        className={`${styles.sectionBoxContainer} ${styles.authformBoxContainer}`}
+      >
         <AuthFormBox authType={props.authType} />
       </div>
     </div>
