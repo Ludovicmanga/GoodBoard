@@ -4,7 +4,6 @@ import userModel from "../models/user.model";
 import { s3 } from "../middleware/multer";
 
 export const getUser = async (req, res, next) => {
-  console.log("im here??");
   try {
     if (req.user) {
       const { boardId } = req.body;
