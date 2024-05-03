@@ -11,3 +11,12 @@
     box-shadow: 24px;
     @include useSpacing(padding, m, xxl);
 }
+
+.closeBtnContainer {
+    display: flex;
+    justify-content: end;
+}
+
+.closeBtn {
+    cursor: pointer;
+}

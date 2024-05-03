@@ -12,9 +12,14 @@
     @include useSpacing(padding, m, xxl);
 } */
 
-.boardIdentityInput {
+.boardIdentityInfo {
     display: flex;
     justify-content: space-between;
+}
+
+.boardIdentityInput {
+    outline: none;
+    border: none;
 }
 
  .penIcon {

@@ -11,7 +11,6 @@ import { BillingPlan, UserType } from "../../../helpers/types";
 import { capitalizeFirstLetter } from "../../../helpers/utils";
 import ModalTemplate from "../ModalTemplate/ModalTemplate";
 import { MdOutlineEdit } from "react-icons/md";
-import { setGeneralProperties } from "../../../redux/features/generalPropertiesSlice";
 import { setActiveBoardData } from "../../../redux/features/activeBoardSlice";
 
 type Props = {
@@ -25,6 +24,7 @@ const ManageBoardModal = (props: Props) => {
   const [boardNameInputClicked, setBoardNameInputClicked] = useState(false);
   const [boardDescriptionInputClicked, setBoardDescriptionInputClicked] =
     useState(false);
+  const [websiteUrlInputClicked, setWebsiteUrlInputClicked] = useState(false);
 
   const generalPropertiesState = useAppSelector(
     (state) => state.generalProperties
@@ -64,6 +64,8 @@ const ManageBoardModal = (props: Props) => {
 
   useEffect(() => {
     handleGetPublicStatus();
+    setBoardNameInputClicked(false);
+    setBoardDescriptionInputClicked(false);
   }, [props.modalIsOpen]);
 
   const handleUpgradePlan = async (selectedPlan: BillingPlan) => {
@@ -98,59 +100,50 @@ const ManageBoardModal = (props: Props) => {
     }
   };
 
-  useEffect(() => {
-    console.log(activeBoardState, " is the state of this board my man");
-  }, [activeBoardState]);
-
   return (
     <ModalTemplate
       modalIsOpen={props.modalIsOpen}
       handleClose={props.handleClose}
     >
-      <h2 className={styles.sectionTitle}>Board name</h2>
-      {boardNameInputClicked ? (
-        <TextField
-          onChange={(e) =>
-            dispatch(
-              setActiveBoardData({
-                name: e.target.value,
-              })
-            )
-          }
-          value={activeBoardState.name}
-        />
-      ) : (
-        <div className={styles.boardIdentityInput}>
-          <div>{activeBoardState.name}</div>
-          <MdOutlineEdit
-            className={styles.penIcon}
-            onClick={() => setBoardNameInputClicked(true)}
-          />
-        </div>
-      )}
-      <h2 className={styles.sectionTitle}>Board description</h2>
-      <div className={styles.boardIdentityInput}>
-        {boardDescriptionInputClicked ? (
-          <TextField
-            onChange={(e) =>
-              dispatch(
-                setActiveBoardData({
-                  description: e.target.value,
-                })
-              )
-            }
-            value={activeBoardState.description}
-          />
-        ) : (
-          <>
-            <div>{activeBoardState.description}</div>
-            <MdOutlineEdit
-              className={styles.penIcon}
-              onClick={() => setBoardDescriptionInputClicked(true)}
-            />
-          </>
-        )}
-      </div>
+      <EditableInput
+        name="Nom"
+        inputValue={activeBoardState.name}
+        inputIsClicked={boardNameInputClicked}
+        setInputIsClicked={setBoardNameInputClicked}
+        handleDispatchAction={(e) =>
+          dispatch(
+            setActiveBoardData({
+              name: e.target.value,
+            })
+          )
+        }
+      />
+      <EditableInput
+        name="Description"
+        inputValue={activeBoardState.description}
+        inputIsClicked={boardDescriptionInputClicked}
+        setInputIsClicked={setBoardDescriptionInputClicked}
+        handleDispatchAction={(e) =>
+          dispatch(
+            setActiveBoardData({
+              description: e.target.value,
+            })
+          )
+        }
+      />
+      <EditableInput
+        name="Site internet"
+        inputValue={activeBoardState.websiteUrl}
+        inputIsClicked={websiteUrlInputClicked}
+        setInputIsClicked={setWebsiteUrlInputClicked}
+        handleDispatchAction={(e) =>
+          dispatch(
+            setActiveBoardData({
+              websiteUrl: e.target.value,
+            })
+          )
+        }
+      />
       {activeBoardState.billingPlan !== BillingPlan.free && (
         <>
           <h2 className={styles.sectionTitle}>Manage board users</h2>
@@ -197,3 +190,40 @@ const ManageBoardModal = (props: Props) => {
 };
 
 export default ManageBoardModal;
+
+const EditableInput = (props: {
+  name: string;
+  inputValue: string;
+  inputIsClicked: boolean;
+  setInputIsClicked: (isClicked: boolean) => void;
+  handleDispatchAction: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}) => {
+  const activeBoardState = useAppSelector((state) => state.activeBoard);
+
+  return (
+    <>
+      <h2 className={styles.sectionTitle}>{props.name}</h2>
+      <div className={styles.boardIdentityInfo}>
+        {props.inputIsClicked ? (
+          <input
+            className={styles.boardIdentityInput}
+            onChange={props.handleDispatchAction}
+            onFocus={(e) => e.target.select()}
+            onBlur={() => props.setInputIsClicked(false)}
+            value={props.inputValue}
+          />
+        ) : (
+          <>
+            <div>{props.inputValue}</div>
+            <MdOutlineEdit
+              className={styles.penIcon}
+              onClick={() => {
+                props.setInputIsClicked(true);
+              }}
+            />
+          </>
+        )}
+      </div>
+    </>
+  );
+};

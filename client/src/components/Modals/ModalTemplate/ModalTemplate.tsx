@@ -34,6 +34,14 @@ const ModalTemplate = (props: Props) => {
       >
         <Fade in={props.modalIsOpen}>
           <Paper className={styles.modalContentContainer}>
+            <div className={styles.closeBtnContainer}>
+              <div
+                className={styles.closeBtn}
+                onClick={() => props.handleClose()}
+              >
+                X
+              </div>
+            </div>
             {props.children}
           </Paper>
         </Fade>
