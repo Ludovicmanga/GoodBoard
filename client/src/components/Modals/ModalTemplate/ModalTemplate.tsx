@@ -1,7 +1,7 @@
 import { Fade, Modal, Paper } from "@mui/material";
 import styles from "./ModalTemplate.module.scss";
-import React, { ReactNode, useEffect, useState } from "react";
-import { useAppSelector } from "../../../redux/hooks";
+import React, { ReactNode } from "react";
+import { IoMdClose } from "react-icons/io";
 
 type Props = {
   modalIsOpen: boolean;
@@ -10,19 +10,6 @@ type Props = {
 };
 
 const ModalTemplate = (props: Props) => {
-  const generalPropertiesState = useAppSelector(
-    (state) => state.generalProperties
-  );
-  const [creationDate, setCreationDate] = useState<Date>();
-
-  useEffect(() => {
-    if (generalPropertiesState.changeLogDetailsModalOpen.createdAt) {
-      const date = new Date(
-        generalPropertiesState.changeLogDetailsModalOpen.createdAt
-      );
-      setCreationDate(date);
-    }
-  }, [generalPropertiesState.changeLogDetailsModalOpen.createdAt]);
   return (
     <div>
       <Modal
@@ -34,14 +21,16 @@ const ModalTemplate = (props: Props) => {
       >
         <Fade in={props.modalIsOpen}>
           <Paper className={styles.modalContentContainer}>
-            <div className={styles.closeBtnContainer}>
-              <div
+            {/* <div className={styles.closeBtnContainer}>
+              <IoMdClose
                 className={styles.closeBtn}
                 onClick={() => props.handleClose()}
-              >
-                X
-              </div>
-            </div>
+              />
+            </div> */}
+            <IoMdClose
+              className={styles.closeBtn}
+              onClick={() => props.handleClose()}
+            />
             {props.children}
           </Paper>
         </Fade>

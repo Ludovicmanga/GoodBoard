@@ -12,11 +12,11 @@
     @include useSpacing(padding, m, xxl);
 }
 
-.closeBtnContainer {
-    display: flex;
-    justify-content: end;
-}
-
 .closeBtn {
     cursor: pointer;
+    font-size: 1.3rem;
+    position: absolute;
+    right: 1.6rem;
+    top: 1rem;
+    color: #868e96;
 }
