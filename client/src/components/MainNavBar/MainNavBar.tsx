@@ -2,19 +2,17 @@ import React, { useEffect, useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
-import EventNoteIcon from "@mui/icons-material/EventNote";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
-import { SettingsModal } from "../Modals/Settings/SettingsModal";
+import { SettingsModal } from "../Modals/SettingsModal/SettingsModal";
 import axios from "axios";
 import { setLoggedUserState } from "../../redux/features/loggedUserSlice";
 import { useNavigate } from "react-router-dom";
 import { websiteUrl } from "../../helpers/constants";
 import SwitchBoardModal from "../Modals/FeatureRequestModal/SwitchBoard/SwitchBoardModal";
-import ShareBoardModal from "../Modals/ShareBoard/ShareBoardModal";
+import ShareBoardModal from "../Modals/ShareBoardModal/ShareBoardModal";
 import DarkModeToggle from "../buttons/DarkModeToggle/DarkModeToggle";
 import styles from "./MainNavBar.module.scss";
 import ManageBoardModal from "../Modals/ManageBoardModal/ManageBoardModal";
@@ -37,9 +35,9 @@ const allPages: {
     title: "our ideas",
     url: `/company-feature-requests`,
   }, */
-  { 
-    title: 'ideas',
-    url: '/ideas'
+  {
+    title: "ideas",
+    url: "/ideas",
   },
   {
     title: "roadmap",
@@ -153,7 +151,10 @@ const MainNavBar = () => {
       },
     ];
 
-    if (generalPropertiesState.boardsList && generalPropertiesState.boardsList.length > 0) {
+    if (
+      generalPropertiesState.boardsList &&
+      generalPropertiesState.boardsList.length > 0
+    ) {
       if (activeBoardState.billingPlan === BillingPlan.business) {
         if (loggedUser.user?.roleOnThisBoard === UserType.admin) {
           setSettingsRoleFiltered(settingsList);
@@ -284,7 +285,8 @@ const MainNavBar = () => {
         <Toolbar disableGutters className={styles.toolbar}>
           <GoodboardLogo />
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {generalPropertiesState.boardsList && generalPropertiesState.boardsList.length > 0 &&
+            {generalPropertiesState.boardsList &&
+              generalPropertiesState.boardsList.length > 0 &&
               pagesList.map((page) => (
                 <Button
                   key={page.title}
