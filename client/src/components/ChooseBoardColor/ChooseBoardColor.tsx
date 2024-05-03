@@ -58,36 +58,59 @@ const ChooseBoardColor = (props: Props) => {
   const colors = [
     {
       name: "blue",
-      hex: "#1976d2",
+      hex: "#a5d8ff",
     },
     {
       name: "red",
-      hex: "#F43C2B",
+      hex: "#ffc9c9",
     },
     {
       name: "green",
-      hex: "#469C63",
+      hex: "#b2f2bb",
     },
     {
       name: "yellow",
-      hex: "#EDD91A",
+      hex: "#ffec99",
+    },
+    {
+      name: "purple",
+      hex: "#d0bfff",
+    },
+    {
+      name: "teal",
+      hex: "#96f2d7",
+    },
+    {
+      name: "orange",
+      hex: "#ffd8a8",
     },
   ];
-  const generalPropertiesState = useAppSelector(state => state.generalProperties);
-  const [selected, setSelected] = useState<{ name: string; hex: string } | null>(null);
+  const generalPropertiesState = useAppSelector(
+    (state) => state.generalProperties
+  );
+  const [selected, setSelected] = useState<{
+    name: string;
+    hex: string;
+  } | null>(null);
 
   useEffect(() => {
-    const foundActiveColor = colors.find(color => color.name === generalPropertiesState.colorMode);
+    const foundActiveColor = colors.find(
+      (color) => color.name === generalPropertiesState.colorMode
+    );
     if (foundActiveColor) {
-        setSelected(foundActiveColor);
+      setSelected(foundActiveColor);
     }
-  }, [generalPropertiesState.colorMode])
+  }, [generalPropertiesState.colorMode]);
 
   return (
     <>
       <div className={styles.colorPaletteBoxContainer}>
         {colors.map((color) => (
-          <div className={styles.avatarContainer} key={color.name} onClick={async () => await handleChangeColorTheme(color)}>
+          <div
+            className={styles.avatarContainer}
+            key={color.name}
+            onClick={async () => await handleChangeColorTheme(color)}
+          >
             <Avatar
               sx={{
                 background: `${color.hex}`,
