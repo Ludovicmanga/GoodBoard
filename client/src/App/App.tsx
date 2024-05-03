@@ -31,44 +31,17 @@ function App() {
   );
   const loggedUserState = useAppSelector((state) => state.loggedUser).user;
 
-  const lightTheme = createTheme({
-    palette: {
-      mode: "light",
-    },
-  });
-
-  const greenTheme = createTheme({
-    palette: {
-      primary: {
-        main: "#469C63",
+  const handleCreateTheme = (primaryColor: string, secondaryColor: string) =>
+    createTheme({
+      palette: {
+        primary: {
+          main: primaryColor,
+        },
+        secondary: {
+          main: secondaryColor,
+        },
       },
-      secondary: {
-        main: "#6EC382",
-      },
-    },
-  });
-
-  const redTheme = createTheme({
-    palette: {
-      primary: {
-        main: "#F43C2B",
-      },
-      secondary: {
-        main: "#E27476",
-      },
-    },
-  });
-
-  const yellowTheme = createTheme({
-    palette: {
-      primary: {
-        main: "#EDD91A",
-      },
-      secondary: {
-        main: "#FFE600",
-      },
-    },
-  });
+    });
 
   const darkTheme = createTheme({
     palette: {
@@ -82,19 +55,31 @@ function App() {
   const themes = [
     {
       color: "green",
-      theme: greenTheme,
+      theme: handleCreateTheme("#b2f2bb", "#d3f9d8"),
     },
     {
       color: "blue",
-      theme: lightTheme,
+      theme: handleCreateTheme("#a5d8ff", "#d0ebff"),
     },
     {
       color: "yellow",
-      theme: yellowTheme,
+      theme: handleCreateTheme("#ffec99", "#fff3bf"),
     },
     {
       color: "red",
-      theme: redTheme,
+      theme: handleCreateTheme("#ffc9c9", "#ffe3e3"),
+    },
+    {
+      color: "purple",
+      theme: handleCreateTheme("#d0bfff", "#e5dbff"),
+    },
+    {
+      color: "teal",
+      theme: handleCreateTheme("#96f2d7", "#c3fae8"),
+    },
+    {
+      color: "orange",
+      theme: handleCreateTheme("#ffd8a8", "#ffe8cc"),
     },
   ];
 
@@ -261,7 +246,7 @@ function App() {
               : themes.find(
                   (colorTheme) =>
                     colorTheme.color === generalPropertiesState.colorMode
-                )?.theme || lightTheme
+                )?.theme || handleCreateTheme("#a5d8ff", "#d0ebff")
           }
         >
           <ErrorBoundary>
