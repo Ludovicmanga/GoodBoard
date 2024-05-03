@@ -1,15 +1,18 @@
-import { Button, ButtonGroup } from "@mui/material";
+import { Button, ButtonGroup, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import styles from "./ManageBoardModal.module.scss";
 import ChooseBoardColor from "../../ChooseBoardColor/ChooseBoardColor";
 import axios from "axios";
 import { websiteUrl } from "../../../helpers/constants";
-import { useAppSelector } from "../../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import BoardIsPublicBtn from "../../BoardIsPublicBtn/BoardIsPublicBtn";
 import AdminsListSection from "../../AdminsList/AdminsListSection/AdminsListSection";
 import { BillingPlan, UserType } from "../../../helpers/types";
 import { capitalizeFirstLetter } from "../../../helpers/utils";
 import ModalTemplate from "../ModalTemplate/ModalTemplate";
+import { MdOutlineEdit } from "react-icons/md";
+import { setGeneralProperties } from "../../../redux/features/generalPropertiesSlice";
+import { setActiveBoardData } from "../../../redux/features/activeBoardSlice";
 
 type Props = {
   modalIsOpen: boolean;
@@ -19,12 +22,16 @@ type Props = {
 const ManageBoardModal = (props: Props) => {
   const [boardIsPublic, setBoardIsPublic] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [boardNameInputClicked, setBoardNameInputClicked] = useState(false);
+  const [boardDescriptionInputClicked, setBoardDescriptionInputClicked] =
+    useState(false);
 
   const generalPropertiesState = useAppSelector(
     (state) => state.generalProperties
   );
   const activeBoardState = useAppSelector((state) => state.activeBoard);
   const loggedUserState = useAppSelector((state) => state.loggedUser);
+  const dispatch = useAppDispatch();
 
   const handleChangeBoardStatus = async (event: boolean) => {
     setIsLoading(true);
@@ -91,11 +98,59 @@ const ManageBoardModal = (props: Props) => {
     }
   };
 
+  useEffect(() => {
+    console.log(activeBoardState, " is the state of this board my man");
+  }, [activeBoardState]);
+
   return (
     <ModalTemplate
       modalIsOpen={props.modalIsOpen}
       handleClose={props.handleClose}
     >
+      <h2 className={styles.sectionTitle}>Board name</h2>
+      {boardNameInputClicked ? (
+        <TextField
+          onChange={(e) =>
+            dispatch(
+              setActiveBoardData({
+                name: e.target.value,
+              })
+            )
+          }
+          value={activeBoardState.name}
+        />
+      ) : (
+        <div className={styles.boardIdentityInput}>
+          <div>{activeBoardState.name}</div>
+          <MdOutlineEdit
+            className={styles.penIcon}
+            onClick={() => setBoardNameInputClicked(true)}
+          />
+        </div>
+      )}
+      <h2 className={styles.sectionTitle}>Board description</h2>
+      <div className={styles.boardIdentityInput}>
+        {boardDescriptionInputClicked ? (
+          <TextField
+            onChange={(e) =>
+              dispatch(
+                setActiveBoardData({
+                  description: e.target.value,
+                })
+              )
+            }
+            value={activeBoardState.description}
+          />
+        ) : (
+          <>
+            <div>{activeBoardState.description}</div>
+            <MdOutlineEdit
+              className={styles.penIcon}
+              onClick={() => setBoardDescriptionInputClicked(true)}
+            />
+          </>
+        )}
+      </div>
       {activeBoardState.billingPlan !== BillingPlan.free && (
         <>
           <h2 className={styles.sectionTitle}>Manage board users</h2>

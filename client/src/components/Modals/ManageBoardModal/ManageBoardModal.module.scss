@@ -12,6 +12,16 @@
     @include useSpacing(padding, m, xxl);
 } */
 
+.boardIdentityInput {
+    display: flex;
+    justify-content: space-between;
+}
+
+ .penIcon {
+    cursor: pointer;
+
+} 
+
 .sectionTitle {
     font-size: 14px;
     @include useSpacing(margin,l,0,s,0);
