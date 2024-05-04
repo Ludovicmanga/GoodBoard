@@ -17,7 +17,7 @@ const SearchBar = ({ onSearch }: SearchBarProps) => {
     <div className={styles.container}>
       <div className={styles.searchBoxContainer}>
         <TextField
-          placeholder="Search..."
+          placeholder="Chercher une idée..."
           fullWidth
           variant="outlined"
           size="small"

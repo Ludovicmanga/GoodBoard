@@ -3,13 +3,13 @@ import styles from "./WelcomeMessage.module.scss";
 import { Button } from "@mui/material";
 
 type Props = {
-    handleCreateBoard: () => void;
-}
+  handleCreateBoard: () => void;
+};
 
 const WelcomeMessage = (props: Props) => {
   return (
     <div className={styles.container}>
-      <h1 className={styles.welcomeTitle}>Welcome to Goodboard! 😄🎉</h1>
+      <h1 className={styles.welcomeTitle}>Bienvenue sur Goodboard! 😄🎉</h1>
       <div className={styles.iframeContainer}>
         <iframe
           title="welcome-gif"
@@ -20,12 +20,13 @@ const WelcomeMessage = (props: Props) => {
           }}
           frameBorder="0"
           allowFullScreen
-        ></iframe>
+        />
       </div>
       <div className={styles.message}>
         <p>
-          We're excited to have you on board! Get ready to have fun and create
-          amazing feature requests! Let's make your ideas come to life! 💡💡💡
+          Nous sommes ravis de vous compter parmi nous ! Préparez-vous à vous
+          amuser et à créer des demandes de fonctionnalités incroyables !
+          Donnons vie à vos idées ! 💡💡💡
         </p>
       </div>
       <Button
@@ -33,7 +34,7 @@ const WelcomeMessage = (props: Props) => {
         variant="contained"
         onClick={props.handleCreateBoard}
       >
-        Create your First Board
+        Créez votre premier board
       </Button>
     </div>
   );

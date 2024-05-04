@@ -2,60 +2,10 @@
 @import '../../../styles/useTypography';
 @import '../../../styles/variables';
 
-/* .modalContentContainer {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90%;
-    border: 0.5px solid #000;
-    border-radius: 8px;
-    box-shadow: 24px;
-    @include useSpacing(padding, l, xl, xl, xl);
-}
- */
 .modalTitle {
     text-align: center;
     font-weight: bold;
     @include useSpacing(margin, 0, 0, l, 0);
-}
-
-.middle {
-    display: flex;
-}
-
-.mainContentMiddleContainerAlone {
-    width: 100%;
-}
-
-.mainContentMiddleContainerWithSidebar {
-    width: 70%;
-}
-
-.integrationChip {
-    display: flex;
-    align-items: center;
-    @include useSpacing(margin, s, 0);
-    cursor: pointer;
-    @include useSpacing(padding, xs);
-    @include useTypography(title-s);
-}
-
-.integrationChipText {
-    @include useSpacing(margin, 0, 0, 0, m);
-}
-
-.rightNavbar {
-    width: 30%;
-    @include useSpacing(margin, 0, 0, 0, s);
-}
-
-.rightNavbarTitle {
-    display: flex;
-    justify-content: center;
-    @include useTypography(legals);
-    @include useSpacing(margin, 0, 0, xs, 0);
-    font-weight:550;
 }
 
 .textInput {
@@ -69,12 +19,6 @@
 .votersSection, .statusSection {
     display: flex;
     @include useSpacing(margin, 0 , 0, s, 0);
-}
-
-.votersSectionTitle, .statusSectionTitle {
-    display: flex;
-    align-items: center;
-    @include useSpacing(margin, 0 , s, 0, 0);
 }
 
 .submitButton {
@@ -92,9 +36,5 @@
 @media screen and (min-width: $main-breakpoint) {
     .modalContentContainer {
         width: 40%;
-    }
-
-    .rightNavbar {
-        @include useSpacing(margin, 0, 0, 0, xxl);
     }
 }

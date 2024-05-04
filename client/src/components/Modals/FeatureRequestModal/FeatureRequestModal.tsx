@@ -243,25 +243,18 @@ export default function FeatureRequestModal(props: {
     >
       <div className={styles.modalTitle}>
         {props.modalMode === FeatureRequestModalMode.creation
-          ? "Make feature request"
+          ? "Créer une nouvelle idée"
           : props.modalMode === FeatureRequestModalMode.update &&
             hasUpdateRights
-          ? "Update feature request"
+          ? "Mettre à jour une idée"
           : ""}
       </div>
       <Divider className={styles.divider} />
       <div className={styles.middle}>
-        <div
-          className={
-            activeBoardState.billingPlan === BillingPlan.business
-              ? styles.mainContentMiddleContainerWithSidebar
-              : styles.mainContentMiddleContainerAlone
-          }
-        >
+        <div>
           {props.modalMode === FeatureRequestModalMode.update && (
             <div>
               <div className={styles.votersSection}>
-                <div className={styles.votersSectionTitle}>Voters :</div>
                 <AvatarGroup
                   className={styles.avatarGroup}
                   total={featureRequestProperties.voters?.length || 0}
@@ -283,7 +276,6 @@ export default function FeatureRequestModal(props: {
               </div>
               {activeBoardState.billingPlan === BillingPlan.business && (
                 <div className={styles.statusSection}>
-                  <div className={styles.statusSectionTitle}>Status :</div>
                   <Select
                     inputProps={{
                       readOnly:
@@ -341,7 +333,7 @@ export default function FeatureRequestModal(props: {
                     placeholder="Topics of the feature"
                   />
                 )}
-                sx={{ width: "500px" }}
+                fullWidth
               />
             </div>
           )}
@@ -383,18 +375,6 @@ export default function FeatureRequestModal(props: {
             className={`${styles.textInput} ${styles.textArea}`}
           />
         </div>
-        {activeBoardState.billingPlan === BillingPlan.business && (
-          <div className={styles.rightNavbar}>
-            <div className={styles.rightNavbarTitle}>Integrations</div>
-            <Card
-              onClick={handleDisplayTrelloCards}
-              className={styles.integrationChip}
-            >
-              <FaTrello color="#007AC0" />
-              <div className={styles.integrationChipText}>Trello</div>
-            </Card>
-          </div>
-        )}
       </div>
       <div className={styles.mainButtonsContainer}>
         {(hasUpdateRights ||

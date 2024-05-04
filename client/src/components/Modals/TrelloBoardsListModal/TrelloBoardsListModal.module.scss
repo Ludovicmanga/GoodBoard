@@ -15,9 +15,9 @@
     height: 600px;
 } */
 
-.modalContentContainer::-webkit-scrollbar {
+/* .modalContentContainer::-webkit-scrollbar {
     display: none;
-  }
+  } */
 
 .boardBox {
     @include useSpacing(margin, m, 0);

@@ -1,6 +1,9 @@
 import { Switch } from "antd";
 import React from "react";
 import styles from "./BoardIsPublicBtn.module.scss";
+import { SlQuestion } from "react-icons/sl";
+import { IconButton, Tooltip } from "@mui/material";
+import { QuestionMarkWithTooltip } from "../QuestionMarkWithTooltip/QuestionMarkWithTooltip";
 
 type Props = {
   handleChangeBoardStatus: (event: boolean) => Promise<void>;
@@ -11,7 +14,26 @@ type Props = {
 const BoardIsPublicBtn = (props: Props) => {
   return (
     <div className={styles.container}>
-      <div>{props.boardIsPublic ? "Board is public" : "Board is private"}</div>
+      <div className={styles.infosContainer}>
+        <div className={styles.textContainer}>
+          {props.boardIsPublic ? "Le board est public" : "Le board est privé"}
+        </div>
+        <QuestionMarkWithTooltip
+          message={
+            <>
+              <p>
+                Si le board est public, tous ceux en possession du lien pourront
+                y accéder (mais pas voter).
+              </p>
+              <br />
+              <p>
+                Si le board est privé, seuls les utilisateurs que vous aurez
+                invités pourront y accéder, et voter.
+              </p>
+            </>
+          }
+        />
+      </div>
       <div className={styles.switchContainer}>
         <Switch
           loading={props.isLoading}

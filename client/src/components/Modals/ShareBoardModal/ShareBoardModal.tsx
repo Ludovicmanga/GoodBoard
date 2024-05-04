@@ -10,6 +10,10 @@ import UserWithRoleInput from "../../UserWithRoleInput/UserWithRoleInput";
 import { getBoardShareableUrl } from "../../../helpers/boards";
 import { generateRandomId } from "../../../helpers/utils";
 import ModalTemplate from "../ModalTemplate/ModalTemplate";
+import AdminsListSection from "../../AdminsList/AdminsListSection/AdminsListSection";
+import BoardIsPublicBtn from "../../BoardIsPublicBtn/BoardIsPublicBtn";
+import { SlQuestion } from "react-icons/sl";
+import { QuestionMarkWithTooltip } from "../../QuestionMarkWithTooltip/QuestionMarkWithTooltip";
 
 type Props = {
   modalIsOpen: boolean;
@@ -31,11 +35,30 @@ const ShareBoardModal = (props: Props) => {
     },
   ]);
   const activeBoardState = useAppSelector((state) => state.activeBoard);
+  const [boardIsPublic, setBoardIsPublic] = useState(false);
+
+  const generalPropertiesState = useAppSelector(
+    (state) => state.generalProperties
+  );
+
+  const handleGetPublicStatus = async () => {
+    const response = await axios({
+      method: "post",
+      url: `${websiteUrl}/api/board/get-public-status`,
+      withCredentials: true,
+      data: { activeBoard: generalPropertiesState.activeBoard },
+    });
+    if (response.data) {
+      setBoardIsPublic(response.data);
+    }
+  };
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [boardUrl, setBoardUrl] = useState("");
 
   const boardId = useAppSelector(
     (state) => state.generalProperties.activeBoard
   );
-  const [boardUrl, setBoardUrl] = useState("");
 
   const sendAdminInvitations = async () => {
     const response = await axios({
@@ -48,6 +71,10 @@ const ShareBoardModal = (props: Props) => {
       props.handleClose();
     }
   };
+
+  useEffect(() => {
+    console.log(usersToInviteList, " is list");
+  }, [usersToInviteList]);
 
   const handleSetBoardUrl = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -75,11 +102,29 @@ const ShareBoardModal = (props: Props) => {
     ]);
   };
 
+  const handleChangeBoardStatus = async (event: boolean) => {
+    setIsLoading(true);
+    const response = await axios({
+      method: "post",
+      url: `${websiteUrl}/api/board/update-public-status`,
+      withCredentials: true,
+      data: {
+        publicStatus: event,
+        activeBoard: generalPropertiesState.activeBoard,
+      },
+    });
+    setIsLoading(false);
+    if (response.data !== null && response.data !== undefined) {
+      setBoardIsPublic(response.data);
+    }
+  };
+
   useEffect(() => {
     handleGetShareableUrl();
   }, [boardId]);
 
   useEffect(() => {
+    handleGetPublicStatus();
     if (!props.modalIsOpen) {
       setUsersToInviteList([
         {
@@ -95,12 +140,37 @@ const ShareBoardModal = (props: Props) => {
     <ModalTemplate {...props}>
       {activeBoardState.billingPlan !== BillingPlan.free && (
         <>
+          <h2 className={styles.sectionTitle}>Utilisateurs & équipe</h2>
+          <AdminsListSection />
+        </>
+      )}
+      {activeBoardState.billingPlan !== BillingPlan.free && (
+        <>
           <div className={styles.sectionTitle}>
-            Invite new members to your board
+            <div className={styles.sectionTitleText}>
+              Inviter de nouveaux utilisateurs
+            </div>
+            <QuestionMarkWithTooltip
+              message={
+                <>
+                  <p>
+                    Les admins peuvent changer l'aspect du board, et modifier
+                    les paramètres critiques
+                  </p>
+                  <br />
+                  <p>
+                    Les membres peuvent voter sur toutes les fonctionnalités
+                  </p>
+                  <br />
+                  <p>
+                    Les membres externes peuvent accéder au board, mais pas
+                    voter (utile si votre board est privé)
+                  </p>
+                </>
+              }
+            />
           </div>
-          <div
-            className={`${styles.sectionContainer} ${styles.adminInviteSection}`}
-          >
+          <div className={styles.adminInviteSection}>
             <div className={styles.adminInputsContainer}>
               {usersToInviteList.map((userToInvite) => (
                 <UserWithRoleInput
@@ -113,40 +183,37 @@ const ShareBoardModal = (props: Props) => {
               ))}
             </div>
             <div className={styles.btnContainer}>
-              <Button
-                variant="contained"
-                onClick={sendAdminInvitations}
-                sx={{
-                  width: "85%",
-                }}
-              >
-                Send invites
+              <Button variant="contained" onClick={sendAdminInvitations}>
+                Envoyer les invitations
               </Button>
             </div>
           </div>
         </>
       )}
 
-      <div
-        className={`${styles.sectionTitle} ${styles.shareBoardSectionTitle}`}
-      >
-        Share your board with the world
+      <div className={styles.sectionTitle}>
+        Partager votre board avec le monde
       </div>
-      <div className={styles.sectionContainer}>
-        <OutlinedInput
-          value={boardUrl}
-          fullWidth
-          onChange={handleSetBoardUrl}
-          size="small"
-          readOnly={true}
-          className={styles.outlinedInput}
-          endAdornment={
-            <div className={styles.CopyToClipboardButtonContainer}>
-              <CopyToClipboardButton textToCopy={boardUrl} />
-            </div>
-          }
+      {activeBoardState.billingPlan === BillingPlan.business && (
+        <BoardIsPublicBtn
+          handleChangeBoardStatus={handleChangeBoardStatus}
+          boardIsPublic={boardIsPublic}
+          isLoading={isLoading}
         />
-      </div>
+      )}
+      <OutlinedInput
+        value={boardUrl}
+        fullWidth
+        onChange={handleSetBoardUrl}
+        size="small"
+        readOnly={true}
+        className={styles.outlinedInput}
+        endAdornment={
+          <div className={styles.CopyToClipboardButtonContainer}>
+            <CopyToClipboardButton textToCopy={boardUrl} />
+          </div>
+        }
+      />
     </ModalTemplate>
   );
 };

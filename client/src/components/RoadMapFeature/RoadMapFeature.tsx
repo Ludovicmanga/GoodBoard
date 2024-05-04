@@ -22,7 +22,7 @@ const RoadMapFeature = (props: Props) => {
     setExtendedFeatureRequestsModalOpen,
   ] = useState(false);
   const dispatch = useAppDispatch();
-  const loggedUser = useAppSelector(state => state.loggedUser);
+  const loggedUser = useAppSelector((state) => state.loggedUser);
   const handleOpenFeatureRequestModal = () => {
     if (loggedUser.user) {
       setExtendedFeatureRequestsModalOpen(true);
@@ -59,8 +59,8 @@ const RoadMapFeature = (props: Props) => {
               </div>
               <div className={styles.featureType}>
                 {props.featureRequest.creatorType === UserType.admin
-                  ? "Our ideas"
-                  : "Your ideas"}
+                  ? "Nos idées"
+                  : "Vos idées"}
               </div>
             </div>
           </div>
@@ -79,15 +79,17 @@ const RoadMapFeature = (props: Props) => {
           </div>
           <div className={styles.bottomContent}>
             <div className={styles.arrowIconContainer}>
-            <ArrowDropUpIcon
-              className={styles.icon}
-              sx={{
-                fontSize: 25,
-                color: "#4C6EF5",
-              }}
-            />
+              <ArrowDropUpIcon
+                className={styles.icon}
+                sx={{
+                  fontSize: 25,
+                  color: "#4C6EF5",
+                }}
+              />
             </div>
-            <div className={styles.votesCount}>{props.featureRequest.voters.length}</div>
+            <div className={styles.votesCount}>
+              {props.featureRequest.voters.length}
+            </div>
           </div>
         </CardContent>
       </Card>

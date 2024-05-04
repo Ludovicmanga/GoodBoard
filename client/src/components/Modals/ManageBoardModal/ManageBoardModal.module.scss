@@ -36,8 +36,35 @@
     @include useSpacing(margin,m,0);
 }
 
+.pricingSection {
+    @include useSpacing(padding,m);
+    border-radius: 6px;
+    border: solid black 0.1px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.pricingText {
+    display: flex;
+    align-items: center;
+}
+
+.currentPlan {
+    font-weight: 600;
+    @include useSpacing(margin,0,0,0,xxs);
+}
+
+.choosePlanBtn {
+    @include useSpacing(margin,0,0,0,m);
+}
+
 @media screen and (min-width: $main-breakpoint) {
     .modalContentContainer {
         width: 50%;
     }
+}
+
+.endAdornment {
+    cursor: pointer;
+    font-size: 2.2rem;
 }

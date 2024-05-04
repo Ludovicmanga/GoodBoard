@@ -9,14 +9,15 @@
     border: 0.5px solid #000;
     border-radius: 8px;
     box-shadow: 24px;
-    @include useSpacing(padding, m, xxl);
+    @include useSpacing(padding, l, xxl);
+}
+
+.modalContentContainer::-webkit-scrollbar {
+    display: none;
 }
 
 .closeBtn {
-    cursor: pointer;
-    font-size: 1.3rem;
     position: absolute;
     right: 1.6rem;
     top: 1rem;
-    color: #868e96;
 }

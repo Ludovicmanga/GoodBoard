@@ -27,7 +27,7 @@
 }
 
 .text {
-  color: $white;
+  color: #495057;
   width: 62%;
   @include useSpacing(padding, m);
   max-height: $max-descrition-height;
@@ -39,7 +39,7 @@
   display: flex;
   justify-content: center;
   @include useSpacing(margin, 0, 0, xs, 0);
-  @include useTypography(companyName);
+  font-size: 1.4rem;  
 }
 
 .companyDescription {
@@ -56,7 +56,7 @@
 
 .companyLink {
   text-decoration: none;
-  color: white;
+  color: #495057;
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -81,8 +81,9 @@
 }
 
 .socialNetworkIcon {
-  color: white;
+  color: #495057;
   @include useSpacing(margin, 0, xs, 0, 0);
+  cursor: pointer;
 }
 
 @media screen and (min-width: $main-breakpoint) {
