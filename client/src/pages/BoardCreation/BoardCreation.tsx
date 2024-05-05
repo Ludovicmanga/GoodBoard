@@ -80,7 +80,7 @@ const BaseMenu = (props: BaseMenuProps) => {
               </Avatar>
             </IconButton>
             <Typography variant="button" color="textSecondary">
-              Create New Board
+              Créer un nouveau board
             </Typography>
           </Paper>
         </>

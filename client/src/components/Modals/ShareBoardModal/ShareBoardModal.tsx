@@ -72,10 +72,6 @@ const ShareBoardModal = (props: Props) => {
     }
   };
 
-  useEffect(() => {
-    console.log(usersToInviteList, " is list");
-  }, [usersToInviteList]);
-
   const handleSetBoardUrl = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {

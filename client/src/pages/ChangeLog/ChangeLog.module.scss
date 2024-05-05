@@ -1,8 +1,31 @@
 @import '../../styles/useSpacing';
 @import '../../styles/useTypography';
 
-.container {
+.top {
+    display: flex;
+    justify-content: center;
+}
+
+.changeLogBoxSectionContainer {
     @include useSpacing(padding, s);
+}
+
+.pageTitleContainer {
+    @include useSpacing(margin, l, 0);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pageTitle {
+    font-size: 1.8rem;
+}
+
+.pageSubtitle {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #868e96;
+    width: 60%;
 }
 
 .emptyDataContainer {
@@ -20,7 +43,15 @@
 .changeLogBoxContainer {
     display: flex;
     justify-content: center;
-    @include useSpacing(margin, 0, xxl);
-    width: 100%;
-    @include useSpacing(margin, s);
+    align-items: center;
+    @include useSpacing(margin, m,0);
+}
+
+.changeLogBoxWithDateContainer {
+    width: 45%;
+}
+
+.creationDate {
+    font-size: 0.8rem;
+    @include useSpacing(margin, s,0);
 }
