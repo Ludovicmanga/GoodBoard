@@ -55,14 +55,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    @include useSpacing(margin,0, xxs);
+    @include useSpacing(margin,0, 0, 0, m);
 }
 
 .voteCountContainer {
     display: flex;
     align-items: center;
     justify-content: center;
-    @include useSpacing(margin,0, xxs);
+    @include useSpacing(margin,0, s);
+    font-size: 1.2rem;
 }
 
 .tagsContainer {
@@ -86,4 +87,11 @@
     .checkButton {
         width: 20%;
     }
+}
+
+.likeBtnContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @include useSpacing(padding, xl);
 }
