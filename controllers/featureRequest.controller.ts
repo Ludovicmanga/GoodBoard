@@ -69,7 +69,7 @@ export const getAllUserFeatureRequests = async (req, res) => {
 
 export const updateFeatureRequest = async (req, res) => {
   try {
-    const { title, details, creatorType, status, creator, topics, boardId } =
+    const { title, details, creatorType, status, creator, topics } =
       req.body.featureRequest;
     if (req.body.featureRequest._id.length > 0) {
       const beforeUpdate = await featureRequestModel.findById(
@@ -113,10 +113,11 @@ export const createFeatureRequest = async (req, res) => {
     const newFeatureRequest = await featureRequestModel.create({
       title: featureRequestData.title,
       details: featureRequestData.details,
-      creatorType: foundUserBoardRel.userRole,
+      creatorType: foundUserBoardRel?.userRole,
       status: featureRequestData.status,
       creator: req.user.id,
       board: req.body.boardId,
+      topics: featureRequestData.topics,
     });
 
     if (newFeatureRequest.status === "done") {
