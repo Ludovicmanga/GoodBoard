@@ -16,6 +16,7 @@ import EmptyImage from "../../EmptyImage/EmptyImage";
 import { updateUserProfilePictureApiCall } from "../../../helpers/users";
 import { BsPencilFill } from "react-icons/bs";
 import ModalTemplate from "../ModalTemplate/ModalTemplate";
+import LikeBtn from "../../LikeBtn/LikeBtn";
 
 type Props = {
   modalIsOpen: boolean;

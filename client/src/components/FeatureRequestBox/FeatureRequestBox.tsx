@@ -25,6 +25,7 @@ import {
 } from "../../redux/features/loggedUserSlice";
 import { websiteUrl } from "../../helpers/constants";
 import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
+import LikeBtn from "../LikeBtn/LikeBtn";
 
 type Props = {
   featureRequestProperties: FeatureRequest;
@@ -111,6 +112,7 @@ function FeatureRequestBox(props: Props) {
   };
 
   useEffect(() => {
+    console.log(isVoted, " is voted");
     if (isClickedAtLeastOnce) {
       handleVote();
     }
@@ -176,7 +178,17 @@ function FeatureRequestBox(props: Props) {
               ))}
           </div>
         </Card>
-        <ToggleButton
+        <div className={styles.likeBtnContainer}>
+          <LikeBtn
+            checked={isVoted}
+            onChange={handleChangeToggleBtn}
+            onClick={handleMakeClickedAtLeastOnce}
+          />
+          <div className={styles.voteCountContainer}>
+            {props.featureRequestProperties.voters?.length || 0}
+          </div>
+        </div>
+        {/* <ToggleButton
           value="check"
           selected={isVoted}
           onChange={handleChangeToggleBtn}
@@ -208,7 +220,7 @@ function FeatureRequestBox(props: Props) {
               </>
             )}
           </div>
-        </ToggleButton>
+        </ToggleButton> */}
       </div>
       <FeatureRequestModal
         modalMode={FeatureRequestModalMode.update}
