@@ -168,6 +168,7 @@ export default function FeatureRequestModal(props: {
         );
       }
     } else {
+      console.log(featureRequestProperties, " are the properties");
       const updatedFeatureRequest = await axios({
         url: `${websiteUrl}/api/feature-request/update`,
         method: "post",
