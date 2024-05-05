@@ -49,7 +49,6 @@ const ChangeLog = (props: Props) => {
       return acc;
     }, {} as Record<string, typeof data>);
 
-    // Convert the groups object into an array
     const result = Object.keys(groups).map((key) => {
       const [year, month] = key.split("-").map(Number);
       return { year, month, objects: groups[key] };
@@ -78,24 +77,35 @@ const ChangeLog = (props: Props) => {
     <>
       <MainNavBar />
       <MainHero />
-      <div className={styles.pageTitleContainer}>
+      <div className={styles.container}>
+        <div className={styles.top}>
+          <div className={styles.pageTitleContainer}>
+            <h1 className={styles.pageTitle}>ChangeLog</h1>
+            <p className={styles.pageSubtitle}>
+              Retrouvez ici toutes les fonctionnalités précédemment développées.
+              Par ordre chronologique.
+            </p>
+          </div>
+        </div>
         {changeLogItemsMappedByDate.length > 0 ? (
-          <div className={styles.container}>
+          <div className={styles.changeLogBoxSectionContainer}>
             {changeLogItemsMappedByDate.map((item) => (
               <div key={`${item.month} - ${item.year}`}>
-                <div className={styles.dateTitle}>
-                  {getMonthForYear(item.month)} - {item.year}
-                </div>
                 {item.objects.map((changeLogItem) => (
                   <div
                     key={changeLogItem.createdAt}
                     className={styles.changeLogBoxContainer}
                   >
-                    <ChangeLogBox
-                      title={changeLogItem.title}
-                      details={changeLogItem.details}
-                      createdAt={changeLogItem.createdAt}
-                    />
+                    <div className={styles.changeLogBoxWithDateContainer}>
+                      <div className={styles.creationDate}>
+                        Créé le {item.month} - {item.year}
+                      </div>
+                      <ChangeLogBox
+                        title={changeLogItem.title}
+                        details={changeLogItem.details}
+                        createdAt={changeLogItem.createdAt}
+                      />
+                    </div>
                   </div>
                 ))}
               </div>
