@@ -2,18 +2,10 @@
 @import '../../styles/useTypography';
 @import '../../styles/variables';
 
-.container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
 .newFeatureRequestsBox {
-    width: 85%;
     @include useSpacing(margin, s, 0);
     display: flex;
     justify-content: center;
-    //TODO : mettre une variable
     height: 155px;
 }
 
@@ -76,10 +68,6 @@
 }
 
 @media screen and (min-width: $main-breakpoint) {
-    .newFeatureRequestsBox {
-        width: 65%;
-    }
-
     .contentBox {
         width: 85%;
     }
