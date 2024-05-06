@@ -22,6 +22,7 @@ import { checkUserAccessAPICall } from "../helpers/boards";
 import LoadingSkeleton from "../components/LoadingSkeleton/LoadingSkeleton";
 import ErrorBoundary from "../components/ErrorBoundary/ErrorBoundary";
 import { Crisp } from "crisp-sdk-web";
+import { DarkMode } from "@mui/icons-material";
 
 Crisp.configure(crispWebsiteId);
 
@@ -207,6 +208,10 @@ function App() {
       setIsLoading(false);
     }
   }, [loggedUserState, generalPropertiesState.activeBoard]);
+
+  useEffect(() => {
+    console.log(generalPropertiesState.darkMode, " is the darkmode");
+  }, [generalPropertiesState.darkMode]);
 
   return (
     <GoogleOAuthProvider clientId="359793701193-uesb1dbegpv1batpku2ro9le0fjnf8il.apps.googleusercontent.com">
