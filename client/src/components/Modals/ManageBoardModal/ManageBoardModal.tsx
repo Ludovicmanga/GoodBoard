@@ -13,6 +13,7 @@ import { setActiveBoardData } from "../../../redux/features/activeBoardSlice";
 import { PricingContainer } from "../../PricingContainer/PricingContainer";
 import { capitalizeFirstLetter } from "../../../helpers/utils";
 import { CheckBox, Create, Fingerprint } from "@mui/icons-material";
+import { SexyCheckbox } from "../../SexyCheckbox/SexyCheckbox";
 
 type Props = {
   modalIsOpen: boolean;

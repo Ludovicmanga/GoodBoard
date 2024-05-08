@@ -104,7 +104,6 @@ function FeatureRequestBox(props: Props) {
   };
 
   useEffect(() => {
-    console.log(isVoted, " is voted");
     if (isClickedAtLeastOnce) {
       handleVote();
     }
@@ -146,8 +145,6 @@ function FeatureRequestBox(props: Props) {
     }
   };
 
-  const theme = useTheme();
-
   return (
     <div className={styles.container}>
       <div className={styles.newFeatureRequestsBox}>
@@ -180,39 +177,6 @@ function FeatureRequestBox(props: Props) {
             {props.featureRequestProperties.voters?.length || 0}
           </div>
         </div>
-        {/* <ToggleButton
-          value="check"
-          selected={isVoted}
-          onChange={handleChangeToggleBtn}
-          onClick={handleMakeClickedAtLeastOnce}
-          className={styles.checkButton}
-          sx={{
-            "&.Mui-selected": {
-              bgcolor: theme.palette.primary.main,
-            },
-            "&:hover": theme.palette.primary.main,
-            color: theme.palette.text.primary,
-          }}
-        >
-          <div className={styles.votesBox}>
-            {isChangingVote ? (
-              <CircularProgress size={10} />
-            ) : (
-              <>
-                <div className={styles.iconContainer}>
-                  {isVoted ? (
-                    <CheckRoundedIcon sx={{ fontSize: 15 }} />
-                  ) : (
-                    <ArrowDropUpRoundedIcon />
-                  )}
-                </div>
-                <div className={styles.voteCountContainer}>
-                  {props.featureRequestProperties.voters?.length || 0}
-                </div>
-              </>
-            )}
-          </div>
-        </ToggleButton> */}
       </div>
       <FeatureRequestModal
         modalMode={FeatureRequestModalMode.update}
