@@ -6,7 +6,8 @@ import styles from "./SearchBar.module.scss";
 type SearchBarProps = {
   onSearch: (searchTerm: string) => void;
   searchedWord: string | null;
-  setSearchBtnIsClicked: React.Dispatch<React.SetStateAction<boolean>>;
+  setSearchBtnIsClicked?: React.Dispatch<React.SetStateAction<boolean>>;
+  placeholder: string;
 };
 
 const SearchBar = (props: SearchBarProps) => {
@@ -19,15 +20,16 @@ const SearchBar = (props: SearchBarProps) => {
     <div className={styles.container}>
       <TextField
         autoFocus
-        placeholder="Chercher une idée..."
+        placeholder={props.placeholder}
         fullWidth
         size="small"
         onChange={handleSearch}
         onBlur={() => {
-          if (!props.searchedWord) {
+          if (!props.searchedWord && props.setSearchBtnIsClicked) {
             props.setSearchBtnIsClicked(false);
           }
         }}
+        value={props.searchedWord}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">

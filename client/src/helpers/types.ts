@@ -70,3 +70,9 @@ export enum BillingPlan {
   basic = "basic",
   business = "business"
 }
+
+export type FilterType = {
+  id: number;
+  label: string;
+  type: "status" | "topic";
+};

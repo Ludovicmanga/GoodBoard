@@ -19,6 +19,7 @@ import FilterFeatureRequestsSidebar from "../../components/FilterFeatureRequests
 import LoadingSkeleton from "../../components/LoadingSkeleton/LoadingSkeleton";
 import { Chip, IconButton, ListItem, Popover } from "@mui/material";
 import { Filter1, FilterList, Search, SwapVert } from "@mui/icons-material";
+import { FilterPopover } from "../../components/FilterPopover/FilterPopover";
 
 type Props = {};
 
@@ -126,6 +127,7 @@ const FeatureRequests = (props: Props) => {
                     searchedWord={searchedWord}
                     setSearchBtnIsClicked={setSearchBtnIsClicked}
                     onSearch={(searchedWord) => setSearchedWord(searchedWord)}
+                    placeholder="Chercher une idée..."
                   />
                 ) : (
                   <IconButton
@@ -138,17 +140,7 @@ const FeatureRequests = (props: Props) => {
                   </IconButton>
                 )}
               </div>
-              <Popover
-                open={!!anchorEl}
-                anchorEl={anchorEl}
-                onClose={() => setAnchorEl(null)}
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "left",
-                }}
-              >
-                Here we arefrefekzlm
-              </Popover>
+              <FilterPopover anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
               {allFeatureRequests
                 .filter((featReq) => {
                   if (selectedTopic) {

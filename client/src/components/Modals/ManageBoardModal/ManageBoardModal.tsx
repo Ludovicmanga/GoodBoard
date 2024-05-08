@@ -1,4 +1,10 @@
-import { Button, ButtonGroup, IconButton, TextField } from "@mui/material";
+import {
+  Button,
+  ButtonGroup,
+  IconButton,
+  OutlinedInput,
+  TextField,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import styles from "./ManageBoardModal.module.scss";
 import ChooseBoardColor from "../../ChooseBoardColor/ChooseBoardColor";
@@ -131,8 +137,10 @@ const EditableInput = (props: {
     <>
       <h2 className={styles.sectionTitle}>{props.name}</h2>
       <div className={styles.boardIdentityInfo}>
-        {props.inputIsClicked ? (
+        {/* {props.inputIsClicked ? (
           <TextField
+            autoFocus
+            onFocus={(e) => e.currentTarget.select()}
             className={styles.boardIdentityInput}
             onChange={props.handleDispatchAction}
             value={props.inputValue}
@@ -161,7 +169,39 @@ const EditableInput = (props: {
               <Create />
             </IconButton>
           </>
-        )}
+        )} */}
+        <OutlinedInput
+          autoFocus
+          onFocus={(e) => e.currentTarget.select()}
+          className={styles.boardIdentityInput}
+          onChange={props.handleDispatchAction}
+          value={props.inputValue}
+          readOnly={!props.inputIsClicked}
+          sx={
+            props.inputIsClicked
+              ? {}
+              : {
+                  "& fieldset": { border: "none" },
+                }
+          }
+          fullWidth
+          endAdornment={
+            <IconButton
+              onClick={() => props.setInputIsClicked(!props.inputIsClicked)}
+            >
+              {props.inputIsClicked ? (
+                <CheckBox
+                  sx={{
+                    color: "#8ce99a",
+                    fontSize: "2rem",
+                  }}
+                />
+              ) : (
+                <Create />
+              )}
+            </IconButton>
+          }
+        />
       </div>
     </>
   );

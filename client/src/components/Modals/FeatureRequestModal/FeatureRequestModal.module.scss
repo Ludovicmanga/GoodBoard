@@ -16,6 +16,15 @@
     @include useSpacing(margin, 0, 0, m, 0);
 }
 
+.noOptionTopicBtnIcon {
+    font-size: 1.2rem;
+}
+
+.noOptionTopicBtnText {
+    font-size: 1rem;
+    @include useSpacing(margin, 0 , 0, 0, xxs);
+}
+
 .votersSection, .statusSection {
     display: flex;
     @include useSpacing(margin, 0 , 0, s, 0);

@@ -6,6 +6,7 @@ import {
   AvatarGroup,
   Card,
   Divider,
+  IconButton,
   MenuItem,
   Select,
   SelectChangeEvent,
@@ -38,6 +39,7 @@ import {
 import TrelloBoardsListModal from "../TrelloBoardsListModal/TrelloBoardsListModal";
 import { FaTrello } from "react-icons/fa";
 import ModalTemplate from "../ModalTemplate/ModalTemplate";
+import { Add } from "@mui/icons-material";
 
 export default function FeatureRequestModal(props: {
   modalMode: FeatureRequestModalMode;
@@ -86,6 +88,8 @@ export default function FeatureRequestModal(props: {
   >([]);
   const [trelloBoardsListModalOpen, setTrelloBoardsListModalOpen] =
     useState(false);
+
+  const [topicInputValue, setTopicInputValue] = useState("");
 
   useEffect(() => {
     if (props.modalIsOpen && loggedUserState.user) {
@@ -237,6 +241,10 @@ export default function FeatureRequestModal(props: {
     setTrelloBoardsListModalOpen(true);
   };
 
+  const handleCreateTopic = () => {
+    console.log("the topic was created");
+  };
+
   return (
     <ModalTemplate
       modalIsOpen={props.modalIsOpen}
@@ -327,11 +335,27 @@ export default function FeatureRequestModal(props: {
                 limitTags={3}
                 options={topicsList}
                 getOptionLabel={(option) => option}
+                noOptionsText={
+                  loggedUserState?.user?.roleOnThisBoard === UserType.admin ? (
+                    <IconButton
+                      className={styles.noOptionTopicBtn}
+                      onClick={handleCreateTopic}
+                    >
+                      <Add className={styles.noOptionTopicBtnIcon} />
+                      <div className={styles.noOptionTopicBtnText}>
+                        Créer {topicInputValue}
+                      </div>
+                    </IconButton>
+                  ) : (
+                    `Aucune catégorie avec le nom ${topicInputValue}`
+                  )
+                }
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    label="Feature topics"
-                    placeholder="Topics of the feature"
+                    label="Catégorie"
+                    placeholder="Catégories de l'idée"
+                    onChange={(e) => setTopicInputValue(e.target.value)}
                   />
                 )}
                 fullWidth
