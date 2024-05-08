@@ -31,7 +31,6 @@ const ManageBoardModal = (props: Props) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    //handleGetPublicStatus();
     setBoardNameInputClicked(false);
     setBoardDescriptionInputClicked(false);
   }, [props.modalIsOpen]);

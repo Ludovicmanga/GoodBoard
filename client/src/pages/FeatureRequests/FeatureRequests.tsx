@@ -96,6 +96,8 @@ const FeatureRequests = (props: Props) => {
     null
   );
 
+  const [searchBtnIsClicked, setSearchBtnIsClicked] = useState(false);
+
   return (
     <>
       <MainNavBar />
@@ -112,17 +114,29 @@ const FeatureRequests = (props: Props) => {
                   className={styles.filterIconBtn}
                   onClick={(e) => setAnchorEl(e.currentTarget)}
                 >
-                  <SwapVert />
+                  <FilterList />
                   <div className={styles.filterIconText}>Filtrer</div>
                 </IconButton>
                 <IconButton size="small" className={styles.filterIconBtn}>
-                  <FilterList />
+                  <SwapVert />
                   <div className={styles.filterIconText}>Trier</div>
                 </IconButton>
-                <IconButton size="small" className={styles.filterIconBtn}>
-                  <Search />
-                  <div className={styles.filterIconText}>Recherche</div>
-                </IconButton>
+                {searchBtnIsClicked ? (
+                  <SearchBar
+                    searchedWord={searchedWord}
+                    setSearchBtnIsClicked={setSearchBtnIsClicked}
+                    onSearch={(searchedWord) => setSearchedWord(searchedWord)}
+                  />
+                ) : (
+                  <IconButton
+                    size="small"
+                    className={styles.filterIconBtn}
+                    onClick={() => setSearchBtnIsClicked(true)}
+                  >
+                    <Search />
+                    <div className={styles.filterIconText}>Recherche</div>
+                  </IconButton>
+                )}
               </div>
               <Popover
                 open={!!anchorEl}
