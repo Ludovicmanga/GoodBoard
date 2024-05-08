@@ -8,7 +8,6 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useAppSelector } from "../../redux/hooks";
 
 type Props = {
@@ -38,7 +37,7 @@ const SettingsMenu = (props: Props) => {
                 width: "100%",
                 height: "100%",
                 objectFit: "cover",
-                borderRadius: "50%", // If you want a circular Avatar
+                borderRadius: "50%",
               },
             }}
           />

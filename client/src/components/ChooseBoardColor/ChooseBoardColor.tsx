@@ -6,6 +6,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
 import axios from "axios";
 import { websiteUrl } from "../../helpers/constants";
+import { SexyCheckbox } from "../SexyCheckbox/SexyCheckbox";
 
 type Props = {
   mode: "creation" | "update";
@@ -118,7 +119,7 @@ const ChooseBoardColor = (props: Props) => {
               className={styles.colorPaletteBox}
               variant="rounded"
             >
-              {selected && selected.name === color.name && <CheckIcon />}
+              {selected && selected.name === color.name && <SexyCheckbox />}
             </Avatar>
           </div>
         ))}

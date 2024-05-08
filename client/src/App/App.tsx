@@ -209,10 +209,6 @@ function App() {
     }
   }, [loggedUserState, generalPropertiesState.activeBoard]);
 
-  useEffect(() => {
-    console.log(generalPropertiesState.darkMode, " is the darkmode");
-  }, [generalPropertiesState.darkMode]);
-
   return (
     <GoogleOAuthProvider clientId="359793701193-uesb1dbegpv1batpku2ro9le0fjnf8il.apps.googleusercontent.com">
       <>
