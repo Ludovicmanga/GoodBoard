@@ -4,9 +4,4 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    @include useSpacing(margin, 0, 0, xs, 0);
-}
-
-.searchBoxContainer {
-    width: 65%;
 }

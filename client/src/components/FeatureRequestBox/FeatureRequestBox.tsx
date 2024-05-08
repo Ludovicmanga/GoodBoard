@@ -172,6 +172,7 @@ function FeatureRequestBox(props: Props) {
             checked={isVoted}
             onChange={handleChangeToggleBtn}
             onClick={handleMakeClickedAtLeastOnce}
+            isClickedAtLeastOnce={isClickedAtLeastOnce}
           />
           <div className={styles.voteCountContainer}>
             {props.featureRequestProperties.voters?.length || 0}

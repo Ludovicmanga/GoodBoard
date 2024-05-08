@@ -28,13 +28,16 @@
     fill: var(--heart-color);
     position: absolute;
   }
-  
+
   .svgFilled {
-    animation: keyframes-svg-filled 1s;
     display: none;
   }
   
-  .svgCelebrate {
+  .svgFilledWithAnimation {
+    animation: keyframes-svg-filled 1s; 
+  }
+  
+  .svgCelebrateWithAnimation {
     position: absolute;
     animation: keyframes-svg-celebrate 0.5s;
     animation-fill-mode: forwards;
@@ -48,10 +51,14 @@
     display: block;
   }
   
-  .checkbox:checked ~ .svgContainer .svgCelebrate {
+  .checkbox:checked ~ .svgContainer .svgCelebrateWithAnimation {
     display: block;
   }
   
+  .checkbox:checked ~ .svgContainer .svgCelebrateNoAnimation {
+    display: none;
+  }
+
   @keyframes keyframes-svg-filled {
     0% {
       transform: scale(0);
