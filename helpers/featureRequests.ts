@@ -30,14 +30,18 @@ const usersList = await userModel.find({
   },
 });
 
+const topicsFromBoard = await topicModel.find({ boardId });
+
   const mapped = await Promise.all(
     features.map(async (feature) => {
       return {
         ...feature.toObject(),
-        votersPics: usersList.filter(user => feature.voters.includes(user.id )).map(user => user.picture)
+        votersPics: usersList.filter(user => feature.voters.includes(user.id )).map(user => user.picture),
+        topics: topicsFromBoard.filter(top => feature.topics.includes(top._id)),
       };
     })
   );
+
   return mapped;
 };
 

@@ -15,7 +15,8 @@ const featureRequestSchema = new mongoose.Schema(
       type: [String],
     },
     topics: {
-      type: [String],
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "topic",
     },
     creatorType: {
       type: String,

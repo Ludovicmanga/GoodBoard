@@ -163,7 +163,11 @@ function FeatureRequestBox(props: Props) {
           <div className={styles.tagsContainer}>
             {activeBoardState.billingPlan !== BillingPlan.free &&
               props.featureRequestProperties.topics.map((category) => (
-                <Chip className={styles.tag} label={category} key={category} />
+                <Chip
+                  className={styles.tag}
+                  label={category.label}
+                  key={category._id}
+                />
               ))}
           </div>
         </Card>

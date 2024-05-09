@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { EmptyPageType, FeatureRequestModalMode } from "../../helpers/types";
 import styles from "./EmptyData.module.scss";
 import { Button } from "@mui/material";
@@ -46,6 +46,10 @@ const EmptyData = (props: Props) => {
       case EmptyPageType.changeLog:
         return (
           <img className={styles.image} src={emptyBox} alt="Empty Changelog" />
+        );
+      case EmptyPageType.featureRequestsSearch:
+        return (
+          <img className={styles.image} src={emptyBox} alt="Empty Search" />
         );
       default:
         return null;

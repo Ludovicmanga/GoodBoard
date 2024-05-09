@@ -25,11 +25,7 @@ type Props = {};
 
 const FeatureRequests = (props: Props) => {
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
-  const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
   const [searchedWord, setSearchedWord] = useState<string | null>(null);
-  /*   const [filteredFeatureRequests, setFilteredFeatureRequests] = useState<
-    FeatureRequest[]
-  >([]); */
   const activeBoardState = useAppSelector((state) => state.activeBoard);
   const generalPropertiesState = useAppSelector(
     (state) => state.generalProperties
@@ -38,6 +34,22 @@ const FeatureRequests = (props: Props) => {
   const allFeatureRequests = useAppSelector(
     (state) => state.allFeatureRequests
   );
+
+  const filteredFeatureRequests = allFeatureRequests
+    .filter((featReq) => {
+      if (selectedStatus) {
+        return featReq.status.toLowerCase() === selectedStatus.toLowerCase();
+      } else {
+        return featReq;
+      }
+    })
+    .filter((featReq) => {
+      if (searchedWord) {
+        return featReq.title.toLowerCase().includes(searchedWord.toLowerCase());
+      } else {
+        return featReq;
+      }
+    });
   /* 
   const dispatch = useAppDispatch();
   const menuSelectedState = useAppSelector(
@@ -141,47 +153,28 @@ const FeatureRequests = (props: Props) => {
                 )}
               </div>
               <FilterPopover anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
-              {allFeatureRequests
-                .filter((featReq) => {
-                  if (selectedTopic) {
-                    return featReq.topics.includes(selectedTopic!);
-                  } else {
-                    return featReq;
-                  }
-                })
-                .filter((featReq) => {
-                  if (selectedStatus) {
-                    return (
-                      featReq.status.toLowerCase() ===
-                      selectedStatus.toLowerCase()
-                    );
-                  } else {
-                    return featReq;
-                  }
-                })
-                .filter((featReq) => {
-                  if (searchedWord) {
-                    return featReq.title
-                      .toLowerCase()
-                      .includes(searchedWord.toLowerCase());
-                  } else {
-                    return featReq;
-                  }
-                })
-                .map((featureRequest) => {
+              {filteredFeatureRequests.length > 0 ? (
+                filteredFeatureRequests.map((featureRequest) => {
                   return (
                     <FeatureRequestBox
                       key={featureRequest._id}
                       featureRequestProperties={featureRequest}
                     />
                   );
-                })}
+                })
+              ) : (
+                <EmptyData
+                  title="Rien pour cette recherche"
+                  details="Change les critères de ta recherche"
+                  type={EmptyPageType.featureRequestsSearch}
+                />
+              )}
             </div>
           ) : (
             <div className={styles.emptyDataContainer}>
               <EmptyData
-                title="No feature request yet !"
-                details="Setup your board with creative ideas"
+                title="Pas encore d'idées !"
+                details="Propose des idées, et elles apparaitront ici"
                 type={EmptyPageType.featureRequests}
               />
             </div>
