@@ -38,6 +38,4 @@ router.post("/create-portal-session", createPortalSession);
 router.post("/update-board-billing-plan", updateBoardBillingPlan);
 router.post('/check-user-has-access-to-board', checkUserHasAccessToBoard);
 
-//router.get('/:token', getPublicBoard);
-
 export default router;

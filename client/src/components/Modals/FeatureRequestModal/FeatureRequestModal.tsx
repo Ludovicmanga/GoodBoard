@@ -4,7 +4,6 @@ import {
   Autocomplete,
   Avatar,
   AvatarGroup,
-  Card,
   Divider,
   IconButton,
   MenuItem,
@@ -19,6 +18,7 @@ import {
   FeatureRequest,
   FeatureRequestModalMode,
   FeatureRequestStatus,
+  TopicType,
   UserType,
 } from "../../../helpers/types";
 import { useEffect } from "react";
@@ -31,15 +31,11 @@ import {
   updateFeatureRequest,
 } from "../../../redux/features/allFeatureRequestsSlice";
 import { setGeneralProperties } from "../../../redux/features/generalPropertiesSlice";
-import {
-  emptyFeatureRequest,
-  topicsList,
-  websiteUrl,
-} from "../../../helpers/constants";
+import { emptyFeatureRequest, websiteUrl } from "../../../helpers/constants";
 import TrelloBoardsListModal from "../TrelloBoardsListModal/TrelloBoardsListModal";
-import { FaTrello } from "react-icons/fa";
 import ModalTemplate from "../ModalTemplate/ModalTemplate";
 import { Add } from "@mui/icons-material";
+import { getTopicsList } from "../../../helpers/topics";
 
 export default function FeatureRequestModal(props: {
   modalMode: FeatureRequestModalMode;
@@ -49,6 +45,7 @@ export default function FeatureRequestModal(props: {
 }) {
   const [featureRequestProperties, setFeatureRequestProperties] =
     useState<FeatureRequest>(emptyFeatureRequest);
+  const [topicsList, setTopicsList] = useState<TopicType[]>([]);
 
   const [hasUpdateRights, setHasUpdateRights] = useState(false);
   const [titleHasError, setTitleHasError] = useState<boolean>(false);
@@ -91,8 +88,16 @@ export default function FeatureRequestModal(props: {
 
   const [topicInputValue, setTopicInputValue] = useState("");
 
+  const handleGetTopicsList = async () => {
+    const topicsListResponse = await getTopicsList(activeBoardState._id);
+    if (topicsListResponse) {
+      setTopicsList(topicsListResponse);
+    }
+  };
+
   useEffect(() => {
     if (props.modalIsOpen && loggedUserState.user) {
+      handleGetTopicsList();
       if (
         props.featureRequestProperties &&
         props.modalMode === FeatureRequestModalMode.update
@@ -241,8 +246,25 @@ export default function FeatureRequestModal(props: {
     setTrelloBoardsListModalOpen(true);
   };
 
-  const handleCreateTopic = () => {
-    console.log("the topic was created");
+  const handleCreateTopic = async () => {
+    const response = await axios({
+      url: `${websiteUrl}/api/topic/create`,
+      method: "post",
+      data: {
+        label: topicInputValue,
+        boardId: activeBoardState._id,
+      },
+      withCredentials: true,
+    });
+    if (response.data) {
+      setTopicsList((curr) => [...curr, response.data]);
+      setFeatureRequestProperties((propertiesState) => {
+        return {
+          ...propertiesState,
+          topics: [...propertiesState.topics, response.data],
+        };
+      });
+    }
   };
 
   return (
@@ -331,10 +353,10 @@ export default function FeatureRequestModal(props: {
                     return { ...propertiesState, topics: value };
                   });
                 }}
-                value={featureRequestProperties?.topics || []}
+                value={featureRequestProperties.topics}
                 limitTags={3}
                 options={topicsList}
-                getOptionLabel={(option) => option}
+                getOptionLabel={(option) => option.label}
                 noOptionsText={
                   loggedUserState?.user?.roleOnThisBoard === UserType.admin ? (
                     <IconButton

@@ -9,7 +9,7 @@ export type FeatureRequest = {
   createdAt: any;
   updatedAt: any;
   board: string;
-  topics: string[];
+  topics: TopicType[];
   votersPics: string[];
 };
 
@@ -57,7 +57,8 @@ export enum MenuSelected {
 export enum EmptyPageType {
   roadmap = "roadmap",
   featureRequests = "feature requests",
-  changeLog = "changelog"
+  featureRequestsSearch = "feature requests search",
+  changeLog = "changelog",
 }
 
 export enum AuthPageType {
@@ -76,3 +77,8 @@ export type FilterType = {
   label: string;
   type: "status" | "topic";
 };
+
+export type TopicType = {
+  _id: string; 
+  label: string
+}

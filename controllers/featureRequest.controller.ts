@@ -1,6 +1,5 @@
 import featureRequestModel from "../models/featureRequest.model";
 import userModel from "../models/user.model";
-import topicModel from "../models/topic.model";
 import { UserRoles } from "../helpers/types";
 import boardModel from "../models/board.model";
 import {
@@ -117,7 +116,7 @@ export const createFeatureRequest = async (req, res) => {
       status: featureRequestData.status,
       creator: req.user.id,
       board: req.body.boardId,
-      topics: featureRequestData.topics,
+      topics: featureRequestData.topics.map(top => top._id),
     });
 
     if (newFeatureRequest.status === "done") {

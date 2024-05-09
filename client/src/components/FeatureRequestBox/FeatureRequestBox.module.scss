@@ -33,29 +33,12 @@
     @include useTypography(commonText);
 }
 
-.checkButton {
-    width: 25%;
-}
-
-.votesBox {
-    display: flex;
-    justify-content: space-around;
-    @include useSpacing(padding, s);
-}
-
-.iconContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    @include useSpacing(margin,0, 0, 0, m);
-}
-
 .voteCountContainer {
     display: flex;
     align-items: center;
-    justify-content: center;
-    @include useSpacing(margin,0, s);
+    @include useSpacing(margin,0, m);
     font-size: 1.2rem;
+    width: 3rem;
 }
 
 .tagsContainer {

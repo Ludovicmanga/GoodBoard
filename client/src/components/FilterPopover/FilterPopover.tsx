@@ -7,7 +7,8 @@ import SearchBar from "../SearchBar/SearchBar";
 import { useEffect, useState } from "react";
 import { Close } from "@mui/icons-material";
 import { TbCircleOff } from "react-icons/tb";
-import { FilterType } from "../../helpers/types";
+import { EmptyPageType, FilterType } from "../../helpers/types";
+import EmptyData from "../EmptyData/EmptyData";
 
 const statusFiltersList: FilterType[] = [
   {
@@ -147,15 +148,19 @@ export const FilterPopover = (props: {
             placeholder="Chercher un filtre..."
           />
         </div>
-        {filteredFiltersList.map((elt) => (
-          <OneFilter
-            key={elt.id}
-            {...elt}
-            setActiveFiltersList={setActiveFiltersList}
-            handleDeleteFilter={handleDeleteFilter}
-            activeFiltersList={activeFiltersList}
-          />
-        ))}
+        {filteredFiltersList.length > 0 ? (
+          filteredFiltersList.map((elt) => (
+            <OneFilter
+              key={elt.id}
+              {...elt}
+              setActiveFiltersList={setActiveFiltersList}
+              handleDeleteFilter={handleDeleteFilter}
+              activeFiltersList={activeFiltersList}
+            />
+          ))
+        ) : (
+          <div>Rien pour cette recherche !</div>
+        )}
       </div>
     </StyledPopover>
   );
