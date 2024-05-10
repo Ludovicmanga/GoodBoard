@@ -162,7 +162,6 @@ export default function FeatureRequestModal(props: {
         withCredentials: true,
       });
       if (createdFeatureRequest) {
-        console.log(createdFeatureRequest, " is the created res");
         dispatch(
           addFeatureRequest({
             featureRequest: createdFeatureRequest.data,
@@ -187,8 +186,6 @@ export default function FeatureRequestModal(props: {
         withCredentials: true,
       });
       if (updatedFeatureRequest) {
-        console.log(updatedFeatureRequest, " is the updated res");
-
         dispatch(
           updateFeatureRequest({
             featureRequestToUpdate: updatedFeatureRequest.data,

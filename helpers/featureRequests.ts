@@ -18,10 +18,8 @@ export const getAllBoardFeatureRequestsMappedWithTopics = async (
   .map((feature) => feature.voters)
   .flat();
 
-// Create a Set from the allFeatureRequestsVotersList to remove duplicates
 const uniqueVotersSet = new Set(allFeatureRequestsVotersList);
 
-// Convert the Set back to an array to get the unique voters list
 const uniqueVotersIdsList = Array.from(uniqueVotersSet);
 
 const usersList = await userModel.find({
