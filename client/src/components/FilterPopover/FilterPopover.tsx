@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, Chip, IconButton, Skeleton } from "@mui/material";
+import { Button, Chip, IconButton } from "@mui/material";
 import { StyledPopover } from "../StyledPopover/StyledPopover";
 import styles from "./FilterPopover.module.scss";
 import { SexyCheckBox2 } from "../SexyCheckBox2/SexyCheckBox2";
@@ -6,7 +6,7 @@ import SearchBar from "../SearchBar/SearchBar";
 import { useEffect, useState } from "react";
 import { Close } from "@mui/icons-material";
 import { TbCircleOff } from "react-icons/tb";
-import { FeatureRequest, FilterType } from "../../helpers/types";
+import { FilterType } from "../../helpers/types";
 import { getTopicsList } from "../../helpers/topics";
 import { useAppSelector } from "../../redux/hooks";
 import LoadingSkeleton from "../LoadingSkeleton/LoadingSkeleton";
