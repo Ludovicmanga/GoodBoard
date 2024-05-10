@@ -38,8 +38,8 @@ export enum UserType {
   externalUser = "external user"
 }
 export enum FeatureRequestStatus {
-  unassigned = "non assigné",
-  assigned = "assigné",
+  unassigned = "unassigned",
+  assigned = "assigned",
   done = "fait",
 }
 
@@ -73,12 +73,12 @@ export enum BillingPlan {
 }
 
 export type FilterType = {
-  id: number;
+  _id: number;
   label: string;
   type: "status" | "topic";
 };
 
 export type TopicType = {
-  _id: string; 
+  _id: number; 
   label: string
 }

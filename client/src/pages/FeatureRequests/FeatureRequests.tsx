@@ -1,32 +1,26 @@
 import NewFeatureRequestsButton from "../../components/buttons/NewFeatureRequestButton/NewFeatureRequestsButton";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { useAppSelector } from "../../redux/hooks";
 import FeatureRequestBox from "../../components/FeatureRequestBox/FeatureRequestBox";
-import {
-  BillingPlan,
-  EmptyPageType,
-  FeatureRequest,
-  MenuSelected,
-  UserType,
-} from "../../helpers/types";
+import { EmptyPageType, FeatureRequest, FilterType } from "../../helpers/types";
 import React, { useEffect, useState } from "react";
 import EmptyData from "../../components/EmptyData/EmptyData";
 import styles from "./FeatureRequests.module.scss";
-import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
 import MainNavBar from "../../components/MainNavBar/MainNavBar";
 import MainHero from "../../components/MainHero/MainHero";
 import SearchBar from "../../components/SearchBar/SearchBar";
-import FilterFeatureRequestsSidebar from "../../components/FilterFeatureRequestsSidebar/FilterFeatureRequestsSidebar";
 import LoadingSkeleton from "../../components/LoadingSkeleton/LoadingSkeleton";
-import { Chip, IconButton, ListItem, Popover } from "@mui/material";
-import { Filter1, FilterList, Search, SwapVert } from "@mui/icons-material";
+import { IconButton } from "@mui/material";
+import { FilterList, Search, SwapVert } from "@mui/icons-material";
 import { FilterPopover } from "../../components/FilterPopover/FilterPopover";
 
 type Props = {};
 
 const FeatureRequests = (props: Props) => {
-  const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
   const [searchedWord, setSearchedWord] = useState<string | null>(null);
-  const activeBoardState = useAppSelector((state) => state.activeBoard);
+  const [filteredFeatureRequests, setFilteredFeatureRequests] = useState<
+    FeatureRequest[]
+  >([]);
+
   const generalPropertiesState = useAppSelector(
     (state) => state.generalProperties
   );
@@ -35,88 +29,54 @@ const FeatureRequests = (props: Props) => {
     (state) => state.allFeatureRequests
   );
 
-  const filteredFeatureRequests = allFeatureRequests
-    .filter((featReq) => {
-      if (selectedStatus) {
-        return featReq.status.toLowerCase() === selectedStatus.toLowerCase();
-      } else {
-        return featReq;
-      }
-    })
-    .filter((featReq) => {
-      if (searchedWord) {
-        return featReq.title.toLowerCase().includes(searchedWord.toLowerCase());
-      } else {
-        return featReq;
-      }
-    });
-  /* 
-  const dispatch = useAppDispatch();
-  const menuSelectedState = useAppSelector(
-    (state) => state.generalProperties.menuSelected
-  ); */
-
-  /*   const handleSetCorrespondingFeatures = () => {
-    if (props.type === UserType.externalUser) {
-      const featureRequestsWithCorrespondingPropsType =
-        allFeatureRequests.filter(
-          (featureRequest) =>
-            featureRequest.creatorType === UserType.externalUser
-        );
-      setFilteredFeatureRequests(featureRequestsWithCorrespondingPropsType);
-    } else {
-      const featureRequestsWithCorrespondingPropsType =
-        allFeatureRequests.filter(
-          (featureRequest) =>
-            featureRequest.creatorType !== UserType.externalUser
-        );
-      setFilteredFeatureRequests(featureRequestsWithCorrespondingPropsType);
-    }
-  };
-
-  useEffect(() => {
-    if (props.type === UserType.externalUser) {
-      dispatch(
-        setGeneralProperties({
-          menuSelected: MenuSelected.yourIdeas,
-        })
-      );
-    } else {
-      dispatch(
-        setGeneralProperties({
-          menuSelected: MenuSelected.ourIdeas,
-        })
-      );
-    }
-  }, [menuSelectedState]); */
-  /* 
-  useEffect(() => {
-    handleSetCorrespondingFeatures();
-  }, [allFeatureRequests, props.type]); */
-
-  const handleChangeSelectedStatus = (statusClicked: {
-    label: string;
-    btnColor: string;
-  }) => {
-    if (selectedStatus === statusClicked.label) {
-      setSelectedStatus(null);
-    } else {
-      setSelectedStatus(statusClicked.label);
-    }
-  };
-
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
   );
 
+  const [activeFiltersList, setActiveFiltersList] = useState<FilterType[]>([]);
+
   const [searchBtnIsClicked, setSearchBtnIsClicked] = useState(false);
+
+  const handleFilterRequests = () => {
+    const activeTopicFiltersList = activeFiltersList.filter(
+      (filt) => filt.type === "topic"
+    );
+    const activeStatusFiltersList = activeFiltersList.filter(
+      (filt) => filt.type === "status"
+    );
+
+    const filteredFR = allFeatureRequests.filter((featReq) => {
+      if (searchedWord) {
+        return (
+          featReq.title.toLowerCase().includes(searchedWord.toLowerCase()) &&
+          (activeFiltersList.length > 0
+            ? featReq.topics
+                .map((top) => top._id)
+                .some((topId) =>
+                  activeTopicFiltersList.map((top) => top._id).includes(topId)
+                ) ||
+              activeStatusFiltersList
+                .map((filt) => filt.label.toLowerCase())
+                .includes(featReq.status.toLowerCase())
+            : true)
+        );
+      } else {
+        return featReq;
+      }
+    });
+    setFilteredFeatureRequests(filteredFR);
+  };
+
+  useEffect(() => {
+    handleFilterRequests();
+  }, [allFeatureRequests, searchedWord, activeFiltersList]);
 
   return (
     <>
       <MainNavBar />
       <MainHero />
       {generalPropertiesState.featuresAreLoading ? (
-        <LoadingSkeleton />
+        <LoadingSkeleton height="100vh" />
       ) : (
         <div className={styles.container}>
           {allFeatureRequests.length > 0 ? (
@@ -152,7 +112,12 @@ const FeatureRequests = (props: Props) => {
                   </IconButton>
                 )}
               </div>
-              <FilterPopover anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
+              <FilterPopover
+                anchorEl={anchorEl}
+                setAnchorEl={setAnchorEl}
+                activeFiltersList={activeFiltersList}
+                setActiveFiltersList={setActiveFiltersList}
+              />
               {filteredFeatureRequests.length > 0 ? (
                 filteredFeatureRequests.map((featureRequest) => {
                   return (

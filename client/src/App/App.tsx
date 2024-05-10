@@ -254,7 +254,7 @@ function App() {
           }
         >
           <ErrorBoundary>
-            {isLoading ? <LoadingSkeleton /> : <Routes />}
+            {isLoading ? <LoadingSkeleton height="100vh" /> : <Routes />}
           </ErrorBoundary>
 
           <CssBaseline />
