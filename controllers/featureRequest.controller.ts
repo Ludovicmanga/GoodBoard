@@ -9,6 +9,7 @@ import {
 import boardUserRelModel from "../models/boardUserRel.model";
 import changeLogModel from "../models/changeLog.model";
 import { checkUserHasAccessToBoardHelper } from "../helpers/boards";
+import topicModel from "../models/topic.model";
 
 export const getAllFeatureRequests = async (req, res) => {
   await featureRequestModel
@@ -92,7 +93,17 @@ export const updateFeatureRequest = async (req, res) => {
         if (updated.status === "done" && beforeUpdate.status !== "done") {
           await addToChangeLog(updated.board, updated._id);
         }
-        res.send(updated);
+        const topicsOfFeature = await topicModel.find({
+          _id: {
+            $in: topics.map(top => top._id),
+          },
+        });
+ 
+        const updatedWithTopics = {
+          ...updated.toObject(),
+          topics: topicsOfFeature,
+        }
+        res.send(updatedWithTopics);
       }
     }
   } catch (e) {
@@ -119,11 +130,20 @@ export const createFeatureRequest = async (req, res) => {
       topics: featureRequestData.topics.map(top => top._id),
     });
 
+    const topicsOfFeature = await topicModel.find({
+      _id: {
+        $in: featureRequestData.topics.map(top => top._id),
+      },
+    });
+
     if (newFeatureRequest.status === "done") {
       await addToChangeLog(newFeatureRequest.board, newFeatureRequest._id);
     }
     if (newFeatureRequest) {
-      res.status(200).send(newFeatureRequest);
+      res.status(200).send({
+        ...newFeatureRequest.toObject(),
+        topics: topicsOfFeature
+      });
     }
   } catch (e) {
     console.log(e, " is the error message");
