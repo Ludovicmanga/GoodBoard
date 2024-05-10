@@ -162,6 +162,7 @@ export default function FeatureRequestModal(props: {
         withCredentials: true,
       });
       if (createdFeatureRequest) {
+        console.log(createdFeatureRequest, " is the created res");
         dispatch(
           addFeatureRequest({
             featureRequest: createdFeatureRequest.data,
@@ -177,7 +178,6 @@ export default function FeatureRequestModal(props: {
         );
       }
     } else {
-      console.log(featureRequestProperties, " are the properties");
       const updatedFeatureRequest = await axios({
         url: `${websiteUrl}/api/feature-request/update`,
         method: "post",
@@ -187,7 +187,8 @@ export default function FeatureRequestModal(props: {
         withCredentials: true,
       });
       if (updatedFeatureRequest) {
-        console.log(updatedFeatureRequest.data, " is the data");
+        console.log(updatedFeatureRequest, " is the updated res");
+
         dispatch(
           updateFeatureRequest({
             featureRequestToUpdate: updatedFeatureRequest.data,
@@ -432,9 +433,9 @@ export default function FeatureRequestModal(props: {
             variant="contained"
           >
             {props.modalMode === FeatureRequestModalMode.creation
-              ? "Create "
-              : "Update "}
-            request
+              ? "Créer "
+              : "Mettre à jour "}
+            idée
           </Button>
         )}
         {hasUpdateRights &&
@@ -445,7 +446,7 @@ export default function FeatureRequestModal(props: {
               variant="outlined"
               color="error"
             >
-              Delete request
+              Supprimer idée
             </Button>
           )}
       </div>
