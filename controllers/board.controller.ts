@@ -11,7 +11,6 @@ import {
 } from "../helpers/boards";
 import { generateStrongPassword, normalizeURL } from "../utils/utils";
 import Stripe from "stripe";
-console.log(process.env.STRIPE_TEST_KEY);
 const stripe = new Stripe(process.env.STRIPE_TEST_KEY || "", {
   //@ts-ignore
   apiVersion: null,

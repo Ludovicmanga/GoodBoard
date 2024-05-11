@@ -3,7 +3,6 @@ import { BillingPlan } from "./types";
 import { websiteUrl } from "./constants";
 
 export const handleUpgradePlan = async (selectedPlan: BillingPlan) => {
-    console.log(selectedPlan, ' is the received')
     const plansWithStripeIds = [
       {
         plan: BillingPlan.free,

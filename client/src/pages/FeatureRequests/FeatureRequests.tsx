@@ -8,17 +8,15 @@ import styles from "./FeatureRequests.module.scss";
 import MainNavBar from "../../components/MainNavBar/MainNavBar";
 import MainHero from "../../components/MainHero/MainHero";
 import SearchBar from "../../components/SearchBar/SearchBar";
-import LoadingSkeleton from "../../components/LoadingSkeleton/LoadingSkeleton";
-import { Badge, Box, IconButton, Skeleton, useTheme } from "@mui/material";
+import { Badge, IconButton, Skeleton, useTheme } from "@mui/material";
 import { FilterList, Search, SwapVert } from "@mui/icons-material";
 import { FilterPopover } from "../../components/FilterPopover/FilterPopover";
 import { OrderPopover } from "../../components/OrderPopover/OrderPopover";
-import { orderAllFeatureRequests } from "../../redux/features/allFeatureRequestsSlice";
 
 type Props = {};
 
 const FeatureRequests = (props: Props) => {
-  const [searchedWord, setSearchedWord] = useState<string | null>(null);
+  const [searchedWord, setSearchedWord] = useState<string>("");
   const [filteredFeatureRequests, setFilteredFeatureRequests] = useState<
     FeatureRequest[]
   >([]);
@@ -42,7 +40,6 @@ const FeatureRequests = (props: Props) => {
   const [searchBtnIsClicked, setSearchBtnIsClicked] = useState(false);
 
   const handleFilterRequests = () => {
-    console.log("is it changing??", allFeatureRequests);
     const activeTopicFiltersList = activeFiltersList.filter(
       (filt) => filt.type === "topic"
     );
@@ -51,26 +48,28 @@ const FeatureRequests = (props: Props) => {
     );
 
     const filteredFR = allFeatureRequests.filter((featReq) => {
-      const hasAllTheActiveTopics = featReq.topics
-        .map((top) => top._id)
-        .every((topId) =>
-          activeTopicFiltersList.map((top) => top._id).includes(topId)
-        );
+      const hasAllTheActiveTopics =
+        activeTopicFiltersList.length > 0
+          ? featReq.topics.length > 0 &&
+            activeTopicFiltersList
+              .map((top) => top._id)
+              .every((topId) =>
+                featReq.topics.map((top) => top._id).includes(topId)
+              )
+          : true;
 
       const hasTheActiveStatus =
-        featReq.status.toLowerCase() ===
-        activeStatusFiltersList?.[0]?.label.toLowerCase();
+        activeStatusFiltersList.length > 0
+          ? featReq.status.toLowerCase() ===
+            activeStatusFiltersList?.[0]?.label.toLowerCase()
+          : true;
 
-      if (searchedWord) {
-        return (
-          featReq.title.toLowerCase().includes(searchedWord.toLowerCase()) &&
-          (activeFiltersList.length > 0
-            ? hasAllTheActiveTopics && hasTheActiveStatus
-            : true)
-        );
-      } else {
-        return featReq;
-      }
+      return (
+        featReq.title.toLowerCase().includes(searchedWord.toLowerCase()) &&
+        (activeFiltersList.length > 0
+          ? hasAllTheActiveTopics && hasTheActiveStatus
+          : true)
+      );
     });
     setFilteredFeatureRequests(filteredFR);
   };
