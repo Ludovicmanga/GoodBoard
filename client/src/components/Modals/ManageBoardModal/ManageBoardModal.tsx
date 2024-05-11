@@ -137,42 +137,8 @@ const EditableInput = (props: {
     <>
       <h2 className={styles.sectionTitle}>{props.name}</h2>
       <div className={styles.boardIdentityInfo}>
-        {/* {props.inputIsClicked ? (
-          <TextField
-            autoFocus
-            onFocus={(e) => e.currentTarget.select()}
-            className={styles.boardIdentityInput}
-            onChange={props.handleDispatchAction}
-            value={props.inputValue}
-            fullWidth
-            InputProps={{
-              endAdornment: (
-                <IconButton onClick={() => props.setInputIsClicked(false)}>
-                  <CheckBox
-                    sx={{
-                      color: "#8ce99a",
-                      fontSize: "2rem",
-                    }}
-                  />
-                </IconButton>
-              ),
-            }}
-          />
-        ) : (
-          <>
-            <div>{props.inputValue}</div>
-            <IconButton
-              onClick={() => {
-                props.setInputIsClicked(true);
-              }}
-            >
-              <Create />
-            </IconButton>
-          </>
-        )} */}
         <OutlinedInput
           autoFocus
-          onFocus={(e) => e.currentTarget.select()}
           className={styles.boardIdentityInput}
           onChange={props.handleDispatchAction}
           value={props.inputValue}

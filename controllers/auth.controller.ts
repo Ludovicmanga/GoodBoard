@@ -12,7 +12,6 @@ export const signUp = (req, res) => {
     .save()
     .then((user) => res.status(201).json({ user: user._id }))
     .catch((error) => {
-      console.log("didnt work because ", error);
       const formattedErrors = signUpErrors(error);
       res.status(200).json(error);
     });

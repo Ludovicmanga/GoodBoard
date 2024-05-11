@@ -5,7 +5,7 @@ import styles from "./SearchBar.module.scss";
 
 type SearchBarProps = {
   onSearch: (searchTerm: string) => void;
-  searchedWord: string | null;
+  searchedWord: string;
   setSearchBtnIsClicked?: React.Dispatch<React.SetStateAction<boolean>>;
   placeholder: string;
 };
