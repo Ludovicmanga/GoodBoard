@@ -13,7 +13,7 @@ import { EditablePicture } from "../../EditablePicture/EditablePicture";
 import {
   deleteBoardImageApiCall,
   handleUploadImageToBoard,
-  updateInstagramUrlApiCall,
+  updateBoardDataApiCall,
 } from "../../../helpers/boards";
 import { ArrowBack } from "@mui/icons-material";
 import { BtnWithCrown } from "../../ShiningBtn/BtnWithCrown";
@@ -23,6 +23,7 @@ import {
   EmbeddedCheckout,
 } from "@stripe/react-stripe-js";
 import { handleUpgradePlan } from "../../../helpers/stripe";
+import { setGeneralProperties } from "../../../redux/features/generalPropertiesSlice";
 
 const stripePromise = loadStripe("pk_test_z5x89OfwkEg8eXOJNMx384xK00KNJoz6oP");
 
@@ -92,20 +93,138 @@ const ManageBoardModal = (props: Props) => {
   }, [generalPropertiesState?.manageBoardModalOpen?.initialStep]);
 
   const handleUpdateInstagram = async (value: string) => {
-    const response = await updateInstagramUrlApiCall(
-      value,
-      activeBoardState._id
-    );
+    const response = await updateBoardDataApiCall({
+      ...activeBoardState,
+      instagramUrl: value,
+    });
+
     if (response?.instagramUrl) {
       dispatch(
         setActiveBoardData({
           instagramUrl: response.instagramUrl,
         })
       );
+      dispatch(
+        setGeneralProperties({
+          mainSnackBar: {
+            isOpen: true,
+            message: "Le board a bien été mis à jour",
+          },
+        })
+      );
     }
   };
 
-  const handleUpdateTwitter = async () => {};
+  const handleUpdateTwitter = async (value: string) => {
+    const response = await updateBoardDataApiCall({
+      ...activeBoardState,
+      twitterUrl: value,
+    });
+
+    if (response.twitterUrl) {
+      dispatch(
+        setActiveBoardData({
+          twitterUrl: response.twitterUrl,
+        })
+      );
+      dispatch(
+        setGeneralProperties({
+          mainSnackBar: {
+            isOpen: true,
+            message: "Le board a bien été mis à jour",
+          },
+        })
+      );
+    }
+  };
+
+  const handleUpdateFacebook = async (value: string) => {
+    const response = await updateBoardDataApiCall({
+      ...activeBoardState,
+      facebookUrl: value,
+    });
+    if (response.facebookUrl) {
+      dispatch(
+        setActiveBoardData({
+          facebookUrl: response.facebookUrl,
+        })
+      );
+      dispatch(
+        setGeneralProperties({
+          mainSnackBar: {
+            isOpen: true,
+            message: "Le board a bien été mis à jour",
+          },
+        })
+      );
+    }
+  };
+
+  const handleUpdateWebsiteUrl = async (value: string) => {
+    const response = await updateBoardDataApiCall({
+      ...activeBoardState,
+      websiteUrl: value,
+    });
+    if (response.websiteUrl) {
+      dispatch(
+        setActiveBoardData({
+          websiteUrl: response.websiteUrl,
+        })
+      );
+      dispatch(
+        setGeneralProperties({
+          mainSnackBar: {
+            isOpen: true,
+            message: "Le board a bien été mis à jour",
+          },
+        })
+      );
+    }
+  };
+
+  const handleUpdateName = async (value: string) => {
+    const response = await updateBoardDataApiCall({
+      ...activeBoardState,
+      name: value,
+    });
+    if (response.name) {
+      dispatch(
+        setActiveBoardData({
+          websiteUrl: response.name,
+        })
+      );
+      dispatch(
+        setGeneralProperties({
+          mainSnackBar: {
+            isOpen: true,
+            message: "Le board a bien été mis à jour",
+          },
+        })
+      );
+    }
+  };
+
+  const handleUpdateDescription = async (value: string) => {
+    const response = await updateBoardDataApiCall({
+      ...activeBoardState,
+      description: value,
+    });
+    if (response.description) {
+      dispatch(
+        setActiveBoardData({
+          description: response.websiteUrl,
+        })
+      );
+      dispatch(
+        setGeneralProperties({
+          mainSnackBar: {
+            isOpen: true,
+            message: "Le board a bien été mis à jour",
+          },
+        })
+      );
+    }
+  };
 
   return (
     <ModalTemplate
@@ -169,7 +288,7 @@ const ManageBoardModal = (props: Props) => {
             inputIsClicked={boardNameInputClicked}
             setInputIsClicked={setBoardNameInputClicked}
             maxLength={30}
-            onSubmit={handleUpdateInstagram}
+            onSubmit={handleUpdateName}
           />
           <EditableInput
             name="Description"
@@ -178,7 +297,7 @@ const ManageBoardModal = (props: Props) => {
             inputIsClicked={boardDescriptionInputClicked}
             setInputIsClicked={setBoardDescriptionInputClicked}
             maxLength={130}
-            onSubmit={handleUpdateInstagram}
+            onSubmit={handleUpdateDescription}
           />
           <EditablePicture
             src={activeBoardState.picture}
@@ -193,7 +312,7 @@ const ManageBoardModal = (props: Props) => {
             initialInputValue={activeBoardState.websiteUrl}
             inputIsClicked={websiteUrlInputClicked}
             setInputIsClicked={setWebsiteUrlInputClicked}
-            onSubmit={handleUpdateInstagram}
+            onSubmit={handleUpdateWebsiteUrl}
           />
           <EditableInput
             name="Facebook"
@@ -201,7 +320,7 @@ const ManageBoardModal = (props: Props) => {
             initialInputValue={activeBoardState.facebookUrl!}
             inputIsClicked={facebookUrlInputClicked}
             setInputIsClicked={setFacebookUrlInputClicked}
-            onSubmit={handleUpdateInstagram}
+            onSubmit={handleUpdateFacebook}
           />
           <EditableInput
             name="Instagram"
@@ -217,7 +336,7 @@ const ManageBoardModal = (props: Props) => {
             initialInputValue={activeBoardState.twitterUrl!}
             inputIsClicked={twitterUrlInputClicked}
             setInputIsClicked={setTwitterUrlInputClicked}
-            onSubmit={handleUpdateInstagram}
+            onSubmit={handleUpdateTwitter}
           />
           <h2 className={styles.sectionTitle}>Couleur du board</h2>
           <div className={styles.ChooseBoardColorContainer}>

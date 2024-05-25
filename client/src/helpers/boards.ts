@@ -103,50 +103,24 @@ export const checkUserAccessAPICall = async (boardId: string) => {
   });
 };
 
-export const updateTwitterUrlApiCall = async (
-  newUrl: string,
-  boardId: string
-) => {
-  return await axios({
-    url: `${websiteUrl}/api/board/update-twitter-url`,
-    method: "post",
-    withCredentials: true,
-    data: {
-      twitterUrl: newUrl,
-      boardId
-    },
-  });
-};
-
-export const updateInstagramUrlApiCall  = async (
-  newUrl: string,
-  boardId: string
-) => {
-  const response = await axios<Board>({
-    url: `${websiteUrl}/api/board/update-instagram-url`,
-    method: "post",
-    withCredentials: true,
-    data: {
-      instagramUrl: newUrl,
-      boardId
-    },
-  });
-  if (response.data) {
-    return response.data;
+export const updateBoardDataApiCall = async (
+  args: {
+    _id: string,
+    twitterUrl?: string,
+    facebookUrl?: string,
+    instagramUrl?: string,
+    name: string,
+    description: string,
+    websiteUrl: string;
   }
-};
-
-export const updateFacebookUrlApiCall = async (
-  newUrl: string,
-  boardId: string
 ) => {
-  return await axios({
-    url: `${websiteUrl}/api/board/update-facebook-url`,
+  const res =  await axios({
+    url: `${websiteUrl}/api/board/update-board-data`,
     method: "post",
     withCredentials: true,
-    data: {
-      facebookUrl: newUrl,
-      boardId
-    },
+    data: { ...args },
   });
+  if (res.data) {
+    return res.data;
+  }
 };
