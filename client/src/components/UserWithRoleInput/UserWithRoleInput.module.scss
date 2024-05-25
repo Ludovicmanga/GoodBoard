@@ -7,7 +7,6 @@
 
 .left {
   display: flex;
-  width: 68%;
 }
 
 .rightBtnContainer {
@@ -19,18 +18,24 @@
   padding-right: 0px;
 }
 
+.mailInput {
+  width: 55%;
+}
+
 .roleInput {
   @include useSpacing(margin, 0, 0, 0, m);
+  width: 45%;
+
 }
 
 @media screen and (min-width: $main-breakpoint) {
   .left {
     display: flex;
-    width: 79%;
+    width: 95%;
   }
 
-  .rightBtnContainer {
+/*   .rightBtnContainer {
     display: flex;
     @include useSpacing(margin, 0, 0, 0, m);
-  }
+  } */
 }

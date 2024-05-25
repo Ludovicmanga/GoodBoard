@@ -5,5 +5,13 @@
     display: flex;
     justify-content: space-between;
     @include useTypography(commonText);
-    @include useSpacing(margin, l, 0, 0, 0);
+}
+
+.infosContainer {
+    display: flex;
+}
+
+.textContainer {
+    display: flex;
+    align-items: center;
 }

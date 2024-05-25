@@ -1,3 +1,4 @@
+import { Types } from "mongoose";
 import changeLogModel from "../models/changeLog.model";
 import featureRequestModel from "../models/featureRequest.model";
 import topicModel from "../models/topic.model";
@@ -18,10 +19,8 @@ export const getAllBoardFeatureRequestsMappedWithTopics = async (
   .map((feature) => feature.voters)
   .flat();
 
-// Create a Set from the allFeatureRequestsVotersList to remove duplicates
 const uniqueVotersSet = new Set(allFeatureRequestsVotersList);
 
-// Convert the Set back to an array to get the unique voters list
 const uniqueVotersIdsList = Array.from(uniqueVotersSet);
 
 const usersList = await userModel.find({
@@ -30,18 +29,22 @@ const usersList = await userModel.find({
   },
 });
 
+const topicsFromBoard = await topicModel.find({ boardId });
+
   const mapped = await Promise.all(
     features.map(async (feature) => {
       return {
         ...feature.toObject(),
-        votersPics: usersList.filter(user => feature.voters.includes(user.id )).map(user => user.picture)
+        votersPics: usersList.filter(user => feature.voters.includes(user.id )).map(user => user.picture),
+        topics: topicsFromBoard.filter(top => feature.topics.includes(top._id)),
       };
     })
   );
+
   return mapped;
 };
 
-export const addToChangeLog = async (boardId: string, featureRequestId: string) => {
+export const addToChangeLog = async (boardId: Types.ObjectId, featureRequestId: Types.ObjectId) => {
   try {
     const foundFeatureRequest = await featureRequestModel.findById(
       featureRequestId
@@ -51,6 +54,7 @@ export const addToChangeLog = async (boardId: string, featureRequestId: string) 
         title: foundFeatureRequest.title,
         details: foundFeatureRequest.details,
         boardId,
+        topics: foundFeatureRequest.topics
       });
       if (newChangeLogItem) {
         return newChangeLogItem;

@@ -1,0 +1,50 @@
+@import '../../../styles/useSpacing';
+
+.container {
+	height: 100%;
+	max-width: 80%;
+}
+
+.logoContainer {
+	height: 20%;
+	display: flex;
+	align-items: center;
+}
+
+.mainMessage {
+	font-size: 2.3rem;
+	font-weight: 600;
+	height: 40%;
+}
+
+.secondaryMessage {
+	height: 40%;
+}
+
+.secondaryMessageTitle {
+	font-size: 1.3rem;
+	font-weight: bold;
+	@include useSpacing(margin, 0,0,m,0)
+}
+
+.argumentsList {
+	list-style-type: none;
+	font-size: 0.9rem;
+}
+
+.argumentsList li {
+	display: flex;
+	@include useSpacing(margin, m, 0)
+}
+
+.iconContainer {
+	display: flex;
+	align-items: top;
+	@include useSpacing(padding, xxs, 0, 0, 0);
+}
+
+.argumentText {
+	display: flex;
+	align-items: center;
+	@include useSpacing(margin, 0, 0, 0, xs);
+}

@@ -1,0 +1,82 @@
+@import "../../styles/useSpacing";
+
+.container {
+    @include useSpacing(padding, m);
+    margin: 30px;
+    position: relative;
+    height: 100%;
+}
+
+.popularityBadge {
+    position: absolute;
+    top: -0.8rem;
+    right: 1rem;
+    @include useSpacing(padding, s);
+    background: #fff4e6;
+    font-size: 0.7rem;
+    display: flex;
+}
+
+.popularityIconContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @include useSpacing(margin, 0, xs, 0, 0);
+    font-size: 1.2rem;
+}
+
+.popularityTextContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.planNameContainer {
+    font-size: 1.3rem;
+    @include useSpacing(margin, 0, 0, m, 0);
+}
+
+.planContextContainer {
+    font-size: 0.8rem;
+    font-style: italic;
+    color: #495057;
+    text-align: center;
+    height: 2rem;
+}
+
+.priceContainer {
+    display: flex;
+    justify-content: center;
+    @include useSpacing(margin, l, 0, 0, 0);
+    color: #868e96;
+}
+
+.pricingAmount, .pricingSymbol {
+    font-size: 2.2rem;
+}
+
+.pricingSymbol {
+    @include useSpacing(margin, 0, xs, 0, 0);
+}
+
+.pricingContext {
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    @include useSpacing(margin, 0, 0, 0, s);
+}
+
+.featuresSectionContainer {
+    @include useSpacing(margin, l, 0, 0, 0);
+}
+
+.featureLineContainer {
+    @include useSpacing(margin, s, 0);
+}
+
+.submitBtnContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @include useSpacing(margin, l, 0, 0, 0);
+}

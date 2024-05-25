@@ -1,0 +1,49 @@
+@import '../../../styles/variables';
+@import '../../../styles/useTypography';
+@import '../../../styles/useSpacing';
+
+.contentContainer {
+    display: flex;
+}
+
+.sectionTitleContainer {
+    display: flex;
+}
+
+.sectionTitle {
+    display: flex;
+    align-items: center;
+    font-size: $switch-board-menu-title;
+    font-weight: 600;
+    @include useSpacing(margin, l, 0, xs, 0);
+}
+
+.adminInviteSection {
+    display: flex;
+    flex-direction: column;
+}
+
+.outlinedInput {
+    padding-right: 0px;
+    @include useTypography(commonText);
+}
+
+.urlTextFieldContainer {
+    @include useSpacing(margin, s, 0, 0, 0);
+}
+
+.CopyToClipboardButtonContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.inviteBtn {
+    max-height: 100%;
+}
+
+@media screen and (min-width: $main-breakpoint) {
+    .modalContentContainer {
+        width: 40%;
+    }
+}

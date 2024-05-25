@@ -2,9 +2,13 @@
 @import '../../styles/useSpacing';
 
 .container {
+    height: 20rem;
+    @include useSpacing(padding, l, m);
+    position: relative;
+}
+
+.developed {
     cursor: pointer;
-    height: $integration-box-height;
-    @include useSpacing(padding, m);
 }
 
 .container:hover {
@@ -46,4 +50,10 @@
     color: $c-black-opacity-45pp;
     @include useSpacing(margin, m, 0, 0, 0);
     height: 30%;
+}
+
+@media screen and (min-width: $main-breakpoint) {
+    .container {
+        height: 12rem;
+    }
 }

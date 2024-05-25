@@ -1,9 +1,10 @@
 import { Skeleton } from "@mui/material";
 import React from "react";
 
-const LoadingSkeleton = () => {
-
-  return <Skeleton variant="rectangular" animation="wave" height='100vh' />
+const LoadingSkeleton = (props: { height: string }) => {
+  return (
+    <Skeleton variant="rectangular" animation="wave" height={props.height} />
+  );
 };
 
 export default LoadingSkeleton;

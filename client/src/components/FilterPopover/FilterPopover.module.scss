@@ -1,0 +1,77 @@
+@import "../../styles/useSpacing";
+
+.noActiveFilters {
+    display: flex;
+    align-items: center;
+    color: #adb5bd;
+    @include useSpacing(margin, xs, 0, 0, 0);
+}
+
+.noActiveFiltersText {
+    @include useSpacing(margin,0, 0, 0, xs);
+    font-size: 0.8rem;
+}
+
+.clearFiltersBtn {
+    display: flex;
+    font-size: 0.6rem;
+    width: 60%;
+    color: #343a40;
+    @include useSpacing(padding,s, 0);
+    justify-content: flex-start;
+    cursor: pointer;
+}
+
+.clearFiltersBtn:hover {
+    background: #f8f9fa;
+    border-radius: 20px;
+}
+
+.clearFiltersBtnIcon {
+    font-size: 0.8rem;
+    @include useSpacing(margin, 0, xxs, 0, 0);
+}
+
+.activeFiltersSection {
+    @include useSpacing(margin, 0, 0, s, 0);
+}
+
+.sectionTitle {
+    font-size: 0.75rem;
+}
+
+.chipsContainer {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.chip {
+    @include useSpacing(margin, xs, xs, xs, 0);
+}
+
+.oneFilterContainer {
+    display: flex;
+    justify-content: space-between;
+    @include useSpacing(margin, xs, 0);
+}
+
+.filtersContainer {
+    overflow: scroll;
+}
+
+.filtersContainer::-webkit-scrollbar {
+    display: none;
+}
+
+.btnsContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.filterTypeBtn {
+    @include useSpacing(margin, s, 0);
+}
+
+.searchBarContainer {
+    @include useSpacing(margin, 0, 0, s, 0);
+}

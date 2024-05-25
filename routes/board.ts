@@ -16,6 +16,11 @@ import {
   updateBoardBillingPlan,
   checkUserHasAccessToBoard,
   updateBoardImage,
+  deleteBoardImage,
+  updateTwitterUrl,
+  updateFacebookUrl,
+  updateInstagramUrl,
+  getSessionStatus,
 } from "../controllers/board.controller";
 import { multerUpload } from "../middleware/multer";
 
@@ -29,15 +34,18 @@ router.post("/create", multerUpload.single("image"), createBoard);
 router.post("/get-public-status", getPublicStatus);
 router.post("/update-color", updateColor);
 router.post("/update-public-status", updatePublicStatus);
+router.post("/update-twitter-url", updateTwitterUrl);
+router.post("/update-facebook-url", updateFacebookUrl);
+router.post("/update-instagram-url", updateInstagramUrl);
 router.post("/get-share-url", getShareUrl);
 router.post("/update-board-image", multerUpload.single("image"), updateBoardImage);
 router.post("/delete-user", deleteUserFromBoard);
 router.put("/update-user-role", updateUserRole);
 router.post("/create-checkout-session", createCheckoutSession);
+router.post('/session-status', getSessionStatus);
 router.post("/create-portal-session", createPortalSession);
 router.post("/update-board-billing-plan", updateBoardBillingPlan);
 router.post('/check-user-has-access-to-board', checkUserHasAccessToBoard);
-
-//router.get('/:token', getPublicBoard);
+router.put('/delete-board-image', deleteBoardImage)
 
 export default router;

@@ -3,25 +3,17 @@ import React from "react";
 import styles from "./NewFeatureRequestsButton.module.scss";
 import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
-import FeatureRequestModal from "../../Modals/FeatureRequestModal/FeatureRequestModal";
-import { BillingPlan, FeatureRequestModalMode } from "../../../helpers/types";
+import { FeatureRequestModalMode } from "../../../helpers/types";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { setGeneralProperties } from "../../../redux/features/generalPropertiesSlice";
 import { handleOpenNewFeatureRequestModal } from "../../../helpers/features";
 
-type Props = {
-  numberOfFeatureRequests: number;
-};
-
-function NewFeatureRequestsButton(props: Props) {
-  const [newFeatureRequestsModalOpen, setNewFeatureRequestsModalOpen] =
-    useState(false);
-  const generalPropertiesState = useAppSelector(
-    (state) => state.generalProperties
-  );
+function NewFeatureRequestsButton() {
   const dispatch = useAppDispatch();
   const loggedUser = useAppSelector((state) => state.loggedUser);
   const activeBoardState = useAppSelector((state) => state.activeBoard);
+  const allFeatureRequests = useAppSelector(
+    (state) => state.allFeatureRequests
+  );
 
   const openNewFeatureRequestModal = () => {
     if (activeBoardState.billingPlan) {
@@ -29,7 +21,7 @@ function NewFeatureRequestsButton(props: Props) {
         activeBoardPlan: activeBoardState.billingPlan,
         mode: FeatureRequestModalMode.creation,
         dispatch,
-        numberOfFeatureRequests: props.numberOfFeatureRequests,
+        numberOfFeatureRequests: allFeatureRequests.length,
         loggedUser: loggedUser.user,
       });
     }
@@ -56,9 +48,9 @@ function NewFeatureRequestsButton(props: Props) {
     } */
   };
 
-  const handleCloseModal = () => {
+  /*   const handleCloseModal = () => {
     setNewFeatureRequestsModalOpen(false);
-  };
+  }; */
 
   return (
     <>
@@ -69,7 +61,7 @@ function NewFeatureRequestsButton(props: Props) {
         onClick={openNewFeatureRequestModal}
       >
         <AddIcon className={styles.addIcon} />
-        New request
+        Nouvelle idée
       </Fab>
     </>
   );

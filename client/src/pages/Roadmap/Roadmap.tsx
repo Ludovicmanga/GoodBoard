@@ -13,6 +13,9 @@ import { capitalizeFirstLetter } from "../../helpers/utils";
 import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import styles from "./Roadmap.module.scss";
+import { ContainerWIthThemeLinearGradient } from "../../components/ContainerWIthThemeLinearGradient/ContainerWIthThemeLinearGradient";
+import { SidebarNavBar } from "../../components/SidebarNavBar/SidebarNavBar";
+import { ContentWithSidebar } from "../../components/ContentWithSidebar/ContentWithSidebar";
 
 type Props = {};
 
@@ -33,64 +36,66 @@ function Roadmap({}: Props) {
 
   return (
     <>
-      <MainNavBar />
-      <MainHero />
-      <div className={styles.container}>
-        <Box className={styles.box}>
-          <>
-            {(
-              Object.keys(FeatureRequestStatus) as Array<
-                keyof typeof FeatureRequestStatus
-              >
-            ).map((status) => {
-              const featureRequestsWithCorrespondingStatus =
-                allFeatureRequests.filter(
-                  (featureRequest) => featureRequest.status === status
-                );
-              return (
-                <Paper elevation={3} className={styles.paperContainer} key={status}>
-                  <Card
-                    className={styles.title}
-                    sx={{
-                      backgroundColor:
-                        status === "done" ? theme.palette.primary.dark : "",
-                    }}
+      <ContentWithSidebar>
+        <div className={styles.container}>
+          <Box className={styles.box}>
+            <>
+              {Object.values(FeatureRequestStatus).map((status) => {
+                const featureRequestsWithCorrespondingStatus =
+                  allFeatureRequests.filter(
+                    (featureRequest) => featureRequest.status === status
+                  );
+                return (
+                  <Paper
+                    elevation={3}
+                    className={styles.paperContainer}
+                    key={status}
                   >
-                    <div className={styles.statusTitle}>
-                      {capitalizeFirstLetter(status)}
-                    </div>
-                    <div className={styles.featureNumberContainer}>
-                      {featureRequestsWithCorrespondingStatus.length}
-                    </div>
-                  </Card>
-                  <div className={styles.featureContainer}>
-                    {featureRequestsWithCorrespondingStatus.length > 0 ? (
-                      featureRequestsWithCorrespondingStatus.map(
-                        (featureRequestWithCorrespondingStatus) => (
-                          <RoadMapFeature
-                            key={featureRequestWithCorrespondingStatus._id}
-                            featureRequest={
-                              featureRequestWithCorrespondingStatus
-                            }
-                          />
-                        )
-                      )
-                    ) : (
-                      <div className={styles.emptyDataContainer}>
-                        <EmptyData
-                          title="Nothing planned yet"
-                          details="Nothing in the roadmap for this status"
-                          type={EmptyPageType.roadmap}
-                        />
+                    <Card
+                      className={styles.title}
+                      sx={{
+                        backgroundColor:
+                          status === FeatureRequestStatus.done
+                            ? theme.palette.primary.dark
+                            : "",
+                      }}
+                    >
+                      <div className={styles.statusTitle}>
+                        {capitalizeFirstLetter(status)}
                       </div>
-                    )}
-                  </div>
-                </Paper>
-              );
-            })}
-          </>
-        </Box>
-      </div>
+                      <div className={styles.featureNumberContainer}>
+                        {featureRequestsWithCorrespondingStatus.length}
+                      </div>
+                    </Card>
+                    <div className={styles.featureContainer}>
+                      {featureRequestsWithCorrespondingStatus.length > 0 ? (
+                        featureRequestsWithCorrespondingStatus.map(
+                          (featureRequestWithCorrespondingStatus) => (
+                            <RoadMapFeature
+                              key={featureRequestWithCorrespondingStatus._id}
+                              featureRequest={
+                                featureRequestWithCorrespondingStatus
+                              }
+                            />
+                          )
+                        )
+                      ) : (
+                        <div className={styles.emptyDataContainer}>
+                          <EmptyData
+                            title="Rien de prévu ici"
+                            details="Rien dans la roadmap pour ce statut"
+                            type={EmptyPageType.roadmap}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </Paper>
+                );
+              })}
+            </>
+          </Box>
+        </div>
+      </ContentWithSidebar>
     </>
   );
 }

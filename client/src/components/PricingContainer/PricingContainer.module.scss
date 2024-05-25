@@ -1,0 +1,21 @@
+@import "../../styles/useSpacing";
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.pricingBoxContainer {
+    @include useSpacing(margin, 0, 0, m, 0);
+}
+
+@media screen and (min-width: $main-breakpoint) {
+    .container {
+        justify-content: space-around;
+        flex-direction: row;
+    }
+    .pricingBoxContainer {
+        @include useSpacing(margin, 0);
+        height: 42rem;
+    }
+}

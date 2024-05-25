@@ -1,0 +1,5 @@
+@import '../../styles/useSpacing';
+
+.iconBtn {
+    @include useSpacing(margin, 0, s, 0, 0);
+}

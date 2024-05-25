@@ -1,38 +1,34 @@
-import React from "react";
-import Backdrop from "@mui/material/Backdrop";
-import Modal from "@mui/material/Modal";
-import Fade from "@mui/material/Fade";
-import styles from './SwitchBoardModal.module.scss';
-import { Paper } from "@mui/material";
-import BoardCreation from "../../../../pages/BoardCreation/BoardCreation";
+import React, { useEffect, useState } from "react";
+import ModalTemplate from "../../ModalTemplate/ModalTemplate";
+import CreationPage from "../../../../pages/CreationPage/CreationPage";
+import ChooseBoardMenu from "../../../../pages/ChooseBoard/ChooseBoard";
+import { SwitchBoardForm } from "../../../../pages/ChooseBoard/SwitchBoardForm/SwitchBoardForm";
+import CreateBoardModal from "../../../CreateBoardModal/CreateBoardModal";
+import { useMediaQuery } from "@mui/material";
 
 type Props = {
-    modalIsOpen: boolean;
-    handleClose: () => void;
-  };
+  modalIsOpen: boolean;
+  handleClose: () => void;
+};
 
 const SwitchBoardModal = (props: Props) => {
-    return (
-        <div>
-          <Modal
-            aria-labelledby="transition-modal-title"
-            aria-describedby="transition-modal-description"
-            open={props.modalIsOpen}
-            onClose={props.handleClose}
-            closeAfterTransition
-            BackdropComponent={Backdrop}
-            BackdropProps={{
-              timeout: 500,
-            }}
-          >
-            <Fade in={props.modalIsOpen}>
-              <Paper className={styles.modalContentContainer}>
-                <BoardCreation pageMode='modal' />
-              </Paper>
-            </Fade>
-          </Modal>
-        </div>
-      );
-}
+  const [mode, setMode] = useState<"choose" | "create">("choose");
+  useEffect(() => {
+    if (props.modalIsOpen) {
+      setMode("choose");
+    }
+  }, [props.modalIsOpen]);
+  const bigScreen = useMediaQuery("(min-width: 40rem)");
 
-export default SwitchBoardModal
+  return (
+    <ModalTemplate {...props} maxHeight="98%" width={bigScreen ? "40%" : "95%"}>
+      {mode === "choose" ? (
+        <SwitchBoardForm handleCreate={() => setMode("create")} />
+      ) : (
+        <CreateBoardModal />
+      )}
+    </ModalTemplate>
+  );
+};
+
+export default SwitchBoardModal;

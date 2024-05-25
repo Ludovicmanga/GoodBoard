@@ -1,41 +1,41 @@
 @import '../../styles/useSpacing';
 
 .container {
-	background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
 	background-size: 400% 400%;
 	animation: gradient 15s ease infinite;
 	height: 100vh;
-}
-
-.buttonsContainer {
 	display: flex;
-	justify-content: center;
+}
+
+.authformBoxContainer {
+	display: flex;
 	align-items: center;
-	flex-direction: column;
+	justify-content: center;
+	background: #E8F0F0;
 }
 
-.link {
-	color: white;
-	text-decoration: none
+.infoBoxContainer {
+	display: none;
 }
 
-.button {
-    width: 260px;
-	@include useSpacing(margin,s,0,s,0);
+.authformBoxContainer {
+	@include useSpacing(padding, l);
 }
 
-.divider {
-	@include useSpacing(margin,m,0,m,0);
-}
-
-@keyframes gradient {
-	0% {
-		background-position: 0% 50%;
+@media screen and (min-width: $main-breakpoint) {
+	.infoBoxContainer {
+		display: block;
+		background: linear-gradient(to right bottom, #2980b9, #FFFFFF 45%);
+		animation: gradient 15s ease infinite;
+		@include useSpacing(padding,m, xl);
 	}
-	50% {
-		background-position: 100% 50%;
+
+	.sectionBoxContainer {
+		width: 50%;
 	}
-	100% {
-		background-position: 0% 50%;
-	}
+
+	.authformBoxContainer {
+		@include useSpacing(padding, 0);
+	}	
 }
+

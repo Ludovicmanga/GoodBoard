@@ -5,41 +5,43 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  @include useSpacing(padding, l, 0);
-  flex: 0 0 30%;
 }
 
 .contentWrapper {
   display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
+  flex-direction: column;
+  border-radius: 20px;
+  @include useSpacing(padding, xl, xxxl);
+  @include useSpacing(margin, 0, 0, s, 0);
+  width: 90%;
 }
 
 .imgContainer {
-  border-radius: 50%;
-  background: $white;
-  width: 50px;
-  height: 50px;
-  @include useSpacing(margin, m, m, m, m);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .text {
-  color: $white;
-  width: 62%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  color: #495057;
   @include useSpacing(padding, m);
   max-height: $max-descrition-height;
   overflow-y: hidden;
 }
 
 .companyName {
-  font-weight: bold;
+  font-weight:600;
   display: flex;
   justify-content: center;
-  @include useSpacing(margin, 0, 0, xs, 0);
-  @include useTypography(companyName);
+  align-items: center;
+  font-size: 1.4rem;
+  @include useSpacing(margin, 0, 0, m, 0);
 }
 
 .companyDescription {
@@ -51,25 +53,32 @@
 .socialLinks {
   display: flex;
   justify-content: center;
+}
+
+.companyLinkBtnContainer {
+  display: flex;
+  justify-content: center;
   @include useSpacing(margin, xs, 0, 0, 0);
 }
 
-.companyLink {
+.companyLinkBtn {
   text-decoration: none;
-  color: white;
+  color: #495057;
   cursor: pointer;
   display: flex;
   justify-content: center;
-  @include useTypography(title-xs);
-  @include useSpacing(margin, s, 0, 0, 0);
+  @include useTypography(title-s);
 }
 
-.companyLogo {
-  @include useSpacing(margin, m, 0, m, m);
+.companyLinkIcon {
+  display: flex;
+  align-items: center;
 }
 
-.companyLogoContainer {
-    position: relative;
+.companyLinkText {
+  @include useSpacing(margin, 0, 0, 0, s);
+  display: flex;
+  align-items: center;
 }
 
 .penIconContainer {
@@ -81,34 +90,21 @@
 }
 
 .socialNetworkIcon {
-  color: white;
-  @include useSpacing(margin, 0, xs, 0, 0);
+  color: #495057;
 }
 
 @media screen and (min-width: $main-breakpoint) {
+  .container {
+    @include useSpacing(padding, xl, l);
+  }
+  
   .contentWrapper {
-    display: flex;
     flex-direction: row;
-    width: 46%;
+    width: 65%;
+    @include useSpacing(margin, 0);
   }
 
-  .text {
-    @include useSpacing(margin, 0, 0, 0, l);
-  }
-
-  .companyName {
-    justify-content: flex-start;
-  }
-
-  .companyDescription {
-    text-align: left;
-  }
-
-  .companyLink {
-    justify-content: flex-start;
-  }
-
-  .socialLinks {
-    justify-content: flex-start;
+  .text, .imgContainer {  
+    width: 40%;
   }
 }

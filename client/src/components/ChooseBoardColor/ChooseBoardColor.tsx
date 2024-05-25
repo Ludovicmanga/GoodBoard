@@ -2,10 +2,10 @@ import { Avatar } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import styles from "./ChooseBoardColor.module.scss";
-import CheckIcon from "@mui/icons-material/Check";
 import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
 import axios from "axios";
 import { websiteUrl } from "../../helpers/constants";
+import { SexyCheckbox } from "../SexyCheckbox/SexyCheckbox";
 
 type Props = {
   mode: "creation" | "update";
@@ -38,7 +38,7 @@ const ChooseBoardColor = (props: Props) => {
           setGeneralProperties({
             mainSnackBar: {
               isOpen: true,
-              message: "The theme color of your board is updated",
+              message: "La couleur du board a été mise à jour",
             },
           })
         );
@@ -57,37 +57,60 @@ const ChooseBoardColor = (props: Props) => {
   };
   const colors = [
     {
-      name: "blue",
-      hex: "#1976d2",
+      name: "pink",
+      hex: "#ffc9c9",
     },
     {
-      name: "red",
-      hex: "#F43C2B",
+      name: "blue",
+      hex: "#a5d8ff",
     },
     {
       name: "green",
-      hex: "#469C63",
+      hex: "#b2f2bb",
     },
     {
       name: "yellow",
-      hex: "#EDD91A",
+      hex: "#ffec99",
+    },
+    {
+      name: "purple",
+      hex: "#d0bfff",
+    },
+    {
+      name: "teal",
+      hex: "#96f2d7",
+    },
+    {
+      name: "orange",
+      hex: "#ffd8a8",
     },
   ];
-  const generalPropertiesState = useAppSelector(state => state.generalProperties);
-  const [selected, setSelected] = useState<{ name: string; hex: string } | null>(null);
+  const generalPropertiesState = useAppSelector(
+    (state) => state.generalProperties
+  );
+  const [selected, setSelected] = useState<{
+    name: string;
+    hex: string;
+  } | null>(null);
 
   useEffect(() => {
-    const foundActiveColor = colors.find(color => color.name === generalPropertiesState.colorMode);
+    const foundActiveColor = colors.find(
+      (color) => color.name === generalPropertiesState.colorMode
+    );
     if (foundActiveColor) {
-        setSelected(foundActiveColor);
+      setSelected(foundActiveColor);
     }
-  }, [generalPropertiesState.colorMode])
+  }, [generalPropertiesState.colorMode]);
 
   return (
     <>
       <div className={styles.colorPaletteBoxContainer}>
         {colors.map((color) => (
-          <div className={styles.avatarContainer} key={color.name} onClick={async () => await handleChangeColorTheme(color)}>
+          <div
+            className={styles.avatarContainer}
+            key={color.name}
+            onClick={async () => await handleChangeColorTheme(color)}
+          >
             <Avatar
               sx={{
                 background: `${color.hex}`,
@@ -95,7 +118,8 @@ const ChooseBoardColor = (props: Props) => {
               className={styles.colorPaletteBox}
               variant="rounded"
             >
-              {selected && selected.name === color.name && <CheckIcon />}
+              {""}
+              {selected && selected.name === color.name && <SexyCheckbox />}
             </Avatar>
           </div>
         ))}

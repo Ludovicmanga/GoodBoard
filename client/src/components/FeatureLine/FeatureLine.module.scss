@@ -1,0 +1,19 @@
+@import "../../styles/useSpacing";
+
+.container {
+    display: flex;
+}
+
+.iconContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.featureTextContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @include useSpacing(margin, 0, 0, 0, s);
+}
+

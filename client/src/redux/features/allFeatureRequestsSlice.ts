@@ -7,6 +7,25 @@ export const allFeatureRequestsSlice = createSlice({
   name: 'all feature requests',
   initialState,
   reducers: {
+    orderAllFeatureRequests: (state, action: PayloadAction<{
+      mode: "time" | "votes"
+    }>) => {  
+      function compareByVotes(a: FeatureRequest, b: FeatureRequest) {
+        if (a.voters.length > b.voters.length) {
+          return -1;
+        } else return 1;
+      }
+  
+      function compareByCreationDate(a: FeatureRequest, b: FeatureRequest) {
+        if (a.createdAt > b.createdAt) {
+          return -1;
+        } else {
+          return 1;
+        }
+      }
+
+      state = state.sort(action.payload.mode === "votes" ? compareByVotes : compareByCreationDate)
+    },
     setAllFeatureRequests: (state, action: PayloadAction<FeatureRequest[]>) => {
       state = action.payload;
       return state;
@@ -44,13 +63,11 @@ export const allFeatureRequestsSlice = createSlice({
     updateFeatureRequest: (state, action) => {
       return state.map((featureRequest) => {
         if (featureRequest._id === action.payload.featureRequestToUpdate._id) {
-          // Create a new object with the updated data
           return {
             ...featureRequest,
             ...action.payload.featureRequestToUpdate,
           };
         } else {
-          // If it's not the featureRequest to update, return the original object
           return featureRequest;
         }
       });
@@ -58,6 +75,6 @@ export const allFeatureRequestsSlice = createSlice({
   },
 })
 
-export const { upVote, downVote, setAllFeatureRequests, addFeatureRequest, deleteFeatureRequest, updateFeatureRequest } = allFeatureRequestsSlice.actions
+export const { upVote, downVote, setAllFeatureRequests, addFeatureRequest, deleteFeatureRequest, updateFeatureRequest, orderAllFeatureRequests } = allFeatureRequestsSlice.actions
 
 export default allFeatureRequestsSlice.reducer

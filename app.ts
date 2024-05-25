@@ -4,7 +4,6 @@ import passport from "passport";
 import "./config/db.ts";
 import cors from "cors";
 import session from "express-session";
-import MongoStore from "connect-mongo";
 import path from "path";
 import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
@@ -29,6 +28,8 @@ import usersRouter from "./routes/users";
 import featureRequestRouter from "./routes/featureRequest";
 import boardRouter from "./routes/board";
 import integrationRouter from "./routes/integration";
+import topicRouter from "./routes/topic";
+import changelogRouter from './routes/changelog';
 
 var app = express();
 import "./config/passport.setup";
@@ -42,10 +43,6 @@ app.use(
     secret: "this is my secrethkjrhkfrhkfh",
     resave: false,
     saveUnitialized: false,
-    store: MongoStore.create({
-      mongoUrl: process.env.MONGODB_URL,
-      collectionName: "sessions",
-    }),
     cookie: {
       secure: process.env.NODE_ENV === "production",
       maxAge: 24 * 60 * 60 * 1000,
@@ -62,6 +59,9 @@ app.use("/api/users", usersRouter);
 app.use("/api/integration", integrationRouter);
 app.use("/api/board", boardRouter);
 app.use("/api/feature-request", featureRequestRouter);
+app.use("/api/topic", topicRouter); 
+app.use("/api/changelog", changelogRouter); 
+
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
@@ -70,18 +70,14 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-// catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
 });
 
-// error handler
 app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
 
-  // render the error page
   res.status(err.status || 500);
   res.json({ error: err });
 });

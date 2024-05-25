@@ -39,18 +39,18 @@ export const getFirstLetterInUpperCase = (stringToParse: string) => {
 export const getMonthForYear = (monthNumber: number | undefined) => {
   if (!monthNumber) return "";
   const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
+    "Janvier",
+    "Février",
+    "Mars",
+    "Avril",
+    "Mai",
+    "Juin",
+    "Juillet",
+    "Août",
+    "Septembre",
+    "Octobre",
+    "Novembre",
+    "Décembre",
   ];
 
   if (monthNumber + 1 >= 1 && monthNumber + 1 <= 12) {

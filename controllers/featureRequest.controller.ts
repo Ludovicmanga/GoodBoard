@@ -1,7 +1,6 @@
 import featureRequestModel from "../models/featureRequest.model";
 import userModel from "../models/user.model";
-import topicModel from "../models/topic.model";
-import { UserRoles } from "../helpers/types";
+import { FeatureRequestStatus, UserRoles } from "../helpers/types";
 import boardModel from "../models/board.model";
 import {
   addToChangeLog,
@@ -10,6 +9,7 @@ import {
 import boardUserRelModel from "../models/boardUserRel.model";
 import changeLogModel from "../models/changeLog.model";
 import { checkUserHasAccessToBoardHelper } from "../helpers/boards";
+import topicModel from "../models/topic.model";
 
 export const getAllFeatureRequests = async (req, res) => {
   await featureRequestModel
@@ -69,7 +69,7 @@ export const getAllUserFeatureRequests = async (req, res) => {
 
 export const updateFeatureRequest = async (req, res) => {
   try {
-    const { title, details, creatorType, status, creator, topics, boardId } =
+    const { title, details, creatorType, status, creator, topics } =
       req.body.featureRequest;
     if (req.body.featureRequest._id.length > 0) {
       const beforeUpdate = await featureRequestModel.findById(
@@ -90,10 +90,20 @@ export const updateFeatureRequest = async (req, res) => {
         }
       );
       if (updated) {
-        if (updated.status === "done" && beforeUpdate.status !== "done") {
-          await addToChangeLog(updated.board, updated._id);
+        if (updated.status === FeatureRequestStatus.done && beforeUpdate?.status !== FeatureRequestStatus.done) {
+          await addToChangeLog(updated.board!, updated._id);
         }
-        res.send(updated);
+        const topicsOfFeature = await topicModel.find({
+          _id: {
+            $in: topics.map(top => top._id),
+          },
+        });
+ 
+        const updatedWithTopics = {
+          ...updated.toObject(),
+          topics: topicsOfFeature,
+        }
+        res.send(updatedWithTopics);
       }
     }
   } catch (e) {
@@ -113,17 +123,27 @@ export const createFeatureRequest = async (req, res) => {
     const newFeatureRequest = await featureRequestModel.create({
       title: featureRequestData.title,
       details: featureRequestData.details,
-      creatorType: foundUserBoardRel.userRole,
+      creatorType: foundUserBoardRel?.userRole,
       status: featureRequestData.status,
       creator: req.user.id,
       board: req.body.boardId,
+      topics: featureRequestData.topics.map(top => top._id),
+    });
+
+    const topicsOfFeature = await topicModel.find({
+      _id: {
+        $in: featureRequestData.topics.map(top => top._id),
+      },
     });
 
     if (newFeatureRequest.status === "done") {
-      await addToChangeLog(newFeatureRequest.board, newFeatureRequest._id);
+      await addToChangeLog(newFeatureRequest.board!, newFeatureRequest._id!);
     }
     if (newFeatureRequest) {
-      res.status(200).send(newFeatureRequest);
+      res.status(200).send({
+        ...newFeatureRequest.toObject(),
+        topics: topicsOfFeature
+      });
     }
   } catch (e) {
     console.log(e, " is the error message");
@@ -179,6 +199,15 @@ export const getChangeLogList = async (req, res) => {
       boardId,
     });
 
-    res.status(200).send(changeLogList);
+    const topicsFromBoard = await topicModel.find({ boardId });
+
+    const changeLogListWithTopics = changeLogList.map(changeL => {
+      return {
+        ...changeL.toObject(),
+        topics: topicsFromBoard.filter(top => changeL.topics.includes(top._id)),
+      }
+    })
+
+    res.status(200).send(changeLogListWithTopics);
   } catch (e) {}
 };

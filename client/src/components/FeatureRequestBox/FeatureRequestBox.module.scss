@@ -2,29 +2,18 @@
 @import '../../styles/useTypography';
 @import '../../styles/variables';
 
-.container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
 .newFeatureRequestsBox {
-    width: 85%;
     @include useSpacing(margin, s, 0);
     display: flex;
     justify-content: center;
-    //TODO : mettre une variable
-    height: 155px;
-}
-
-.newFeatureRequestsBox:hover {
-    box-shadow: 0 0 2px $c-blue-dark-30pp;
+    min-height: 155px;
 }
 
 .contentBox {
-    width: 75%;
+    width: 55%;
     cursor: pointer;
     @include useSpacing(padding, s);
+
 }
 
 .featureRequestTitle {
@@ -41,28 +30,11 @@
     @include useTypography(commonText);
 }
 
-.checkButton {
-    width: 25%;
-}
-
-.votesBox {
-    display: flex;
-    justify-content: space-around;
-    @include useSpacing(padding, s);
-}
-
-.iconContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    @include useSpacing(margin,0, xxs);
-}
-
 .voteCountContainer {
     display: flex;
     align-items: center;
-    justify-content: center;
-    @include useSpacing(margin,0, xxs);
+    @include useSpacing(margin,0, m);
+    font-size: 1.3rem;
 }
 
 .tagsContainer {
@@ -70,20 +42,34 @@
 }
 
 .tag {
-    @include useSpacing(margin, 0, xs);
+    @include useSpacing(margin, xxs, xs);
     @include useTypography(legals);
 }
 
+.likeBtnContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 9rem;
+}
+
+.likeIconAndVoteContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 70%;
+}
+
 @media screen and (min-width: $main-breakpoint) {
-    .newFeatureRequestsBox {
-        width: 65%;
-    }
-
     .contentBox {
-        width: 85%;
+        width: 75%;
     }
 
-    .checkButton {
-        width: 20%;
+    .likeBtnContainer {
+        width: 17rem;
+    }
+
+    .likeIconAndVoteContainer {
+        width: 37%;
     }
 }

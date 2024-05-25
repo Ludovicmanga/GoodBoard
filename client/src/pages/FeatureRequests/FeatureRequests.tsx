@@ -1,33 +1,38 @@
 import NewFeatureRequestsButton from "../../components/buttons/NewFeatureRequestButton/NewFeatureRequestsButton";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import FeatureRequestBox from "../../components/FeatureRequestBox/FeatureRequestBox";
-import {
-  BillingPlan,
-  EmptyPageType,
-  FeatureRequest,
-  MenuSelected,
-  UserType,
-} from "../../helpers/types";
+import { EmptyPageType, FeatureRequest, FilterType } from "../../helpers/types";
 import React, { useEffect, useState } from "react";
 import EmptyData from "../../components/EmptyData/EmptyData";
 import styles from "./FeatureRequests.module.scss";
-import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
 import MainNavBar from "../../components/MainNavBar/MainNavBar";
 import MainHero from "../../components/MainHero/MainHero";
 import SearchBar from "../../components/SearchBar/SearchBar";
-import FilterFeatureRequestsSidebar from "../../components/FilterFeatureRequestsSidebar/FilterFeatureRequestsSidebar";
-import LoadingSkeleton from "../../components/LoadingSkeleton/LoadingSkeleton";
+import {
+  Badge,
+  IconButton,
+  Skeleton,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+import { FilterList, Search, SwapVert } from "@mui/icons-material";
+import { FilterPopover } from "../../components/FilterPopover/FilterPopover";
+import { OrderPopover } from "../../components/OrderPopover/OrderPopover";
+import { SexyBtn3 } from "../../components/SexyBtn3/SexyBtn3";
+import { FeaturesLoadingSkeleton } from "../../components/FeaturesLoadingSkeleton/FeaturesLoadingSkeleton";
+import { ContainerWIthThemeLinearGradient } from "../../components/ContainerWIthThemeLinearGradient/ContainerWIthThemeLinearGradient";
+import AlertDialog from "../../components/AlertDialog/AlertDialog";
+import { SidebarNavBar } from "../../components/SidebarNavBar/SidebarNavBar";
+import { ContentWithSidebar } from "../../components/ContentWithSidebar/ContentWithSidebar";
 
 type Props = {};
 
 const FeatureRequests = (props: Props) => {
-  const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
-  const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
-  const [searchedWord, setSearchedWord] = useState<string | null>(null);
-/*   const [filteredFeatureRequests, setFilteredFeatureRequests] = useState<
+  const [searchedWord, setSearchedWord] = useState<string>("");
+  const [filteredFeatureRequests, setFilteredFeatureRequests] = useState<
     FeatureRequest[]
-  >([]); */
-  const activeBoardState = useAppSelector((state) => state.activeBoard);
+  >([]);
+
   const generalPropertiesState = useAppSelector(
     (state) => state.generalProperties
   );
@@ -35,146 +40,153 @@ const FeatureRequests = (props: Props) => {
   const allFeatureRequests = useAppSelector(
     (state) => state.allFeatureRequests
   );
-/* 
-  const dispatch = useAppDispatch();
-  const menuSelectedState = useAppSelector(
-    (state) => state.generalProperties.menuSelected
-  ); */
 
-/*   const handleSetCorrespondingFeatures = () => {
-    if (props.type === UserType.externalUser) {
-      const featureRequestsWithCorrespondingPropsType =
-        allFeatureRequests.filter(
-          (featureRequest) =>
-            featureRequest.creatorType === UserType.externalUser
-        );
-      setFilteredFeatureRequests(featureRequestsWithCorrespondingPropsType);
-    } else {
-      const featureRequestsWithCorrespondingPropsType =
-        allFeatureRequests.filter(
-          (featureRequest) =>
-            featureRequest.creatorType !== UserType.externalUser
-        );
-      setFilteredFeatureRequests(featureRequestsWithCorrespondingPropsType);
-    }
+  const [filterBtnAnchorEl, setFilterBtnAnchorEl] =
+    React.useState<HTMLButtonElement | null>(null);
+
+  const [orderBtnAnchorEl, setOrderBtnAnchorEl] =
+    React.useState<HTMLButtonElement | null>(null);
+
+  const [activeFiltersList, setActiveFiltersList] = useState<FilterType[]>([]);
+
+  const [searchBtnIsClicked, setSearchBtnIsClicked] = useState(false);
+
+  const bigScreen = useMediaQuery("(min-width: 40rem)");
+
+  const handleFilterRequests = () => {
+    const activeTopicFiltersList = activeFiltersList.filter(
+      (filt) => filt.type === "topic"
+    );
+    const activeStatusFiltersList = activeFiltersList.filter(
+      (filt) => filt.type === "status"
+    );
+
+    const filteredFR = allFeatureRequests.filter((featReq) => {
+      const hasAllTheActiveTopics =
+        activeTopicFiltersList.length > 0
+          ? featReq.topics.length > 0 &&
+            activeTopicFiltersList
+              .map((top) => top._id)
+              .every((topId) =>
+                featReq.topics.map((top) => top._id).includes(topId)
+              )
+          : true;
+
+      const hasTheActiveStatus =
+        activeStatusFiltersList.length > 0
+          ? featReq.status.toLowerCase() ===
+            activeStatusFiltersList?.[0]?.label.toLowerCase()
+          : true;
+
+      return (
+        featReq.title.toLowerCase().includes(searchedWord.toLowerCase()) &&
+        (activeFiltersList.length > 0
+          ? hasAllTheActiveTopics && hasTheActiveStatus
+          : true)
+      );
+    });
+    setFilteredFeatureRequests(filteredFR);
   };
 
   useEffect(() => {
-    if (props.type === UserType.externalUser) {
-      dispatch(
-        setGeneralProperties({
-          menuSelected: MenuSelected.yourIdeas,
-        })
-      );
-    } else {
-      dispatch(
-        setGeneralProperties({
-          menuSelected: MenuSelected.ourIdeas,
-        })
-      );
-    }
-  }, [menuSelectedState]); */
-/* 
-  useEffect(() => {
-    handleSetCorrespondingFeatures();
-  }, [allFeatureRequests, props.type]); */
-
-  const handleChangeSelectedStatus = (statusClicked: {
-    label: string;
-    btnColor: string;
-  }) => {
-    if (selectedStatus === statusClicked.label) {
-      setSelectedStatus(null);
-    } else {
-      setSelectedStatus(statusClicked.label);
-    }
-  };
+    handleFilterRequests();
+  }, [allFeatureRequests, searchedWord, activeFiltersList]);
 
   return (
-    <>
-      <MainNavBar />
-      <MainHero />
-      {generalPropertiesState.featuresAreLoading ? (
-        <LoadingSkeleton />
-      ) : (
-        <div className={styles.sectionContainer}>
-          {activeBoardState.billingPlan !== BillingPlan.free && (
-            <div className={styles.sidebarContainer}>
-              <FilterFeatureRequestsSidebar
-                setSelectedTopic={setSelectedTopic}
-                handleChangeSelectedStatus={handleChangeSelectedStatus}
-                selectedTopic={selectedTopic}
-                selectedStatus={selectedStatus}
-              />
-            </div>
-          )}
-          <div
-            className={
-              allFeatureRequests.length > 0
-                ? styles.featuresSectionContainer
-                : `${styles.featuresSectionContainer} ${styles.featuresSectionContainerEmpty}`
-            }
-          >
-            {allFeatureRequests.length > 0 ? (
-              <div className={styles.featuresContainer}>
+    <ContentWithSidebar>
+      <div
+        className={
+          filteredFeatureRequests.length > 0
+            ? `${styles.container}`
+            : `${styles.container} ${styles.emptyContainer}`
+        }
+      >
+        {allFeatureRequests.length > 0 ? (
+          <div className={styles.featuresSectionContainer}>
+            <div className={styles.filterSectionContainer}>
+              <Badge
+                badgeContent={activeFiltersList.length}
+                color="primary"
+                overlap="circular"
+              >
+                <IconButton
+                  size="small"
+                  className={styles.filterIconBtn}
+                  onClick={(e) => setFilterBtnAnchorEl(e.currentTarget)}
+                  sx={{
+                    bgcolor: activeFiltersList.length > 0 ? "#f7f9fd" : "",
+                  }}
+                >
+                  <FilterList />
+                  <div className={styles.filterIconText}>Filtrer</div>
+                </IconButton>
+              </Badge>
+              <IconButton
+                size="small"
+                className={styles.filterIconBtn}
+                onClick={(e) => setOrderBtnAnchorEl(e.currentTarget)}
+              >
+                <SwapVert />
+                <div className={styles.filterIconText}>Trier</div>
+              </IconButton>
+              {searchBtnIsClicked ? (
                 <SearchBar
+                  searchedWord={searchedWord}
+                  setSearchBtnIsClicked={setSearchBtnIsClicked}
                   onSearch={(searchedWord) => setSearchedWord(searchedWord)}
+                  placeholder="Chercher une idée..."
                 />
+              ) : (
+                <IconButton
+                  size="small"
+                  className={styles.filterIconBtn}
+                  onClick={() => setSearchBtnIsClicked(true)}
+                >
+                  <Search />
+                  <div className={styles.filterIconText}>Recherche</div>
+                </IconButton>
+              )}
+            </div>
+            <FilterPopover
+              anchorEl={filterBtnAnchorEl}
+              setAnchorEl={setFilterBtnAnchorEl}
+              activeFiltersList={activeFiltersList}
+              setActiveFiltersList={setActiveFiltersList}
+            />
+            <OrderPopover
+              anchorEl={orderBtnAnchorEl}
+              setAnchorEl={setOrderBtnAnchorEl}
+            />
 
-                {allFeatureRequests
-                  .filter((featReq) => {
-                    if (selectedTopic) {
-                      return featReq.topics.includes(selectedTopic!);
-                    } else {
-                      return featReq;
-                    }
-                  })
-                  .filter((featReq) => {
-                    if (selectedStatus) {
-                      return (
-                        featReq.status.toLowerCase() ===
-                        selectedStatus.toLowerCase()
-                      );
-                    } else {
-                      return featReq;
-                    }
-                  })
-                  .filter((featReq) => {
-                    if (searchedWord) {
-                      return featReq.title
-                        .toLowerCase()
-                        .includes(searchedWord.toLowerCase());
-                    } else {
-                      return featReq;
-                    }
-                  })
-                  .map((featureRequest) => {
-                    return (
-                      <FeatureRequestBox
-                        key={featureRequest._id}
-                        featureRequestProperties={featureRequest}
-                      />
-                    );
-                  })}
-              </div>
+            {generalPropertiesState.featuresAreLoading ? (
+              <FeaturesLoadingSkeleton />
+            ) : filteredFeatureRequests.length > 0 ? (
+              filteredFeatureRequests.map((featureRequest) => {
+                return (
+                  <div className={styles.featuresContainer}>
+                    <FeatureRequestBox
+                      key={featureRequest._id}
+                      featureRequestProperties={featureRequest}
+                    />
+                  </div>
+                );
+              })
             ) : (
-              <div className={styles.emptyDataContainer}>
-                <EmptyData
-                  title="No feature request yet !"
-                  details="Setup your board with creative ideas"
-                  type={EmptyPageType.featureRequests}
-                />
-              </div>
+              <EmptyData
+                title="Rien pour cette recherche"
+                details="Change les critères de ta recherche"
+                type={EmptyPageType.featureRequestsSearch}
+              />
             )}
           </div>
-        </div>
-      )}
-      {allFeatureRequests.length > 0 && (
-        <NewFeatureRequestsButton
-          numberOfFeatureRequests={allFeatureRequests.length}
-        />
-      )}
-    </>
+        ) : (
+          <div className={styles.emptyDataContainer}>
+            <SexyBtn3 />
+          </div>
+        )}
+        {allFeatureRequests.length > 0 && <NewFeatureRequestsButton />}
+      </div>
+    </ContentWithSidebar>
   );
 };
 

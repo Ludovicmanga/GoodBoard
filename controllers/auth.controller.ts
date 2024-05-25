@@ -1,8 +1,8 @@
-import { logUserIn } from "../helpers/auth";
+import { UserType } from "../client/src/helpers/types";
+import { getUserRoleOnThisBoard, sendWelcomeMessage } from "../helpers/user";
 import userModel from "../models/user.model";
 import { signUpErrors } from "../utils/errors.utils";
 import jwtDecode from 'jwt-decode';
-const maxAge = 3 * 24 * 60 * 1000;
 
 export const signUp = (req, res) => {
   const { email, password } = req.body;
@@ -10,9 +10,11 @@ export const signUp = (req, res) => {
 
   user
     .save()
-    .then((user) => res.status(201).json({ user: user._id }))
+    .then((user) => {
+      sendWelcomeMessage(user.email, user.given_name || '')
+      res.status(201).json({ user: user._id });
+    })
     .catch((error) => {
-      console.log("didnt work because ", error);
       const formattedErrors = signUpErrors(error);
       res.status(200).json(error);
     });
@@ -35,18 +37,39 @@ export const loginOrSignupGoogle = async (req, res) => {
       email: infos.email,
     });
 
+    let userToSignUpOrLogin;
+    let roleOnThisBoard: UserType | undefined;
+
     if (foundUser) {
-      logUserIn(foundUser, req, res);
+      userToSignUpOrLogin = foundUser;
     } else {
-      const createdUser = await userModel.create({
+      const user = new userModel({
         email: infos.email,
         password: req.body.credentialResponse.credential,
         picture: infos.picture,
+        given_name: infos.given_name,
+        family_name: infos.family_name
       });
-      console.log()
+
+      const createdUser = await user.save();
+
       if (createdUser) {
-        logUserIn(createdUser, req, res);
+        userToSignUpOrLogin = createdUser;
+        sendWelcomeMessage(createdUser.email, createdUser.given_name || '')
       }
+    }
+    if (userToSignUpOrLogin) {
+      if (req.body.boardId) {
+        roleOnThisBoard = await getUserRoleOnThisBoard(userToSignUpOrLogin, req.body.boardId);
+      }
+
+      req.login(userToSignUpOrLogin, async (err) => {
+        if (err) {
+          console.log(err, " is the err");
+        } else {
+          res.json({ user: { ...userToSignUpOrLogin._doc, roleOnThisBoard } });
+        }
+      });
     }
 
   } catch (e) {

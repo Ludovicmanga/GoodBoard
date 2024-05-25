@@ -1,37 +1,34 @@
 @import "../../styles/useSpacing";
 
-.emptyDataContainer {
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 60vh;
+  position: relative;
+}
+
+ .emptyContainer {
+  justify-content: center;
+}
+
+.filterSectionContainer {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 30%;
-  @include useSpacing(padding, xl, 0, 0, 0);
+  @include useSpacing(margin, xs, 0, 0, 0);
 }
 
-.sectionContainer {
-  display: flex;
-  justify-content: center;
-  height: 50%;
-  position: relative;
+.filterIconBtn {
+  @include useSpacing(padding, m);
+}
+
+.filterIconText {
+  @include useSpacing(margin, 0, 0, 0, s);
 }
 
 .sectionContainerWithNavBar {
   @include useSpacing(margin, 0, 0, 0, l);
-}
-
-.sidebarContainer {
-  position: absolute;
-  left: 1%;
-  top: 1%;
-  display: none;
-}
-
-.featuresSectionContainer {
-  width: 100%;
-}
-
-.featuresSectionContainerEmpty {
-  justify-content: center;
 }
 
 .listItemButton {
@@ -43,12 +40,6 @@
   font-size: 14px;
 }
 
-.featuresSectionContainer {
-  display: flex;
-  flex-direction: column;
-  @include useSpacing(margin, l, 0);
-}
-
 .filtersTextContainer {
   display: flex;
   justify-content: center;
@@ -57,12 +48,26 @@
   @include useSpacing(margin, 0, 0, 0, s);
 }
 
+.featuresContainer {
+  @include useSpacing(padding, 0, l);
+}
+
+
 @media screen and (min-width: $main-breakpoint) {
-  .sidebarContainer {
-    display: flex;
+  .featuresSectionContainer {
+    width: 65%;
   }
 
   .featuresContainer {
-    @include useSpacing(padding, 0, xxxl);
+    @include useSpacing(padding, 0);
+  }
+
+
+.filterSectionContainer {
+  justify-content: flex-start;
+}
+
+  .filterIconBtn {
+   @include useSpacing(margin, 0, s, 0, 0);
   }
 }

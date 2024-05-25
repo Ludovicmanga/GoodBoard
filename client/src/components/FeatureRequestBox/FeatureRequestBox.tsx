@@ -1,12 +1,4 @@
-import {
-  Card,
-  Chip,
-  CircularProgress,
-  ToggleButton,
-  useTheme,
-} from "@mui/material";
-import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
-import ArrowDropUpRoundedIcon from "@mui/icons-material/ArrowDropUpRounded";
+import { Card, Chip } from "@mui/material";
 import React, { useState } from "react";
 import styles from "./FeatureRequestBox.module.scss";
 import {
@@ -25,6 +17,7 @@ import {
 } from "../../redux/features/loggedUserSlice";
 import { websiteUrl } from "../../helpers/constants";
 import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
+import LikeBtn from "../LikeBtn/LikeBtn";
 
 type Props = {
   featureRequestProperties: FeatureRequest;
@@ -152,63 +145,43 @@ function FeatureRequestBox(props: Props) {
     }
   };
 
-  const theme = useTheme();
-
   return (
-    <div className={styles.container}>
-      <div className={styles.newFeatureRequestsBox}>
-        <Card
-          className={styles.contentBox}
-          onClick={handleOpenNewFeatureRequestsModal}
-        >
-          <h3 className={styles.featureRequestTitle}>
-            {props.featureRequestProperties.title.slice(0, 30)}
-            {props.featureRequestProperties.title.length > 30 && "..."}
-          </h3>
-          <div className={styles.featureRequestDescription}>
-            {props.featureRequestProperties.details.slice(0, 50)}
-            {props.featureRequestProperties.details.length > 50 && "..."}
+    <div className={styles.newFeatureRequestsBox}>
+      <Card
+        className={styles.contentBox}
+        onClick={handleOpenNewFeatureRequestsModal}
+      >
+        <h3 className={styles.featureRequestTitle}>
+          {props.featureRequestProperties.title.slice(0, 30)}
+          {props.featureRequestProperties.title.length > 30 && "..."}
+        </h3>
+        <div className={styles.featureRequestDescription}>
+          {props.featureRequestProperties.details.slice(0, 50)}
+          {props.featureRequestProperties.details.length > 50 && "..."}
+        </div>
+        <div className={styles.tagsContainer}>
+          {activeBoardState.billingPlan !== BillingPlan.free &&
+            props.featureRequestProperties.topics.map((category) => (
+              <Chip
+                className={styles.tag}
+                label={category.label}
+                key={category._id}
+              />
+            ))}
+        </div>
+      </Card>
+      <div className={styles.likeBtnContainer}>
+        <div className={styles.likeIconAndVoteContainer}>
+          <LikeBtn
+            checked={isVoted}
+            onChange={handleChangeToggleBtn}
+            onClick={handleMakeClickedAtLeastOnce}
+            isClickedAtLeastOnce={isClickedAtLeastOnce}
+          />
+          <div className={styles.voteCountContainer}>
+            {props.featureRequestProperties.voters?.length || 0}
           </div>
-          <div className={styles.tagsContainer}>
-            {activeBoardState.billingPlan !== BillingPlan.free &&
-              props.featureRequestProperties.topics.map((category) => (
-                <Chip className={styles.tag} label={category} key={category} />
-              ))}
-          </div>
-        </Card>
-        <ToggleButton
-          value="check"
-          selected={isVoted}
-          onChange={handleChangeToggleBtn}
-          onClick={handleMakeClickedAtLeastOnce}
-          className={styles.checkButton}
-          sx={{
-            "&.Mui-selected": {
-              bgcolor: theme.palette.primary.main,
-            },
-            "&:hover": theme.palette.primary.main,
-            color: theme.palette.text.primary,
-          }}
-        >
-          <div className={styles.votesBox}>
-            {isChangingVote ? (
-              <CircularProgress size={10} />
-            ) : (
-              <>
-                <div className={styles.iconContainer}>
-                  {isVoted ? (
-                    <CheckRoundedIcon sx={{ fontSize: 15 }} />
-                  ) : (
-                    <ArrowDropUpRoundedIcon />
-                  )}
-                </div>
-                <div className={styles.voteCountContainer}>
-                  {props.featureRequestProperties.voters?.length || 0}
-                </div>
-              </>
-            )}
-          </div>
-        </ToggleButton>
+        </div>
       </div>
       <FeatureRequestModal
         modalMode={FeatureRequestModalMode.update}

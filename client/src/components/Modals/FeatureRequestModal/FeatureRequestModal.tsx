@@ -1,19 +1,16 @@
 import * as React from "react";
-import Backdrop from "@mui/material/Backdrop";
-import Modal from "@mui/material/Modal";
-import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
 import {
   Autocomplete,
   Avatar,
   AvatarGroup,
-  Card,
   Divider,
+  IconButton,
   MenuItem,
-  Paper,
   Select,
   SelectChangeEvent,
   TextField,
+  useMediaQuery,
 } from "@mui/material";
 import styles from "./FeatureRequestModal.module.scss";
 import { useState } from "react";
@@ -22,6 +19,7 @@ import {
   FeatureRequest,
   FeatureRequestModalMode,
   FeatureRequestStatus,
+  TopicType,
   UserType,
 } from "../../../helpers/types";
 import { useEffect } from "react";
@@ -34,13 +32,11 @@ import {
   updateFeatureRequest,
 } from "../../../redux/features/allFeatureRequestsSlice";
 import { setGeneralProperties } from "../../../redux/features/generalPropertiesSlice";
-import {
-  emptyFeatureRequest,
-  topicsList,
-  websiteUrl,
-} from "../../../helpers/constants";
+import { emptyFeatureRequest, websiteUrl } from "../../../helpers/constants";
 import TrelloBoardsListModal from "../TrelloBoardsListModal/TrelloBoardsListModal";
-import { FaTrello } from "react-icons/fa";
+import ModalTemplate from "../ModalTemplate/ModalTemplate";
+import { Add } from "@mui/icons-material";
+import { getTopicsList } from "../../../helpers/topics";
 
 export default function FeatureRequestModal(props: {
   modalMode: FeatureRequestModalMode;
@@ -50,6 +46,7 @@ export default function FeatureRequestModal(props: {
 }) {
   const [featureRequestProperties, setFeatureRequestProperties] =
     useState<FeatureRequest>(emptyFeatureRequest);
+  const [topicsList, setTopicsList] = useState<TopicType[]>([]);
 
   const [hasUpdateRights, setHasUpdateRights] = useState(false);
   const [titleHasError, setTitleHasError] = useState<boolean>(false);
@@ -90,8 +87,20 @@ export default function FeatureRequestModal(props: {
   const [trelloBoardsListModalOpen, setTrelloBoardsListModalOpen] =
     useState(false);
 
+  const [topicInputValue, setTopicInputValue] = useState("");
+
+  const handleGetTopicsList = async () => {
+    const topicsListResponse = await getTopicsList(activeBoardState._id);
+    if (topicsListResponse) {
+      setTopicsList(topicsListResponse);
+    }
+  };
+
+  const bigscreen = useMediaQuery("(min-width: 40rem)");
+
   useEffect(() => {
     if (props.modalIsOpen && loggedUserState.user) {
+      handleGetTopicsList();
       if (
         props.featureRequestProperties &&
         props.modalMode === FeatureRequestModalMode.update
@@ -117,7 +126,29 @@ export default function FeatureRequestModal(props: {
     }
   }, [featureRequestProperties.creator]);
 
-  const deleteRequest = async () => {
+  const openDeleteRequestDialog = () => {
+    dispatch(
+      setGeneralProperties({
+        dialogAlert: {
+          isOpen: true,
+          title: "Supprimer votre idée",
+          textDetails:
+            "Êtes-vous sûr de vouloir supprimer votre idée ? Cette action est irréversible",
+          handleClose: () =>
+            dispatch(
+              setGeneralProperties({
+                dialogAlert: null,
+              })
+            ),
+          handleSubmit: handleDeleteRequest,
+          submitBtnText: "supprimer idée",
+          submitBtnColor: "error",
+        },
+      })
+    );
+  };
+
+  const handleDeleteRequest = async () => {
     const deletedFeature = await axios({
       url: `${websiteUrl}/api/feature-request/delete`,
       method: "post",
@@ -137,7 +168,7 @@ export default function FeatureRequestModal(props: {
       setGeneralProperties({
         mainSnackBar: {
           isOpen: true,
-          message: "The feature was successfully deleted",
+          message: "L'idée a été supprimée",
         },
       })
     );
@@ -165,7 +196,7 @@ export default function FeatureRequestModal(props: {
           setGeneralProperties({
             mainSnackBar: {
               isOpen: true,
-              message: "The feature was successfully created",
+              message: "L'idée a bien été créé !",
             },
           })
         );
@@ -180,17 +211,16 @@ export default function FeatureRequestModal(props: {
         withCredentials: true,
       });
       if (updatedFeatureRequest) {
-        console.log(updatedFeatureRequest.data, ' is the data')
-         dispatch(
+        dispatch(
           updateFeatureRequest({
             featureRequestToUpdate: updatedFeatureRequest.data,
           })
-        ); 
+        );
         dispatch(
           setGeneralProperties({
             mainSnackBar: {
               isOpen: true,
-              message: "The feature was successfully updated",
+              message: "L'idée a été mise à jour",
             },
           })
         );
@@ -239,205 +269,211 @@ export default function FeatureRequestModal(props: {
     setTrelloBoardsListModalOpen(true);
   };
 
+  const handleCreateTopic = async () => {
+    const response = await axios({
+      url: `${websiteUrl}/api/topic/create`,
+      method: "post",
+      data: {
+        label: topicInputValue,
+        boardId: activeBoardState._id,
+      },
+      withCredentials: true,
+    });
+    if (response.data) {
+      setTopicsList((curr) => [...curr, response.data]);
+      setFeatureRequestProperties((propertiesState) => {
+        return {
+          ...propertiesState,
+          topics: [...propertiesState.topics, response.data],
+        };
+      });
+    }
+  };
+
   return (
-    <Modal
-      aria-labelledby="transition-modal-title"
-      aria-describedby="transition-modal-description"
-      open={props.modalIsOpen}
-      onClose={props.handleCloseModal}
-      closeAfterTransition
-      BackdropComponent={Backdrop}
-      BackdropProps={{
-        timeout: 500,
-      }}
+    <ModalTemplate
+      modalIsOpen={props.modalIsOpen}
+      handleClose={props.handleCloseModal}
+      width={bigscreen ? "50%" : "90%"}
+      maxHeight="93%"
     >
-      <Fade in={props.modalIsOpen}>
-        <Paper className={styles.modalContentContainer}>
-          <div className={styles.modalTitle}>
-            {props.modalMode === FeatureRequestModalMode.creation
-              ? "Make feature request"
-              : props.modalMode === FeatureRequestModalMode.update &&
-                hasUpdateRights
-              ? "Update feature request"
-              : ""}
-          </div>
-          <Divider className={styles.divider} />
-          <div className={styles.middle}>
-            <div className={activeBoardState.billingPlan === BillingPlan.business ? styles.mainContentMiddleContainerWithSidebar : styles.mainContentMiddleContainerAlone}>
-              {props.modalMode === FeatureRequestModalMode.update && (
-                <div>
-                  <div className={styles.votersSection}>
-                    <div className={styles.votersSectionTitle}>Voters :</div>
-                    <AvatarGroup
-                      className={styles.avatarGroup}
-                      total={featureRequestProperties.voters?.length || 0}
-                    >
-                      {featureRequestProperties.votersPics?.length > 0 ? (
-                        featureRequestProperties.votersPics
-                          .slice(0, 4)
-                          .map((voterPic) => (
-                            <Avatar
-                              key={voterPic}
-                              alt="Voters pic"
-                              src={voterPic}
-                            />
-                          ))
-                      ) : (
-                        <div>Not voted yet</div>
-                      )}
-                    </AvatarGroup>
-                  </div>
-                  {activeBoardState.billingPlan === BillingPlan.business && (
-                    <div className={styles.statusSection}>
-                      <div className={styles.statusSectionTitle}>Status :</div>
-                      <Select
-                        inputProps={{
-                          readOnly:
-                            props.modalMode ===
-                              FeatureRequestModalMode.update &&
-                            !hasUpdateRights,
-                        }}
-                        labelId="status"
-                        id="status"
-                        value={featureRequestProperties.status}
-                        label="Status"
-                        onChange={(e: SelectChangeEvent<string>) => {
-                          setFeatureRequestProperties((propertiesState) => {
-                            return {
-                              ...propertiesState,
-                              status: e.target.value,
-                            };
-                          });
-                        }}
-                      >
-                        {(
-                          Object.keys(FeatureRequestStatus) as Array<
-                            keyof typeof FeatureRequestStatus
-                          >
-                        ).map((status) => (
-                          <MenuItem value={status} key={status}>
-                            {capitalizeFirstLetter(status)}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </div>
-                  )}
-                </div>
-              )}
-              {activeBoardState.billingPlan !== BillingPlan.free && (
+      <div className={styles.modalTitle}>
+        {props.modalMode === FeatureRequestModalMode.creation
+          ? "Créer une nouvelle idée"
+          : props.modalMode === FeatureRequestModalMode.update &&
+            hasUpdateRights
+          ? "Mettre à jour une idée"
+          : ""}
+      </div>
+      <Divider className={styles.divider} />
+      <div className={styles.middle}>
+        <div>
+          {props.modalMode === FeatureRequestModalMode.update && (
+            <div>
+              <div className={styles.votersSection}>
+                <AvatarGroup
+                  className={styles.avatarGroup}
+                  total={featureRequestProperties.voters?.length || 0}
+                >
+                  {featureRequestProperties.votersPics?.length > 0 &&
+                    featureRequestProperties.votersPics
+                      .slice(0, 4)
+                      .map((voterPic) => (
+                        <Avatar
+                          key={voterPic}
+                          alt="Voters pic"
+                          src={voterPic}
+                        />
+                      ))}
+                </AvatarGroup>
+              </div>
+              {activeBoardState.billingPlan === BillingPlan.business && (
                 <div className={styles.statusSection}>
-                  <Autocomplete
-                    readOnly={
-                      props.modalMode === FeatureRequestModalMode.update &&
-                      !hasUpdateRights
-                    }
-                    multiple
-                    onChange={(e, value) => {
+                  <Select
+                    inputProps={{
+                      readOnly:
+                        props.modalMode === FeatureRequestModalMode.update &&
+                        !hasUpdateRights,
+                    }}
+                    labelId="status"
+                    id="status"
+                    value={featureRequestProperties.status}
+                    label="Status"
+                    onChange={(e: SelectChangeEvent<string>) => {
                       setFeatureRequestProperties((propertiesState) => {
-                        return { ...propertiesState, topics: value };
+                        return {
+                          ...propertiesState,
+                          status: e.target.value,
+                        };
                       });
                     }}
-                    value={featureRequestProperties?.topics || []}
-                    limitTags={3}
-                    options={topicsList}
-                    getOptionLabel={(option) => option}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label="Feature topics"
-                        placeholder="Topics of the feature"
-                      />
-                    )}
-                    sx={{ width: "500px" }}
-                  />
+                  >
+                    {Object.values(FeatureRequestStatus).map((status) => (
+                      <MenuItem value={status} key={status}>
+                        {capitalizeFirstLetter(status)}
+                      </MenuItem>
+                    ))}
+                  </Select>
                 </div>
               )}
-
-              <TextField
-                InputProps={{
-                  readOnly:
-                    props.modalMode === FeatureRequestModalMode.update &&
-                    !hasUpdateRights,
-                }}
-                error={titleHasError}
-                helperText={titleErrorHelperText}
-                label="Title"
-                value={featureRequestProperties.title}
-                onChange={(e) => {
+            </div>
+          )}
+          {activeBoardState.billingPlan !== BillingPlan.free && (
+            <div className={styles.statusSection}>
+              <Autocomplete
+                readOnly={
+                  props.modalMode === FeatureRequestModalMode.update &&
+                  !hasUpdateRights
+                }
+                multiple
+                onChange={(e, value) => {
                   setFeatureRequestProperties((propertiesState) => {
-                    return { ...propertiesState, title: e.target.value };
+                    return { ...propertiesState, topics: value };
                   });
                 }}
-                className={`${styles.textInput} ${styles.titleInput}`}
-              />
-              <TextField
-                InputProps={{
-                  readOnly:
-                    props.modalMode === FeatureRequestModalMode.update &&
-                    !hasUpdateRights,
-                }}
-                error={detailsHasError}
-                helperText={detailsErrorHelperText}
-                label="Details"
-                multiline
-                rows={4}
-                value={featureRequestProperties.details}
-                onChange={(e) => {
-                  setFeatureRequestProperties((propertiesState) => {
-                    return { ...propertiesState, details: e.target.value };
-                  });
-                }}
-                className={`${styles.textInput} ${styles.textArea}`}
+                value={featureRequestProperties.topics}
+                limitTags={3}
+                options={topicsList}
+                getOptionLabel={(option) => option.label}
+                noOptionsText={
+                  loggedUserState?.user?.roleOnThisBoard === UserType.admin ? (
+                    <IconButton
+                      className={styles.noOptionTopicBtn}
+                      onClick={handleCreateTopic}
+                    >
+                      <Add className={styles.noOptionTopicBtnIcon} />
+                      <div className={styles.noOptionTopicBtnText}>
+                        Créer {topicInputValue}
+                      </div>
+                    </IconButton>
+                  ) : (
+                    `Aucune catégorie avec le nom ${topicInputValue}`
+                  )
+                }
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Catégorie"
+                    placeholder="Catégories de l'idée"
+                    onChange={(e) => setTopicInputValue(e.target.value)}
+                  />
+                )}
+                fullWidth
               />
             </div>
-            {activeBoardState.billingPlan === BillingPlan.business && (
-              <div className={styles.rightNavbar}>
-                <div className={styles.rightNavbarTitle}>Integrations</div>
-                <Card
-                  onClick={handleDisplayTrelloCards}
-                  className={styles.integrationChip}
-                >
-                  <FaTrello color="#007AC0" />
-                  <div className={styles.integrationChipText}>Trello</div>
-                </Card>
-              </div>
-            )}
-          </div>
-          <div className={styles.mainButtonsContainer}>
-            {(hasUpdateRights ||
-              props.modalMode === FeatureRequestModalMode.creation) && (
-              <Button
-                onClick={handleUpsertRequest}
-                className={styles.submitButton}
-                variant="contained"
-              >
-                {props.modalMode === FeatureRequestModalMode.creation
-                  ? "Create "
-                  : "Update "}
-                request
-              </Button>
-            )}
-            {hasUpdateRights &&
-              props.modalMode === FeatureRequestModalMode.update && (
-                <Button
-                  className={styles.submitButton}
-                  onClick={deleteRequest}
-                  variant="outlined"
-                  color="error"
-                >
-                  Delete request
-                </Button>
-              )}
-          </div>
-          <TrelloBoardsListModal
-            cardTitle={featureRequestProperties.title}
-            cardDescription={featureRequestProperties.details}
-            trelloBoardsList={trelloBoardsList}
-            modalIsOpen={trelloBoardsListModalOpen}
-            handleClose={() => setTrelloBoardsListModalOpen(false)}
+          )}
+
+          <TextField
+            InputProps={{
+              readOnly:
+                props.modalMode === FeatureRequestModalMode.update &&
+                !hasUpdateRights,
+            }}
+            error={titleHasError}
+            helperText={titleErrorHelperText}
+            label="Titre"
+            value={featureRequestProperties.title}
+            onChange={(e) => {
+              setFeatureRequestProperties((propertiesState) => {
+                return { ...propertiesState, title: e.target.value };
+              });
+            }}
+            className={`${styles.textInput} ${styles.titleInput}`}
           />
-        </Paper>
-      </Fade>
-    </Modal>
+          <TextField
+            InputProps={{
+              readOnly:
+                props.modalMode === FeatureRequestModalMode.update &&
+                !hasUpdateRights,
+            }}
+            error={detailsHasError}
+            helperText={detailsErrorHelperText}
+            label="Détails"
+            multiline
+            rows={4}
+            value={featureRequestProperties.details}
+            onChange={(e) => {
+              setFeatureRequestProperties((propertiesState) => {
+                return { ...propertiesState, details: e.target.value };
+              });
+            }}
+            className={`${styles.textInput} ${styles.textArea}`}
+          />
+        </div>
+      </div>
+      <div className={styles.mainButtonsContainer}>
+        {(hasUpdateRights ||
+          props.modalMode === FeatureRequestModalMode.creation) && (
+          <Button
+            onClick={handleUpsertRequest}
+            className={styles.submitButton}
+            variant="contained"
+          >
+            {props.modalMode === FeatureRequestModalMode.creation
+              ? "Créer "
+              : "Mettre à jour "}
+            idée
+          </Button>
+        )}
+        {hasUpdateRights &&
+          props.modalMode === FeatureRequestModalMode.update && (
+            <Button
+              className={styles.submitButton}
+              onClick={openDeleteRequestDialog}
+              variant="outlined"
+              color="error"
+            >
+              Supprimer idée
+            </Button>
+          )}
+      </div>
+      <TrelloBoardsListModal
+        cardTitle={featureRequestProperties.title}
+        cardDescription={featureRequestProperties.details}
+        trelloBoardsList={trelloBoardsList}
+        modalIsOpen={trelloBoardsListModalOpen}
+        handleClose={() => setTrelloBoardsListModalOpen(false)}
+      />
+    </ModalTemplate>
   );
 }

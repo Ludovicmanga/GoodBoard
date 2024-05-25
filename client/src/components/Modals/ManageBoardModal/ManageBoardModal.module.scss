@@ -1,28 +1,62 @@
 @import '../../../styles/useSpacing';
 
-.modalContentContainer {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90%;
-    border: 0.5px solid #000;
-    border-radius: 8px;
-    box-shadow: 24px;
-    @include useSpacing(padding, m, xxl);
-}
-
 .sectionTitle {
     font-size: 14px;
-    @include useSpacing(margin,l,0,s,0);
+    @include useSpacing(margin,l,0,s,s);
 }
 
-.billingBtnsContainer {
-    @include useSpacing(margin,m,0);
+.pricingSection {
+    @include useSpacing(padding,m);
+    border-radius: 6px;
+    border: solid black 0.1px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
 }
+
+.pricingText {
+    text-align: center;
+}
+
+.subscribeBtnContainer {
+    @include useSpacing(margin, s, 0, 0, 0);
+}
+
+.currentPlan {
+    font-weight: 600;
+    @include useSpacing(margin,0,0,0,xxs);
+}
+
+.choosePlanBtn {
+    @include useSpacing(margin,0,0,0,m);
+}
+
+.endAdornment {
+    cursor: pointer;
+    font-size: 2.2rem;
+}
+
+.arrowBackBtn {
+    position: absolute;
+    left: 1.6rem;
+    top: 1rem;
+}
+
+.ChooseBoardColorContainer {
+}
+
 
 @media screen and (min-width: $main-breakpoint) {
     .modalContentContainer {
         width: 50%;
+    }
+
+    .pricingSection {
+        flex-direction: row;
+    }
+
+    .subscribeBtnContainer {
+        @include useSpacing(margin, 0);
     }
 }

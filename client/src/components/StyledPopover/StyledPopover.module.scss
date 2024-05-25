@@ -1,0 +1,6 @@
+@import '../../styles/useSpacing';
+
+.container {
+    @include useSpacing(padding, m);
+    width: 100%;
+}

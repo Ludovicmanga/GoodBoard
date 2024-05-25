@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { EmptyPageType, FeatureRequestModalMode } from "../../helpers/types";
 import styles from "./EmptyData.module.scss";
 import { Button } from "@mui/material";
@@ -47,6 +47,10 @@ const EmptyData = (props: Props) => {
         return (
           <img className={styles.image} src={emptyBox} alt="Empty Changelog" />
         );
+      case EmptyPageType.featureRequestsSearch:
+        return (
+          <img className={styles.image} src={emptyBox} alt="Empty Search" />
+        );
       default:
         return null;
     }
@@ -57,11 +61,11 @@ const EmptyData = (props: Props) => {
       {renderImage()}
       <div className={styles.title}>{props.title}</div>
       <div className={styles.details}>{props.details}</div>
-      {props.type === EmptyPageType.featureRequests && (
+      {/*       {props.type === EmptyPageType.featureRequests && (
         <Button onClick={openFeatureRequestsModal} variant="contained">
-          Create your first request
+          Propose ta première idée
         </Button>
-      )}
+      )} */}
     </div>
   );
 };

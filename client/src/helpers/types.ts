@@ -1,3 +1,5 @@
+import { ObjectId } from "mongoose";
+
 export type FeatureRequest = {
   _id: string;
   title: string;
@@ -9,7 +11,7 @@ export type FeatureRequest = {
   createdAt: any;
   updatedAt: any;
   board: string;
-  topics: string[];
+  topics: TopicType[];
   votersPics: string[];
 };
 
@@ -17,7 +19,7 @@ export type User = {
   _id: string;
   email: string;
   voted: string[];
-  roleOnThisBoard: UserType | null;
+  roleOnThisBoard?: UserType | null;
   picture: string;
 };
 
@@ -28,8 +30,22 @@ export type Board = {
   picture: string;
   themeColor: string;
   websiteUrl: string;
+  instagramUrl?: string;
+  twitterUrl?: string;
+  facebookUrl?: string;
   billingPlan: BillingPlan | null;
 };
+
+export type ChangeLog = {
+  _id: string;
+  title: string;
+  details: string;
+  createdAt: any;
+  happyEmojiVoters: string[];
+  sadEmojiVoters: string[];
+  middleEmojiVoters: string[];
+  topics: TopicType[]
+}
 
 export enum UserType {
   user = "user",
@@ -37,11 +53,10 @@ export enum UserType {
   member = "member",
   externalUser = "external user"
 }
-
 export enum FeatureRequestStatus {
-  unassigned = "unassigned",
-  assigned = "assigned",
-  done = "done",
+  unassigned = "Non assigné",
+  assigned = "Assigné",
+  done = "Fait",
 }
 
 export enum FeatureRequestModalMode {
@@ -50,15 +65,16 @@ export enum FeatureRequestModalMode {
 }
 
 export enum MenuSelected {
-  yourIdeas = "your ideas",
-  ourIdeas = "our ideas",
+  yourIdeas = "vos idées",
+  ourIdeas = "nos idées",
   roadmap = "roadmap",
 }
 
 export enum EmptyPageType {
   roadmap = "roadmap",
   featureRequests = "feature requests",
-  changeLog = "changelog"
+  featureRequestsSearch = "feature requests search",
+  changeLog = "changelog",
 }
 
 export enum AuthPageType {
@@ -70,4 +86,15 @@ export enum BillingPlan {
   free = "free",
   basic = "basic",
   business = "business"
+}
+
+export type FilterType = {
+  _id: number;
+  label: string;
+  type: "status" | "topic";
+};
+
+export type TopicType = {
+  _id: number; 
+  label: string
 }
