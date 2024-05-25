@@ -37,11 +37,10 @@ export enum UserType {
   member = "member",
   externalUser = "external user"
 }
-
 export enum FeatureRequestStatus {
-  unassigned = "unassigned",
-  assigned = "assigned",
-  done = "done",
+  unassigned = "non assigné",
+  assigned = "assigné",
+  done = "fait",
 }
 
 export enum FeatureRequestModalMode {
@@ -50,8 +49,8 @@ export enum FeatureRequestModalMode {
 }
 
 export enum MenuSelected {
-  yourIdeas = "your ideas",
-  ourIdeas = "our ideas",
+  yourIdeas = "vos idées",
+  ourIdeas = "nos idées",
   roadmap = "roadmap",
 }
 

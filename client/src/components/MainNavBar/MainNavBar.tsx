@@ -28,11 +28,11 @@ const allPages: {
   url: string;
 }[] = [
   /* {
-    title: "your ideas",
+    title: "vos idées",
     url: `/user-feature-requests`,
   },
   {
-    title: "our ideas",
+    title: "nos idées",
     url: `/company-feature-requests`,
   }, */
   {
@@ -80,7 +80,7 @@ const MainNavBar = () => {
         setGeneralProperties({
           mainSnackBar: {
             isOpen: true,
-            message: `Successful logout`,
+            message: `Vous avez été déconnecté`,
           },
         })
       );
@@ -126,19 +126,19 @@ const MainNavBar = () => {
   useEffect(() => {
     const settingsList = [
       {
-        linkText: "My account",
+        linkText: "Mon compte",
         onClick: handleSettingsModal,
       },
       {
-        linkText: "Manage this board",
+        linkText: "Gérer mon board",
         onClick: handleManageBoard,
       },
       {
-        linkText: "Switch board",
+        linkText: "Changer de board",
         onClick: handleChangeBoard,
       },
       {
-        linkText: "Share your board",
+        linkText: "Partager votre board",
         onClick: handleShareBoard,
       },
       {
@@ -146,7 +146,7 @@ const MainNavBar = () => {
         onClick: handleDisplayIntegrations,
       },
       {
-        linkText: "Logout",
+        linkText: "Déconnexion",
         onClick: handleLogout,
       },
     ];
@@ -162,7 +162,7 @@ const MainNavBar = () => {
           setSettingsRoleFiltered(() =>
             settingsList.filter(
               (setting) =>
-                setting.linkText !== "Manage this board" &&
+                setting.linkText !== "Gérer mon board" &&
                 setting.linkText !== "Integrations"
             )
           );
@@ -178,7 +178,7 @@ const MainNavBar = () => {
           setSettingsRoleFiltered(() =>
             settingsList.filter(
               (setting) =>
-                setting.linkText !== "Manage this board" &&
+                setting.linkText !== "Gérer mon board" &&
                 setting.linkText !== "Integrations"
             )
           );
@@ -188,7 +188,8 @@ const MainNavBar = () => {
       setSettingsRoleFiltered(() =>
         settingsList.filter(
           (setting) =>
-            setting.linkText === "My account" || setting.linkText === "Logout"
+            setting.linkText === "Mon compte" ||
+            setting.linkText === "Déconnexion"
         )
       );
     }
@@ -212,11 +213,11 @@ const MainNavBar = () => {
     } else {
       setPagesList([
         {
-          title: "your ideas",
+          title: "vos idées",
           url: `/user-feature-requests`,
         },
         {
-          title: "our ideas",
+          title: "nos idées",
           url: `/company-feature-requests`,
         },
       ]);

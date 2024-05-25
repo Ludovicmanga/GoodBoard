@@ -1,9 +1,4 @@
-import {
-  Avatar,
-  IconButton,
-  Paper,
-  Typography,
-} from "@mui/material";
+import { Avatar, IconButton, Paper, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import BoardInList from "../../components/BoardInList/BoardInList";
@@ -39,16 +34,19 @@ type BaseMenuProps = {
 };
 
 const BaseMenu = (props: BaseMenuProps) => {
-  const generalPropertiesState = useAppSelector(state => state.generalProperties);
+  const generalPropertiesState = useAppSelector(
+    (state) => state.generalProperties
+  );
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   return (
     <>
-      {generalPropertiesState.boardsList && generalPropertiesState.boardsList.length > 0 ? (
+      {generalPropertiesState.boardsList &&
+      generalPropertiesState.boardsList.length > 0 ? (
         <>
           <h1 className={`${styles.sectionTitle} ${styles.selectBoardTitle}`}>
-            Select a board
+            Sélectionner un board
           </h1>
           {generalPropertiesState.boardsList.map((board) => {
             return (
@@ -67,7 +65,7 @@ const BaseMenu = (props: BaseMenuProps) => {
             );
           })}
           <h1 className={`${styles.sectionTitle} ${styles.createBoardTitle}`}>
-            Create a board
+            Créer un board
           </h1>
           <Paper
             className={styles.createBoardBtnContainer}

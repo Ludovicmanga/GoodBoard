@@ -16,7 +16,7 @@ import { topicsList } from "../../helpers/constants";
 
 const statusChoices = [
   {
-    label: "Unassigned",
+    label: "Non assigné",
     btnColor: "#EB765D",
   },
   {
@@ -81,10 +81,7 @@ const FilterFeatureRequestsSidebar = (props: Props) => {
                     <div className={styles.listItem}>{statusChoice.label}</div>
                   </ListItemText>
                   {props.selectedStatus === statusChoice.label && (
-                    <TiDelete
-                      size={22}
-                      color="grey"
-                    />
+                    <TiDelete size={22} color="grey" />
                   )}
                 </ListItemButton>
               ))}

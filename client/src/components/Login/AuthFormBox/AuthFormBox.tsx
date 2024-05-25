@@ -126,7 +126,7 @@ export const AuthFormBox = (props: Props) => {
             required
             fullWidth
             id="email"
-            label="Email Address"
+            label="Adresse emaill"
             name="username"
             autoComplete="email"
             autoFocus
@@ -138,7 +138,7 @@ export const AuthFormBox = (props: Props) => {
             required
             fullWidth
             name="password"
-            label="Password"
+            label="Mot de passe"
             type="password"
             id="password"
             autoComplete="current-password"
@@ -146,7 +146,7 @@ export const AuthFormBox = (props: Props) => {
           <Grid container>
             <Grid item xs>
               <Link className={styles.link} href="#" variant="body2">
-                Forgot password?
+                Mot de passe oublié
               </Link>
             </Grid>
             <Grid item>
@@ -160,8 +160,8 @@ export const AuthFormBox = (props: Props) => {
                 variant="body2"
               >
                 {props.authType === AuthPageType.login
-                  ? "Don't have an account? Sign Up"
-                  : "Already have an account? Log in"}
+                  ? "Pas de compte? Inscrivez-vous"
+                  : "Déjà un compte? Connectez-vous"}
               </Link>
             </Grid>
           </Grid>
@@ -173,10 +173,12 @@ export const AuthFormBox = (props: Props) => {
               variant="contained"
               className={styles.button}
             >
-              {props.authType === AuthPageType.login ? "Sign In" : "Sign up"}
+              {props.authType === AuthPageType.login
+                ? "Se connecter"
+                : "S'inscrire"}
             </LoadingButton>
             <Divider className={styles.divider} />
-            Or continue with
+            Ou
             <GoogleLogin
               onSuccess={async (credentialResponse) => {
                 await handleGoogleAuth(credentialResponse);

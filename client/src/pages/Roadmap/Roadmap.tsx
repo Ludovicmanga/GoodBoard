@@ -48,7 +48,11 @@ function Roadmap({}: Props) {
                   (featureRequest) => featureRequest.status === status
                 );
               return (
-                <Paper elevation={3} className={styles.paperContainer} key={status}>
+                <Paper
+                  elevation={3}
+                  className={styles.paperContainer}
+                  key={status}
+                >
                   <Card
                     className={styles.title}
                     sx={{
@@ -78,8 +82,8 @@ function Roadmap({}: Props) {
                     ) : (
                       <div className={styles.emptyDataContainer}>
                         <EmptyData
-                          title="Nothing planned yet"
-                          details="Nothing in the roadmap for this status"
+                          title="Rien de prévu ici"
+                          details="Rien dans la roadmap pour ce statut"
                           type={EmptyPageType.roadmap}
                         />
                       </div>

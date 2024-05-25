@@ -38,7 +38,7 @@ const ChooseBoardColor = (props: Props) => {
           setGeneralProperties({
             mainSnackBar: {
               isOpen: true,
-              message: "The theme color of your board is updated",
+              message: "La couleur du board a été mise à jour",
             },
           })
         );

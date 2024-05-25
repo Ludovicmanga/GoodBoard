@@ -55,15 +55,15 @@ function App() {
   const themes = [
     {
       color: "green",
-      theme: handleCreateTheme("#b2f2bb", "#d3f9d8"),
+      theme: handleCreateTheme("#d3f9d8", "#ebfbee"),
     },
     {
       color: "blue",
-      theme: handleCreateTheme("#a5d8ff", "#d0ebff"),
+      theme: handleCreateTheme("#d0ebff", "#e7f5ff"),
     },
     {
       color: "yellow",
-      theme: handleCreateTheme("#ffec99", "#fff3bf"),
+      theme: handleCreateTheme("#fff3bf", "#fff9db"),
     },
     {
       color: "red",

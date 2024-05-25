@@ -1,0 +1,67 @@
+@import "../../styles/useSpacing";
+
+.container {
+    @include useSpacing(padding, m);
+    cursor: pointer;
+    margin: 30px;
+    position: relative;
+}
+
+.popularityBadge {
+    position: absolute;
+    top: -0.8rem;
+    right: 1rem;
+    @include useSpacing(padding, s);
+    background: #fff4e6;
+    font-size: 0.7rem;
+    display: flex;
+}
+
+.popularityIconContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @include useSpacing(margin, 0, xs, 0, 0);
+    font-size: 1.2rem;
+}
+
+.popularityTextContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.planNameContainer {
+    font-size: 1.3rem;
+    @include useSpacing(margin, 0, 0, m, 0);
+}
+
+.planContextContainer {
+    font-size: 0.8rem;
+    font-style: italic;
+    color: #495057;
+}
+
+.priceContainer {
+    display: flex;
+    font-size: 2.7rem;
+}
+
+.pricingSymbol {
+    @include useSpacing(margin, 0, xs, 0, 0);
+}
+
+.featuresSectionContainer {
+    @include useSpacing(margin, m, 0, 0, 0);
+}
+
+.featureLineContainer {
+    @include useSpacing(margin, xs, 0);
+}
+
+.submitBtnContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @include useSpacing(margin, l, 0, 0, 0);
+}

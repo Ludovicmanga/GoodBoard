@@ -104,8 +104,8 @@ const ChangeLog = (props: Props) => {
         ) : (
           <div className={styles.emptyDataContainer}>
             <EmptyData
-              title="Nothing in the changelog yet !"
-              details="Change the status of some features to done to fill it"
+              title="Rien dans le changelog pour l'instant !"
+              details="Change le statut de tes idées en 'fait' pour qu'elles s'ajoutent ici"
               type={EmptyPageType.changeLog}
             />
           </div>

@@ -3,10 +3,8 @@ import React from "react";
 import styles from "./NewFeatureRequestsButton.module.scss";
 import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
-import FeatureRequestModal from "../../Modals/FeatureRequestModal/FeatureRequestModal";
-import { BillingPlan, FeatureRequestModalMode } from "../../../helpers/types";
+import { FeatureRequestModalMode } from "../../../helpers/types";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { setGeneralProperties } from "../../../redux/features/generalPropertiesSlice";
 import { handleOpenNewFeatureRequestModal } from "../../../helpers/features";
 
 type Props = {
@@ -69,7 +67,7 @@ function NewFeatureRequestsButton(props: Props) {
         onClick={openNewFeatureRequestModal}
       >
         <AddIcon className={styles.addIcon} />
-        New request
+        Nouvelle idée
       </Fab>
     </>
   );

@@ -1,0 +1,9 @@
+@import '../../styles/useSpacing';
+
+.tooltipMessage {
+    @include useSpacing(padding, s);
+}
+
+.iconBtn {
+    font-size: 1rem;
+}

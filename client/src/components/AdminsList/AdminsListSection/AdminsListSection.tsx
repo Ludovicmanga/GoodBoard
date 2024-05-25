@@ -100,7 +100,7 @@ const AdminsListSection = (props: Props) => {
         ))
       ) : (
         <div className={styles.onlyAdminText}>
-          You are the only admin on this board
+          Vous êtes le seul admin de ce board
         </div>
       )}
     </div>

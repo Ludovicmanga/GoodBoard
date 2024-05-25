@@ -98,11 +98,16 @@ const UserWithRoleInput = (props: Props) => {
         >
           <AiOutlinePlusCircle size={25} />
         </IconButton>
-        {props.id !== props.usersToInviteList[0].id && (
-          <IconButton size="small" onClick={handleDelete}>
-            <Close />
-          </IconButton>
-        )}
+        <IconButton
+          size="small"
+          onClick={handleDelete}
+          sx={{
+            visibility:
+              props.id === props.usersToInviteList[0].id ? "hidden" : "initial",
+          }}
+        >
+          <Close />
+        </IconButton>
       </div>
     </div>
   );
