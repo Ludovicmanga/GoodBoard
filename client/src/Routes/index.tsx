@@ -35,17 +35,21 @@ export default function Index() {
           )}
           {activeBoard && (
             <>
-              <Route
+              {/* <Route
                 path="/company-feature-requests"
                 element={<FeatureRequests type={UserType.admin} />}
               />
               <Route
                 path="/user-feature-requests"
                 element={<FeatureRequests type={UserType.externalUser} />}
+              /> */}
+              <Route
+                path="/ideas"
+                element={<FeatureRequests />}
               />
               <Route
                 path="*"
-                element={<Navigate to="/user-feature-requests" replace />}
+                element={<Navigate to="/ideas" replace />}
               />
             </>
           )}

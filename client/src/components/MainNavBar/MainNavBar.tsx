@@ -28,13 +28,17 @@ const allPages: {
   title: string;
   url: string;
 }[] = [
-  {
+  /* {
     title: "your ideas",
     url: `/user-feature-requests`,
   },
   {
     title: "our ideas",
     url: `/company-feature-requests`,
+  }, */
+  { 
+    title: 'ideas',
+    url: '/ideas'
   },
   {
     title: "roadmap",
