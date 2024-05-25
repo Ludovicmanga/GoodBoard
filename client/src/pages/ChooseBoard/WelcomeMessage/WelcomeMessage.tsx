@@ -24,9 +24,12 @@ const WelcomeMessage = (props: Props) => {
       </div>
       <div className={styles.message}>
         <p>
-          Nous sommes ravis de vous compter parmi nous ! Préparez-vous à vous
-          amuser et à créer des demandes de fonctionnalités incroyables !
-          Donnons vie à vos idées ! 💡💡💡
+          Toute l'équipe vous souhaite la bienvenue sur GoodBoard ! Il est temps
+          d'enfin savoir ce que vos clients attendent de vous! Vous allez
+          pouvoir leur donner la possibilité d'exprimer leurs demandes. L'idée
+          est que vous puissiez créer le produit que vos clients souhaitent,
+          tout en leur montrant que vous les incluez dans vos processus
+          décisionnels. Donnons vie à vos idées ! 💡💡💡
         </p>
       </div>
       <Button
