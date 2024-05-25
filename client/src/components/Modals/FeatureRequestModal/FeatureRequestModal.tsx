@@ -10,6 +10,7 @@ import {
   Select,
   SelectChangeEvent,
   TextField,
+  useMediaQuery,
 } from "@mui/material";
 import styles from "./FeatureRequestModal.module.scss";
 import { useState } from "react";
@@ -95,6 +96,8 @@ export default function FeatureRequestModal(props: {
     }
   };
 
+  const bigscreen = useMediaQuery("(min-width: 40rem)");
+
   useEffect(() => {
     if (props.modalIsOpen && loggedUserState.user) {
       handleGetTopicsList();
@@ -123,7 +126,29 @@ export default function FeatureRequestModal(props: {
     }
   }, [featureRequestProperties.creator]);
 
-  const deleteRequest = async () => {
+  const openDeleteRequestDialog = () => {
+    dispatch(
+      setGeneralProperties({
+        dialogAlert: {
+          isOpen: true,
+          title: "Supprimer votre idée",
+          textDetails:
+            "Êtes-vous sûr de vouloir supprimer votre idée ? Cette action est irréversible",
+          handleClose: () =>
+            dispatch(
+              setGeneralProperties({
+                dialogAlert: null,
+              })
+            ),
+          handleSubmit: handleDeleteRequest,
+          submitBtnText: "supprimer idée",
+          submitBtnColor: "error",
+        },
+      })
+    );
+  };
+
+  const handleDeleteRequest = async () => {
     const deletedFeature = await axios({
       url: `${websiteUrl}/api/feature-request/delete`,
       method: "post",
@@ -143,7 +168,7 @@ export default function FeatureRequestModal(props: {
       setGeneralProperties({
         mainSnackBar: {
           isOpen: true,
-          message: "The feature was successfully deleted",
+          message: "L'idée a été supprimée",
         },
       })
     );
@@ -171,7 +196,7 @@ export default function FeatureRequestModal(props: {
           setGeneralProperties({
             mainSnackBar: {
               isOpen: true,
-              message: "The feature was successfully created",
+              message: "L'idée a bien été créé !",
             },
           })
         );
@@ -195,7 +220,7 @@ export default function FeatureRequestModal(props: {
           setGeneralProperties({
             mainSnackBar: {
               isOpen: true,
-              message: "The feature was successfully updated",
+              message: "L'idée a été mise à jour",
             },
           })
         );
@@ -269,6 +294,8 @@ export default function FeatureRequestModal(props: {
     <ModalTemplate
       modalIsOpen={props.modalIsOpen}
       handleClose={props.handleCloseModal}
+      width={bigscreen ? "50%" : "90%"}
+      maxHeight="93%"
     >
       <div className={styles.modalTitle}>
         {props.modalMode === FeatureRequestModalMode.creation
@@ -288,7 +315,7 @@ export default function FeatureRequestModal(props: {
                   className={styles.avatarGroup}
                   total={featureRequestProperties.voters?.length || 0}
                 >
-                  {featureRequestProperties.votersPics?.length > 0 ? (
+                  {featureRequestProperties.votersPics?.length > 0 &&
                     featureRequestProperties.votersPics
                       .slice(0, 4)
                       .map((voterPic) => (
@@ -297,10 +324,7 @@ export default function FeatureRequestModal(props: {
                           alt="Voters pic"
                           src={voterPic}
                         />
-                      ))
-                  ) : (
-                    <div>Not voted yet</div>
-                  )}
+                      ))}
                 </AvatarGroup>
               </div>
               {activeBoardState.billingPlan === BillingPlan.business && (
@@ -324,11 +348,7 @@ export default function FeatureRequestModal(props: {
                       });
                     }}
                   >
-                    {(
-                      Object.keys(FeatureRequestStatus) as Array<
-                        keyof typeof FeatureRequestStatus
-                      >
-                    ).map((status) => (
+                    {Object.values(FeatureRequestStatus).map((status) => (
                       <MenuItem value={status} key={status}>
                         {capitalizeFirstLetter(status)}
                       </MenuItem>
@@ -391,7 +411,7 @@ export default function FeatureRequestModal(props: {
             }}
             error={titleHasError}
             helperText={titleErrorHelperText}
-            label="Title"
+            label="Titre"
             value={featureRequestProperties.title}
             onChange={(e) => {
               setFeatureRequestProperties((propertiesState) => {
@@ -408,7 +428,7 @@ export default function FeatureRequestModal(props: {
             }}
             error={detailsHasError}
             helperText={detailsErrorHelperText}
-            label="Details"
+            label="Détails"
             multiline
             rows={4}
             value={featureRequestProperties.details}
@@ -439,7 +459,7 @@ export default function FeatureRequestModal(props: {
           props.modalMode === FeatureRequestModalMode.update && (
             <Button
               className={styles.submitButton}
-              onClick={deleteRequest}
+              onClick={openDeleteRequestDialog}
               variant="outlined"
               color="error"
             >

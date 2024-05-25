@@ -12,7 +12,8 @@ const featureRequestSchema = new mongoose.Schema(
       max: 1024,
     },
     voters: {
-      type: [String],
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "user",
     },
     topics: {
       type: [mongoose.Schema.Types.ObjectId],

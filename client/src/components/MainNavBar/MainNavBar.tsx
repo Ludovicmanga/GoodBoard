@@ -22,19 +22,12 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Drawer from "@mui/material/Drawer";
 import { GoodboardLogo } from "../Logo/GoodboardLogo";
+import { SideBarContent } from "../SidebarNavBar/SidebarNavBar";
 
 const allPages: {
   title: string;
   url: string;
 }[] = [
-  /* {
-    title: "vos idées",
-    url: `/user-feature-requests`,
-  },
-  {
-    title: "nos idées",
-    url: `/company-feature-requests`,
-  }, */
   {
     title: "ideas",
     url: "/ideas",
@@ -106,7 +99,9 @@ const MainNavBar = () => {
   const handleManageBoard = () => {
     dispatch(
       setGeneralProperties({
-        manageBoardModalOpen: true,
+        manageBoardModalOpen: {
+          isOpen: true,
+        },
       })
     );
   };
@@ -123,34 +118,34 @@ const MainNavBar = () => {
     );
   };
 
-  useEffect(() => {
-    const settingsList = [
-      {
-        linkText: "Mon compte",
-        onClick: handleSettingsModal,
-      },
-      {
-        linkText: "Gérer mon board",
-        onClick: handleManageBoard,
-      },
-      {
-        linkText: "Changer de board",
-        onClick: handleChangeBoard,
-      },
-      {
-        linkText: "Partager votre board",
-        onClick: handleShareBoard,
-      },
-      {
-        linkText: "Integrations",
-        onClick: handleDisplayIntegrations,
-      },
-      {
-        linkText: "Déconnexion",
-        onClick: handleLogout,
-      },
-    ];
+  const [settingsList, setSettingsList] = useState([
+    {
+      linkText: "Mon compte",
+      onClick: handleSettingsModal,
+    },
+    {
+      linkText: "Gérer mon board",
+      onClick: handleManageBoard,
+    },
+    {
+      linkText: "Changer de board",
+      onClick: handleChangeBoard,
+    },
+    {
+      linkText: "Partager votre board",
+      onClick: handleShareBoard,
+    },
+    {
+      linkText: "Integrations",
+      onClick: handleDisplayIntegrations,
+    },
+    {
+      linkText: "Déconnexion",
+      onClick: handleLogout,
+    },
+  ]);
 
+  useEffect(() => {
     if (
       generalPropertiesState.boardsList &&
       generalPropertiesState.boardsList.length > 0
@@ -198,6 +193,7 @@ const MainNavBar = () => {
     loggedUser.user,
     activeBoardState.billingPlan,
     generalPropertiesState.boardsList,
+    settingsList,
   ]);
 
   const [settingsRoleFiltered, setSettingsRoleFiltered] = useState<
@@ -211,16 +207,7 @@ const MainNavBar = () => {
     if (activeBoardState.billingPlan === BillingPlan.business) {
       setPagesList(allPages);
     } else {
-      setPagesList([
-        {
-          title: "vos idées",
-          url: `/user-feature-requests`,
-        },
-        {
-          title: "nos idées",
-          url: `/company-feature-requests`,
-        },
-      ]);
+      setPagesList([]);
     }
   }, [activeBoardState]);
 
@@ -251,7 +238,9 @@ const MainNavBar = () => {
   const handleCloseManageBoardModal = () => {
     dispatch(
       setGeneralProperties({
-        manageBoardModalOpen: false,
+        manageBoardModalOpen: {
+          isOpen: false,
+        },
       })
     );
   };
@@ -284,8 +273,8 @@ const MainNavBar = () => {
     <AppBar position="static" className={styles.container}>
       <Container maxWidth="xl">
         <Toolbar disableGutters className={styles.toolbar}>
-          <GoodboardLogo />
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+          {/*  <GoodboardLogo /> */}
+          {/*           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {generalPropertiesState.boardsList &&
               generalPropertiesState.boardsList.length > 0 &&
               pagesList.map((page) => (
@@ -297,7 +286,7 @@ const MainNavBar = () => {
                   {page.title}
                 </Button>
               ))}
-          </Box>
+          </Box> */}
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -307,21 +296,23 @@ const MainNavBar = () => {
           >
             <MenuIcon />
           </IconButton>
-          <div className={styles.darkModeBtnContainer}>
-            <DarkModeToggle />
-          </div>
-          {loggedUser.user ? (
-            <SettingsMenu
-              anchorElUser={anchorElUser}
-              settings={settingsRoleFiltered}
-              handleCloseUserMenu={handleCloseUserMenu}
-              handleOpenUserMenu={handleOpenUserMenu}
-            />
-          ) : (
-            <div onClick={handleGoToLoginPage} className={styles.logInBtn}>
-              Log in
+          <div className={styles.right}>
+            <div className={styles.darkModeBtnContainer}>
+              <DarkModeToggle />
             </div>
-          )}
+            {loggedUser.user ? (
+              <SettingsMenu
+                anchorElUser={anchorElUser}
+                settings={settingsRoleFiltered}
+                handleCloseUserMenu={handleCloseUserMenu}
+                handleOpenUserMenu={handleOpenUserMenu}
+              />
+            ) : (
+              <div onClick={handleGoToLoginPage} className={styles.logInBtn}>
+                Log in
+              </div>
+            )}
+          </div>
         </Toolbar>
       </Container>
       <SettingsModal
@@ -337,7 +328,7 @@ const MainNavBar = () => {
         handleClose={handleCloseShareBoardModal}
       />
       <ManageBoardModal
-        modalIsOpen={generalPropertiesState.manageBoardModalOpen}
+        modalIsOpen={generalPropertiesState.manageBoardModalOpen.isOpen}
         handleClose={handleCloseManageBoardModal}
       />
       <Drawer
@@ -346,24 +337,7 @@ const MainNavBar = () => {
         onClose={handleDrawerClose}
         sx={{ display: { md: "none" } }}
       >
-        <Box
-          role="presentation"
-          onClick={handleDrawerClose}
-          onKeyDown={handleDrawerClose}
-        >
-          <div className={styles.drawerContent}>
-            {pagesList.map((page) => (
-              <Button
-                key={page.title}
-                onClick={() => navigate(page.url)}
-                sx={{ my: 2, color: "white", display: "block" }}
-                className={styles.navBtn}
-              >
-                {page.title}
-              </Button>
-            ))}
-          </div>
-        </Box>
+        <SideBarContent />
       </Drawer>
     </AppBar>
   );

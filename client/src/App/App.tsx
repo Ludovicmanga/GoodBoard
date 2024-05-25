@@ -23,8 +23,11 @@ import LoadingSkeleton from "../components/LoadingSkeleton/LoadingSkeleton";
 import ErrorBoundary from "../components/ErrorBoundary/ErrorBoundary";
 import { Crisp } from "crisp-sdk-web";
 import { DarkMode } from "@mui/icons-material";
+import AlertDialog from "../components/AlertDialog/AlertDialog";
 
-Crisp.configure(crispWebsiteId);
+Crisp.configure(crispWebsiteId, {
+  autoload: true,
+});
 
 function App() {
   const dispatch = useAppDispatch();
@@ -53,6 +56,9 @@ function App() {
       primary: {
         main: "rgba(0, 0, 0)",
       },
+      secondary: {
+        main: "#adb5bd",
+      },
     },
   });
 
@@ -70,7 +76,7 @@ function App() {
       theme: handleCreateTheme("#fff3bf", "#fff9db"),
     },
     {
-      color: "red",
+      color: "pink",
       theme: handleCreateTheme("#ffc9c9", "#ffe3e3"),
     },
     {
@@ -159,7 +165,7 @@ function App() {
         })
       );
     }
-  }, [dispatch]);
+  }, [dispatch, loggedUserState]);
 
   useEffect(() => {
     if (generalPropertiesState.activeBoard) {
@@ -250,13 +256,12 @@ function App() {
               : themes.find(
                   (colorTheme) =>
                     colorTheme.color === generalPropertiesState.colorMode
-                )?.theme || handleCreateTheme("#a5d8ff", "#d0ebff")
+                )?.theme || handleCreateTheme("#ffc9c9", "#ffe3e3")
           }
         >
           <ErrorBoundary>
             {isLoading ? <LoadingSkeleton height="100vh" /> : <Routes />}
           </ErrorBoundary>
-
           <CssBaseline />
         </ThemeProvider>
         <FeatureRequestModal
@@ -270,6 +275,7 @@ function App() {
             )
           }
         />
+        <AlertDialog />
       </>
     </GoogleOAuthProvider>
   );

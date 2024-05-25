@@ -18,8 +18,14 @@
   padding-right: 0px;
 }
 
+.mailInput {
+  width: 55%;
+}
+
 .roleInput {
   @include useSpacing(margin, 0, 0, 0, m);
+  width: 45%;
+
 }
 
 @media screen and (min-width: $main-breakpoint) {

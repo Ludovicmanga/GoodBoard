@@ -1,0 +1,54 @@
+
+@import "../../styles/useSpacing";
+
+.contextInfosContainer {
+	@include useSpacing(padding,xxl); 
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #f3d9fa, #23d5ab);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+	height: 100%;
+}
+
+.contextInfosContainerTitle {
+    @include useSpacing(margin, 0, 0, m, 0);
+}
+
+.argumentsList {
+    list-style-type: none;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+.argumentsList {
+	list-style-type: none;
+	font-size: 1rem;
+    @include useSpacing(margin, xl, 0);
+}
+
+.argumentsList li {
+	display: flex;
+	@include useSpacing(margin, xl, 0, 0, 0);
+    font-weight: 400;
+}
+
+.iconContainer {
+	display: flex;
+	align-items: top;
+	@include useSpacing(padding, xxs, 0, 0, 0);
+}
+
+.argumentText {
+	display: flex;
+	align-items: center;
+	@include useSpacing(margin, xxxs, 0, 0, s);
+}

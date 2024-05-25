@@ -1,12 +1,7 @@
-import { Avatar, Box, IconButton, useTheme } from "@mui/material";
-import React, { useEffect } from "react";
+import { Avatar, IconButton, Skeleton, useTheme } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import styles from "./MainHero.module.scss";
-import {
-  BsFacebook,
-  BsFillPenFill,
-  BsPencil,
-  BsPencilFill,
-} from "react-icons/bs";
+import { BsFacebook } from "react-icons/bs";
 import { AiFillInstagram, AiFillTwitterCircle } from "react-icons/ai";
 import axios from "axios";
 import { websiteUrl } from "../../helpers/constants";
@@ -18,15 +13,16 @@ import CannotMakeActionAsGuestModal from "../Modals/CannotMakeActionAsGuestModal
 import { setActiveBoardData } from "../../redux/features/activeBoardSlice";
 import NeedToUpgradeModal from "../Modals/NeedToUpgradeModal/NeedToUpgradeModal";
 import { capitalizeFirstLetter } from "../../helpers/utils";
-import { updateBoardImageApiCall } from "../../helpers/boards";
+import { handleUploadImageToBoard } from "../../helpers/boards";
+import { IoLinkOutline } from "react-icons/io5";
 
 type Props = {};
 
 const MainHero = (props: Props) => {
+  const [pictureIsLoading, setPictureIsLoading] = useState(false);
   const generalPropertiesState = useAppSelector(
     (state) => state.generalProperties
   );
-  const loggedUserState = useAppSelector(state => state.loggedUser).user;
   const activeBoardState = useAppSelector((state) => state.activeBoard);
   const dispatch = useAppDispatch();
 
@@ -75,67 +71,52 @@ const MainHero = (props: Props) => {
   ) => {
     const selectedFile = e.target.files?.[0];
     if (selectedFile) {
-      await handleUploadImageToBoard(selectedFile);
-    }
-  };
-
-  const handleUploadImageToBoard = async (selectedFile: File) => {
-    const res = await updateBoardImageApiCall(
-      selectedFile,
-      generalPropertiesState.activeBoard!
-    );
-    if (res.data.url) {
-      dispatch(
-        setActiveBoardData({
-          picture: res.data.url,
-        })
+      setPictureIsLoading(true);
+      await handleUploadImageToBoard(
+        selectedFile,
+        dispatch,
+        generalPropertiesState.activeBoard!
       );
+      setPictureIsLoading(false);
     }
   };
 
   return (
-    <Box
+    <div
       className={styles.container}
-      sx={{
+      style={{
         background: theme.palette.primary.main,
       }}
     >
-      <div className={styles.contentWrapper}>
-        {activeBoardState.picture ? (
-          <div className={styles.companyLogoContainer}>
-            <IconButton
-              className={styles.penIconContainer}
-              aria-label="upload picture"
-              component="label"
-            >
-              <input
-                onChange={handleUpdateBoardImage}
-                hidden
-                accept="image/*"
-                type="file"
-                disabled={!loggedUserState}
-              />
-              <BsPencilFill className={styles.penIcon} size={15} />
-            </IconButton>
+      <div
+        className={styles.contentWrapper}
+        style={{
+          background: theme.palette.secondary.light,
+        }}
+      >
+        <div className={styles.imgContainer}>
+          {pictureIsLoading ? (
+            <Skeleton variant="circular" height={125} width={125} />
+          ) : activeBoardState.picture ? (
             <Avatar
-              variant="rounded"
+              variant="circular"
               className={styles.companyLogo}
               alt="Company logo pic"
               src={activeBoardState.picture}
               sx={{
-                height: 100,
-                width: 100,
+                height: 145,
+                width: 145,
+                border: "1px solid lightgray",
               }}
             />
-          </div>
-        ) : (
-          <EmptyImage
-            handleUploadedImage={handleUploadImageToBoard}
-            height={85}
-            width={85}
-          />
-        )}
-
+          ) : (
+            <EmptyImage
+              handleUploadedImage={handleUpdateBoardImage}
+              height={145}
+              width={145}
+            />
+          )}
+        </div>
         <div className={styles.text}>
           <div className={styles.companyName}>
             {capitalizeFirstLetter(activeBoardState.name)}
@@ -143,18 +124,50 @@ const MainHero = (props: Props) => {
           <div className={styles.companyDescription}>
             {capitalizeFirstLetter(activeBoardState.description)}
           </div>
-          <a
-            rel="noreferrer"
-            target="_blank"
-            href={activeBoardState.websiteUrl}
-          >
-            <div className={styles.companyLink}>Voir le site web</div>
-          </a>
+          <div className={styles.companyLinkBtnContainer}>
+            <IconButton
+              className={styles.companyLinkBtn}
+              onClick={() => window.open(activeBoardState.websiteUrl)}
+            >
+              <div className={styles.companyLinkIcon}>
+                <IoLinkOutline />
+              </div>
+              <div className={styles.companyLinkText}>Voir le site web</div>
+            </IconButton>
+          </div>
           <div>
             <div className={styles.socialLinks}>
-              <BsFacebook className={styles.socialNetworkIcon} />
-              <AiFillInstagram className={styles.socialNetworkIcon} />
-              <AiFillTwitterCircle className={styles.socialNetworkIcon} />
+              <IconButton
+                onClick={() =>
+                  window.open(
+                    "https://facebook.com/" + activeBoardState.facebookUrl
+                  )
+                }
+              >
+                <BsFacebook className={styles.socialNetworkIcon} size={24} />
+              </IconButton>
+              <IconButton
+                onClick={() =>
+                  window.open(
+                    "https://instagram.com/" + activeBoardState.instagramUrl
+                  )
+                }
+              >
+                <AiFillInstagram
+                  className={styles.socialNetworkIcon}
+                  size={28}
+                />
+              </IconButton>
+              <IconButton
+                onClick={() =>
+                  window.open("https://x.com/" + activeBoardState.twitterUrl)
+                }
+              >
+                <AiFillTwitterCircle
+                  className={styles.socialNetworkIcon}
+                  size={28}
+                />
+              </IconButton>
             </div>
           </div>
         </div>
@@ -179,7 +192,7 @@ const MainHero = (props: Props) => {
           )
         }
       />
-    </Box>
+    </div>
   );
 };
 

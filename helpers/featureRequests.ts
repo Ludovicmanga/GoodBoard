@@ -1,3 +1,4 @@
+import { Types } from "mongoose";
 import changeLogModel from "../models/changeLog.model";
 import featureRequestModel from "../models/featureRequest.model";
 import topicModel from "../models/topic.model";
@@ -43,7 +44,7 @@ const topicsFromBoard = await topicModel.find({ boardId });
   return mapped;
 };
 
-export const addToChangeLog = async (boardId: string, featureRequestId: string) => {
+export const addToChangeLog = async (boardId: Types.ObjectId, featureRequestId: Types.ObjectId) => {
   try {
     const foundFeatureRequest = await featureRequestModel.findById(
       featureRequestId
@@ -53,6 +54,7 @@ export const addToChangeLog = async (boardId: string, featureRequestId: string) 
         title: foundFeatureRequest.title,
         details: foundFeatureRequest.details,
         boardId,
+        topics: foundFeatureRequest.topics
       });
       if (newChangeLogItem) {
         return newChangeLogItem;

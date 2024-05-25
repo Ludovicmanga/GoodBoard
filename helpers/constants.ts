@@ -1,0 +1,1 @@
+export const welcomeMessageTemplateID = "d-96c39e41795f456aaa51ce780aaf9336";

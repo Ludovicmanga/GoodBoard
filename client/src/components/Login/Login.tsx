@@ -2,6 +2,7 @@ import styles from "./Login.module.scss";
 import { AuthPageType } from "../../helpers/types";
 import { InfosBox } from "./InfosBox/InfosBox";
 import { AuthFormBox } from "./AuthFormBox/AuthFormBox";
+import { useMediaQuery } from "@mui/material";
 
 type Props = {
   authType: AuthPageType;

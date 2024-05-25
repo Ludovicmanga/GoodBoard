@@ -74,7 +74,7 @@ const UserWithRoleInput = (props: Props) => {
           fullWidth
           onChange={handleChangeAdminEmail}
           size="small"
-          className={styles.outlinedInput}
+          className={`${styles.outlinedInput} ${styles.mailInput}`}
         />
         <Select
           value={foundAdmin?.role}

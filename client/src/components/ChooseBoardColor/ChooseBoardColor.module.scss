@@ -2,11 +2,11 @@
 
 .colorPaletteBoxContainer {
   display: flex;
-  justify-content: center;
+  flex-wrap: wrap
 }
 
 .colorPaletteBox {
-  @include useSpacing(margin, 0, s);
+  @include useSpacing(margin, xs, s);
   cursor: pointer;
   border: none;
   width: 3rem;

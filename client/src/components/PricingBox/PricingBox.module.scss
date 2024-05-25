@@ -2,9 +2,9 @@
 
 .container {
     @include useSpacing(padding, m);
-    cursor: pointer;
     margin: 30px;
     position: relative;
+    height: 100%;
 }
 
 .popularityBadge {
@@ -40,23 +40,38 @@
     font-size: 0.8rem;
     font-style: italic;
     color: #495057;
+    text-align: center;
+    height: 2rem;
 }
 
 .priceContainer {
     display: flex;
-    font-size: 2.7rem;
+    justify-content: center;
+    @include useSpacing(margin, l, 0, 0, 0);
+    color: #868e96;
+}
+
+.pricingAmount, .pricingSymbol {
+    font-size: 2.2rem;
 }
 
 .pricingSymbol {
     @include useSpacing(margin, 0, xs, 0, 0);
 }
 
+.pricingContext {
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    @include useSpacing(margin, 0, 0, 0, s);
+}
+
 .featuresSectionContainer {
-    @include useSpacing(margin, m, 0, 0, 0);
+    @include useSpacing(margin, l, 0, 0, 0);
 }
 
 .featureLineContainer {
-    @include useSpacing(margin, xs, 0);
+    @include useSpacing(margin, s, 0);
 }
 
 .submitBtnContainer {

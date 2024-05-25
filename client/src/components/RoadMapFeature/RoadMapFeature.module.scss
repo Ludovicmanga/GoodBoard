@@ -18,7 +18,6 @@
     justify-content: flex-start;
     align-items: center;
     height: 20%;
-
 }
 
 .topContent {
@@ -52,6 +51,7 @@
     @include useTypography(commonText);
     height: 45%;
     box-sizing: border-box;
+    word-break: break-all;
  }
 
  .dividerContainer {

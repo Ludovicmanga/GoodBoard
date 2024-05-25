@@ -6,6 +6,10 @@
     justify-content: center;
 }
 
+.featureContainer {
+    min-height: 20rem;
+}
+
 .box {
     display: flex;
     flex-wrap: wrap;
@@ -19,13 +23,8 @@
     justify-content: space-between;
     align-items: center;
     @include useSpacing(margin, xxs, xxs, m, xxs );
-    height: 11%;
+    @include useSpacing(padding, s, 0);
     border-radius: 4px;
-}
-
-.featureContainer {
-    overflow: scroll;
-    height: 80%;
 }
 
 .statusTitle {
@@ -44,12 +43,10 @@
 
 .paperContainer {
     width: pxToRem(380);
-    height: pxToRem(500);
     @include useSpacing(margin, xs, xs, xs, xs);
 }
 
 .emptyDataContainer {
-    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;

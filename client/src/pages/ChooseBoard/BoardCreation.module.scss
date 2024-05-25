@@ -1,0 +1,17 @@
+
+@import '../../styles/useSpacing';
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    min-height: 100vh;
+}
+
+.ChooseBoardContextInfosContainer {
+    width: 50%;
+}
+
+.ChooseBoardContentContainer {
+    @include useSpacing(padding,xxl); 
+    width: 50%;
+}

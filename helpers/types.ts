@@ -5,3 +5,8 @@ export enum UserRoles {
     externalUser = "externalUser",
   }
   
+  export enum FeatureRequestStatus {
+    unassigned = "Non assigné",
+    assigned = "Assigné",
+    done = "Fait",
+  }

@@ -1,6 +1,6 @@
 import featureRequestModel from "../models/featureRequest.model";
 import userModel from "../models/user.model";
-import { UserRoles } from "../helpers/types";
+import { FeatureRequestStatus, UserRoles } from "../helpers/types";
 import boardModel from "../models/board.model";
 import {
   addToChangeLog,
@@ -90,8 +90,8 @@ export const updateFeatureRequest = async (req, res) => {
         }
       );
       if (updated) {
-        if (updated.status === "done" && beforeUpdate.status !== "done") {
-          await addToChangeLog(updated.board, updated._id);
+        if (updated.status === FeatureRequestStatus.done && beforeUpdate?.status !== FeatureRequestStatus.done) {
+          await addToChangeLog(updated.board!, updated._id);
         }
         const topicsOfFeature = await topicModel.find({
           _id: {
@@ -137,7 +137,7 @@ export const createFeatureRequest = async (req, res) => {
     });
 
     if (newFeatureRequest.status === "done") {
-      await addToChangeLog(newFeatureRequest.board, newFeatureRequest._id);
+      await addToChangeLog(newFeatureRequest.board!, newFeatureRequest._id!);
     }
     if (newFeatureRequest) {
       res.status(200).send({
@@ -199,6 +199,15 @@ export const getChangeLogList = async (req, res) => {
       boardId,
     });
 
-    res.status(200).send(changeLogList);
+    const topicsFromBoard = await topicModel.find({ boardId });
+
+    const changeLogListWithTopics = changeLogList.map(changeL => {
+      return {
+        ...changeL.toObject(),
+        topics: topicsFromBoard.filter(top => changeL.topics.includes(top._id)),
+      }
+    })
+
+    res.status(200).send(changeLogListWithTopics);
   } catch (e) {}
 };

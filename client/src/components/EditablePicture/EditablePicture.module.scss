@@ -1,0 +1,29 @@
+@import "../../styles/useSpacing";
+
+.sectionTitle {
+    font-size: 14px;
+    @include useSpacing(margin,l,0,s,s);
+    display: flex;
+    align-items: center;
+  }
+
+  .titleText {
+    @include useSpacing(margin,0, xxxs, 0, 0);
+
+  }
+  
+  .picSectionContainer {
+    display: flex;
+    justify-content: space-between;
+    @include useSpacing(margin,l,0,s,s);
+
+  }
+
+  .editOrRemovePicBtnsContainer {
+    display: flex;
+    align-items: center;
+  }
+
+  .removePicBtn {
+    @include useSpacing(margin,0,0,0,xs);
+  }

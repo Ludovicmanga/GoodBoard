@@ -1,5 +1,0 @@
-@import '../../../styles/useSpacing';
-
-.container {
-    @include useSpacing(padding, l, xxl, 0, xxl);
-}

@@ -6,6 +6,9 @@ import { AiFillClockCircle } from "react-icons/ai";
 import { ReactNode, useState } from "react";
 import { useAppDispatch } from "../../redux/hooks";
 import { orderAllFeatureRequests } from "../../redux/features/allFeatureRequestsSlice";
+import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
+import starIcon from "../../photos/star.png";
+import clockIcon from "../../photos/clock.png";
 
 export const OrderPopover = (props: {
   anchorEl: HTMLButtonElement | null;
@@ -23,10 +26,14 @@ export const OrderPopover = (props: {
         component="nav"
         aria-label="main mailbox folders"
       >
-        <ListItemBtn sortMode="votes" icon={<FaStar />} text="Plus votées" />
+        <ListItemBtn
+          sortMode="votes"
+          icon={<img src={starIcon} alt="star" height={18} />}
+          text="Plus votées"
+        />
         <ListItemBtn
           sortMode="time"
-          icon={<AiFillClockCircle />}
+          icon={<img src={clockIcon} height={17} />}
           text="Plus récentes"
         />
       </List>
@@ -52,6 +59,16 @@ const ListItemBtn = (props: {
   const handleSetSelected = () => {
     setSelected(true);
     handleSortFeatureRequests(props.sortMode);
+    dispatch(
+      setGeneralProperties({
+        mainSnackBar: {
+          isOpen: true,
+          message: `Les idées ont été filtrées par ${
+            props.sortMode === "time" ? "date de création" : "nombre de votes"
+          }`,
+        },
+      })
+    );
     setTimeout(() => {
       setSelected(false);
     }, 1000);

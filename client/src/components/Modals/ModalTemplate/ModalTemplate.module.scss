@@ -1,23 +1,19 @@
 @import '../../../styles/useSpacing';
 
 .modalContentContainer {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90%;
-    border: 0.5px solid #000;
-    border-radius: 8px;
-    box-shadow: 24px;
-    @include useSpacing(padding, l, xxl);
-}
-
-.modalContentContainer::-webkit-scrollbar {
-    display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 0.5px solid #000;
+  border-radius: 8px;
+  box-shadow: 24px;
+  @include useSpacing(padding, l, xxl);
+  overflow: scroll;
 }
 
 .closeBtn {
-    position: absolute;
-    right: 1.6rem;
-    top: 1rem;
+  position: absolute;
+  right: 1.6rem;
+  top: 1rem;
 }

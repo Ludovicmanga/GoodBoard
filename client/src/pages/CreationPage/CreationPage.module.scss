@@ -1,0 +1,26 @@
+@import '../../styles/useSpacing';
+
+ .container {
+    display: flex;
+    justify-content: space-between;
+    min-height: 100vh;
+}
+
+.infosContainer {
+    display: none;
+}
+
+.contentContainer {
+    @include useSpacing(padding, xxl);
+}
+
+@media screen and (min-width: $main-breakpoint) {
+	.infosContainer {
+        display: block;
+        width: 50%;
+    }
+
+    .contentContainer {
+        width: 50%;
+    }
+}

@@ -1,3 +1,5 @@
+import { ObjectId } from "mongoose";
+
 export type FeatureRequest = {
   _id: string;
   title: string;
@@ -17,7 +19,7 @@ export type User = {
   _id: string;
   email: string;
   voted: string[];
-  roleOnThisBoard: UserType | null;
+  roleOnThisBoard?: UserType | null;
   picture: string;
 };
 
@@ -28,8 +30,22 @@ export type Board = {
   picture: string;
   themeColor: string;
   websiteUrl: string;
+  instagramUrl?: string;
+  twitterUrl?: string;
+  facebookUrl?: string;
   billingPlan: BillingPlan | null;
 };
+
+export type ChangeLog = {
+  _id: string;
+  title: string;
+  details: string;
+  createdAt: any;
+  happyEmojiVoters: string[];
+  sadEmojiVoters: string[];
+  middleEmojiVoters: string[];
+  topics: TopicType[]
+}
 
 export enum UserType {
   user = "user",
@@ -38,9 +54,9 @@ export enum UserType {
   externalUser = "external user"
 }
 export enum FeatureRequestStatus {
-  unassigned = "unassigned",
-  assigned = "assigned",
-  done = "fait",
+  unassigned = "Non assigné",
+  assigned = "Assigné",
+  done = "Fait",
 }
 
 export enum FeatureRequestModalMode {
