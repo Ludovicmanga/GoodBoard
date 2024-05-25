@@ -14,17 +14,17 @@ import LoadingSkeleton from "../LoadingSkeleton/LoadingSkeleton";
 const statusFiltersList: FilterType[] = [
   {
     _id: 1,
-    label: "Unassigned",
+    label: "Non assigné",
     type: "status",
   },
   {
     _id: 2,
-    label: "Assigned",
+    label: "Assigné",
     type: "status",
   },
   {
     _id: 3,
-    label: "Done",
+    label: "Fait",
     type: "status",
   },
 ];

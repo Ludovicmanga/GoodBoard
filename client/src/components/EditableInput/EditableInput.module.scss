@@ -1,0 +1,16 @@
+@import "../../styles/useSpacing";
+
+.sectionTitle {
+    font-size: 14px;
+    @include useSpacing(margin,l,0,s,s);
+}
+
+.boardIdentityInput {
+    outline: none;
+    border: 0;
+}
+
+.boardIdentityInfo {
+    display: flex;
+    justify-content: space-between;
+}

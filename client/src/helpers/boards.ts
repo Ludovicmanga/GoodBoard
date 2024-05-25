@@ -44,6 +44,17 @@ export const getBoardShareableUrl = async (boardId: string) => {
   }
 };
 
+export const deleteBoardImageApiCall = async (boardId: string) => {
+  return await axios({
+    url: `${websiteUrl}/api/board/delete-board-image`,
+    method: "put",
+    data: {
+      boardId
+    },
+    withCredentials: true,
+  });
+}
+
 export const updateBoardImageApiCall = async (
   selectedFile: File,
   boardId: string
@@ -88,6 +99,54 @@ export const checkUserAccessAPICall = async (boardId: string) => {
     url: `${websiteUrl}/api/board/check-user-has-access-to-board`,
     data: {
       boardId,
+    },
+  });
+};
+
+export const updateTwitterUrlApiCall = async (
+  newUrl: string,
+  boardId: string
+) => {
+  return await axios({
+    url: `${websiteUrl}/api/board/update-twitter-url`,
+    method: "post",
+    withCredentials: true,
+    data: {
+      twitterUrl: newUrl,
+      boardId
+    },
+  });
+};
+
+export const updateInstagramUrlApiCall  = async (
+  newUrl: string,
+  boardId: string
+) => {
+  const response = await axios<Board>({
+    url: `${websiteUrl}/api/board/update-instagram-url`,
+    method: "post",
+    withCredentials: true,
+    data: {
+      instagramUrl: newUrl,
+      boardId
+    },
+  });
+  if (response.data) {
+    return response.data;
+  }
+};
+
+export const updateFacebookUrlApiCall = async (
+  newUrl: string,
+  boardId: string
+) => {
+  return await axios({
+    url: `${websiteUrl}/api/board/update-facebook-url`,
+    method: "post",
+    withCredentials: true,
+    data: {
+      facebookUrl: newUrl,
+      boardId
     },
   });
 };

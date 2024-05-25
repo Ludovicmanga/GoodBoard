@@ -7,12 +7,6 @@
   justify-content: center;
 }
 
-.uploadImgBtnContainer {
-  @include useSpacing(margin, s, 0, 0, 0);
-  display: flex;
-  justify-content: center;
-}
-
 .submitBtnContainer {
   display: flex;
   justify-content: center;
@@ -26,10 +20,6 @@
 
 @media screen and (min-width: $main-breakpoint) {
   .inputLabel {
-    justify-content: flex-start;
-  }
-
-  .uploadImgBtnContainer {
     justify-content: flex-start;
   }
 }

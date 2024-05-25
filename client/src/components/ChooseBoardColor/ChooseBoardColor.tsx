@@ -2,7 +2,6 @@ import { Avatar } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import styles from "./ChooseBoardColor.module.scss";
-import CheckIcon from "@mui/icons-material/Check";
 import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
 import axios from "axios";
 import { websiteUrl } from "../../helpers/constants";
@@ -58,12 +57,12 @@ const ChooseBoardColor = (props: Props) => {
   };
   const colors = [
     {
-      name: "blue",
-      hex: "#a5d8ff",
+      name: "pink",
+      hex: "#ffc9c9",
     },
     {
-      name: "red",
-      hex: "#ffc9c9",
+      name: "blue",
+      hex: "#a5d8ff",
     },
     {
       name: "green",
@@ -119,6 +118,7 @@ const ChooseBoardColor = (props: Props) => {
               className={styles.colorPaletteBox}
               variant="rounded"
             >
+              {""}
               {selected && selected.name === color.name && <SexyCheckbox />}
             </Avatar>
           </div>

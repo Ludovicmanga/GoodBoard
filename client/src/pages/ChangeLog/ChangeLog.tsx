@@ -7,11 +7,16 @@ import ChangeLogBox from "../../components/ChangeLogBox/ChangeLogBox";
 import axios from "axios";
 import { websiteUrl } from "../../helpers/constants";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { capitalizeFirstLetter, getMonthForYear } from "../../helpers/utils";
 import ChangeLogDetailsModal from "../../components/Modals/ChangeLogDetailsModal/ChangeLogDetailsModal";
 import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
 import EmptyData from "../../components/EmptyData/EmptyData";
-import { EmptyPageType } from "../../helpers/types";
+import { ChangeLog as ChangeLogType, EmptyPageType } from "../../helpers/types";
+import { Paper, useTheme } from "@mui/material";
+import { setAllChangelogItems } from "../../redux/features/changeLogSlice";
+import { FeaturesLoadingSkeleton } from "../../components/FeaturesLoadingSkeleton/FeaturesLoadingSkeleton";
+import { ContainerWIthThemeLinearGradient } from "../../components/ContainerWIthThemeLinearGradient/ContainerWIthThemeLinearGradient";
+import { SidebarNavBar } from "../../components/SidebarNavBar/SidebarNavBar";
+import { ContentWithSidebar } from "../../components/ContentWithSidebar/ContentWithSidebar";
 
 type Props = {};
 
@@ -19,43 +24,8 @@ const ChangeLog = (props: Props) => {
   const generalPropertiesState = useAppSelector(
     (state) => state.generalProperties
   );
+  const changeLogItemsState = useAppSelector((state) => state.changeLog);
   const dispatch = useAppDispatch();
-  const [changeLogItemsMappedByDate, setChangeLogItemsMappedByDate] = useState<
-    {
-      year: number;
-      month: number;
-      objects: {
-        title: string;
-        details: string;
-        createdAt: string;
-      }[];
-    }[]
-  >([]);
-
-  function groupObjectsByMonthAndYear(
-    data: { title: string; details: string; createdAt: string }[]
-  ) {
-    const groups = data.reduce((acc, obj) => {
-      const date = new Date(obj.createdAt);
-      const year = date.getFullYear();
-      const month = date.getMonth();
-
-      const key = `${year}-${month}`;
-      if (!acc[key]) {
-        acc[key] = [];
-      }
-      acc[key].push(obj);
-
-      return acc;
-    }, {} as Record<string, typeof data>);
-
-    const result = Object.keys(groups).map((key) => {
-      const [year, month] = key.split("-").map(Number);
-      return { year, month, objects: groups[key] };
-    });
-
-    return result;
-  }
   const getChangeLogList = async () => {
     const response = await axios({
       url: `${websiteUrl}/api/feature-request/get-changelog-list`,
@@ -64,72 +34,67 @@ const ChangeLog = (props: Props) => {
       data: { boardId: generalPropertiesState.activeBoard },
     });
     if (response.data) {
-      const changeLogsItemsMapped = groupObjectsByMonthAndYear(response.data);
-      setChangeLogItemsMappedByDate(changeLogsItemsMapped);
+      dispatch(setAllChangelogItems(response.data));
+      setIsLoading(false);
     }
   };
+  const theme = useTheme();
 
   useEffect(() => {
     getChangeLogList();
-  }, []);
+  }, [generalPropertiesState.activeBoard]);
+
+  const [isLoading, setIsLoading] = useState(true);
 
   return (
     <>
-      <MainNavBar />
-      <MainHero />
-      <div className={styles.container}>
-        <div className={styles.top}>
-          <div className={styles.pageTitleContainer}>
-            <h1 className={styles.pageTitle}>ChangeLog</h1>
-            <p className={styles.pageSubtitle}>
-              Retrouvez ici toutes les fonctionnalités précédemment développées.
-              Par ordre chronologique.
-            </p>
-          </div>
-        </div>
-        {changeLogItemsMappedByDate.length > 0 ? (
-          <div className={styles.changeLogBoxSectionContainer}>
-            {changeLogItemsMappedByDate.map((item) => (
-              <div key={`${item.month} - ${item.year}`}>
-                {item.objects.map((changeLogItem) => (
+      <ContentWithSidebar>
+        <div className={styles.container}>
+          <Paper className={styles.changelogPageWrapper} elevation={5}>
+            <div className={styles.topOfPage}>
+              <div className={styles.changeLogPageLogo}>
+                <h2>Changelog</h2>
+                <p>Toutes nos dernières nouveautés</p>
+              </div>
+            </div>
+            {isLoading ? (
+              <div className={styles.skeletonLoaderContainer}>
+                <FeaturesLoadingSkeleton />
+              </div>
+            ) : changeLogItemsState.length > 0 ? (
+              <div className={styles.changeLogBoxSectionContainer}>
+                {changeLogItemsState.map((changeLogItem) => (
                   <div
                     key={changeLogItem.createdAt}
                     className={styles.changeLogBoxContainer}
                   >
-                    <div className={styles.changeLogBoxWithDateContainer}>
-                      <div className={styles.creationDate}>
-                        Créé le {item.month} - {item.year}
-                      </div>
-                      <ChangeLogBox
-                        title={changeLogItem.title}
-                        details={changeLogItem.details}
-                        createdAt={changeLogItem.createdAt}
-                      />
-                    </div>
+                    <ChangeLogBox
+                      key={changeLogItem._id}
+                      changelogData={changeLogItem}
+                    />
                   </div>
                 ))}
               </div>
-            ))}
-          </div>
-        ) : (
-          <div className={styles.emptyDataContainer}>
-            <EmptyData
-              title="Rien dans le changelog pour l'instant !"
-              details="Change le statut de tes idées en 'fait' pour qu'elles s'ajoutent ici"
-              type={EmptyPageType.changeLog}
-            />
-          </div>
-        )}
-      </div>
+            ) : (
+              <div className={styles.emptyDataContainer}>
+                <EmptyData
+                  title="Rien dans le changelog pour l'instant !"
+                  details="Change le statut de tes idées en 'fait' pour qu'elles s'ajoutent ici"
+                  type={EmptyPageType.changeLog}
+                />
+              </div>
+            )}
+          </Paper>
+        </div>
+      </ContentWithSidebar>
+
       <ChangeLogDetailsModal
         handleClose={() =>
           dispatch(
             setGeneralProperties({
               changeLogDetailsModalOpen: {
                 isOpen: false,
-                title: "",
-                details: "",
-                createdAt: "",
+                changeLogId: null,
               },
             })
           )

@@ -1,14 +1,20 @@
 @import "../../styles/useSpacing";
 
-.integrationsContainer {
+.container {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  @include useSpacing(margin, l);
+  @include useSpacing(padding, m);
 }
 
 .integrationBoxContainer {
   @include useSpacing(margin, s);
-  width: 30%;
+  width: 40%;
+}
+
+@media screen and (min-width: 40rem) {
+  .integrationBoxContainer {
+    width: 30%;
+  }
 }

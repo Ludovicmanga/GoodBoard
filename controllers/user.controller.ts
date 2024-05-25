@@ -86,3 +86,24 @@ export const updatePicture = async (req, res) => {
     console.log(e, " is the error");
   }
 };
+
+export const deletePicture = async (req, res) => {
+  try {
+    if (req.user) {
+      const updatedUser = await userModel.findOneAndUpdate(
+        { _id: req.user.id },
+        {
+          picture: null,
+        },
+        {
+          new: true,
+        }
+      );
+      if (updatedUser) {
+        res.status(200).json(updatedUser);
+      }
+    }
+  } catch (e) {
+    console.log(e);
+  }
+}

@@ -1,4 +1,3 @@
-import { CiCircleCheck } from "react-icons/ci";
 import { GoodboardLogo } from "../../Logo/GoodboardLogo";
 import styles from "./InfosBox.module.scss";
 import { FaCheckCircle } from "react-icons/fa";

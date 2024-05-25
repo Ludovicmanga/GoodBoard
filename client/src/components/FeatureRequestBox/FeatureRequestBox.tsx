@@ -1,4 +1,4 @@
-import { Card, Chip, useTheme } from "@mui/material";
+import { Card, Chip } from "@mui/material";
 import React, { useState } from "react";
 import styles from "./FeatureRequestBox.module.scss";
 import {
@@ -146,32 +146,32 @@ function FeatureRequestBox(props: Props) {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.newFeatureRequestsBox}>
-        <Card
-          className={styles.contentBox}
-          onClick={handleOpenNewFeatureRequestsModal}
-        >
-          <h3 className={styles.featureRequestTitle}>
-            {props.featureRequestProperties.title.slice(0, 30)}
-            {props.featureRequestProperties.title.length > 30 && "..."}
-          </h3>
-          <div className={styles.featureRequestDescription}>
-            {props.featureRequestProperties.details.slice(0, 50)}
-            {props.featureRequestProperties.details.length > 50 && "..."}
-          </div>
-          <div className={styles.tagsContainer}>
-            {activeBoardState.billingPlan !== BillingPlan.free &&
-              props.featureRequestProperties.topics.map((category) => (
-                <Chip
-                  className={styles.tag}
-                  label={category.label}
-                  key={category._id}
-                />
-              ))}
-          </div>
-        </Card>
-        <div className={styles.likeBtnContainer}>
+    <div className={styles.newFeatureRequestsBox}>
+      <Card
+        className={styles.contentBox}
+        onClick={handleOpenNewFeatureRequestsModal}
+      >
+        <h3 className={styles.featureRequestTitle}>
+          {props.featureRequestProperties.title.slice(0, 30)}
+          {props.featureRequestProperties.title.length > 30 && "..."}
+        </h3>
+        <div className={styles.featureRequestDescription}>
+          {props.featureRequestProperties.details.slice(0, 50)}
+          {props.featureRequestProperties.details.length > 50 && "..."}
+        </div>
+        <div className={styles.tagsContainer}>
+          {activeBoardState.billingPlan !== BillingPlan.free &&
+            props.featureRequestProperties.topics.map((category) => (
+              <Chip
+                className={styles.tag}
+                label={category.label}
+                key={category._id}
+              />
+            ))}
+        </div>
+      </Card>
+      <div className={styles.likeBtnContainer}>
+        <div className={styles.likeIconAndVoteContainer}>
           <LikeBtn
             checked={isVoted}
             onChange={handleChangeToggleBtn}

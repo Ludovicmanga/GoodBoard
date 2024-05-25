@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { FeatureRequestModalMode, MenuSelected, Board } from "../../helpers/types";
+import { FeatureRequestModalMode, MenuSelected, Board, ChangeLog } from "../../helpers/types";
 
 interface GeneralProperties {
   activeBoard: string | null | undefined;
@@ -12,11 +12,12 @@ interface GeneralProperties {
   switchBoardModalOpen: boolean;
   changeLogDetailsModalOpen: {
     isOpen: boolean;
-    title: string;
-    details: string;
-    createdAt: string;
+    changeLogId: string | null
   };
-  manageBoardModalOpen: boolean;
+  manageBoardModalOpen: {
+    isOpen: boolean;
+    initialStep?: "settings" | "pricings list" | "checkout form"
+  };
   cannotMakeActionModalOpen: boolean;
   needToUpgradeModalOpen: boolean;
   menuSelected: MenuSelected | null;
@@ -28,6 +29,15 @@ interface GeneralProperties {
   darkMode: boolean | null;
   colorMode: string | null;
   boardsList: Board[]
+  dialogAlert: {
+    isOpen: boolean;
+    title: string;
+    textDetails: string;
+    submitBtnText: string;
+    submitBtnColor: "error" | "success"
+    handleClose: () => void;
+    handleSubmit: () => Promise<void>
+  } | null;
 }
 
 const initialState: GeneralProperties = {
@@ -38,16 +48,16 @@ const initialState: GeneralProperties = {
   },
   generalSettingsModalOpen: false,
   shareBoardModalOpen: false,
-  manageBoardModalOpen: false,
+  manageBoardModalOpen: {
+    isOpen: false
+  },
   switchBoardModalOpen: false,
   cannotMakeActionModalOpen: false,
   needToUpgradeModalOpen: false,
   featuresAreLoading: false,
   changeLogDetailsModalOpen: {
     isOpen: false,
-    title: '',
-    details: '',
-    createdAt: '',
+    changeLogId: null
   },
   menuSelected: null,
   mainSnackBar: {
@@ -56,7 +66,8 @@ const initialState: GeneralProperties = {
   },
   colorMode: null,
   darkMode: null,
-  boardsList: []
+  boardsList: [],
+  dialogAlert: null
 };
 
 export const generalPropertiesSlice = createSlice({

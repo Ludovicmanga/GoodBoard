@@ -6,17 +6,14 @@
     @include useSpacing(margin, s, 0);
     display: flex;
     justify-content: center;
-    height: 155px;
-}
-
-.newFeatureRequestsBox:hover {
-    box-shadow: 0 0 2px $c-blue-dark-30pp;
+    min-height: 155px;
 }
 
 .contentBox {
-    width: 75%;
+    width: 55%;
     cursor: pointer;
     @include useSpacing(padding, s);
+
 }
 
 .featureRequestTitle {
@@ -37,8 +34,7 @@
     display: flex;
     align-items: center;
     @include useSpacing(margin,0, m);
-    font-size: 1.2rem;
-    width: 3rem;
+    font-size: 1.3rem;
 }
 
 .tagsContainer {
@@ -46,23 +42,34 @@
 }
 
 .tag {
-    @include useSpacing(margin, 0, xs);
+    @include useSpacing(margin, xxs, xs);
     @include useTypography(legals);
-}
-
-@media screen and (min-width: $main-breakpoint) {
-    .contentBox {
-        width: 85%;
-    }
-
-    .checkButton {
-        width: 20%;
-    }
 }
 
 .likeBtnContainer {
     display: flex;
     align-items: center;
     justify-content: center;
-    @include useSpacing(padding, xl);
+    width: 9rem;
+}
+
+.likeIconAndVoteContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 70%;
+}
+
+@media screen and (min-width: $main-breakpoint) {
+    .contentBox {
+        width: 75%;
+    }
+
+    .likeBtnContainer {
+        width: 17rem;
+    }
+
+    .likeIconAndVoteContainer {
+        width: 37%;
+    }
 }

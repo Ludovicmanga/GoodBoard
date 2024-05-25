@@ -1,0 +1,44 @@
+@import '../../styles/useSpacing';
+
+.container {
+    z-index: 1;
+    @include useSpacing(padding, m, l);
+}
+
+.logoContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @include useSpacing(padding, m);
+    cursor: pointer;
+}
+
+.sidebarItemContainer {
+    @include useSpacing(margin, m, 0);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.textAndIconContainer {
+    display: flex;
+    align-items: center;
+}
+
+.sidebarIconContainer {
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+}
+
+.sidebarTextContainer {
+    display: flex;
+    align-items: center;
+    @include useSpacing(margin, 0, 0, 0, m);
+}
+
+.changePlanContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

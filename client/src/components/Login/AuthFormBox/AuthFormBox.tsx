@@ -7,7 +7,7 @@ import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
 import { Divider, Grid } from "@mui/material";
 import axios from "axios";
 import { AuthPageType, User } from "../../../helpers/types";
-import { useAppDispatch } from "../../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { setLoggedUserState } from "../../../redux/features/loggedUserSlice";
 import { useNavigate } from "react-router-dom";
 import Link from "@mui/material/Link";
@@ -26,6 +26,8 @@ export const AuthFormBox = (props: Props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [buttonIsLoading, setButtonIsLoading] = useState(false);
+
+  const activeBoardState = useAppSelector((state) => state.activeBoard);
 
   const handleSuccessfulLogin = (user: User) => {
     dispatch(
@@ -52,6 +54,7 @@ export const AuthFormBox = (props: Props) => {
         data: {
           email,
           password,
+          boardId: activeBoardState._id,
         },
         withCredentials: true,
       });
@@ -97,10 +100,12 @@ export const AuthFormBox = (props: Props) => {
       const userResponse = await axios({
         url: `${websiteUrl}/api/users/login-google`,
         method: "post",
-        data: { credentialResponse },
+        data: { credentialResponse, boardId: activeBoardState._id },
         withCredentials: true,
       });
       if (userResponse.data.user) {
+        console.log(userResponse.data.user, " is the user res");
+
         handleSuccessfulLogin(userResponse.data.user);
       }
       setButtonIsLoading(false);

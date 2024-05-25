@@ -1,0 +1,38 @@
+@import '../../../styles/variables';
+@import '../../../styles/useSpacing';
+
+.sectionTitle {
+    font-size: $switch-board-menu-title;
+}
+
+.selectBoardTitle {
+    @include useSpacing(margin, s, 0,0,xs);
+}
+
+.createBoardTitle {
+    @include useSpacing(margin, xl, 0,s,xs);
+}
+
+.boardInListContainer {
+    display: 'flex';
+    align-items: center;
+    @include useSpacing(margin, s, 0);
+}
+
+.boardInListContainer:hover {
+    box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.4);
+}
+
+.createBoardBtnContainer {
+    display: flex;
+    align-items: center;
+}
+
+.createBoardBtnContainer:hover {
+    box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.4);
+}
+
+.textBtn {
+    @include useSpacing(margin, 0, 0, 0, s);
+    text-align: center;
+}

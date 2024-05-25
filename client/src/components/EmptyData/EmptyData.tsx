@@ -61,11 +61,11 @@ const EmptyData = (props: Props) => {
       {renderImage()}
       <div className={styles.title}>{props.title}</div>
       <div className={styles.details}>{props.details}</div>
-      {props.type === EmptyPageType.featureRequests && (
+      {/*       {props.type === EmptyPageType.featureRequests && (
         <Button onClick={openFeatureRequestsModal} variant="contained">
-          Create your first request
+          Propose ta première idée
         </Button>
-      )}
+      )} */}
     </div>
   );
 };

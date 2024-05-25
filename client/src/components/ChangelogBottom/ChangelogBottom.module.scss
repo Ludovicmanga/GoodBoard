@@ -1,0 +1,34 @@
+@import "../../styles/useSpacing";
+
+.container {
+    @include useSpacing(margin, m, 0, 0, 0);
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.chipsContainer {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.chip {
+    @include useSpacing(margin, s, s, 0, 0);
+}
+
+.emojiVotesContainer {
+    display: flex;
+    justify-content: end;
+    @include useSpacing(margin, s, 0 , 0, 0);
+}
+
+@media screen and (min-width: $main-breakpoint) {
+    .container {
+        flex-direction: row;
+    }
+
+    .emojiVotesContainer {
+        @include useSpacing(margin, 0);
+    }
+}

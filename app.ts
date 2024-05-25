@@ -4,7 +4,6 @@ import passport from "passport";
 import "./config/db.ts";
 import cors from "cors";
 import session from "express-session";
-import MongoStore from "connect-mongo";
 import path from "path";
 import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
@@ -30,6 +29,7 @@ import featureRequestRouter from "./routes/featureRequest";
 import boardRouter from "./routes/board";
 import integrationRouter from "./routes/integration";
 import topicRouter from "./routes/topic";
+import changelogRouter from './routes/changelog';
 
 var app = express();
 import "./config/passport.setup";
@@ -62,6 +62,8 @@ app.use("/api/integration", integrationRouter);
 app.use("/api/board", boardRouter);
 app.use("/api/feature-request", featureRequestRouter);
 app.use("/api/topic", topicRouter); 
+app.use("/api/changelog", changelogRouter); 
+
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));

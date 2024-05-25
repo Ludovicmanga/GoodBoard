@@ -4,6 +4,11 @@
     flex: 0 0 10%;
 }
 
+.right {
+    display: flex;
+    justify-content: space-between;
+}
+
 .toolbar {
     display: flex;
     justify-content: space-between;
@@ -12,7 +17,6 @@
 .drawerContent {
     width: 250px;
     padding: 20px;
-     /* Replace with your desired background color */
   }
 
 .navBtn {
@@ -29,4 +33,7 @@
 }
 
 @media screen and (min-width: $main-breakpoint) {
+    .toolbar {
+        justify-content: end;
+    }
 }

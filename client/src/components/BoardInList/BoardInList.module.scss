@@ -7,10 +7,11 @@
     display: flex;
 }
 
-.pictureAvatar {
-}
-
 .icon {
     color: $c-black;
     font-size: 20px;
+}
+
+.text {
+    @include useSpacing(margin, 0, 0, 0, s);
 }

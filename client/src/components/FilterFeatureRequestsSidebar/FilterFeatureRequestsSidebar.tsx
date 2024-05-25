@@ -16,15 +16,15 @@ import { topicsList } from "../../helpers/constants";
 
 const statusChoices = [
   {
-    label: "Unassigned",
+    label: "Non assigné",
     btnColor: "#EB765D",
   },
   {
-    label: "Assigned",
+    label: "Assigné",
     btnColor: "#63C8D9",
   },
   {
-    label: "Done",
+    label: "Fait",
     btnColor: "#1ab856",
   },
 ];

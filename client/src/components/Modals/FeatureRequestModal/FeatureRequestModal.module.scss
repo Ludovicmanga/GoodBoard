@@ -31,7 +31,7 @@
 }
 
 .submitButton {
-    @include useSpacing(margin, l, m, xxxs, 0);
+    @include useSpacing(margin, s, 0, 0, 0);
 }
 
 .divider {
@@ -40,10 +40,20 @@
 
 .mainButtonsContainer {
     display: flex;
+    flex-direction: column;
 }
 
 @media screen and (min-width: $main-breakpoint) {
     .modalContentContainer {
         width: 40%;
     }
+
+    .mainButtonsContainer {
+        flex-direction: row;
+    }
+
+    .submitButton {
+        @include useSpacing(margin, l, m, xxxs, 0);
+    }
+    
 }

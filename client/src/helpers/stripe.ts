@@ -2,7 +2,7 @@ import axios from "axios";
 import { BillingPlan } from "./types";
 import { websiteUrl } from "./constants";
 
-export const handleUpgradePlan = async (selectedPlan: BillingPlan) => {
+export const handleUpgradePlan = async (selectedPlan: BillingPlan, boardId: string) => {
     const plansWithStripeIds = [
       {
         plan: BillingPlan.free,
@@ -26,10 +26,11 @@ export const handleUpgradePlan = async (selectedPlan: BillingPlan) => {
         method: "post",
         withCredentials: true,
         url: `${websiteUrl}/api/board/create-checkout-session`,
-        data: { selectedPlan: foundPlanWithId },
+        data: { selectedPlan: foundPlanWithId, boardId },
       });
       if (response.data) {
-        window.open(response.data);
+        //window.open(response.data);
+        return response.data
       }
     }
   };

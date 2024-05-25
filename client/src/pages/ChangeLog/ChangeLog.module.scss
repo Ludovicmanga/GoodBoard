@@ -1,31 +1,37 @@
 @import '../../styles/useSpacing';
 @import '../../styles/useTypography';
 
-.top {
+.container {
     display: flex;
     justify-content: center;
+    @include useSpacing(padding, m, 0, 0, 0);
+}
+
+.changelogPageWrapper {
+    width: 95%;
+    @include useSpacing(padding, m);
+    height: fit-content;
+}
+
+.skeletonLoaderContainer {
+    @include useSpacing(margin, l, m);
+}
+
+.topOfPage {
+    height: 20%;
+    display: flex;
+}
+
+.changeLogPageLogo {
+    @include useSpacing(margin, 0, 0, 0, m);
+}
+
+.changeLogPageText {
+    @include useSpacing(margin, 0, 0, 0, m);
 }
 
 .changeLogBoxSectionContainer {
     @include useSpacing(padding, s);
-}
-
-.pageTitleContainer {
-    @include useSpacing(margin, l, 0);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.pageTitle {
-    font-size: 1.8rem;
-}
-
-.pageSubtitle {
-    text-align: center;
-    font-size: 0.8rem;
-    color: #868e96;
-    width: 60%;
 }
 
 .emptyDataContainer {
@@ -47,11 +53,13 @@
     @include useSpacing(margin, m,0);
 }
 
-.changeLogBoxWithDateContainer {
-    width: 45%;
-}
-
 .creationDate {
     font-size: 0.8rem;
     @include useSpacing(margin, s,0);
+}
+
+@media screen and (min-width: $main-breakpoint) {
+    .changelogPageWrapper {
+        width: 60%;
+    }
 }

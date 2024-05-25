@@ -8,10 +8,22 @@ import styles from "./FeatureRequests.module.scss";
 import MainNavBar from "../../components/MainNavBar/MainNavBar";
 import MainHero from "../../components/MainHero/MainHero";
 import SearchBar from "../../components/SearchBar/SearchBar";
-import { Badge, IconButton, Skeleton, useTheme } from "@mui/material";
+import {
+  Badge,
+  IconButton,
+  Skeleton,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { FilterList, Search, SwapVert } from "@mui/icons-material";
 import { FilterPopover } from "../../components/FilterPopover/FilterPopover";
 import { OrderPopover } from "../../components/OrderPopover/OrderPopover";
+import { SexyBtn3 } from "../../components/SexyBtn3/SexyBtn3";
+import { FeaturesLoadingSkeleton } from "../../components/FeaturesLoadingSkeleton/FeaturesLoadingSkeleton";
+import { ContainerWIthThemeLinearGradient } from "../../components/ContainerWIthThemeLinearGradient/ContainerWIthThemeLinearGradient";
+import AlertDialog from "../../components/AlertDialog/AlertDialog";
+import { SidebarNavBar } from "../../components/SidebarNavBar/SidebarNavBar";
+import { ContentWithSidebar } from "../../components/ContentWithSidebar/ContentWithSidebar";
 
 type Props = {};
 
@@ -38,6 +50,8 @@ const FeatureRequests = (props: Props) => {
   const [activeFiltersList, setActiveFiltersList] = useState<FilterType[]>([]);
 
   const [searchBtnIsClicked, setSearchBtnIsClicked] = useState(false);
+
+  const bigScreen = useMediaQuery("(min-width: 40rem)");
 
   const handleFilterRequests = () => {
     const activeTopicFiltersList = activeFiltersList.filter(
@@ -79,12 +93,16 @@ const FeatureRequests = (props: Props) => {
   }, [allFeatureRequests, searchedWord, activeFiltersList]);
 
   return (
-    <>
-      <MainNavBar />
-      <MainHero />
-      <div className={styles.container}>
+    <ContentWithSidebar>
+      <div
+        className={
+          filteredFeatureRequests.length > 0
+            ? `${styles.container}`
+            : `${styles.container} ${styles.emptyContainer}`
+        }
+      >
         {allFeatureRequests.length > 0 ? (
-          <div className={styles.featuresContainer}>
+          <div className={styles.featuresSectionContainer}>
             <div className={styles.filterSectionContainer}>
               <Badge
                 badgeContent={activeFiltersList.length}
@@ -145,12 +163,12 @@ const FeatureRequests = (props: Props) => {
             ) : filteredFeatureRequests.length > 0 ? (
               filteredFeatureRequests.map((featureRequest) => {
                 return (
-                  <>
+                  <div className={styles.featuresContainer}>
                     <FeatureRequestBox
                       key={featureRequest._id}
                       featureRequestProperties={featureRequest}
                     />
-                  </>
+                  </div>
                 );
               })
             ) : (
@@ -163,49 +181,13 @@ const FeatureRequests = (props: Props) => {
           </div>
         ) : (
           <div className={styles.emptyDataContainer}>
-            <EmptyData
-              title="Pas encore d'idées !"
-              details="Propose des idées, et elles apparaitront ici"
-              type={EmptyPageType.featureRequests}
-            />
+            <SexyBtn3 />
           </div>
         )}
+        {allFeatureRequests.length > 0 && <NewFeatureRequestsButton />}
       </div>
-      {allFeatureRequests.length > 0 && (
-        <NewFeatureRequestsButton
-          numberOfFeatureRequests={allFeatureRequests.length}
-        />
-      )}
-    </>
+    </ContentWithSidebar>
   );
 };
 
 export default FeatureRequests;
-
-const FeaturesLoadingSkeleton = () => {
-  return (
-    <>
-      <Skeleton
-        variant="rounded"
-        height={150}
-        sx={{
-          marginBottom: "1rem",
-        }}
-      />
-      <Skeleton
-        variant="rounded"
-        height={150}
-        sx={{
-          marginBottom: "1rem",
-        }}
-      />
-      <Skeleton
-        variant="rounded"
-        height={150}
-        sx={{
-          marginBottom: "1rem",
-        }}
-      />
-    </>
-  );
-};

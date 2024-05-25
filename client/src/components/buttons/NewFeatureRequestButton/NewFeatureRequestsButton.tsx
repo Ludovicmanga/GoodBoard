@@ -7,19 +7,13 @@ import { FeatureRequestModalMode } from "../../../helpers/types";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { handleOpenNewFeatureRequestModal } from "../../../helpers/features";
 
-type Props = {
-  numberOfFeatureRequests: number;
-};
-
-function NewFeatureRequestsButton(props: Props) {
-  const [newFeatureRequestsModalOpen, setNewFeatureRequestsModalOpen] =
-    useState(false);
-  const generalPropertiesState = useAppSelector(
-    (state) => state.generalProperties
-  );
+function NewFeatureRequestsButton() {
   const dispatch = useAppDispatch();
   const loggedUser = useAppSelector((state) => state.loggedUser);
   const activeBoardState = useAppSelector((state) => state.activeBoard);
+  const allFeatureRequests = useAppSelector(
+    (state) => state.allFeatureRequests
+  );
 
   const openNewFeatureRequestModal = () => {
     if (activeBoardState.billingPlan) {
@@ -27,7 +21,7 @@ function NewFeatureRequestsButton(props: Props) {
         activeBoardPlan: activeBoardState.billingPlan,
         mode: FeatureRequestModalMode.creation,
         dispatch,
-        numberOfFeatureRequests: props.numberOfFeatureRequests,
+        numberOfFeatureRequests: allFeatureRequests.length,
         loggedUser: loggedUser.user,
       });
     }
@@ -54,9 +48,9 @@ function NewFeatureRequestsButton(props: Props) {
     } */
   };
 
-  const handleCloseModal = () => {
+  /*   const handleCloseModal = () => {
     setNewFeatureRequestsModalOpen(false);
-  };
+  }; */
 
   return (
     <>

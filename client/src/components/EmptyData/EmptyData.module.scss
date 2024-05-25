@@ -7,27 +7,26 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  @include useSpacing(padding, xxxl, l, l, l);
-  @include useSpacing(margin, xxs, l, l, l);
+  @include useSpacing(padding, xxl, l, l, l);
+  filter: $c-filtergrey;
+}
 
-  .image {
-    width: 25%;
-    filter: $c-filtergrey;
-  }
+.image {
+  width: 25%;
+}
 
-  .title {
-    @include useSpacing(margin, xs, 0, xxs, 0);
-    font-family: 'Roboto', sans-serif; // Apply the new font
-    font-size: 19px; // Adjust the font size as needed
-    font-weight: 700; // Set the font weight (bold in this case)
-  }
+.title {
+  @include useSpacing(margin, xs, 0, xxs, 0);
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
 
-  .details {
-    font-family: 'Roboto', sans-serif;
-    font-size: 14px;
-    text-align: center;
-    @include useSpacing(margin, 0, 0, l, 0);
-  }
+.details {
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  text-align: center;
+  @include useSpacing(margin, 0, 0, l, 0);
 }
 
 @media screen and (min-width: $main-breakpoint) {

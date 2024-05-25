@@ -11,12 +11,10 @@ import {
 } from "../helpers/boards";
 import { generateStrongPassword, normalizeURL } from "../utils/utils";
 import Stripe from "stripe";
-const stripe = new Stripe(process.env.STRIPE_TEST_KEY || "", {
-  //@ts-ignore
-  apiVersion: null,
-});
+const stripe = new Stripe(process.env.STRIPE_TEST_KEY || "");
 import { DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { s3 } from "../middleware/multer";
+import { checkUserIsAdminOnThisBoard } from "../helpers/user";
 
 export const updateColor = async (req, res) => {
   try {
@@ -67,7 +65,7 @@ export const getUserBoards = async (req, res) => {
 };
 
 export const createBoard = async (req, res) => {
-  const { name, description, themeColor, isPublic, companyWebsiteUrl } =
+  const { name, description, themeColor, isPublic, companyWebsiteUrl, facebookUrl, instagramUrl, twitterUrl } =
     req.body;
   try {
     if (req.user) {
@@ -78,11 +76,14 @@ export const createBoard = async (req, res) => {
       const newBoard = await boardModel.create({
         name,
         description,
-        themeColor: themeColor || "blue",
+        themeColor: themeColor || "pink",
         isPublic,
         websiteUrl: normalizeURL(companyWebsiteUrl),
         picture: fileUrl,
         billingPlan: "free",
+        facebookUrl,
+        instagramUrl,
+        twitterUrl
       });
       const updatedNewBoard = await boardModel.findOneAndUpdate(
         {
@@ -181,6 +182,41 @@ export const updateBoardImage = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+export const deleteBoardImage = async (req, res) => {
+  try {
+    const { boardId } = req.body;
+
+    if (req.body.boardId) {
+      const oldBoardData = await boardModel.findById(boardId);
+
+      if (oldBoardData && oldBoardData.picture) {
+        const oldPictureKey = oldBoardData.picture.split("/").pop();
+        const deleteParams = {
+          Bucket: "goodboard",
+          Key: oldPictureKey,
+        };
+        await s3.send(new DeleteObjectCommand(deleteParams));
+
+        const boardFoundInDB = await boardModel.findOneAndUpdate(
+          { _id: boardId },
+          {
+            picture: null,
+          },
+          {
+            new: true,
+          }
+        );
+  
+        if (boardFoundInDB) {
+          res.status(200).json({ boardFoundInDB });
+        }
+      }
+    }
+  } catch(e) {
+    console.log(e);
+  }
+}
 
 export const updatePublicStatus = async (req, res) => {
   try {
@@ -330,7 +366,7 @@ export const inviteUsers = async (req, res) => {
 
 export const createCheckoutSession = async (req, res) => {
   const session = await stripe.checkout.sessions.create({
-    billing_address_collection: "auto",
+    ui_mode: 'embedded',
     line_items: [
       {
         price: req.body.selectedPlan.stripeId,
@@ -338,12 +374,20 @@ export const createCheckoutSession = async (req, res) => {
       },
     ],
     mode: "subscription",
-    success_url: `${websiteUrl}/successful-stripe-payment?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${websiteUrl}?canceled-stripe-payment`,
+    return_url: `${websiteUrl}/return?session_id={CHECKOUT_SESSION_ID}&board_id=${req.body.boardId}`,
   });
+  
+  res.send({clientSecret: session.client_secret});
+}
 
-  res.send(session.url);
-};
+export const getSessionStatus = async (req, res) => {
+  const session = await stripe.checkout.sessions.retrieve(req.body.session_id);
+
+  res.send({
+    status: session.status,
+    customer_email: session?.customer_details?.email
+  });
+}
 
 export const createPortalSession = async (req, res) => {
   try {
@@ -371,11 +415,12 @@ export const updateBoardBillingPlan = async (req, res) => {
     const session = await stripe.checkout.sessions.retrieve(session_id, {
       expand: ["line_items.data.price.product"], // Expand the line items to include product details
     });
-
-    if (session.payment_status === "paid") {
+ 
+     if (session.payment_status === "paid") {
       const lineItems = session?.line_items?.data;
       //@ts-ignore
       const productName = lineItems?.[0]?.price?.product.name as string;
+
       if (productName) {
         const foundBoard = await boardModel.findOneAndUpdate(
           {
@@ -397,7 +442,8 @@ export const updateBoardBillingPlan = async (req, res) => {
       res
         .status(400)
         .json({ status: "failed", message: "Payment not successful." });
-    }
+    } 
+
   } catch (error) {
     // Error occurred during the request
     res.status(500).json({
@@ -457,3 +503,78 @@ export const checkUserHasAccessToBoard = async (req, res) => {
     console.log(e);
   }
 };
+
+export const updateTwitterUrl = async (req,res) => {
+  try {
+    const { boardId, twitterUrl } = req.body;
+    if (req.user) {
+      const isAdmin = await checkUserIsAdminOnThisBoard(req.user, boardId);
+      if (isAdmin) {
+        const updatedBoard = await await boardModel.findOneAndUpdate(
+          { _id: req.body.boardId },
+          {
+            twitterUrl,
+          },
+          {
+            new: true,
+          }
+        );
+        if (updatedBoard) {
+          res.json(updatedBoard);
+        }
+      }
+    }
+  } catch(e) {
+    console.log(e);
+  }
+}
+
+export const updateInstagramUrl = async (req,res) => {
+  try {
+    const { boardId, instagramUrl } = req.body;
+    if (req.user) {
+      const isAdmin = await checkUserIsAdminOnThisBoard(req.user, boardId);
+      if (isAdmin) {
+        const updatedBoard = await await boardModel.findOneAndUpdate(
+          { _id: req.body.boardId },
+          {
+            instagramUrl,
+          },
+          {
+            new: true,
+          }
+        );
+        if (updatedBoard) {
+          res.json(updatedBoard);
+        }
+      }
+    }
+  } catch(e) {
+    console.log(e);
+  }
+}
+
+export const updateFacebookUrl = async (req,res) => {
+  try {
+    const { boardId, facebookUrl } = req.body;
+    if (req.user) {
+      const isAdmin = await checkUserIsAdminOnThisBoard(req.user, boardId);
+      if (isAdmin) {
+        const updatedBoard = await await boardModel.findOneAndUpdate(
+          { _id: req.body.boardId },
+          {
+            facebookUrl,
+          },
+          {
+            new: true,
+          }
+        );
+        if (updatedBoard) {
+          res.json(updatedBoard);
+        }
+      }
+    }
+  } catch(e) {
+    console.log(e);
+  }
+}

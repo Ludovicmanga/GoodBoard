@@ -15,23 +15,27 @@
 }
 
 .infoBoxContainer {
-	background: linear-gradient(to right bottom, #2980b9, #6dd5fa, #FFFFFF);
-	animation: gradient 15s ease infinite;
-	@include useSpacing(padding,m, xl);
+	display: none;
 }
 
-.sectionBoxContainer {
-	width: 50%;
+.authformBoxContainer {
+	@include useSpacing(padding, l);
 }
 
-@keyframes gradient {
-	0% {
-		background-position: 0% 50%;
+@media screen and (min-width: $main-breakpoint) {
+	.infoBoxContainer {
+		display: block;
+		background: linear-gradient(to right bottom, #2980b9, #FFFFFF 45%);
+		animation: gradient 15s ease infinite;
+		@include useSpacing(padding,m, xl);
 	}
-	50% {
-		background-position: 100% 50%;
+
+	.sectionBoxContainer {
+		width: 50%;
 	}
-	100% {
-		background-position: 0% 50%;
-	}
+
+	.authformBoxContainer {
+		@include useSpacing(padding, 0);
+	}	
 }
+
