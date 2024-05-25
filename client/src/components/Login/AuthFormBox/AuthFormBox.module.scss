@@ -1,15 +1,16 @@
 @import '../../../styles/useSpacing';
 
 .buttonsContainer {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
+
 }
 
 .link {
 	color: #5c7cfa;
 	text-decoration: none
+}
+
+.submitBtnContainer {
+	text-align: center;
 }
 
 .button {
@@ -19,4 +20,17 @@
 
 .divider {
 	@include useSpacing(margin,m,0,m,0);
+}
+
+.otherLoginOptionsContextText {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	@include useSpacing(margin,0,0,m,0);
+}
+
+.googleLoginBtnContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }

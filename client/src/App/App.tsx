@@ -9,7 +9,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
-import { websiteUrl } from "../helpers/constants";
+import { crispWebsiteId, websiteUrl } from "../helpers/constants";
 import { setAllFeatureRequests } from "../redux/features/allFeatureRequestsSlice";
 import { setGeneralProperties } from "../redux/features/generalPropertiesSlice";
 import { setLoggedUserState } from "../redux/features/loggedUserSlice";
@@ -21,6 +21,9 @@ import FeatureRequestModal from "../components/Modals/FeatureRequestModal/Featur
 import { checkUserAccessAPICall } from "../helpers/boards";
 import LoadingSkeleton from "../components/LoadingSkeleton/LoadingSkeleton";
 import ErrorBoundary from "../components/ErrorBoundary/ErrorBoundary";
+import { Crisp } from "crisp-sdk-web";
+
+Crisp.configure(crispWebsiteId);
 
 function App() {
   const dispatch = useAppDispatch();

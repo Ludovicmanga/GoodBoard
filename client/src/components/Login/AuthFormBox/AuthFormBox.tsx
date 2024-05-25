@@ -165,7 +165,7 @@ export const AuthFormBox = (props: Props) => {
               </Link>
             </Grid>
           </Grid>
-          <div className={styles.buttonsContainer}>
+          <div className={styles.submitBtnContainer}>
             <LoadingButton
               loading={buttonIsLoading}
               onClick={handleAuth}
@@ -177,17 +177,21 @@ export const AuthFormBox = (props: Props) => {
                 ? "Se connecter"
                 : "S'inscrire"}
             </LoadingButton>
-            <Divider className={styles.divider} />
-            Ou
-            <GoogleLogin
-              onSuccess={async (credentialResponse) => {
-                await handleGoogleAuth(credentialResponse);
-              }}
-              onError={() => {
-                console.log("Login Failed");
-              }}
-              useOneTap
-            />
+          </div>
+          <Divider className={styles.divider} />
+          <div className={styles.otherLoginOptionsContainer}>
+            <div className={styles.otherLoginOptionsContextText}>Ou</div>
+            <div className={styles.googleLoginBtnContainer}>
+              <GoogleLogin
+                onSuccess={async (credentialResponse) => {
+                  await handleGoogleAuth(credentialResponse);
+                }}
+                onError={() => {
+                  console.log("Login Failed");
+                }}
+                useOneTap
+              />
+            </div>
           </div>
         </div>
       </Box>

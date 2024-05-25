@@ -1,12 +1,4 @@
-import {
-  Card,
-  Chip,
-  CircularProgress,
-  ToggleButton,
-  useTheme,
-} from "@mui/material";
-import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
-import ArrowDropUpRoundedIcon from "@mui/icons-material/ArrowDropUpRounded";
+import { Card, Chip, useTheme } from "@mui/material";
 import React, { useState } from "react";
 import styles from "./FeatureRequestBox.module.scss";
 import {
