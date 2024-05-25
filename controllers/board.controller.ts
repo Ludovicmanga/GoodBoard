@@ -560,11 +560,34 @@ export const updateFacebookUrl = async (req,res) => {
     if (req.user) {
       const isAdmin = await checkUserIsAdminOnThisBoard(req.user, boardId);
       if (isAdmin) {
-        const updatedBoard = await await boardModel.findOneAndUpdate(
+        const updatedBoard = await boardModel.findOneAndUpdate(
           { _id: req.body.boardId },
           {
             facebookUrl,
           },
+          {
+            new: true,
+          }
+        );
+        if (updatedBoard) {
+          res.json(updatedBoard);
+        }
+      }
+    }
+  } catch(e) {
+    console.log(e);
+  }
+}
+
+export const updateBoardData = async (req, res) => {
+  try {
+    const { _id, facebookUrl, twitterUrl, instagramUrl, name, description, websiteUrl  } = req.body;
+    if (req.user) {
+      const isAdmin = await checkUserIsAdminOnThisBoard(req.user, _id);
+      if (isAdmin) {
+        const updatedBoard = await await boardModel.findOneAndUpdate(
+          { _id },
+          { facebookUrl, twitterUrl, instagramUrl, name, description, websiteUrl },
           {
             new: true,
           }

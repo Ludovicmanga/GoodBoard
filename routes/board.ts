@@ -21,6 +21,7 @@ import {
   updateFacebookUrl,
   updateInstagramUrl,
   getSessionStatus,
+  updateBoardData,
 } from "../controllers/board.controller";
 import { multerUpload } from "../middleware/multer";
 
@@ -34,9 +35,7 @@ router.post("/create", multerUpload.single("image"), createBoard);
 router.post("/get-public-status", getPublicStatus);
 router.post("/update-color", updateColor);
 router.post("/update-public-status", updatePublicStatus);
-router.post("/update-twitter-url", updateTwitterUrl);
-router.post("/update-facebook-url", updateFacebookUrl);
-router.post("/update-instagram-url", updateInstagramUrl);
+router.post('/update-board-data', updateBoardData);
 router.post("/get-share-url", getShareUrl);
 router.post("/update-board-image", multerUpload.single("image"), updateBoardImage);
 router.post("/delete-user", deleteUserFromBoard);
