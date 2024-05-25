@@ -19,7 +19,7 @@ const CreateBoardModal = (props: Props) => {
   const [instagram, setInstagram] = useState("");
   const [facebook, setFacebook] = useState("");
   const [twitter, setTwitter] = useState("");
-  const [themeColor, setThemeColor] = useState("blue");
+  const [themeColor, setThemeColor] = useState("pink");
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
