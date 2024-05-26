@@ -212,7 +212,7 @@ const ManageBoardModal = (props: Props) => {
     if (response.description) {
       dispatch(
         setActiveBoardData({
-          description: response.websiteUrl,
+          description: response.description,
         })
       );
       dispatch(

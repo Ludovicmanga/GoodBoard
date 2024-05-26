@@ -31,8 +31,6 @@
   align-items: center;
   color: #495057;
   @include useSpacing(padding, m);
-  max-height: $max-descrition-height;
-  overflow-y: hidden;
 }
 
 .companyName {
@@ -47,7 +45,8 @@
 .companyDescription {
   text-align: center;
   @include useTypography(commonText);
-  overflow-y: auto;
+  word-break: break-all;
+  overflow: scroll;
 }
 
 .socialLinks {
