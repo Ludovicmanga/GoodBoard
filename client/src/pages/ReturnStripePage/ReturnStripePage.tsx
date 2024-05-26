@@ -4,9 +4,8 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { websiteUrl } from "../../helpers/constants";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { setGeneralProperties } from "../../redux/features/generalPropertiesSlice";
-import LoadingSkeleton from "../../components/LoadingSkeleton/LoadingSkeleton";
 import styles from "./ReturnStripePage.module.scss";
-import { Skeleton } from "@mui/material";
+import { LinearProgress, Skeleton } from "@mui/material";
 
 export const ReturnStripePage = () => {
   const [status, setStatus] = useState(null);
@@ -32,7 +31,6 @@ export const ReturnStripePage = () => {
   };
 
   const updateDB = async () => {
-    console.log(activeBoardState._id, " is the id");
     const response = await axios({
       method: "post",
       url: `${websiteUrl}/api/board/update-board-billing-plan`,
@@ -64,34 +62,8 @@ export const ReturnStripePage = () => {
 
   return (
     <div className={styles.loaderContainer}>
-      <Skeleton
-        variant="rounded"
-        height={170}
-        sx={{
-          marginBottom: "1rem",
-        }}
-      />
-      <Skeleton
-        variant="rounded"
-        height={170}
-        sx={{
-          marginBottom: "1rem",
-        }}
-      />
-      <Skeleton
-        variant="rounded"
-        height={170}
-        sx={{
-          marginBottom: "1rem",
-        }}
-      />
-      <Skeleton
-        variant="rounded"
-        height={170}
-        sx={{
-          marginBottom: "1rem",
-        }}
-      />
+      <LinearProgress />
+      <div className={styles.text}>Paiement en cours..</div>
     </div>
   );
 };

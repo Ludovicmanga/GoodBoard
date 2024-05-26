@@ -24,23 +24,19 @@ const IntegrationBox = (props: Props) => {
         background: props.developed ? "" : "#f1f3f5",
       }}
     >
-      {props.connected && (
-        <div className={styles.connectedBadgeContainer}>
-          <Chip label="Connected" variant="outlined" />{" "}
-        </div>
-      )}
-      {!props.developed && (
-        <div className={styles.connectedBadgeContainer}>
+      <div className={styles.connectedBadgeContainer}>
+        {props.connected && <Chip label="Connected" variant="outlined" />}
+        {!props.developed && (
           <Chip
             label="Bientôt sur goodboard"
             variant="outlined"
             sx={{
-              background: "#495057",
+              background: "#868e96",
               color: "white",
             }}
           />
-        </div>
-      )}
+        )}
+      </div>
       <div className={styles.logoAndNameRowContainer}>
         <div className={styles.logoAndNameContainer}>
           <>
