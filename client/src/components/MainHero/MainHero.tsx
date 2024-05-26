@@ -25,6 +25,12 @@ const MainHero = (props: Props) => {
   );
   const activeBoardState = useAppSelector((state) => state.activeBoard);
   const dispatch = useAppDispatch();
+  const [nameWithCapitalFirstLetter, setNameWithCapitalFirstLetter] =
+    useState("");
+  const [
+    descriptionWithCapitalFirstLetter,
+    setDescriptionWithCapitalFirstLetter,
+  ] = useState("");
 
   useEffect(() => {
     if (
@@ -50,19 +56,25 @@ const MainHero = (props: Props) => {
       url: `${websiteUrl}/api/board/get/${generalPropertiesState.activeBoard}`,
     });
     if (response.data) {
-      dispatch(
-        setActiveBoardData({
-          _id: "",
-          name: "",
-          description: "",
-          picture: "",
-          themeColor: "",
-          websiteUrl: "",
-        })
-      );
-      dispatch(setActiveBoardData(response.data as Board));
+      dispatch(setActiveBoardData(response.data));
     }
   };
+
+  useEffect(() => {
+    if (activeBoardState?.name) {
+      setNameWithCapitalFirstLetter(
+        capitalizeFirstLetter(activeBoardState.name)
+      );
+    }
+  }, [activeBoardState.name]);
+
+  useEffect(() => {
+    if (activeBoardState?.description) {
+      setDescriptionWithCapitalFirstLetter(
+        capitalizeFirstLetter(activeBoardState.description)
+      );
+    }
+  }, [activeBoardState.description]);
 
   const theme = useTheme();
 
@@ -118,16 +130,14 @@ const MainHero = (props: Props) => {
           )}
         </div>
         <div className={styles.text}>
-          <div className={styles.companyName}>
-            {capitalizeFirstLetter(activeBoardState.name)}
-          </div>
+          <div className={styles.companyName}>{nameWithCapitalFirstLetter}</div>
           <div className={styles.companyDescription}>
-            {capitalizeFirstLetter(activeBoardState.description)}
+            {descriptionWithCapitalFirstLetter}
           </div>
           <div className={styles.companyLinkBtnContainer}>
             <IconButton
               className={styles.companyLinkBtn}
-              onClick={() => window.open(activeBoardState.websiteUrl)}
+              onClick={() => window.open(activeBoardState?.websiteUrl)}
             >
               <div className={styles.companyLinkIcon}>
                 <IoLinkOutline />

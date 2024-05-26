@@ -73,6 +73,7 @@ const CreateBoardModal = (props: Props) => {
         size="small"
         multiline
         minRows={3}
+        inputProps={{ maxLength: 130 }}
       />
       <TextField
         onChange={(e) => setWebsite(e.target.value)}
