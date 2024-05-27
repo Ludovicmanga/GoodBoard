@@ -26,6 +26,9 @@ export const AuthFormBox = (props: Props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [buttonIsLoading, setButtonIsLoading] = useState(false);
+  const [passwordErrorHelperText, setPasswordErrorHelperText] =
+    useState<string>("");
+  const [wrongFormatPassword, setWrongFormatPassword] = useState(false);
 
   const activeBoardState = useAppSelector((state) => state.activeBoard);
 
@@ -64,26 +67,38 @@ export const AuthFormBox = (props: Props) => {
       }
     }
     if (props.authType === AuthPageType.signUp) {
-      setButtonIsLoading(true);
-      const signUpResponse = await axios<{ user: User }>({
-        url: `${websiteUrl}/api/users/sign-up`,
-        method: "post",
-        data: {
-          email,
-          password,
-        },
-      });
-      setButtonIsLoading(false);
-      if (signUpResponse.data.user) {
-        navigate("/login");
-        dispatch(
-          setGeneralProperties({
-            mainSnackBar: {
-              isOpen: true,
-              message: "Successful sign up !",
-            },
-          })
+      if (password.length >= 6) {
+        setButtonIsLoading(true);
+        const signUpResponse = await axios<{ user: User }>({
+          url: `${websiteUrl}/api/users/sign-up`,
+          method: "post",
+          data: {
+            email,
+            password,
+          },
+        });
+        setButtonIsLoading(false);
+        if (signUpResponse.data.user) {
+          navigate("/login");
+          dispatch(
+            setGeneralProperties({
+              mainSnackBar: {
+                isOpen: true,
+                message: "Successful sign up !",
+              },
+            })
+          );
+        }
+      } else {
+        setWrongFormatPassword(true);
+        setPasswordErrorHelperText(
+          "Le mot de passe doit faire au moins 6 caractères"
         );
+
+        setTimeout(() => {
+          setWrongFormatPassword(false);
+          setPasswordErrorHelperText("");
+        }, 3000);
       }
     }
   };
@@ -143,6 +158,8 @@ export const AuthFormBox = (props: Props) => {
             required
             fullWidth
             name="password"
+            error={wrongFormatPassword}
+            helperText={passwordErrorHelperText}
             label="Mot de passe"
             type="password"
             id="password"
