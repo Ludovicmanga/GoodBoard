@@ -28,8 +28,7 @@ const WelcomeMessage = (props: Props) => {
           <br /> Il est temps d'enfin savoir ce que vos clients attendent de
           vous! Grâce aux données factuelles recueillies, vous pourrez créer le
           produit que vos clients souhaitent, tout en leur montrant que vous les
-          incluez dans vos processus décisionnels. <br /> Donnons vie à vos
-          idées ! 💡💡💡
+          incluez dans vos processus décisionnels.
         </p>
       </div>
       <Button
