@@ -174,16 +174,20 @@ export const checkTrelloAuth = async (req, res) => {
 };
 
 export const getTrelloBoards = async (req, res) => {
-  const user = await userModel.findById(req.user.id);
-  oauth.getProtectedResource(
-    "https://api.trello.com/1/members/me/boards?lists=open",
-    "GET",
-    user.trelloAccessToken,
-    user.trelloAccessTokenSecret,
-    function (error, data, response) {
-      res.send(data);
+  if (req.user) {
+    const user = await userModel.findById(req.user.id);
+    if (user) {
+      oauth.getProtectedResource(
+        "https://api.trello.com/1/members/me/boards?lists=open",
+        "GET",
+        user?.trelloAccessToken,
+        user?.trelloAccessTokenSecret,
+        function (error, data, response) {
+          res.send(data);
+        }
+      );
     }
-  );
+  }
 };
 
 export const createTrelloCards = async (req, res) => {
