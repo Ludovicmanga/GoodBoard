@@ -4,10 +4,6 @@
 .button {
     @include useTypography(title-xs);
     @include useSpacing(padding,m,l,m,m);
-    position: fixed;
-    bottom: 1%;
-    left: 50%;
-    transform: translate(-50%, -50%);
 }
 
 .addIcon {

@@ -71,3 +71,11 @@
    @include useSpacing(margin, 0, s, 0, 0);
   }
 }
+
+.newBtnContainer {
+  position: absolute;
+  bottom: 3%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
