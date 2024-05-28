@@ -184,7 +184,11 @@ const FeatureRequests = (props: Props) => {
             <SexyBtn3 />
           </div>
         )}
-        {allFeatureRequests.length > 0 && <NewFeatureRequestsButton />}
+        {allFeatureRequests.length > 0 && (
+          <div className={styles.newBtnContainer}>
+            <NewFeatureRequestsButton />
+          </div>
+        )}
       </div>
     </ContentWithSidebar>
   );

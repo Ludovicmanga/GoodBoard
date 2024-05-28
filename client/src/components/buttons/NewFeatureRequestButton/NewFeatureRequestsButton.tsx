@@ -48,10 +48,6 @@ function NewFeatureRequestsButton() {
     } */
   };
 
-  /*   const handleCloseModal = () => {
-    setNewFeatureRequestsModalOpen(false);
-  }; */
-
   return (
     <>
       <Fab
