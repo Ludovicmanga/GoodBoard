@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styles from "./ShareBoardModal.module.scss";
-import { Button, IconButton, OutlinedInput, Paper } from "@mui/material";
+import {
+  Button,
+  IconButton,
+  OutlinedInput,
+  Paper,
+  useMediaQuery,
+} from "@mui/material";
 import CopyToClipboardButton from "../../buttons/CopyToClipboardButton/CopyToClipboardButton";
 import axios from "axios";
 import { websiteUrl } from "../../../helpers/constants";
@@ -132,8 +138,10 @@ const ShareBoardModal = (props: Props) => {
     }
   }, [props.modalIsOpen]);
 
+  const bigScreen = useMediaQuery("(min-width: 40rem)");
+
   return (
-    <ModalTemplate {...props}>
+    <ModalTemplate {...props} width={bigScreen ? "50%" : "99%"}>
       {activeBoardState.billingPlan !== BillingPlan.free && (
         <>
           <h2 className={styles.sectionTitle}>Utilisateurs & équipe</h2>
