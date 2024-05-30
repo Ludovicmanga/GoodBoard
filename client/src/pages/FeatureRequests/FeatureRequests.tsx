@@ -163,9 +163,11 @@ const FeatureRequests = (props: Props) => {
             ) : filteredFeatureRequests.length > 0 ? (
               filteredFeatureRequests.map((featureRequest) => {
                 return (
-                  <div className={styles.featuresContainer}>
+                  <div
+                    className={styles.featuresContainer}
+                    key={featureRequest._id}
+                  >
                     <FeatureRequestBox
-                      key={featureRequest._id}
                       featureRequestProperties={featureRequest}
                     />
                   </div>
